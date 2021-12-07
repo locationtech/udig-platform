@@ -16,9 +16,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -145,34 +143,28 @@ public class ApplicationGISInternal {
 
     }
 
-    public static MapEditorPart findMapEditor(final IMap map) {
+    /**
+     * @deprecated Use {link {@link ApplicationGISInternal#findMapPart(IMap)}} instead!
+     */
+    @Deprecated
+    public static MapPart findMapEditor(final IMap map) {
+        return findMapPart(map);
+    }
+
+    /**
+     * @param map the map to find the MapPart for.
+     * @return MapPart for given Map, if it has been opened already, otherwise null.
+     */
+    public static MapPart findMapPart(final IMap map) {
         if (map == null)
             throw new NullPointerException("Map cannot be null"); //$NON-NLS-1$
-
-        final MapEditorPart[] result = new MapEditorPart[1];
-        PlatformGIS.syncInDisplayThread(new Runnable() {
-            @Override
-            public void run() {
-                IWorkbenchWindow win = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-                if (win == null)
-                    return;
-                IWorkbenchPage page = win.getActivePage();
-                if (page == null)
-                    return;
-                IEditorReference[] refs = page.getEditorReferences();
-                for (IEditorReference reference : refs) {
-                    IEditorPart e = reference.getEditor(false);
-                    if (e instanceof MapEditorPart) {
-                        MapEditorPart me = (MapEditorPart) e;
-                        if (map.equals(me.getMap())) {
-                            result[0] = me;
-                            return;
-                        }
-                    }
-                }
+        Collection<MapPart> openMapParts = ApplicationGIS.getOpenMapParts();
+        for (MapPart mapPart : openMapParts) {
+            if (map.equals(mapPart.getMap())) {
+                return mapPart;
             }
-        });
-        return result[0];
+        }
+        return null;
     }
 
 }

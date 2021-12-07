@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -57,11 +58,9 @@ import org.locationtech.udig.ui.graphics.SWTGraphics;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
- * The ViewportPaneImpl is a java.awt.Panel that is the display 
- * area for a Map. It Registers itself
- * with a RenderStack and obtains the image from the RenderStack 
- * if the RenderStack is "ready"
- * 
+ * The ViewportPaneImpl is a java.awt.Panel that is the display area for a Map. It Registers itself
+ * with a RenderStack and obtains the image from the RenderStack if the RenderStack is "ready"
+ *
  * @author Jesse Eichar, gdavis
  * @version $Revision: 1.9 $
  */
@@ -82,13 +81,12 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
 
     Dimension displaySize = new Dimension(0, 0);
 
-    //private org.eclipse.swt.graphics.Image swtImage;
-
     private Display display;
 
     private volatile Object disposeMutex;
 
     private volatile Rectangle repaintRequest = null;
+
     private final Rectangle ZERO_RECTANGLE = new Rectangle(0, 0, 0, 0);
 
     private Object repaintRequestMutex = new Object();
@@ -96,24 +94,23 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
     private Image buffer;
 
     private final int dpi;
-    
+
     /**
-     * The glass pane associated with the viewport pane.
-     * Allows direct drawing on the image (similar to 
-     * draw commands).
+     * The glass pane associated with the viewport pane. Allows direct drawing on the image (similar
+     * to draw commands).
      */
     private GlassPane glass;
-    
+
     /**
      * The cached tile images that have previously been drawn/rendered
      */
-    private Map<ReferencedEnvelope, Tile> cachedTiles = new HashMap<ReferencedEnvelope, Tile>();
-    
+    private Map<ReferencedEnvelope, Tile> cachedTiles = new HashMap<>();
+
     /**
      * The current list of tiles that is ready to be rendered/drawn onto screen
      */
-    private Map<ReferencedEnvelope, Tile> readyTiles = new HashMap<ReferencedEnvelope, Tile>(); 
-    
+    private Map<ReferencedEnvelope, Tile> readyTiles = new HashMap<>();
+
     /**
      * Create a image that is compatible with this ViewportPane.
      * <p>
@@ -123,37 +120,39 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
      * <p>
      * This image is *not* expected to be hardware accelarated, althought the blit process will be.
      * </p>
-     * 
+     *
      * @see org.locationtech.udig.project.render.ViewportPane#acquireImage(int, int)
      * @param w width
      * @param h height
      * @return BufferedImage with same color model as SWT Image.
      */
-    public BufferedImage image( int w, int h ) {
+    @Override
+    public BufferedImage image(int w, int h) {
         return new BufferedImage(w, h, BufferedImage.TYPE_4BYTE_ABGR);
     }
 
     /**
      * Creates a new ViewportPaneImpl object.
-     * 
+     *
      * @param comp The Composite that this pane will be embedded into
      * @param renderStack The renderstack that is rendering onto this viewport
      * @param vmodel The Viewport model that models this viewport
      */
-    public ViewportPaneTiledSWT( Composite comp, MapPart editor ) {
-        this(comp, SWT.NO_BACKGROUND | SWT.DOUBLE_BUFFERED | SWT.NO_MERGE_PAINTS, editor );
+    public ViewportPaneTiledSWT(Composite comp, MapPart editor) {
+        this(comp, SWT.NO_BACKGROUND | SWT.DOUBLE_BUFFERED | SWT.NO_MERGE_PAINTS, editor);
     }
+
     /**
      * Creates a new ViewportPaneImpl object.
-     * 
+     *
      * @param comp The Composite that this pane will be embedded into
      * @param style recommended SWT.NO_BACKGROUND|SWT.DOUBLE_BUFFERED
      * @param renderStack The renderstack that is rendering onto this viewport
      * @param vmodel The Viewport model that models this viewport
      */
-    public ViewportPaneTiledSWT( Composite comp, int style, MapPart editor ) {
-        super(comp, style );
-        dpi=calculateDPI();
+    public ViewportPaneTiledSWT(Composite comp, int style, MapPart editor) {
+        super(comp, style);
+        dpi = calculateDPI();
         ProjectUIPlugin.trace(Trace.VIEWPORT, getClass(), "ViewportPaneSWT created", null); //$NON-NLS-1$
 
         display = comp.getDisplay();
@@ -165,8 +164,9 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
     private void addEventListeners() {
 
         handler = new EventHandler(this, eventJob);
-        addListener(SWT.Resize, new Listener(){
-            public void handleEvent( Event event ) {
+        addListener(SWT.Resize, new Listener() {
+            @Override
+            public void handleEvent(Event event) {
                 Point size = getSize();
                 if (displaySize != null) {
                     if (displaySize.width == size.x && displaySize.height == size.y)
@@ -191,9 +191,10 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
         addListener(SWT.MouseWheel, handler);
         addListener(SWT.Resize, handler);
         addListener(SWT.KeyDown, handler);
-        addPaintListener(new PaintListener(){
-            public void paintControl( PaintEvent event ) {
-                //System.out.println("paint");
+        addPaintListener(new PaintListener() {
+            @Override
+            public void paintControl(PaintEvent event) {
+                // System.out.println("paint");
                 paint(event.gc, event.display);
             }
         });
@@ -211,46 +212,49 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
     /**
      * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#setRenderManager(org.locationtech.udig.project.render.RenderManager)
      */
-    public void setRenderManager( RenderManager manager ) {
+    @Override
+    public void setRenderManager(RenderManager manager) {
         this.renderManager = manager;
     }
 
     /**
      * Called by the Paint listener to update the canvas
-     * 
+     *
      * @param display the display of the canvas.
      * @param g the GC object to use to draw with.
      */
-    public void paint( GC g, final Display display ) {
-        if (g.isDisposed()) return;
+    public void paint(GC g, final Display display) {
+        if (g.isDisposed())
+            return;
         synchronized (repaintRequestMutex) {
-        	/*
-        	 * Refactored for clarity.
-        	 */
+            /*
+             * Refactored for clarity.
+             */
             if (repaintRequest != ZERO_RECTANGLE) {
-            	if (g.getClipping() == null || repaintRequest == null) {
-            		repaintRequest = ZERO_RECTANGLE;
-            		
-            	} else if (g.getClipping().equals(repaintRequest)) {
+                if (g.getClipping() == null || repaintRequest == null) {
                     repaintRequest = ZERO_RECTANGLE;
-                    
-            	} else if (g.getClipping().width==0 && g.getClipping().height==0 ) {
+
+                } else if (g.getClipping().equals(repaintRequest)) {
                     repaintRequest = ZERO_RECTANGLE;
-                    
-            	} else if (clipContainsRepaintRequest(g.getClipping())) {
-            		repaintRequest = ZERO_RECTANGLE;
-            	}
+
+                } else if (g.getClipping().width == 0 && g.getClipping().height == 0) {
+                    repaintRequest = ZERO_RECTANGLE;
+
+                } else if (clipContainsRepaintRequest(g.getClipping())) {
+                    repaintRequest = ZERO_RECTANGLE;
+                }
             }
         }
         int antiAliasing;
-        if( ProjectPlugin.getPlugin().getPreferenceStore().getBoolean(PreferenceConstants.P_ANTI_ALIASING) ) {
-            antiAliasing=SWT.ON;
+        if (ProjectPlugin.getPlugin().getPreferenceStore()
+                .getBoolean(PreferenceConstants.P_ANTI_ALIASING)) {
+            antiAliasing = SWT.ON;
         } else {
-            antiAliasing=SWT.OFF;
-    	}
+            antiAliasing = SWT.OFF;
+        }
         g.setAntialias(antiAliasing);
         Map<ReferencedEnvelope, Tile> tiles = getTiles();
-        
+
         getDoubleBufferGraphics(display, g, tiles, displaySize.width, displaySize.height);
 
         synchronized (repaintRequestMutex) {
@@ -263,47 +267,49 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
         }
     }
 
-    private void getDoubleBufferGraphics( final Display display, GC gc, Map<ReferencedEnvelope, Tile> tiles, int minWidth, int minHeight ) {
-    	IPreferenceStore store = UiPlugin.getDefault().getPreferenceStore();
-    	boolean useAdvancedGraphics = store.getBoolean(org.locationtech.udig.ui.preferences.PreferenceConstants.P_ADVANCED_GRAPHICS); 
-    	
-        if ((getStyle()&SWT.DOUBLE_BUFFERED)==0){
+    private void getDoubleBufferGraphics(final Display display, GC gc,
+            Map<ReferencedEnvelope, Tile> tiles, int minWidth, int minHeight) {
+        IPreferenceStore store = UiPlugin.getDefault().getPreferenceStore();
+        boolean useAdvancedGraphics = store.getBoolean(
+                org.locationtech.udig.ui.preferences.PreferenceConstants.P_ADVANCED_GRAPHICS);
+
+        if ((getStyle() & SWT.DOUBLE_BUFFERED) == 0) {
             if (buffer == null) {
                 buffer = new Image(display, displaySize.width, displaySize.height);
-            }         
+            }
 
             ViewportGraphics swtGraphics = null;
-            
-            if (useAdvancedGraphics ) { 
-            	swtGraphics = new SWTGraphics(buffer, display);
+
+            if (useAdvancedGraphics) {
+                swtGraphics = new SWTGraphics(buffer, display);
             } else {
-            	swtGraphics = new NonAdvancedSWTGraphics(buffer, display);
+                swtGraphics = new NonAdvancedSWTGraphics(buffer, display);
             }
-            if (renderManager.getViewportModelInternal().isBoundsChanging() ) {
+            if (renderManager.getViewportModelInternal().isBoundsChanging()) {
                 swtGraphics.getGraphics(GC.class).setAdvanced(false);
             }
             painter.paint(swtGraphics, tiles, minWidth, minHeight);
             swtGraphics.dispose();
 
             gc.drawImage(buffer, 0, 0);
-        }else{
+        } else {
 
-        	ViewportGraphics swtGraphics = null;
-        	
-        	if (useAdvancedGraphics ) {
-        		swtGraphics = new SWTGraphics(gc, display);
-        	} else {
-        		swtGraphics = new NonAdvancedSWTGraphics(gc, display, null);
-        	}
-        	if (renderManager.getViewportModelInternal().isBoundsChanging() ) {
-        	    swtGraphics.getGraphics(GC.class).setAdvanced(false);
-        	}
+            ViewportGraphics swtGraphics = null;
+
+            if (useAdvancedGraphics) {
+                swtGraphics = new SWTGraphics(gc, display);
+            } else {
+                swtGraphics = new NonAdvancedSWTGraphics(gc, display, null);
+            }
+            if (renderManager.getViewportModelInternal().isBoundsChanging()) {
+                swtGraphics.getGraphics(GC.class).setAdvanced(false);
+            }
             painter.paint(swtGraphics, tiles, minWidth, minHeight);
             swtGraphics.dispose();
         }
     }
 
-    private boolean clipContainsRepaintRequest( Rectangle clipping ) {
+    private boolean clipContainsRepaintRequest(Rectangle clipping) {
 
         if (clipping.contains(repaintRequest.x, repaintRequest.y)
                 && clipping.contains(repaintRequest.x + repaintRequest.width, repaintRequest.y)
@@ -316,7 +322,7 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
 
     /**
      * Returns map of tiles, and if necessary creates the new one while disposing the old.
-     * 
+     *
      * @return
      */
     Map<ReferencedEnvelope, Tile> getTiles() {
@@ -327,162 +333,136 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
         }
 
         try {
-        	// clear the previously ready tiles
-        	if (readyTiles != null) {
-        		clearReadyTiles();
-        	}
-        	
-        	disposeMutex = null;
-        	
-        	// create the new tiles and return a copy of the list (with the same objs)
-        	readyTiles = createTiles();
-        	Map<ReferencedEnvelope, Tile> tilesCopy = new HashMap<ReferencedEnvelope, Tile>(readyTiles);
-        	//Map<ReferencedEnvelope, Tile> tilesCopy = (Map<ReferencedEnvelope, Tile>) ((HashMap)readyTiles).clone();
-        	return tilesCopy;
+            // clear the previously ready tiles
+            if (readyTiles != null) {
+                clearReadyTiles();
+            }
+
+            disposeMutex = null;
+
+            // create the new tiles and return a copy of the list (with the same objs)
+            readyTiles = createTiles();
+            Map<ReferencedEnvelope, Tile> tilesCopy = new HashMap<>(
+                    readyTiles);
+            // Map<ReferencedEnvelope, Tile> tilesCopy = (Map<ReferencedEnvelope, Tile>)
+            // ((HashMap)readyTiles).clone();
+            return tilesCopy;
 
         } catch (Throwable e) {
             ProjectUIPlugin.log(null, e);
         }
         return null;
     }
-    
+
     /**
-     * Updates the list of ready tiles with the viewport bounds and only returns the
-     * new tiles.  These are the tiles that will need to be rendered.
-     * 
-     * <p>This is used when panning to render the new tiles.</p>
+     * Updates the list of ready tiles with the viewport bounds and only returns the new tiles.
+     * These are the tiles that will need to be rendered.
+     *
+     * <p>
+     * This is used when panning to render the new tiles.
+     * </p>
      *
      * @return
      */
-    public Collection<Tile> updateReadyTiles(){
+    public Collection<Tile> updateReadyTiles() {
         ReferencedEnvelope bnds = this.renderManager.getViewportModelInternal().getBounds();
-        Collection<ReferencedEnvelope> newlist = renderManager.computeTileBounds(bnds, bnds.getWidth() / renderManager.getMapDisplay().getWidth());
-        ArrayList<ReferencedEnvelope> newTiles = new ArrayList<ReferencedEnvelope>();
-        for( Iterator<ReferencedEnvelope> iterator = newlist.iterator(); iterator.hasNext(); ) {
-            ReferencedEnvelope referencedEnvelope = (ReferencedEnvelope) iterator.next();
-            if (!readyTiles.containsKey(referencedEnvelope)){
+        Collection<ReferencedEnvelope> newlist = renderManager.computeTileBounds(bnds,
+                bnds.getWidth() / renderManager.getMapDisplay().getWidth());
+        ArrayList<ReferencedEnvelope> newTiles = new ArrayList<>();
+        for (Iterator<ReferencedEnvelope> iterator = newlist.iterator(); iterator.hasNext();) {
+            ReferencedEnvelope referencedEnvelope = iterator.next();
+            if (!readyTiles.containsKey(referencedEnvelope)) {
                 newTiles.add(referencedEnvelope);
             }
-            
+
         }
-        Map<ReferencedEnvelope, Tile> tiles =  renderManager.getTiles(newTiles);
+        Map<ReferencedEnvelope, Tile> tiles = renderManager.getTiles(newTiles);
         readyTiles.putAll(tiles);
         return tiles.values();
     }
-    
-    /**
-     * Disposes of any SWTImages within the cached tiles that are NOT also in the
-     * ready tiles (don't want to dispose images that are still being used), then clear 
-     * the tiles from the cached hashmap.
-     */
-    public void clearCachedTiles() {
-    	//Collection<Tile> values = cachedTiles.values();
-    	//for (Tile tile : values) {
-        Set<Entry<ReferencedEnvelope, Tile>> entrySet = cachedTiles.entrySet();
-        for( Entry<ReferencedEnvelope, Tile> set : entrySet ) {
-        	Tile tile = set.getValue();
-    		// only dispose the image if this tile is not in the ready tiles
-    		if (!readyTiles.containsValue(tile)) {
-    			tile.disposeSWTImage();
-    		}
-    	}
-    	cachedTiles.clear();
-    }
-    
-    /**
-     * Disposes of any SWTImages within the ready tiles, then clears the tiles
-     * from the ready list.
-     */
-    public void clearReadyTiles() {
-    	//Collection<Tile> values = readyTiles.values();
-    	//for (Tile tile : values) {
-        Set<Entry<ReferencedEnvelope, Tile>> entrySet = readyTiles.entrySet();
-        for( Entry<ReferencedEnvelope, Tile> set : entrySet ) {
-            Tile tile = set.getValue();    		
-    		tile.disposeSWTImage();
-    	}
-    	readyTiles.clear();
-    }    
 
     /**
-     * Creates tiles for the current viewport size, using previously cached ones if 
-     * available.
-     * 
+     * Disposes of any SWTImages within the cached tiles that are NOT also in the ready tiles (don't
+     * want to dispose images that are still being used), then clear the tiles from the cached
+     * hashmap.
+     */
+    public void clearCachedTiles() {
+        // Collection<Tile> values = cachedTiles.values();
+        // for (Tile tile : values) {
+        Set<Entry<ReferencedEnvelope, Tile>> entrySet = cachedTiles.entrySet();
+        for (Entry<ReferencedEnvelope, Tile> set : entrySet) {
+            Tile tile = set.getValue();
+            // only dispose the image if this tile is not in the ready tiles
+            if (!readyTiles.containsValue(tile)) {
+                tile.disposeSWTImage();
+            }
+        }
+        cachedTiles.clear();
+    }
+
+    /**
+     * Disposes of any SWTImages within the ready tiles, then clears the tiles from the ready list.
+     */
+    public void clearReadyTiles() {
+        // Collection<Tile> values = readyTiles.values();
+        // for (Tile tile : values) {
+        Set<Entry<ReferencedEnvelope, Tile>> entrySet = readyTiles.entrySet();
+        for (Entry<ReferencedEnvelope, Tile> set : entrySet) {
+            Tile tile = set.getValue();
+            tile.disposeSWTImage();
+        }
+        readyTiles.clear();
+    }
+
+    /**
+     * Creates tiles for the current viewport size, using previously cached ones if available.
+     *
      */
     private Map<ReferencedEnvelope, Tile> createTiles() {
-    	//System.out.println("CREATE TILES CALLED");
+        // System.out.println("CREATE TILES CALLED");
         // get the list of tile bounds for the current viewport
-		ReferencedEnvelope viewportbounds = renderManager.getViewportModelInternal().getBounds();
-		Collection<ReferencedEnvelope> bounds = renderManager.computeTileBounds(viewportbounds, viewportbounds.getWidth() / getWidth());
-		
-//		// figure out what tiles are already cached and can be reused
-//		Map<ReferencedEnvelope, Tile> tiles = new HashMap<ReferencedEnvelope, Tile>();
-//		Collection<ReferencedEnvelope> boundsToRemove = new ArrayList<ReferencedEnvelope>();
-//		for (ReferencedEnvelope env : bounds) {
-//        	if (cachedTiles.containsKey(env)) {
-//        		Tile tile = cachedTiles.get(env);
-//        		tiles.put(env, tile);
-//        		boundsToRemove.add(env);
-//        		//System.out.println("using cached tile: "+env);
-//        	}
-//        	else {
-//        		//System.out.println("NOT USING CACHE: "+env);
-//        	}
-//        }
-//		
-//		// get the missing tiles and add them to our list
-//		bounds.removeAll(boundsToRemove);
-//        tiles.putAll(renderManager.getTiles(bounds));
-		
-		Map<ReferencedEnvelope, Tile> tiles = renderManager.getTiles(bounds);
-		
+        ReferencedEnvelope viewportbounds = renderManager.getViewportModelInternal().getBounds();
+        Collection<ReferencedEnvelope> bounds = renderManager.computeTileBounds(viewportbounds,
+                viewportbounds.getWidth() / getWidth());
+
+        Map<ReferencedEnvelope, Tile> tiles = renderManager.getTiles(bounds);
+
         // clear the cached tiles and cache the new ones
         clearCachedTiles();
         cachedTiles.putAll(tiles);
-        
-        return tiles;        
+
+        return tiles;
     }
 
     /**
      * Just signals to recreate buffer image in the next redrawing routine.
      */
     void initMap() {
-        if (renderManager.getViewportModelInternal().isBoundsChanging())return;
+        if (renderManager.getViewportModelInternal().isBoundsChanging())
+            return;
         disposeMutex = new Object();
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderStarting()
-     */
+    @Override
     public void renderStarting() {
         painter.renderStart();
         repaint();
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderDone()
-     */
+    @Override
     public void renderDone() {
         renderUpdate();
         painter.renderDone();
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderUpdate()
-     */
+    @Override
     public void renderUpdate() {
         initMap();
         painter.renderUpdate();
         repaint();
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#setTransform(AffineTransform)
-     */
-
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#dispose()
-     */
+    @Override
     public void dispose() {
         super.dispose();
         if (readyTiles != null) {
@@ -490,21 +470,20 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
         }
         if (cachedTiles != null) {
             clearCachedTiles();
-        }        
+        }
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#addDrawCommand(org.locationtech.udig.project.internal.commands.draw.IDrawCommand)
-     */
-    public void addDrawCommand( IDrawCommand command ) {
+    @Override
+    public void addDrawCommand(IDrawCommand command) {
         painter.addDrawCommand(command);
     }
 
     /**
      * @see org.locationtech.udig.project.render.ViewportPane#setCursor(java.awt.Cursor)
      */
-    public void setCursor( final Cursor cursor ) {
-        display.asyncExec(new Runnable(){
+    public void setCursor(final Cursor cursor) {
+        display.asyncExec(new Runnable() {
+            @Override
             public void run() {
                 String name = cursor.getName();
                 if (name.equals("Default Cursor")) { //$NON-NLS-1$
@@ -540,106 +519,86 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
         });
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#removeMouseListener(org.locationtech.udig.project.render.MapMouseListener)
-     */
-    public void removeMouseListener( MapMouseListener l ) {
+    @Override
+    public void removeMouseListener(MapMouseListener l) {
         eventJob.removeMouseListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#removeMouseMotionListener(org.locationtech.udig.project.render.MapMouseMotionListener)
-     */
-    public void removeMouseMotionListener( MapMouseMotionListener l ) {
+    @Override
+    public void removeMouseMotionListener(MapMouseMotionListener l) {
         eventJob.removeMouseMotionListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#removeMouseWheelListener(org.locationtech.udig.project.render.MapMouseWheelListener)
-     */
-    public void removeMouseWheelListener( MapMouseWheelListener l ) {
+    @Override
+    public void removeMouseWheelListener(MapMouseWheelListener l) {
         eventJob.removeMouseWheelListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#addMouseListener(org.locationtech.udig.project.render.MapMouseListener)
-     */
-    public void addMouseListener( MapMouseListener l ) {
+    @Override
+    public void addMouseListener(MapMouseListener l) {
         eventJob.addMouseListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#addMouseMotionListener(org.locationtech.udig.project.render.MapMouseMotionListener)
-     */
-    public void addMouseMotionListener( MapMouseMotionListener l ) {
+    @Override
+    public void addMouseMotionListener(MapMouseMotionListener l) {
         eventJob.addMouseMotionListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#addMouseWheelListener(org.locationtech.udig.project.render.MapMouseWheelListener)
-     */
-    public void addMouseWheelListener( MapMouseWheelListener l ) {
+    @Override
+    public void addMouseWheelListener(MapMouseWheelListener l) {
         eventJob.addMouseWheelListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.MapDisplay#getDisplaySize()
-     */
+    @Override
     public Dimension getDisplaySize() {
         return displaySize;
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.MapDisplay#getWidth()
-     */
+    @Override
     public int getWidth() {
         return getDisplaySize().width;
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.MapDisplay#getHeight()
-     */
+    @Override
     public int getHeight() {
         return getDisplaySize().height;
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#addPaneListener(org.locationtech.udig.project.render.displayAdapter.MapDisplayListener)
-     */
-    public void addPaneListener( IMapDisplayListener listener ) {
+    @Override
+    public void addPaneListener(IMapDisplayListener listener) {
         eventJob.addMapEditorListener(listener);
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#removePaneListener(org.locationtech.udig.project.render.displayAdapter.MapDisplayListener)
-     */
-    public void removePaneListener( IMapDisplayListener listener ) {
+    @Override
+    public void removePaneListener(IMapDisplayListener listener) {
         eventJob.removeMapEditorListener(listener);
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#getMapEditor()
-     */
-    public MapPart getMapEditor() {
+    @Override
+    public MapPart getMapPart() {
         return editor;
     }
 
+    @Override
     public int getDPI() {
         return dpi;
     }
 
+    @Override
     public Control getControl() {
         return this;
     }
-    
-    public void update(){
+
+    @Override
+    public void update() {
         super.update();
     }
 
-    public void repaint( int x, int y, int width, int height ) {
+    @Override
+    public void repaint(int x, int y, int width, int height) {
         if (width == 0 || height == 0)
             return;
-        
+
         synchronized (repaintRequestMutex) {
             Rectangle rectangle = new Rectangle(x, y, width, height);
             if (repaintRequest == null) {
@@ -660,66 +619,74 @@ public class ViewportPaneTiledSWT extends Canvas implements ViewportPane {
      * @param width
      * @param height
      */
-    private void doRepaint( int x, int y, int width, int height ) {
+    private void doRepaint(int x, int y, int width, int height) {
         REPAINT.x = x;
         REPAINT.y = y;
         REPAINT.width = width;
         REPAINT.height = height;
         if (Display.getCurrent() != null) {
             REPAINT.run();
-        }else
-        	display.asyncExec(REPAINT);
+        } else
+            display.asyncExec(REPAINT);
     }
 
     /**
      * @see org.locationtech.udig.project.render.ViewportPane#repaint()
      */
+    @Override
     public void repaint() {
         repaint(0, 0, displaySize.width, displaySize.height);
     }
 
     private class Repainter implements Runnable {
         int x;
+
         int y;
+
         int width;
+
         int height;
 
+        @Override
         public void run() {
             if (PlatformUI.getWorkbench().isClosing())
                 return;
             if (!isDisposed()) {
                 redraw(x, y, width, height, false);
-            } 
+            }
         }
     }
 
-    public void enableDrawCommands( boolean enable ) {
+    @Override
+    public void enableDrawCommands(boolean enable) {
         painter.switchOnOff(enable);
     }
 
     @Override
-    public void setCursor( org.eclipse.swt.graphics.Cursor cursor ) {
+    public void setCursor(org.eclipse.swt.graphics.Cursor cursor) {
         super.setCursor(cursor);
     }
-    
+
     /**
      * Gets the GlassPane.
      * <p>
      * Will return null if no glass pane set.
      * </p>
-     * 
+     *
      * @return the GlassPane if set; or null if no GlassPane set
      */
+    @Override
     public GlassPane getGlass() {
         return this.glass;
     }
 
     /**
      * Sets the GlassPane
-     * 
+     *
      * @param g
      */
-    public void setGlass( GlassPane glass ) {
+    @Override
+    public void setGlass(GlassPane glass) {
         this.glass = glass;
-    }    
+    }
 }

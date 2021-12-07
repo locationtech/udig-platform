@@ -164,7 +164,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
 
     final StatusLineManager statusLineManager = new StatusLineManager();
 
-    private MapEditorSite mapEditorSite;
+    private MapSite mapSite;
 
     private boolean dirty = false;
 
@@ -788,8 +788,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
         this.replaceableSelectionProvider = new ReplaceableSelectionProvider();
         getSite().setSelectionProvider(replaceableSelectionProvider);
         runMapOpeningInterceptor(getMap());
-        mapEditorSite = new MapEditorSite(super.getSite(), this);
-        final IContributionManager statusBar = mapEditorSite.getActionBars().getStatusLineManager();
+        mapSite = new MapSite(super.getSite(), this);
+        final IContributionManager statusBar = mapSite.getActionBars().getStatusLineManager();
 
         scaleContributionItem = new ScaleRatioLabel(this);
         scaleContributionItem.setVisible(true);
@@ -1115,8 +1115,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
     }
 
     @Override
-    public MapEditorSite getMapEditorSite() {
-        return mapEditorSite;
+    public MapSite getMapSite() {
+        return mapSite;
     }
 
     private class FlashFeatureListener implements ISelectionListener {
