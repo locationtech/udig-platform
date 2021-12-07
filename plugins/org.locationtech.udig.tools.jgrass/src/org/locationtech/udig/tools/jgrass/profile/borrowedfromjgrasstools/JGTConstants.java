@@ -9,9 +9,8 @@
  */
 package org.locationtech.udig.tools.jgrass.profile.borrowedfromjgrasstools;
 
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Constant values and novalues handling.
@@ -120,22 +119,22 @@ public class JGTConstants {
      * Global formatter for joda datetime (yyyy-MM-dd HH:mm:ss).
      */
     public static String dateTimeFormatterYYYYMMDDHHMMSS_string = "yyyy-MM-dd HH:mm:ss";
-    public static DateTimeFormatter dateTimeFormatterYYYYMMDDHHMMSS = DateTimeFormat
-            .forPattern(dateTimeFormatterYYYYMMDDHHMMSS_string);
+    public static DateTimeFormatter dateTimeFormatterYYYYMMDDHHMMSS = DateTimeFormatter
+    		.ofPattern(dateTimeFormatterYYYYMMDDHHMMSS_string);
 
     /**
     * Global formatter for joda datetime (yyyy-MM-dd HH:mm).
     */
     public static String dateTimeFormatterYYYYMMDDHHMM_string = "yyyy-MM-dd HH:mm";
-    public static DateTimeFormatter dateTimeFormatterYYYYMMDDHHMM = DateTimeFormat
-            .forPattern(dateTimeFormatterYYYYMMDDHHMM_string);
+    public static DateTimeFormatter dateTimeFormatterYYYYMMDDHHMM = DateTimeFormatter
+            .ofPattern(dateTimeFormatterYYYYMMDDHHMM_string);
 
     public static String utcDateFormatterYYYYMMDDHHMMSS_string = "yyyy-MM-dd HH:mm:ss";
-    public static DateTimeFormatter utcDateFormatterYYYYMMDDHHMMSS = DateTimeFormat.forPattern(
-            utcDateFormatterYYYYMMDDHHMMSS_string).withZone(DateTimeZone.UTC);
+    public static DateTimeFormatter utcDateFormatterYYYYMMDDHHMMSS = DateTimeFormatter.ofPattern(
+            utcDateFormatterYYYYMMDDHHMMSS_string).withZone(ZoneOffset.UTC);
     public static String utcDateFormatterYYYYMMDDHHMM_string = "yyyy-MM-dd HH:mm";
-    public static DateTimeFormatter utcDateFormatterYYYYMMDDHHMM = DateTimeFormat.forPattern(utcDateFormatterYYYYMMDDHHMM_string)
-            .withZone(DateTimeZone.UTC);
+    public static DateTimeFormatter utcDateFormatterYYYYMMDDHHMM = DateTimeFormatter.ofPattern(utcDateFormatterYYYYMMDDHHMM_string)
+            .withZone(ZoneOffset.UTC);
 
     /**
      * Enumeration defining meteo types.

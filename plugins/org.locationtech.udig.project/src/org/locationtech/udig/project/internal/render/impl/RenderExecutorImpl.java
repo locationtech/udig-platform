@@ -1,5 +1,12 @@
 /**
- * <copyright></copyright> $Id$
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.project.internal.render.impl;
 
@@ -12,6 +19,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.IJobChangeListener;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Messages;
@@ -30,32 +49,21 @@ import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.render.RenderException;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.IJobChangeListener;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
-
 /**
  * Runs a renderer in its own thread. Is responsible for stopping the thread. Does not do composite
  * renderer or multilayer renderers.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
 public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
+
+    private boolean isDisposed = false;
+
     /**
      * Listens to a layer for visibility events and styling events. <b>Public ONLY for testing
      * purposes</b>
-     * 
+     *
      * @author Jesse
      * @since 1.0.0
      */
@@ -66,20 +74,14 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
             this.executor = executor;
         }
 
-        /**
-         * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
-         */
         @Override
         public void notifyChanged(Notification msg) {
             Layer layer = (Layer) msg.getNotifier();
             switch (msg.getFeatureID(Layer.class)) {
             case ProjectPackage.LAYER__STYLE_BLACKBOARD:
-                //dealt with by the layer listener created in the RenderManagerAdapters (added to the render manager)
-                //therefore we don't need to deal with this here.
-                //                if (executor.getContext().getLayer() instanceof SelectionLayer)
-                //                    return;
-                //
-                //                styleBlackboardChanged(msg);
+                // dealt with by the layer listener created in the RenderManagerAdapters (added to
+                // the render manager)
+                // therefore we don't need to deal with this here.
                 break;
             case ProjectPackage.LAYER__VISIBLE:
                 if (executor.getContext().getLayer() instanceof SelectionLayer)
@@ -120,8 +122,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
             if (executor.getState() != IRenderer.DONE || executor.dirty) {
                 RenderManager renderManager = (RenderManager) layer.getMapInternal()
                         .getRenderManager();
-                renderManager.refresh(layer, null); //ensures the entire layer and all tiles/selection layers are refreshed
-                //executor.getRenderer().setState(RENDER_REQUEST);
+                renderManager.refresh(layer, null); // ensures the entire layer and all
+                                                    // tiles/selection layers are refreshed
             } else {
                 RenderManager renderManager = (RenderManager) layer.getMapInternal()
                         .getRenderManager();
@@ -131,9 +133,6 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
             }
         }
 
-        //        protected void styleBlackboardChanged( Notification msg ) {
-        //            executor.getContext().getRenderManager().refresh((ILayer) msg.getNotifier(), null);
-        //        }
     }
 
     /**
@@ -145,8 +144,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * <li>executor.render()
      * <li>executor.setState
      * </ul>
-     * Right now we assume it is listening to EVERTHING (or at least everything
-     * in this Map).
+     * Right now we assume it is listening to EVERTHING (or at least everything in this Map).
      */
     protected static class RendererListener extends AdapterImpl {
 
@@ -156,9 +154,6 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
             this.executor = executor;
         }
 
-        /**
-         * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
-         */
         @Override
         public void notifyChanged(Notification msg) {
             if (msg.getNotifier() instanceof Renderer) {
@@ -206,14 +201,14 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     /**
      * The cached value of the '{@link #getRenderer() <em>Renderer</em>}' reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getRenderer()
      * @generated
      * @ordered
      */
     protected Renderer renderer;
 
-    protected Adapter renderListener = getRendererListener();
+    protected Adapter renderListener;
 
     /**
      * A listener that triggers an update when the style of its layer changes or the visibility
@@ -227,16 +222,18 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public RenderExecutorImpl() {
         super();
         renderJob = new RenderJob(this);
+        renderListener = getRendererListener();
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -246,23 +243,29 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
     public void dispose() {
+        if (isDisposed)
+            return;
+
+        isDisposed = true;
+
         while (getRenderer().eAdapters().remove(renderListener))
             ;
+
         eAdapters().clear();
         removeLayerListener(getContext());
         stopRendering();
         getRenderer().dispose();
 
         try {
-            //Clear label cache for this layer.
+            // Clear label cache for this layer.
             ILayer renderingLayer = getContext().getLayer();
             if (renderingLayer != null) {
-                //Only if it as a usual layer's renderer
+                // Only if it as a usual layer's renderer
                 ILabelPainter labelPainter = getContext().getLabelPainter();
                 String layerId = renderingLayer.getID().toString();
                 if (getContext().getLayer() instanceof SelectionLayer)
@@ -275,11 +278,13 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
         if (getRenderer().getState() != DISPOSED)
             getRenderer().setState(DISPOSED);
+
+        if (this.renderJob != null) {
+            this.renderJob.cancel();
+            this.renderJob = null;
+        }
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#setState(int)
-     */
     @Override
     public void setState(int newState) {
         super.setState(newState);
@@ -287,12 +292,12 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
     public void stopRendering() {
-        if (renderJob.cancel())
+        if (renderJob == null || renderJob.cancel())
             return;
         final AtomicBoolean done = new AtomicBoolean(renderJob.cancel());
         IJobChangeListener listener = new JobChangeAdapter() {
@@ -328,7 +333,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @throws RenderException
      * @generated NOT
      */
@@ -347,9 +352,6 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         return new NullProgressMonitor();
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.Renderer#getContext()
-     */
     @Override
     public RenderContext getContext() {
         if (getRenderer() == null)
@@ -359,6 +361,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -376,21 +379,18 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
      * @uml.property name="renderer"
      */
     @Override
-    @SuppressWarnings("unchecked")
     public void setRenderer(Renderer newRenderer) {
         if (getRenderer() != null) {
             getRenderer().eAdapters().remove(renderListener);
             removeLayerListener(getRenderer().getContext());
         }
         setRendererGen(newRenderer);
-        // registerFeatureListener();
         if (newRenderer != null) {
             newRenderer.eAdapters().add(renderListener);
             addLayerListener(newRenderer.getContext());
         }
     }
 
-    @SuppressWarnings("unchecked")
     protected void removeLayerListener(IRenderContext context) {
         if (context.getLayer() != null) {
             Layer layer = ((Layer) context.getLayer());
@@ -399,12 +399,10 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
                 ((SynchronizedEList) adapters).lock();
             }
             try {
-                ArrayList<Adapter> toRemove = new ArrayList<Adapter>();
+                ArrayList<Adapter> toRemove = new ArrayList<>();
                 for (Iterator<Adapter> iter = adapters.iterator(); iter.hasNext();) {
                     Adapter t = iter.next();
                     if (t instanceof RenderExecutorImpl.LayerListener) {
-                        //                        iter.remove();
-                        //iter.remove() doesn't seem to work here; nothing gets removed.
                         toRemove.add(t);
                     }
                 }
@@ -417,7 +415,6 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         }
     }
 
-    @SuppressWarnings("unchecked")
     protected void addLayerListener(IRenderContext context) {
 
         if (context.getLayer() != null && !(context.getLayer() instanceof SelectionLayer)) {
@@ -428,6 +425,7 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public void setRendererGen(Renderer newRenderer) {
@@ -439,8 +437,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -453,8 +451,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -468,8 +466,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -483,8 +481,8 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -496,17 +494,6 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         return super.eIsSet(featureID);
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#getInfo(Point, Layer)
-     *      public InfoList getInfo(Point screenLocation) throws IOException { if
-     *      (!(getContext().getLayer() instanceof SelectionLayer)) return
-     *      renderer.getInfo(screenLocation); return new InfoList(screenLocation.x,
-     *      screenLocation.y, null); }
-     */
-
-    /**
-     * @see org.locationtech.udig.project.internal.render.RenderExecutor#visit(org.locationtech.udig.project.render.ExecutorVisitor)
-     */
     @Override
     public void visit(ExecutorVisitor visitor) {
         visitor.visit(this);
@@ -524,9 +511,6 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         return new RendererListener(this);
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.Renderer#render(org.locationtech.jts.geom.Envelope)
-     */
     @Override
     public synchronized void render() {
         if (getState() == DISPOSED || !getRenderer().getContext().isVisible()) {
@@ -544,10 +528,6 @@ public class RenderExecutorImpl extends RendererImpl implements RenderExecutor {
         renderJob.addRequest(getRenderBounds());
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.impl.RendererImpl#render(org.locationtech.jts.geom.Envelope,
-     *      org.eclipse.core.runtime.IProgressMonitor)
-     */
     @Override
     public void render(IProgressMonitor monitor) {
         render();

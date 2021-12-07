@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2010, Refractions Research Inc.
  *
@@ -19,44 +20,42 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceInfo;
 import org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.LayerSet;
 import org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.QuadTileSet;
 import org.locationtech.udig.catalog.wmt.internal.Messages;
-import org.locationtech.udig.ui.ErrorManager;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-
-
 /**
- * Based on WMSServiceImpl this class represents a 
- * NASA WorldWind configuration file in the catalog.
- * 
+ * Based on WMSServiceImpl this class represents a NASA WorldWind configuration file in the catalog.
+ *
  * @see org.locationtech.udig.catalog.internal.wmt.wmtsource.ww.LayerSet
- * 
+ *
  * @author to.srwn
  * @since 1.1.0
  */
 public class WWService extends IService {
 
     public static final String WW_URL_KEY = "org.locationtech.udig.catalog.internal.wmt.WWService.WW_URL_KEY"; //$NON-NLS-1$
+
     public static final String WW_LAYERSET_KEY = "org.locationtech.udig.catalog.internal.wmt.WWService.WW_LAYERSET_KEY"; //$NON-NLS-1$
 
     private Map<String, Serializable> params;
 
     private Throwable error;
+
     private URL url;
 
     private volatile LayerSet layerSet = null;
+
     private volatile List<IResolve> members;
-    
-    protected final Lock rLock=new UDIGDisplaySafeLock();
+
+    protected final Lock rLock = new UDIGDisplaySafeLock();
+
     private static final Lock dsLock = new UDIGDisplaySafeLock();
 
     public WWService(URL url, Map<String, Serializable> params) {
@@ -71,186 +70,199 @@ public class WWService extends IService {
             }
         }
     }
-    
+
+    @Override
     public Status getStatus() {
-        if( layerSet == null ){
+        if (layerSet == null) {
             return super.getStatus();
         }
         return Status.CONNECTED;
     }
 
     /**
-     * Aquire the actual LayerSet instance (load the file).
+     * Acquire the actual LayerSet instance (load the file).
      * <p>
      * Note this method is blocking and throws an IOException to indicate such.
      * </p>
-     * @param theUserIsWatching 
+     *
+     * @param theUserIsWatching
      * @return LayerSet instance
-     * @throws IOException 
+     * @throws IOException
      */
-    protected LayerSet getLayerSet(IProgressMonitor theUserIsWatching) throws IOException{
+    protected LayerSet getLayerSet(IProgressMonitor theUserIsWatching) throws IOException {
         if (layerSet == null) {
             dsLock.lock();
-            try{
+            try {
                 if (layerSet == null) {
                     try {
-                        if( theUserIsWatching != null ) {
-                        	String message = MessageFormat.format(Messages.WWService_Connecting_to, new Object[] { url }); 
-                            theUserIsWatching.beginTask(message, 100 );
+                        if (theUserIsWatching != null) {
+                            String message = MessageFormat.format(Messages.WWService_Connecting_to,
+                                    new Object[] { url });
+                            theUserIsWatching.beginTask(message, 100);
                         }
                         URL url1 = (URL) getConnectionParams().get(WW_URL_KEY);
-                        if( theUserIsWatching != null )
-                            theUserIsWatching.worked( 5 );  
-                        
-                        layerSet = LayerSet.getFromUrl(url1); 
-                        
-                        if( theUserIsWatching != null )
+                        if (theUserIsWatching != null)
+                            theUserIsWatching.worked(5);
+
+                        layerSet = LayerSet.getFromUrl(url1);
+
+                        if (theUserIsWatching != null)
                             theUserIsWatching.done();
-                    }
-                    catch(Exception exc){                      
-                        IOException broken = new IOException( 
-                                MessageFormat.format(Messages.WWService_Could_not_connect, 
-                                new Object[] { exc.getLocalizedMessage() }));
-                        broken.initCause( exc );
-                        error = broken;                
-                        throw broken;                
+                    } catch (Exception exc) {
+                        IOException broken = new IOException(
+                                MessageFormat.format(Messages.WWService_Could_not_connect,
+                                        new Object[] { exc.getLocalizedMessage() }));
+                        broken.initCause(exc);
+                        error = broken;
+                        throw broken;
                     }
                 }
-            }finally{
+            } finally {
                 dsLock.unlock();
             }
         }
         return layerSet;
     }
 
+    @Override
     protected IServiceInfo createInfo(IProgressMonitor monitor) throws IOException {
-        if (info == null){
-            getLayerSet( monitor );
+        if (info == null) {
+            getLayerSet(monitor);
             rLock.lock();
-            try{
-                if(info == null){
-                	info = new WWServiceInfo(this, monitor);
+            try {
+                if (info == null) {
+                    info = new WWServiceInfo(this, monitor);
                 }
-            }finally{
+            } finally {
                 rLock.unlock();
             }
         }
         return info;
     }
 
-    /*
-     * @see org.locationtech.udig.catalog.IService#resolve(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)
+    /**
+     * @see org.locationtech.udig.catalog.IService#resolve(java.lang.Class,
+     *      org.eclipse.core.runtime.IProgressMonitor)
      */
+    @Override
     public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
         if (adaptee == null) {
             return null;
         }
-        
+
         if (adaptee.isAssignableFrom(IServiceInfo.class)) {
             return adaptee.cast(createInfo(monitor));
         }
-        
+
         if (adaptee.isAssignableFrom(List.class)) {
             return adaptee.cast(members(monitor));
         }
-        
+
         if (adaptee.isAssignableFrom(LayerSet.class)) {
             return adaptee.cast(getLayerSet(monitor));
         }
-        
+
         return super.resolve(adaptee, monitor);
     }
 
     /**
      * @see org.locationtech.udig.catalog.IService#getConnectionParams()
      */
-    public Map<String,Serializable> getConnectionParams() {
+    @Override
+    public Map<String, Serializable> getConnectionParams() {
         return params;
     }
 
-    /*
+    /**
      * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
+    @Override
     public <T> boolean canResolve(Class<T> adaptee) {
         if (adaptee == null)
             return false;
 
         return adaptee.isAssignableFrom(LayerSet.class) || super.canResolve(adaptee);
     }
-    public void dispose( IProgressMonitor monitor ) {
+
+    @Override
+    public void dispose(IProgressMonitor monitor) {
         super.dispose(monitor);
-        if( members != null ){
+        if (members != null) {
             members = null;
         }
-        if( layerSet != null ){
+        if (layerSet != null) {
             layerSet.dispose(); // clean up
             layerSet = null;
         }
     }
-    
-    public List<WWGeoResource> resources( IProgressMonitor monitor ) throws IOException {
+
+    @Override
+    public List<WWGeoResource> resources(IProgressMonitor monitor) throws IOException {
         // seed the potentially null field
         members(monitor);
-        List<WWGeoResource> children = new ArrayList<WWGeoResource>();
+        List<WWGeoResource> children = new ArrayList<>();
         collectChildren(this, children);
-        
+
         return children;
     }
-    
-    private void collectChildren( IResolve resolve, List<WWGeoResource> children )
+
+    private void collectChildren(IResolve resolve, List<WWGeoResource> children)
             throws IOException {
         List<IResolve> resolves = resolve.members(new NullProgressMonitor());
 
         if (resolves.isEmpty() && resolve instanceof WWGeoResource) {
             children.add((WWGeoResource) resolve);
         } else {
-            for( IResolve resolve2 : resolves ) {
+            for (IResolve resolve2 : resolves) {
                 collectChildren(resolve2, children);
             }
         }
     }
 
+    @Override
     public List<IResolve> members(IProgressMonitor monitor) throws IOException {
 
-        if(members == null){
+        if (members == null) {
             getLayerSet(monitor);
             rLock.lock();
-            try{
-                if(members == null){
+            try {
+                if (members == null) {
                     getLayerSet(monitor); // load ds
-                    members = new LinkedList<IResolve>();
-                    
+                    members = new LinkedList<>();
+
                     // add QuadTileSets
                     List<QuadTileSet> quadTileSets = getLayerSet(monitor).getQuadTileSets();
                     for (QuadTileSet quadTileSet : quadTileSets) {
                         members.add(new WWGeoResource(this, this, quadTileSet));
                     }
-                    
+
                     // add LayerSets
                     List<LayerSet> layerSets = getLayerSet(monitor).getChildLayerSets();
                     for (LayerSet layerSet : layerSets) {
                         members.add(new WWFolder(this, this, layerSet));
                     }
                 }
-            }finally{
+            } finally {
                 rLock.unlock();
             }
         }
         return members;
     }
 
-    /*
+    /**
      * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
+    @Override
     public Throwable getMessage() {
         return error;
     }
 
-    /*
+    /**
      * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
+    @Override
     public URL getIdentifier() {
         return url;
     }
-    
+
 }

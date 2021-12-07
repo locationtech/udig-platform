@@ -11,16 +11,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.locationtech.udig.catalog.URLUtils;
-import org.locationtech.udig.project.IProject;
-import org.locationtech.udig.project.internal.Messages;
-import org.locationtech.udig.project.internal.Project;
-import org.locationtech.udig.project.internal.ProjectFactory;
-import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.ProjectRegistry;
-import org.locationtech.udig.ui.PlatformGIS;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Adapter;
@@ -39,12 +29,21 @@ import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.project.IProject;
+import org.locationtech.udig.project.internal.Messages;
+import org.locationtech.udig.project.internal.Project;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.ProjectRegistry;
+import org.locationtech.udig.ui.PlatformGIS;
 
 /**
  * TODO Purpose of org.locationtech.udig.project.internal.impl
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -62,7 +61,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     /**
      * The cached value of the '{@link #getProjects() <em>Projects</em>}' reference list. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getProjects()
      * @generated NOT
      * @ordered
@@ -89,7 +88,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -184,7 +183,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -339,7 +338,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
                 url = new URL(projectPath); // actually already a URL!
             } catch (MalformedURLException e) {
                 System.err.println("Unable to turn " + projectPath + " into a URL to load");
-                return null; // not a project                
+                return null; // not a project
             }
         } else {
             File file = new File(projectPath);
@@ -348,7 +347,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
         }
 
         final String uriText = url.toExternalForm() + File.separatorChar
-                + ProjectRegistry.PROJECT_FILE; 
+                + ProjectRegistry.PROJECT_FILE;
         final URI uri = URI.createURI(uriText);
 
         Project project = getProject(uri);
@@ -469,7 +468,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
 
     /**
      * Loads the project registry.
-     * 
+     *
      * @return the loaded project registry.
      */
     @SuppressWarnings("unchecked")

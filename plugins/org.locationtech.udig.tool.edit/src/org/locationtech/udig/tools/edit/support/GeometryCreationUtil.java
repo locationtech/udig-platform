@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -14,9 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.shapefile.shp.JTSUtilities;
 import org.locationtech.jts.algorithm.Orientation;
@@ -47,7 +46,9 @@ public class GeometryCreationUtil {
      */
     public static class Bag {
         public EditGeom geom;
+
         public List<Geometry> jts = new ArrayList<>();
+
         public Bag(EditGeom geom) {
             this.geom = geom;
         }
@@ -67,7 +68,7 @@ public class GeometryCreationUtil {
      * <li>Finally if the geomType is geometry then a Polygon will be created... unless the
      * endpoints are not the same. In that case a Line will be created. Unless it is a single point.
      * </li>
-     *</ul>
+     * </ul>
      *
      * @param currentGeom the shape that will be created as a geomToCreate type.
      * @param geomToCreate the type of geometry that will be created for the currentShape in the
@@ -87,8 +88,8 @@ public class GeometryCreationUtil {
         for (EditGeom editGeom : editGeoms) {
             if (editGeom.isChanged()) {
                 if (!idToGeom.containsKey(editGeom.getFeatureIDRef().get()))
-                    idToGeom.put(editGeom.getFeatureIDRef().get(), new GeometryCreationUtil.Bag(
-                            editGeom));
+                    idToGeom.put(editGeom.getFeatureIDRef().get(),
+                            new GeometryCreationUtil.Bag(editGeom));
             }
         }
         for (EditGeom editGeom : editGeoms) {
@@ -120,7 +121,7 @@ public class GeometryCreationUtil {
      * <li>Finally if the geomType is geometry then a Polygon will be created... unless the
      * endpoints are not the same. In that case a Line will be created. Unless it is a single point.
      * </li>
-     *</ul>
+     * </ul>
      *
      * @param currentGeom the handler's current Geom. If == editGeom then geomToCreate will be
      *        returned
@@ -132,7 +133,8 @@ public class GeometryCreationUtil {
      */
     public static Class determineGeometryType(EditGeom currentGeom, EditGeom editGeom,
             Class geomToCreate, GeometryDescriptor geomAttribute) {
-        if ((editGeom.getFeatureIDRef().get() == null && currentGeom.getFeatureIDRef().get() == null)
+        if ((editGeom.getFeatureIDRef().get() == null
+                && currentGeom.getFeatureIDRef().get() == null)
                 || editGeom.getFeatureIDRef().get().equals(currentGeom.getFeatureIDRef().get()))
             return geomToCreate;
         ShapeType attributeDefinedType = ShapeType.valueOf(geomAttribute.getType().getBinding());
@@ -146,24 +148,24 @@ public class GeometryCreationUtil {
         }
 
         switch (typeToSwitchOn) {
-            case LINE:
-                return LineString.class;
-            case POINT:
-                return Point.class;
-            case POLYGON:
-                return Polygon.class;
-            case UNKNOWN:
-                if (geomAttribute.getType().getBinding() == Geometry.class
-                        || geomAttribute.getType().getBinding() == GeometryCollection.class) {
-                    PrimitiveShape shell = editGeom.getShell();
-                    if (shell.getNumPoints() == 1)
-                        return Point.class;
-                    else if (shell.getPoint(0).equals(shell.getPoint(shell.getNumPoints() - 1))
-                            && shell.getNumCoords() != 2)
-                        return Polygon.class;
-                    else
-                        return LineString.class;
-                }
+        case LINE:
+            return LineString.class;
+        case POINT:
+            return Point.class;
+        case POLYGON:
+            return Polygon.class;
+        case UNKNOWN:
+            Class<?> binding = geomAttribute.getType().getBinding();
+            if (binding == Geometry.class || binding == GeometryCollection.class) {
+                PrimitiveShape shell = editGeom.getShell();
+                if (shell.getNumPoints() == 1)
+                    return Point.class;
+                else if (shell.getPoint(0).equals(shell.getPoint(shell.getNumPoints() - 1))
+                        && shell.getNumCoords() != 2)
+                    return Polygon.class;
+                else
+                    return LineString.class;
+            }
         }
         return null;
     }
@@ -183,11 +185,11 @@ public class GeometryCreationUtil {
         if (geomToCreate == Polygon.class) {
             geom = createPolygon(shape.getEditGeom());
         } else if (geomToCreate == LinearRing.class) {
-            geom = GeometryBuilder.create()
-                    .safeCreateGeometry(LinearRing.class, shape.coordArray());
+            geom = GeometryBuilder.create().safeCreateGeometry(LinearRing.class,
+                    shape.coordArray());
         } else if (geomToCreate == LineString.class) {
-            geom = GeometryBuilder.create()
-                    .safeCreateGeometry(LineString.class, shape.coordArray());
+            geom = GeometryBuilder.create().safeCreateGeometry(LineString.class,
+                    shape.coordArray());
         } else {
             geom = GeometryBuilder.create().safeCreateGeometry(Point.class, shape.coordArray());
         }
@@ -195,18 +197,10 @@ public class GeometryCreationUtil {
         if (!geom.isValid()) {
             final Display display = Display.getDefault();
             if (showError) {
-                display.asyncExec(new Runnable(){
-                    public void run() {
-                        IStatus errorStatus = new Status(IStatus.ERROR,
-                                EditPlugin.ID, IStatus.ERROR,
-                                Messages.GeometryCreationUtil_errorMsg, null);
-                        ErrorDialog
-                                .openError(
-                                        display.getActiveShell(),
-                                        Messages.GeometryCreationUtil_errorTitle,
-                                        Messages.GeometryCreationUtil_errorMsg,
-                                        errorStatus);
-                    }
+                display.asyncExec(() -> {
+                    MessageDialog.openError(display.getActiveShell(),
+                            Messages.GeometryCreationUtil_errorTitle,
+                            Messages.GeometryCreationUtil_errorMsg);
                 });
 
                 throw new IllegalStateException("Geometry constructed from EditGeom: " //$NON-NLS-1$
@@ -278,7 +272,7 @@ public class GeometryCreationUtil {
 
         Geometry geom;
         GeometryFactory factory = new GeometryFactory();
-        Class< ? extends Geometry> geomType = geoms.get(0).getClass();
+        Class<? extends Geometry> geomType = geoms.get(0).getClass();
         if (geomType == Polygon.class) {
             geom = factory.createMultiPolygon(geoms.toArray(new Polygon[geoms.size()]));
         } else if (geomType == LinearRing.class) {

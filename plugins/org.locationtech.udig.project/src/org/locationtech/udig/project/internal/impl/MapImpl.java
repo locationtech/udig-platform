@@ -935,7 +935,7 @@ public class MapImpl extends EObjectImpl implements Map {
             super(notifier, eventType, featureid, null, null);
         }
 
-        List<Notification> notifications = new ArrayList<Notification>();
+        List<Notification> notifications = new ArrayList<>();
 
         /**
          * @see org.eclipse.emf.common.notify.impl.NotificationImpl#add(org.eclipse.emf.common.notify.Notification)
@@ -1413,24 +1413,24 @@ public class MapImpl extends EObjectImpl implements Map {
         @Override
         public void notifyChanged(Notification msg) {
             switch (msg.getFeatureID(RenderManager.class)) {
-                case RenderPackage.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL: {
-                    if (msg.getEventType() == Notification.ADD) {
-                        if (getViewportModel() != msg.getNewValue()) {
-                            setViewportModelInternal((ViewportModel) msg.getNewValue());
-                        }
+            case RenderPackage.RENDER_MANAGER__VIEWPORT_MODEL_INTERNAL: {
+                if (msg.getEventType() == Notification.ADD) {
+                    if (getViewportModel() != msg.getNewValue()) {
+                        setViewportModelInternal((ViewportModel) msg.getNewValue());
                     }
-                    break;
                 }
+                break;
+            }
             }
             switch (msg.getFeatureID(ViewportModel.class)) {
-                case RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL: {
-                    if (msg.getEventType() == Notification.ADD) {
-                        if (getRenderManager() != msg.getNewValue()) {
-                            setRenderManagerInternal((RenderManager) msg.getNewValue());
-                        }
+            case RenderPackage.VIEWPORT_MODEL__RENDER_MANAGER_INTERNAL: {
+                if (msg.getEventType() == Notification.ADD) {
+                    if (getRenderManager() != msg.getNewValue()) {
+                        setRenderManagerInternal((RenderManager) msg.getNewValue());
                     }
-                    break;
                 }
+                break;
+            }
             }
         }
     };
@@ -1546,7 +1546,7 @@ public class MapImpl extends EObjectImpl implements Map {
     @Override
     public List<ILegendItem> getLegend() {
         if (legend == null) {
-            legend = new EObjectContainmentEList<ILegendItem>(ILegendItem.class, this,
+            legend = new EObjectContainmentEList<>(ILegendItem.class, this,
                     ProjectPackage.MAP__LEGEND);
         }
         return legend;
@@ -1730,9 +1730,9 @@ public class MapImpl extends EObjectImpl implements Map {
         return "umap"; //$NON-NLS-1$
     }
 
-    CopyOnWriteArraySet<IMapListener> mapListeners = new CopyOnWriteArraySet<IMapListener>();
+    CopyOnWriteArraySet<IMapListener> mapListeners = new CopyOnWriteArraySet<>();
 
-    CopyOnWriteArraySet<IMapCompositionListener> compositionListeners = new CopyOnWriteArraySet<IMapCompositionListener>();
+    CopyOnWriteArraySet<IMapCompositionListener> compositionListeners = new CopyOnWriteArraySet<>();
 
     @Override
     public void addMapListener(IMapListener listener) {
@@ -1757,7 +1757,7 @@ public class MapImpl extends EObjectImpl implements Map {
     @Override
     public List<Color> getMapDefaultColours() {
         List<Layer> layers = getLayersInternal();
-        List<Color> colours = new ArrayList<Color>();
+        List<Color> colours = new ArrayList<>();
         for (Layer layer : layers) {
             Color thisColour = layer.getDefaultColor();
             if (thisColour != null) {

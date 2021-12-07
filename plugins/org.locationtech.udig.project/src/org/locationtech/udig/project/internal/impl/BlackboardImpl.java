@@ -257,7 +257,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                     }
                 } catch (Exception e) {
                     String msg = "provider exception :" + key; //$NON-NLS-1$
-                    String id = provider.getExtension().getNamespace();
+                    String id = provider.getExtension().getNamespaceIdentifier();
                     IStatus status = new Status(IStatus.WARNING, id, 0, msg, e);
 
                     ProjectPlugin.getPlugin().getLog().log(status);
@@ -551,7 +551,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                         if (ProjectPlugin.isDebugging("blackboard")) { //$NON-NLS-1$
                             ProjectPlugin.trace(BlackboardImpl.class,
                                     persister.getExtension().getExtensionPointUniqueIdentifier()
-                                            + "unable to load " + className, //$NON-NLS-1$
+                                            + "unable to load " //$NON-NLS-1$
+                                            + className,
                                     e);
                         }
                         continue; // skip this one

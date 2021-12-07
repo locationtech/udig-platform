@@ -7,13 +7,13 @@
 package org.locationtech.udig.project.internal.render.provider;
 
 import java.util.List;
-import org.locationtech.udig.project.internal.render.RenderExecutor;
-import org.locationtech.udig.project.internal.render.RenderPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.locationtech.udig.project.internal.render.RenderExecutor;
+import org.locationtech.udig.project.internal.render.RenderPackage;
 
 /**
  * This is the item provider adapter for a {@link org.locationtech.udig.project.internal.render.RenderExecutor} object.
@@ -88,7 +88,7 @@ public class RenderExecutorItemProvider extends RendererItemProvider {
     /**
      * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated NOT
      */
     @Override

@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * TODO Purpose of org.locationtech.udig.project.internal
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @model
@@ -30,14 +30,14 @@ public interface ProjectRegistry extends EObject {
     /**
      * Will create or return the default project. This project is called: workspace/newProject.udig
      * (in english versions)
-     * 
+     *
      * @return the default project
      */
     public Project getDefaultProject();
 
     /**
      * Returns the last selected/modified project
-     * 
+     *
      * @return the last selected/modified project
      * @model transient="true"
      */
@@ -61,7 +61,7 @@ public interface ProjectRegistry extends EObject {
      * <ul>
      * <li>Loads projects when required.</li>
      * </ul>
-     * 
+     *
      * @model
      * @param uri The file name of the Project
      * @return The Project that maps to the file indicated by name
@@ -77,7 +77,7 @@ public interface ProjectRegistry extends EObject {
      * <ul>
      * <li>Loads projects when required.</li>
      * </ul>
-     * 
+     *
      * @model
      * @param projectPath The file path of the Project
      * @return The Project that maps to the file indicated by name

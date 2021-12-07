@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -52,11 +53,9 @@ import org.locationtech.udig.ui.graphics.SWTGraphics;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
- * The ViewportPaneImpl is a java.awt.Panel that is the display 
- * area for a Map. It Registers itself
- * with a RenderStack and obtains the image from the RenderStack 
- * if the RenderStack is "ready"
- * 
+ * The ViewportPaneImpl is a java.awt.Panel that is the display area for a Map. It Registers itself
+ * with a RenderStack and obtains the image from the RenderStack if the RenderStack is "ready"
+ *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
@@ -78,6 +77,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     Dimension displaySize = new Dimension(0, 0);
 
     private org.eclipse.swt.graphics.Image swtImage;
+
     private AffineTransform swtImageTrsf = new AffineTransform();
 
     private Display display;
@@ -85,6 +85,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     private volatile Object disposeMutex;
 
     private volatile Rectangle repaintRequest = null;
+
     private final Rectangle ZERO_RECTANGLE = new Rectangle(0, 0, 0, 0);
 
     private Object repaintRequestMutex = new Object();
@@ -92,11 +93,10 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     private Image buffer;
 
     private final int dpi;
-    
+
     /**
-     * The glass pane associated with the viewport pane.
-     * Allows direct drawing on the image (similar to 
-     * draw commands).
+     * The glass pane associated with the viewport pane. Allows direct drawing on the image (similar
+     * to draw commands).
      */
     private GlassPane glass;
 
@@ -107,33 +107,34 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
      * is BufferedImage.TYPE_4BYTE_ABGR although you should never depend on the Image type directly.
      * </p>
      * <p>
-     * This image is *not* expected to be hardware accelarated, althought the blit process will be.
+     * This image is *not* expected to be hardware accelarated, although the blit process will be.
      * </p>
-     * 
+     *
      * @see org.locationtech.udig.project.render.ViewportPane#acquireImage(int, int)
      * @param w width
      * @param h height
      * @return BufferedImage with same color model as SWT Image.
      */
-    public BufferedImage image( int w, int h ) {
+    @Override
+    public BufferedImage image(int w, int h) {
         return new BufferedImage(w, h, BufferedImage.TYPE_4BYTE_ABGR);
     }
 
-    public ViewportPaneSWT( Composite comp, MapPart editor ) {
-        this(comp, SWT.NO_BACKGROUND|SWT.DOUBLE_BUFFERED, editor );
+    public ViewportPaneSWT(Composite comp, MapPart editor) {
+        this(comp, SWT.NO_BACKGROUND | SWT.DOUBLE_BUFFERED, editor);
     }
-    
+
     /**
      * Creates a new ViewportPaneImpl object.
-     * 
+     *
      * @param comp The Composite that this pane will be embedded into
      * @param style recommended SWT.NO_BACKGROUND|SWT.DOUBLE_BUFFERED
      * @param renderStack The renderstack that is rendering onto this viewport
      * @param vmodel The Viewport model that models this viewport
      */
-    public ViewportPaneSWT( Composite comp, int style, MapPart editor ) {
+    public ViewportPaneSWT(Composite comp, int style, MapPart editor) {
         super(comp, style);
-        dpi=calculateDPI();
+        dpi = calculateDPI();
         ProjectUIPlugin.trace(Trace.VIEWPORT, getClass(), "ViewportPaneSWT created", null); //$NON-NLS-1$
 
         display = comp.getDisplay();
@@ -141,12 +142,13 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
 
         addEventListeners();
     }
-   
+
     private void addEventListeners() {
 
         handler = new EventHandler(this, eventJob);
-        addListener(SWT.Resize, new Listener(){
-            public void handleEvent( Event event ) {
+        addListener(SWT.Resize, new Listener() {
+            @Override
+            public void handleEvent(Event event) {
                 Point size = getSize();
                 if (displaySize != null) {
                     if (displaySize.width == size.x && displaySize.height == size.y)
@@ -171,14 +173,15 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
         addListener(SWT.MouseWheel, handler);
         addListener(SWT.Resize, handler);
         addListener(SWT.KeyDown, handler);
-        
-        addPaintListener(new PaintListener(){
-            public void paintControl( PaintEvent event ) {
+
+        addPaintListener(new PaintListener() {
+            @Override
+            public void paintControl(PaintEvent event) {
                 paint(event.gc, event.display);
             }
         });
     }
-    
+
     private int calculateDPI() {
         Point dpi = getDisplay().getDPI();
         if (dpi.x != dpi.y)
@@ -191,44 +194,50 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     /**
      * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#setRenderManager(org.locationtech.udig.project.render.RenderManager)
      */
-    public void setRenderManager( RenderManager manager ) {
+    @Override
+    public void setRenderManager(RenderManager manager) {
         this.renderManager = manager;
     }
 
     /**
      * Called by the Paint listener to update the canvas
-     * 
+     *
      * @param display the display of the canvas.
      * @param g the GC object to use to draw with.
      */
-    public void paint( GC g, final Display display ) {
+    public void paint(GC g, final Display display) {
+        if (renderManager == null) {
+            return;
+        }
+
         synchronized (repaintRequestMutex) {
-        	/*
-        	 * Refactored for clarity.
-        	 */
+            /**
+             * Refactored for clarity.
+             */
             if (repaintRequest != ZERO_RECTANGLE) {
-            	if (g.getClipping() == null || repaintRequest == null) {
-            		repaintRequest = ZERO_RECTANGLE;
-            		
-            	} else if (g.getClipping().equals(repaintRequest)) {
+                if (g.getClipping() == null || repaintRequest == null) {
                     repaintRequest = ZERO_RECTANGLE;
-                    
-            	} else if (g.getClipping().width==0 && g.getClipping().height==0 ) {
+
+                } else if (g.getClipping().equals(repaintRequest)) {
                     repaintRequest = ZERO_RECTANGLE;
-                    
-            	} else if (clipContainsRepaintRequest(g.getClipping())) {
-            		repaintRequest = ZERO_RECTANGLE;
-            	}
+
+                } else if (g.getClipping().width == 0 && g.getClipping().height == 0) {
+                    repaintRequest = ZERO_RECTANGLE;
+
+                } else if (clipContainsRepaintRequest(g.getClipping())) {
+                    repaintRequest = ZERO_RECTANGLE;
+                }
             }
         }
         int antiAliasing;
-        if( ProjectPlugin.getPlugin().getPreferenceStore().getBoolean(PreferenceConstants.P_ANTI_ALIASING) )
-            antiAliasing=SWT.ON;
+        if (ProjectPlugin.getPlugin().getPreferenceStore()
+                .getBoolean(PreferenceConstants.P_ANTI_ALIASING))
+            antiAliasing = SWT.ON;
         else
-            antiAliasing=SWT.OFF;
+            antiAliasing = SWT.OFF;
         g.setAntialias(antiAliasing);
-        Image swtImage = getImage(); //shadows this.swtImage
-        
+        Image swtImage = getImage(); // shadows this.swtImage
+
         int minHeight;
         int minWidth;
         if (swtImage == null) {
@@ -239,10 +248,8 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
             minWidth = Math.min(bounds.width, getWidth());
             minHeight = Math.min(bounds.height, getHeight());
         }
-        
-        
-        getDoubleBufferGraphics(display,g,minWidth, minHeight);
 
+        getDoubleBufferGraphics(display, g, minWidth, minHeight);
 
         synchronized (repaintRequestMutex) {
             if (repaintRequest != ZERO_RECTANGLE) {
@@ -253,71 +260,74 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
                 repaintRequest = null;
         }
     }
-    
+
     /**
-     * When the viewport parameters change, this.swtImage will be out of sync with the viewport 
-     * until renderManager completes and updates this.swtImage. During any repaints in this period, 
+     * When the viewport parameters change, this.swtImage will be out of sync with the viewport
+     * until renderManager completes and updates this.swtImage. During any repaints in this period,
      * this.swtImage needs to be transformed to the correct location in the new viewport.
-     * 
+     *
      * @return A transform to position this.swtImage within the current viewport.
      */
     private AffineTransform getSwtImageToViewportTransform() {
-    	AffineTransform viewportTrsf = new AffineTransform(); //identity
-    	
-    	AffineTransform worldToScreenTrsf = this.renderManager.getMapInternal().getViewportModel().worldToScreenTransform();
-    	if (!worldToScreenTrsf.equals(this.swtImageTrsf)) { 
-    		//swtImage was rendered for a different viewport
-    		try {
-    			viewportTrsf = worldToScreenTrsf;
-    			viewportTrsf.concatenate(this.swtImageTrsf.createInverse());
-    		} catch (NoninvertibleTransformException ex) {
-    			UiPlugin.getDefault().log("Viewport transform was not invertible.", ex);
-    			//just return the default transform.
-    		}
-    	}
-    	
-    	return viewportTrsf;
+        AffineTransform viewportTrsf = new AffineTransform(); // identity
+
+        AffineTransform worldToScreenTrsf = this.renderManager.getMapInternal().getViewportModel()
+                .worldToScreenTransform();
+        if (!worldToScreenTrsf.equals(this.swtImageTrsf)) {
+            // swtImage was rendered for a different viewport
+            try {
+                viewportTrsf = worldToScreenTrsf;
+                viewportTrsf.concatenate(this.swtImageTrsf.createInverse());
+            } catch (NoninvertibleTransformException ex) {
+                UiPlugin.getDefault().log("Viewport transform was not invertible.", ex);
+                // just return the default transform.
+            }
+        }
+
+        return viewportTrsf;
     }
 
-    private void getDoubleBufferGraphics( final Display display, GC gc, int minWidth, int minHeight ) {
-    	IPreferenceStore store = UiPlugin.getDefault().getPreferenceStore();
-    	boolean useAdvancedGraphics = store.getBoolean(org.locationtech.udig.ui.preferences.PreferenceConstants.P_ADVANCED_GRAPHICS); 
-    	
-    	AffineTransform viewportTrsf = getSwtImageToViewportTransform();
-    	
-        if ((getStyle()&SWT.DOUBLE_BUFFERED)==0){
+    private void getDoubleBufferGraphics(final Display display, GC gc, int minWidth,
+            int minHeight) {
+        IPreferenceStore store = UiPlugin.getDefault().getPreferenceStore();
+        boolean useAdvancedGraphics = store.getBoolean(
+                org.locationtech.udig.ui.preferences.PreferenceConstants.P_ADVANCED_GRAPHICS);
+
+        AffineTransform viewportTrsf = getSwtImageToViewportTransform();
+
+        if ((getStyle() & SWT.DOUBLE_BUFFERED) == 0) {
             if (buffer == null) {
                 buffer = new Image(display, displaySize.width, displaySize.height);
             }
 
             ViewportGraphics swtGraphics = null;
-            
-            if (useAdvancedGraphics) { 
-            	swtGraphics = new SWTGraphics(buffer, display);
+
+            if (useAdvancedGraphics) {
+                swtGraphics = new SWTGraphics(buffer, display);
             } else {
-            	swtGraphics = new NonAdvancedSWTGraphics(buffer, display);
+                swtGraphics = new NonAdvancedSWTGraphics(buffer, display);
             }
 
             painter.paint(swtGraphics, swtImage, viewportTrsf, minWidth, minHeight);
             swtGraphics.dispose();
 
             gc.drawImage(buffer, 0, 0);
-        }else{
+        } else {
 
-        	ViewportGraphics swtGraphics = null;
-        	
-        	if (useAdvancedGraphics) {
-        		swtGraphics = new SWTGraphics(gc, display);
-        	} else {
-        		swtGraphics = new NonAdvancedSWTGraphics(gc, display, null);
-        	}
-        	
+            ViewportGraphics swtGraphics = null;
+
+            if (useAdvancedGraphics) {
+                swtGraphics = new SWTGraphics(gc, display);
+            } else {
+                swtGraphics = new NonAdvancedSWTGraphics(gc, display, null);
+            }
+
             painter.paint(swtGraphics, swtImage, viewportTrsf, minWidth, minHeight);
             swtGraphics.dispose();
         }
     }
 
-    private boolean clipContainsRepaintRequest( Rectangle clipping ) {
+    private boolean clipContainsRepaintRequest(Rectangle clipping) {
 
         if (clipping.contains(repaintRequest.x, repaintRequest.y)
                 && clipping.contains(repaintRequest.x + repaintRequest.width, repaintRequest.y)
@@ -330,7 +340,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
 
     /**
      * Returns buffer image and if necessary creates the new one while disposing the old.
-     * 
+     *
      * @return
      */
     org.eclipse.swt.graphics.Image getImage() {
@@ -348,8 +358,9 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
             disposeMutex = null;
 
             swtImage = createImage();
-            this.swtImageTrsf=renderManager.getMapInternal().getViewportModel().worldToScreenTransform();
-            
+            this.swtImageTrsf = renderManager.getMapInternal().getViewportModel()
+                    .worldToScreenTransform();
+
             return swtImage;
 
         } catch (Throwable e) {
@@ -360,13 +371,13 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
 
     /**
      * Creates the new buffer image.
-     * 
+     *
      * @return
      */
     private org.eclipse.swt.graphics.Image createImage() {
         org.eclipse.swt.graphics.Image newImage;
         RenderedImage image = renderManager.getImage();
-        
+
         if (image != null)
             newImage = AWTSWTImageUtils.createSWTImage(image, false);
         else {
@@ -385,6 +396,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     /**
      * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderStarting()
      */
+    @Override
     public void renderStarting() {
         painter.renderStart();
         repaint();
@@ -393,6 +405,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     /**
      * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderDone()
      */
+    @Override
     public void renderDone() {
         renderUpdate();
         painter.renderDone();
@@ -401,6 +414,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     /**
      * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#renderUpdate()
      */
+    @Override
     public void renderUpdate() {
         initMap();
         painter.renderUpdate();
@@ -414,6 +428,7 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     /**
      * @see org.locationtech.udig.project.render.ViewportPane#dispose()
      */
+    @Override
     public void dispose() {
         super.dispose();
         if (swtImage != null)
@@ -423,15 +438,17 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
     /**
      * @see org.locationtech.udig.project.render.ViewportPane#addDrawCommand(org.locationtech.udig.project.internal.commands.draw.IDrawCommand)
      */
-    public void addDrawCommand( IDrawCommand command ) {
+    @Override
+    public void addDrawCommand(IDrawCommand command) {
         painter.addDrawCommand(command);
     }
 
     /**
      * @see org.locationtech.udig.project.render.ViewportPane#setCursor(java.awt.Cursor)
      */
-    public void setCursor( final Cursor cursor ) {
-        display.asyncExec(new Runnable(){
+    public void setCursor(final Cursor cursor) {
+        display.asyncExec(new Runnable() {
+            @Override
             public void run() {
                 String name = cursor.getName();
                 if (name.equals("Default Cursor")) { //$NON-NLS-1$
@@ -467,102 +484,81 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
         });
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#removeMouseListener(org.locationtech.udig.project.render.MapMouseListener)
-     */
-    public void removeMouseListener( MapMouseListener l ) {
+    @Override
+    public void removeMouseListener(MapMouseListener l) {
         eventJob.removeMouseListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#removeMouseMotionListener(org.locationtech.udig.project.render.MapMouseMotionListener)
-     */
-    public void removeMouseMotionListener( MapMouseMotionListener l ) {
+    @Override
+    public void removeMouseMotionListener(MapMouseMotionListener l) {
         eventJob.removeMouseMotionListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#removeMouseWheelListener(org.locationtech.udig.project.render.MapMouseWheelListener)
-     */
-    public void removeMouseWheelListener( MapMouseWheelListener l ) {
+    @Override
+    public void removeMouseWheelListener(MapMouseWheelListener l) {
         eventJob.removeMouseWheelListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#addMouseListener(org.locationtech.udig.project.render.MapMouseListener)
-     */
-    public void addMouseListener( MapMouseListener l ) {
+    @Override
+    public void addMouseListener(MapMouseListener l) {
         eventJob.addMouseListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#addMouseMotionListener(org.locationtech.udig.project.render.MapMouseMotionListener)
-     */
-    public void addMouseMotionListener( MapMouseMotionListener l ) {
+    @Override
+    public void addMouseMotionListener(MapMouseMotionListener l) {
         eventJob.addMouseMotionListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.ViewportPane#addMouseWheelListener(org.locationtech.udig.project.render.MapMouseWheelListener)
-     */
-    public void addMouseWheelListener( MapMouseWheelListener l ) {
+    @Override
+    public void addMouseWheelListener(MapMouseWheelListener l) {
         eventJob.addMouseWheelListener(l);
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.MapDisplay#getDisplaySize()
-     */
+    @Override
     public Dimension getDisplaySize() {
         return displaySize;
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.MapDisplay#getWidth()
-     */
+    @Override
     public int getWidth() {
         return getDisplaySize().width;
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.MapDisplay#getHeight()
-     */
+    @Override
     public int getHeight() {
         return getDisplaySize().height;
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#addPaneListener(org.locationtech.udig.project.render.displayAdapter.MapDisplayListener)
-     */
-    public void addPaneListener( IMapDisplayListener listener ) {
+    @Override
+    public void addPaneListener(IMapDisplayListener listener) {
         eventJob.addMapEditorListener(listener);
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#removePaneListener(org.locationtech.udig.project.render.displayAdapter.MapDisplayListener)
-     */
-    public void removePaneListener( IMapDisplayListener listener ) {
+    @Override
+    public void removePaneListener(IMapDisplayListener listener) {
         eventJob.removeMapEditorListener(listener);
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane#getMapEditor()
-     */
-    public MapPart getMapEditor() {
+    @Override
+    public MapPart getMapPart() {
         return editor;
     }
 
+    @Override
     public int getDPI() {
         return dpi;
     }
 
+    @Override
     public Control getControl() {
         return this;
     }
 
-    public void repaint( int x, int y, int width, int height ) {
+    @Override
+    public void repaint(int x, int y, int width, int height) {
         if (width == 0 || height == 0)
             return;
-        
+
         synchronized (repaintRequestMutex) {
             Rectangle rectangle = new Rectangle(x, y, width, height);
             if (repaintRequest == null) {
@@ -576,8 +572,9 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
         }
 
     }
-    
-    public void update(){
+
+    @Override
+    public void update() {
         super.update();
     }
 
@@ -587,66 +584,73 @@ public class ViewportPaneSWT extends Canvas implements ViewportPane {
      * @param width
      * @param height
      */
-    private void doRepaint( int x, int y, int width, int height ) {
+    private void doRepaint(int x, int y, int width, int height) {
         REPAINT.x = x;
         REPAINT.y = y;
         REPAINT.width = width;
         REPAINT.height = height;
-        
+
         display.asyncExec(REPAINT);
     }
 
     /**
      * @see org.locationtech.udig.project.render.ViewportPane#repaint()
      */
+    @Override
     public void repaint() {
         repaint(0, 0, displaySize.width, displaySize.height);
     }
 
     private class Repainter implements Runnable {
         int x;
+
         int y;
+
         int width;
+
         int height;
 
+        @Override
         public void run() {
             if (PlatformUI.getWorkbench().isClosing())
                 return;
             if (!isDisposed()) {
                 redraw(x, y, width, height, false);
-            } 
+            }
         }
 
     }
 
-    public void enableDrawCommands( boolean enable ) {
+    @Override
+    public void enableDrawCommands(boolean enable) {
         painter.switchOnOff(enable);
     }
 
     @Override
-    public void setCursor( org.eclipse.swt.graphics.Cursor cursor ) {
+    public void setCursor(org.eclipse.swt.graphics.Cursor cursor) {
         super.setCursor(cursor);
     }
-    
+
     /**
      * Gets the GlassPane.
      * <p>
      * Will return null if no glass pane set.
      * </p>
-     * 
+     *
      * @return the GlassPane if set; or null if no GlassPane set
      */
+    @Override
     public GlassPane getGlass() {
         return this.glass;
     }
 
     /**
      * Sets the GlassPane
-     * 
+     *
      * @param g
      */
-    public void setGlass( GlassPane glass ) {
+    @Override
+    public void setGlass(GlassPane glass) {
         this.glass = glass;
     }
 }
- 

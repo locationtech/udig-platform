@@ -36,7 +36,7 @@ jobs:
     - uses: BSFishy/pip-action@v1
       with:
         packages: |
-          sphinx==1.8.5
+          sphinx==4.2.0
     - name: Build docs with sphinx
       run: mvn install -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs
     - name: Run uDig product & sdk build (parallel)

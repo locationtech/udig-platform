@@ -355,12 +355,6 @@
 			<version>${geotools.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-geobuf</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-
 		<!-- others -->
 		<dependency>
 			<groupId>org.geotools</groupId>
@@ -396,12 +390,6 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-gtopo30</artifactId>
 			<version>${geotools.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>1.6</version>
 		</dependency>
 		<dependency>
 			<groupId>it.geosolutions.imageio-ext</groupId>
@@ -489,6 +477,13 @@
 			<version>3.1</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.xml</groupId>
+			<artifactId>xml-commons-resolver</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- add jdbc drivers dependencies -->
 		<!-- normally drivers will be retrieved from the dependencies of the 
 			 corresponding gt-jdbc-xxx geotools packages. Usually the latest
@@ -580,15 +575,12 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-math</artifactId>
-			<version>2.2</version>
+			<version>2.6</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- EMF -->
