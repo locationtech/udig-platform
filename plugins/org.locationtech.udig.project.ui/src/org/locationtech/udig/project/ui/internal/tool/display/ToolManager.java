@@ -123,12 +123,14 @@ import org.opengis.filter.Filter;
  * <p>
  * The tool manager is a used by the MapEditor to populate the menu and action bars. It is
  * responsible for processing the tools extension point and making action contributions as needed.
+ * </p>
  * <p>
  * New for uDig 1.1:
  * <ul>
  * <li>We will check for an ActionSet with the same name as the tool category, this will allow you
- * to turn off actions that don't make sense for your current workflow (ie perspective change).
+ * to turn off actions that don't make sense for your current workflow (ie perspective change).</li>
  * </ul>
+ * </p>
  *
  * @author Jesse Eichar (Refractions Research Inc)
  * @since 0.6.0
@@ -165,7 +167,6 @@ public class ToolManager implements IToolManager {
     List<MenuToolCategory> menuCategories = new LinkedList<>();
 
     /**
-     *
      * I think these are the tools that lurk in the background updating state like the status bar.
      */
     List<ToolProxy> backgroundTools = new LinkedList<>();
@@ -186,6 +187,7 @@ public class ToolManager implements IToolManager {
      * The category of this tool will behave a little like a perspective; since the nature of the
      * editor changes completely with the current tool. As such the Edit menu may change what
      * actions are available based on what subject matter this tool is working on.
+     * </p>
      */
     private ToolProxy activeModalToolProxy;
 
@@ -193,6 +195,7 @@ public class ToolManager implements IToolManager {
      * Current active tool; this represents the state of the editor.
      * <p>
      * This is considered an internal detail of ToolManager.
+     * </p>
      */
     private ModalTool activeTool;
 
@@ -318,8 +321,9 @@ public class ToolManager implements IToolManager {
     /**
      * Find a tool with the provided ID.
      * <p>
-     * In the current implementation finds only among modal tools. TODO Extend findTool to search
-     * for non modal tools
+     * In the current implementation finds only among modal tools.
+     * </p>
+     * TODO Extend findTool to search for non modal tools
      *
      * @param toolID toolId to search for
      * @return Modal tool if found, or null
@@ -525,7 +529,7 @@ public class ToolManager implements IToolManager {
      * Register commands; so they can be picked up by command handlers.
      * <p>
      * These command/handler system is used to hook our tools up to the keyboard short cut system.
-     * <p>
+     * </p>
      *
      * @param ids
      * @param service
@@ -623,6 +627,7 @@ public class ToolManager implements IToolManager {
      * Specifically we grab the OpFilter and give it a chance to determine if the tool is enabled;
      * currently OpFilter is focused on the selectedLayer but I hope to break this out to process
      * more general "core expressions" in the future (but we have to wait for someone to ask first).
+     * </p>
      *
      * @param map
      * @param categories
@@ -666,9 +671,10 @@ public class ToolManager implements IToolManager {
      * This is called by the "support views" associated with the MapEditor, it is used so the tools
      * can be active even when the MapEditor does not have the focus. Without this modification you
      * would need to constantly select the MapEditor, change the tool and then get to work.
+     * </p>
      * <p>
      * Aside: it would be good if selecting a tool made the MapEditor grab focus.
-     * <p>
+     * </p>
      *
      * @param editor MapEditor associated with the support view (such as the Layers view)
      */
@@ -822,6 +828,7 @@ public class ToolManager implements IToolManager {
      * <li>navigate: forward and backward buttons
      * <li>map: an entry for each tool category
      * </ul>
+     * </p>
      */
     @Override
     public void contributeToMenu(IMenuManager manager) {
@@ -873,7 +880,7 @@ public class ToolManager implements IToolManager {
         }
         // churn through each category and add stuff as needed
         // note we check with the cmdService to see what we if the actionSet
-        // associated with this cateogry is turned on by the
+        // associated with this category is turned on by the
         // current perspective.
         for (MenuToolCategory category : menuCategories) {
             category.contribute(manager);
@@ -900,7 +907,7 @@ public class ToolManager implements IToolManager {
 
     /**
      * Retrieves the redo action that is used by much of the map components such as the MapEditor
-     * and the LayersView. redoes the last undone command sent to the currently active map.
+     * and the LayersView. Redoes the last undone command sent to the currently active map.
      */
     @Override
     public IAction getREDOAction() {
@@ -931,9 +938,6 @@ public class ToolManager implements IToolManager {
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void setREDOAction(IAction action, IWorkbenchPart part) {
         if (action == null)
@@ -1014,9 +1018,6 @@ public class ToolManager implements IToolManager {
         try {
             if (forwardAction == null) {
                 forwardAction = new Action() {
-                    /**
-                     * @see org.eclipse.jface.action.Action#run()
-                     */
                     @Override
                     public void run() {
                         Map activeMap = ApplicationGISInternal.getActiveMap();
@@ -1143,9 +1144,6 @@ public class ToolManager implements IToolManager {
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void setBACKAction(IAction action, IWorkbenchPart part) {
         if (action == null)
@@ -1238,7 +1236,6 @@ public class ToolManager implements IToolManager {
         }
     }
 
-    //
     public IAction getPropertiesAction(IWorkbenchPart part, ISelectionProvider selectionProvider) {
         propertiesLock.lock();
         try {
@@ -1490,7 +1487,7 @@ public class ToolManager implements IToolManager {
      * Contributes the common global actions.
      *
      * @param part WorkbenchPart such as a view or editor
-     * @param bars Actionbar used to register global actions
+     * @param bars ActionBar used to register global actions
      */
     @Override
     public void contributeGlobalActions(IWorkbenchPart part, IActionBars bars) {
@@ -1529,9 +1526,6 @@ public class ToolManager implements IToolManager {
     Adapter getCommandListener(final MapPart editor) {
         if (commandListener == null) {
             commandListener = new AdapterImpl() {
-                /**
-                 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
-                 */
                 @Override
                 public void notifyChanged(Notification msg) {
                     /**
@@ -1748,7 +1742,7 @@ public class ToolManager implements IToolManager {
     }
 
     /**
-     * returns the actual tool action.
+     * Returns the actual tool action.
      */
     private IAction getToolInteral(String toolID, String categoryID) {
         ToolCategory category = findModalCategory(categoryID);
@@ -1823,18 +1817,15 @@ public class ToolManager implements IToolManager {
             values.put(ToolConstants.SELECTION_CA, "0400"); //$NON-NLS-1$
             values.put(ToolConstants.INFO_CA, "0500"); //$NON-NLS-1$
             values.put(ToolConstants.EDIT_CA, "0600"); //$NON-NLS-1$
-            values.put(ToolConstants.TOOL_EDIT_CA, "0600"); //$NON-NLS-1$
-            values.put(ToolConstants.TOOL_CREATE_CA, "0700"); //$NON-NLS-1$
-            values.put(ToolConstants.TOOL_FEATURE_CA, "0800"); //$NON-NLS-1$
+            values.put(ToolConstants.TOOL_EDIT_CA, "0700"); //$NON-NLS-1$
+            values.put(ToolConstants.TOOL_CREATE_CA, "0800"); //$NON-NLS-1$
+            values.put(ToolConstants.TOOL_FEATURE_CA, "0900"); //$NON-NLS-1$
         }
 
         private static final int MAX = -1;
 
         private static final int MIN = 1;
 
-        /**
-         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-         */
         @Override
         public int compare(String arg0, String arg1) {
             arg0 = getOrDefault(values, arg0, "") + arg0; //$NON-NLS-1$

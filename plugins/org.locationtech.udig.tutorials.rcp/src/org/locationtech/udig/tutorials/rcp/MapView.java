@@ -42,6 +42,7 @@ import org.locationtech.udig.project.internal.ProjectFactory;
 import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
 import org.locationtech.udig.project.internal.commands.AddLayersCommand;
 import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.MapSite;
 import org.locationtech.udig.project.ui.internal.wizard.MapImport;
 import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 import org.locationtech.udig.project.ui.tool.ModalTool;
@@ -63,6 +64,11 @@ public class MapView extends ViewPart implements MapPart {
 
     private MapViewer mapviewer;
 
+    private MapSite mapSite;
+
+    @SuppressWarnings("unused")
+    private boolean isDirty = false;
+
     private Map map;
 
     private SeagullGlassPaneOp seagullOp;
@@ -79,6 +85,7 @@ public class MapView extends ViewPart implements MapPart {
 
         mapviewer = new MapViewer(parent, this, SWT.SINGLE | SWT.DOUBLE_BUFFERED);
 
+        mapSite = new MapSite(getViewSite(), this);
         // create a new empty map
         // if you are going to add layers do so now
         // prior to adding to the MapViewer
@@ -204,8 +211,6 @@ public class MapView extends ViewPart implements MapPart {
                 } catch (IOException eek) {
                     String message = "Could not add " + file; //$NON-NLS-1$
                     IStatus status = new Status(IStatus.WARNING, Activator.PLUGIN_ID, message, eek);
-                    // ExceptionDetailsDialog.openError(null, message, IStatus.ERROR,
-                    // Activator.PLUGIN_ID, eek );
                     Activator.getDefault().getLog().log(status);
                 }
             }
@@ -245,7 +250,6 @@ public class MapView extends ViewPart implements MapPart {
         @Override
         public void run() {
             Display display = Display.getCurrent();
-            // final ArrayList<File> files = new ArrayList<File>();
             display.syncExec(new Runnable() {
                 @Override
                 public void run() {
@@ -312,8 +316,28 @@ public class MapView extends ViewPart implements MapPart {
     }
 
     @Override
+    public MapSite getMapSite() {
+        return mapSite;
+    }
+
+    @Override
     public UDIGDropHandler getDropHandler() {
         // view has no drop support
         return null;
+    }
+
+    @Override
+    public boolean isDragging() {
+        return false;
+    }
+
+    @Override
+    public void setDragging(boolean isDragging) {
+        // ignore drag source
+    }
+
+    @Override
+    public void setDirty(boolean isDirty) {
+        this.isDirty = isDirty;
     }
 }

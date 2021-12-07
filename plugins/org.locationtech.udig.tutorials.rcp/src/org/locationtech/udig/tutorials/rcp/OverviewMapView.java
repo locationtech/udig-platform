@@ -33,6 +33,7 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.ProjectFactory;
 import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
 import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.MapSite;
 import org.locationtech.udig.project.ui.internal.wizard.MapImport;
 import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 import org.locationtech.udig.project.ui.tool.ModalTool;
@@ -59,6 +60,11 @@ public class OverviewMapView extends ViewPart implements MapPart {
     public static final String ID = "org.locationtech.udig.tutorials.rcp.mapViewOverview"; //$NON-NLS-1$
 
     private MapViewer mapviewer; // main map viewer
+
+    private MapSite mapSite;
+
+    @SuppressWarnings("unused")
+    private boolean isDirty = false;
 
     private OverviewMapViewer overviewmapviewer; // overview map viewer
 
@@ -96,6 +102,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
         final Map overviewmap = ProjectFactory.eINSTANCE.createMap();
         final Map mainmap = ProjectFactory.eINSTANCE.createMap();
 
+        mapSite = new MapSite(getViewSite(), this);
         // create overview
         overviewmapviewer = new OverviewMapViewer(parent, this,
                 SWT.MULTI | SWT.NO_BACKGROUND | SWT.BORDER, mainmap);
@@ -119,7 +126,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
         fd.bottom = new FormAttachment(100);
         mapviewer.getControl().setLayoutData(fd);
 
-        // must be called after the mainmap has a mapviewer otherwise
+        // must be called after the main map has a MapViewer otherwise
         // we cannot correctly add necessary listeners
         overviewmapviewer.setMap(overviewmap);
         overviewmapviewer.createLocationBox(mapviewer.getViewport());
@@ -295,6 +302,26 @@ public class OverviewMapView extends ViewPart implements MapPart {
     @Override
     public IStatusLineManager getStatusLineManager() {
         return getViewSite().getActionBars().getStatusLineManager();
+    }
+
+    @Override
+    public MapSite getMapSite() {
+        return mapSite;
+    }
+
+    @Override
+    public boolean isDragging() {
+        return false;
+    }
+
+    @Override
+    public void setDragging(boolean isDragging) {
+        // ignore drag source
+    }
+
+    @Override
+    public void setDirty(boolean isDirty) {
+        this.isDirty = isDirty;
     }
 
 }
