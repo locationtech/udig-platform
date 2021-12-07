@@ -299,7 +299,7 @@ public class BrowserSelectionPage extends WizardSelectionPage implements ISelect
             d.setDescription(element.getAttribute("description")); //$NON-NLS-1$
             d.setListener(element.getAttribute("listener")); //$NON-NLS-1$
             d.setViewName(element.getAttribute("viewName")); //$NON-NLS-1$
-            String ns = element.getNamespace();
+            String ns = element.getNamespaceIdentifier();
             String banner = element.getAttribute("image"); //$NON-NLS-1$
 
             if (banner != null)

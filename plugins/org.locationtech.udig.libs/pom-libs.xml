@@ -355,12 +355,6 @@
 			<version>${geotools.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-geobuf</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-
 		<!-- others -->
 		<dependency>
 			<groupId>org.geotools</groupId>
