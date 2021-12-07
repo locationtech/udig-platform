@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2008, Refractions Research Inc.
  *
@@ -12,36 +13,34 @@ package org.locationtech.udig.catalog.internal.wmsc;
 import java.io.IOException;
 import java.net.URL;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IGeoResourceInfo;
 import org.locationtech.udig.catalog.IResolve;
-import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.wmsc.server.TileSet;
 import org.locationtech.udig.catalog.wmsc.server.TiledWebMapServer;
 import org.locationtech.udig.catalog.wmsc.server.WMSTileSet;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-
 /**
  * GeoResource to represent a WMS-C Tileset.
- * 
+ *
  * @author Emily Gouge (Refractions Research, Inc.)
  * @since 1.1.0
  */
 public class WMSCGeoResourceImpl extends IGeoResource {
 
     private TileSet tile; // the tile set info from the capabilities document
+
     private URL identifier; // the unique identifier
 
     /**
-     * Creates a new georesource for a given WMSC tile set
-     * 
+     * Creates a new GeoResource for a given WMSC tile set
+     *
      * @param service
      * @param tile
      */
-    public WMSCGeoResourceImpl( WMSCServiceImpl service, TileSet tile ) {
+    public WMSCGeoResourceImpl(WMSCServiceImpl service, TileSet tile) {
         this.service = service;
         try {
             this.identifier = new URL(service.getIdentifier().toString() + "#" + tile.getId()); //$NON-NLS-1$
@@ -58,14 +57,15 @@ public class WMSCGeoResourceImpl extends IGeoResource {
     }
 
     @Override
-    public IResolve parent( IProgressMonitor monitor ) throws IOException {
+    public IResolve parent(IProgressMonitor monitor) throws IOException {
         return service;
     }
-    /*
+
+    /**
      * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
     @Override
-    public <T> boolean canResolve( Class<T> adaptee ) {
+    public <T> boolean canResolve(Class<T> adaptee) {
         if (adaptee == null) {
             return false;
         }
@@ -79,7 +79,7 @@ public class WMSCGeoResourceImpl extends IGeoResource {
     }
 
     @Override
-    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
+    public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
         if (adaptee.isAssignableFrom(TiledWebMapServer.class)) {
             return adaptee.cast(service(monitor).getWMSC());
         }
@@ -89,32 +89,36 @@ public class WMSCGeoResourceImpl extends IGeoResource {
         return super.resolve(adaptee, monitor);
     }
 
-    /*
+    /**
      * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
+    @Override
     public Throwable getMessage() {
         return service.getMessage();
     }
 
-    /*
+    /**
      * @see org.locationtech.udig.catalog.IGeoResource#getStatus()
      */
+    @Override
     public Status getStatus() {
         return service.getStatus();
     }
 
     @Override
-    public WMSCGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
+    public WMSCGeoResourceInfo getInfo(IProgressMonitor monitor) throws IOException {
         return (WMSCGeoResourceInfo) super.getInfo(monitor);
     }
-    protected WMSCGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+
+    @Override
+    protected WMSCGeoResourceInfo createInfo(IProgressMonitor monitor) throws IOException {
         if (monitor == null)
             monitor = new NullProgressMonitor();
 
-        WMSCServiceImpl tileServer = service(new SubProgressMonitor(monitor, 50));
+        WMSCServiceImpl tileServer = service(SubMonitor.convert(monitor, 50));
         try {
             tileServer.rLock.lock();
-            return new WMSCGeoResourceInfo(this, new SubProgressMonitor(monitor, 50));
+            return new WMSCGeoResourceInfo(this, SubMonitor.convert(monitor, 50));
         } finally {
             tileServer.rLock.unlock();
         }
@@ -122,7 +126,7 @@ public class WMSCGeoResourceImpl extends IGeoResource {
     }
 
     @Override
-    public WMSCServiceImpl service( IProgressMonitor monitor ) throws IOException {
+    public WMSCServiceImpl service(IProgressMonitor monitor) throws IOException {
         return (WMSCServiceImpl) super.service(monitor);
     }
 

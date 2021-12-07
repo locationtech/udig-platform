@@ -28,6 +28,7 @@
                                 <plugin id="org.locationtech.udig.help"/>
                                 <plugin id="org.locationtech.udig.libs.db2"/>
                                 <plugin id="org.locationtech.udig.libs.oracle"/>
+                                <plugin id="org.locationtech.udig.libs.geobuf"/>
                                 <plugin id="org.locationtech.udig.libs.jfreechart"/>
                                 <plugin id="javax.media.jai_imageio"/>
                                 <plugin id="javax.media.jai_imageio.linux.gtk.x86_64"/>

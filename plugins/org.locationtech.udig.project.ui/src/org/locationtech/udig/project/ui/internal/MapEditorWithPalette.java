@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -164,7 +164,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
 
     final StatusLineManager statusLineManager = new StatusLineManager();
 
-    private MapEditorSite mapEditorSite;
+    private MapSite mapSite;
 
     private boolean dirty = false;
 
@@ -380,8 +380,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
         @Override
         public boolean preShutdown(IProgressMonitor monitor, IWorkbench workbench, boolean forced)
                 throws Exception {
-            monitor.beginTask("Saving Map Editor", 3); //$NON-NLS-1$
-            save(new SubProgressMonitor(monitor, 1));
+            monitor.beginTask("Saving Map Editor", 3);
+            save(SubMonitor.convert(monitor, 1));
             if (dirty) {
                 if (!forced) {
                     return false;
@@ -788,8 +788,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
         this.replaceableSelectionProvider = new ReplaceableSelectionProvider();
         getSite().setSelectionProvider(replaceableSelectionProvider);
         runMapOpeningInterceptor(getMap());
-        mapEditorSite = new MapEditorSite(super.getSite(), this);
-        final IContributionManager statusBar = mapEditorSite.getActionBars().getStatusLineManager();
+        mapSite = new MapSite(super.getSite(), this);
+        final IContributionManager statusBar = mapSite.getActionBars().getStatusLineManager();
 
         scaleContributionItem = new ScaleRatioLabel(this);
         scaleContributionItem.setVisible(true);
@@ -1115,8 +1115,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
     }
 
     @Override
-    public MapEditorSite getMapEditorSite() {
-        return mapEditorSite;
+    public MapSite getMapSite() {
+        return mapSite;
     }
 
     private class FlashFeatureListener implements ISelectionListener {

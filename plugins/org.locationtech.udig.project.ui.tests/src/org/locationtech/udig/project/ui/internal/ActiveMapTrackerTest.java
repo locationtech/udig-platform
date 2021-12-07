@@ -107,7 +107,7 @@ public class ActiveMapTrackerTest {
     @Test
     public void trackMapPartOnlyOnPartOpened() {
         final ActiveMapTracker instance = new ActiveMapTracker();
-        final MapEditorPart mapPart = mock(MapEditorPart.class);
+        final MapPart mapPart = mock(MapPart.class);
         final IViewPart anotherPart = mock(IViewPart.class);
 
         when(partRef.getPart(false)).thenReturn(mapPart);
@@ -134,8 +134,8 @@ public class ActiveMapTrackerTest {
     public void mostRecentOpenedMapFirst() {
         final ActiveMapTracker instance = new ActiveMapTracker();
         IWorkbenchPartReference partRef = mock(IWorkbenchPartReference.class);
-        final MapEditorPart mapPart1 = mock(MapEditorPart.class);
-        final MapEditorPart mapPart2 = mock(MapEditorPart.class);
+        final MapPart mapPart1 = mock(MapPart.class);
+        final MapPart mapPart2 = mock(MapPart.class);
 
         when(partRef.getPart(false)).thenReturn(mapPart1);
 

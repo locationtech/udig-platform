@@ -75,7 +75,7 @@ public class TestViewportPane implements ViewportPane {
     }
 
     @Override
-    public MapPart getMapEditor() {
+    public MapPart getMapPart() {
         return null;
     }
 
