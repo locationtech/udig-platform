@@ -180,9 +180,10 @@ public final class ProjectPlugin extends EMFPlugin {
                             .getResources();
                     for (Iterator<Resource> iter = resources.iterator(); iter.hasNext();) {
                         Resource resource = iter.next();
-                        if (resource.getContents().isEmpty()) {
-                            ProjectPlugin
-                                    .log("Not saving " + resource.getURI() + " empty contents"); //$NON-NLS-1$ //$NON-NLS-2$
+                        if (resource == null || resource.getContents() == null
+                                || resource.getContents().isEmpty()) {
+                            ProjectPlugin.log("Not saving empty contents" //$NON-NLS-1$
+                                    + (resource != null ? " " + resource.getURI() : "")); //$NON-NLS-1$ ////$NON-NLS-2$
                             continue;
                         }
                         Object next = resource.getAllContents().next();
@@ -246,10 +247,10 @@ public final class ProjectPlugin extends EMFPlugin {
         }
 
         /**
-         * Returns the preference store for this UI plug-in. This preference store is used to hold
-         * persistent settings for this plug-in in the context of a workbench. Some of these
-         * settings will be user controlled, whereas others may be internal setting that are never
-         * exposed to the user.
+         * Returns the preference store for this UI plug-in.
+         * This preference store is used to hold persistent settings for this plug-in in
+         * the context of a workbench. Some of these settings will be user controlled,
+         * whereas others may be internal setting that are never exposed to the user.
          * <p>
          * If an error occurs reading the preference store, an empty preference store is quietly
          * created, initialized with defaults, and returned.
@@ -309,7 +310,7 @@ public final class ProjectPlugin extends EMFPlugin {
      * <pre>
      * <code> private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
-     * System.out.println( "your message here" );
+     *      System.out.println( "your message here" );
      *
      */
     private static void trace(String message, Throwable e) {
@@ -325,8 +326,7 @@ public final class ProjectPlugin extends EMFPlugin {
 
     /**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
-     * Available trace options can be found in the Trace class. (They must also be part of the
-     * .options file)
+     * Available trace options can be found in the Trace class.  (They must also be part of the .options file)
      */
     public static void trace(String traceID, Class caller, String message, Throwable e) {
         if (isDebugging(traceID)) {

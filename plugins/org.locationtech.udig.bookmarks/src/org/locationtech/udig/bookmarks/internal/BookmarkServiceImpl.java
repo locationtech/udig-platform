@@ -78,7 +78,7 @@ public class BookmarkServiceImpl implements IBookmarkService {
 
     @Override
     public void load(Bookmark bookmark) {
-        if (bookmark.getName() == null || bookmark.getName() == "") { //$NON-NLS-1$
+        if (bookmark.getName() == null || bookmark.getName().equals("")) { //$NON-NLS-1$
             bookmark.setName(Messages.BookmarkManager_bookmarkdefaultname + (++count));
         }
         MapReference map = bookmark.getMap();

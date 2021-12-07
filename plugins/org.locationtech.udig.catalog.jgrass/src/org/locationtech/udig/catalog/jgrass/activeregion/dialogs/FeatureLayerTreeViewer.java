@@ -1,4 +1,4 @@
-/*
+/**
  * JGrass - Free Open Source Java GIS http://www.jgrass.org
  * (C) HydroloGIS - www.hydrologis.com
  *
@@ -16,18 +16,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
-import org.locationtech.udig.catalog.ui.ISharedImages;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -38,6 +31,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
 import org.geotools.data.FeatureStore;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.ISharedImages;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 /**
  * <p>
@@ -48,11 +46,13 @@ import org.geotools.data.FeatureStore;
  * @author Andrea Antonello - www.hydrologis.com
  * @since 1.1.0
  */
-public class FeatureLayerTreeViewer extends Composite implements ISelectionChangedListener, IResourcesSelector {
+public class FeatureLayerTreeViewer extends Composite
+        implements ISelectionChangedListener, IResourcesSelector {
 
     public static final int SHAPELAYER = 0;
 
-    private final HashMap<String, ILayer> itemsMap = new HashMap<String, ILayer>();
+    private final HashMap<String, ILayer> itemsMap = new HashMap<>();
+
     private LabelProvider labelProvider = null;
 
     private List<FeatureStore> selectedLayers;
@@ -62,7 +62,7 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
      * @param style
      * @param selectionStyle the tree selection style (single or multiple)
      */
-    public FeatureLayerTreeViewer( Composite parent, int style, int selectionStyle ) {
+    public FeatureLayerTreeViewer(Composite parent, int style, int selectionStyle) {
         super(parent, style);
         setLayout(new GridLayout(1, false));
         GridData gridData = new GridData();
@@ -74,7 +74,7 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
 
         // Create the tree viewer to display the file tree
         PatternFilter patternFilter = new PatternFilter();
-        final FilteredTree filter = new FilteredTree(this, selectionStyle, patternFilter);
+        final FilteredTree filter = new FilteredTree(this, selectionStyle, patternFilter, false);
         final TreeViewer tv = filter.getViewer();
         tv.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
         tv.setContentProvider(new ContentProvider());
@@ -84,21 +84,22 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
         tv.addSelectionChangedListener(this);
     }
 
-    public void selectionChanged( SelectionChangedEvent event ) {
+    @Override
+    public void selectionChanged(SelectionChangedEvent event) {
         // if the selection is empty clear the label
         if (event.getSelection().isEmpty()) {
             return;
         }
         if (event.getSelection() instanceof IStructuredSelection) {
             IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-            Vector<String> itemNames = new Vector<String>();
-            for( Iterator iterator = selection.iterator(); iterator.hasNext(); ) {
+            Vector<String> itemNames = new Vector<>();
+            for (Iterator iterator = selection.iterator(); iterator.hasNext();) {
                 Object domain = iterator.next();
                 String value = labelProvider.getText(domain);
                 itemNames.add(value);
             }
-            selectedLayers = new ArrayList<FeatureStore>();
-            for( String name : itemNames ) {
+            selectedLayers = new ArrayList<>();
+            for (String name : itemNames) {
                 ILayer tmpLayer = itemsMap.get(name);
                 if (tmpLayer != null) {
                     try {
@@ -113,6 +114,7 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
 
         }
     }
+
     /**
      * This class provides the content for the tree in FileTree
      */
@@ -124,7 +126,8 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
          * @param arg0 the parent object
          * @return Object[]
          */
-        public Object[] getChildren( Object arg0 ) {
+        @Override
+        public Object[] getChildren(Object arg0) {
 
             if (arg0 instanceof IMap) {
                 IMap map = (IMap) arg0;
@@ -139,9 +142,9 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
             return null;
         }
 
-        private Object[] filteredLayers( List<ILayer> layers ) {
-            Vector<ILayer> filteredLayers = new Vector<ILayer>();
-            for( ILayer layer : layers ) {
+        private Object[] filteredLayers(List<ILayer> layers) {
+            Vector<ILayer> filteredLayers = new Vector<>();
+            for (ILayer layer : layers) {
                 if (layer.getGeoResource().canResolve(FeatureStore.class)) {
                     filteredLayers.add(layer);
                     itemsMap.put(layer.getName(), layer);
@@ -150,13 +153,15 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
 
             return filteredLayers.toArray();
         }
+
         /**
          * Gets the parent of the specified object
          *
          * @param arg0 the object
          * @return Object
          */
-        public Object getParent( Object arg0 ) {
+        @Override
+        public Object getParent(Object arg0) {
             if (arg0 instanceof IMap) {
                 return null;
             } else if (arg0 instanceof ILayer) {
@@ -171,7 +176,8 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
          * @param arg0 the parent object
          * @return boolean
          */
-        public boolean hasChildren( Object arg0 ) {
+        @Override
+        public boolean hasChildren(Object arg0) {
             if (arg0 instanceof IMap) {
                 return true;
             } else if (arg0 instanceof ILayer) {
@@ -186,14 +192,16 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
          * @param arg0 the input data
          * @return Object[]
          */
-        public Object[] getElements( Object arg0 ) {
+        @Override
+        public Object[] getElements(Object arg0) {
             IMap map = ApplicationGIS.getActiveMap();
-            return new Object[]{map};
+            return new Object[] { map };
         }
 
         /**
          * Disposes any created resources
          */
+        @Override
         public void dispose() {
             // Nothing to dispose
         }
@@ -205,7 +213,8 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
          * @param arg1 the old input
          * @param arg2 the new input
          */
-        public void inputChanged( Viewer arg0, Object arg1, Object arg2 ) {
+        @Override
+        public void inputChanged(Viewer arg0, Object arg1, Object arg2) {
             // Nothing to change
         }
     }
@@ -228,11 +237,13 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
          */
         public LabelProvider() {
             // Create the list to hold the listeners
-            listeners = new ArrayList<ILabelProviderListener>();
+            listeners = new ArrayList<>();
 
             // Create the images
-            vectorMaps = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.FEATURE_OBJ).createImage();
-            mainMaps = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.CATALOG_OBJ).createImage();
+            vectorMaps = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.FEATURE_OBJ)
+                    .createImage();
+            mainMaps = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.CATALOG_OBJ)
+                    .createImage();
         }
 
         /**
@@ -241,7 +252,8 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
          * @param arg0 the node
          * @return Image
          */
-        public Image getImage( Object arg0 ) {
+        @Override
+        public Image getImage(Object arg0) {
             if (arg0 instanceof IMap) {
                 return mainMaps;
             } else if (arg0 instanceof ILayer) {
@@ -257,7 +269,8 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
          * @param arg0 the node
          * @return String
          */
-        public String getText( Object arg0 ) {
+        @Override
+        public String getText(Object arg0) {
 
             String text = null;
             if (arg0 instanceof IMap) {
@@ -274,13 +287,15 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
          *
          * @param arg0 the listener
          */
-        public void addListener( ILabelProviderListener arg0 ) {
+        @Override
+        public void addListener(ILabelProviderListener arg0) {
             listeners.add(arg0);
         }
 
         /**
          * Called when this LabelProvider is being disposed
          */
+        @Override
         public void dispose() {
             // Dispose the images
             if (vectorMaps != null)
@@ -295,7 +310,8 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
          * @param arg1 the property
          * @return boolean
          */
-        public boolean isLabelProperty( Object arg0, String arg1 ) {
+        @Override
+        public boolean isLabelProperty(Object arg0, String arg1) {
             return false;
         }
 
@@ -304,11 +320,13 @@ public class FeatureLayerTreeViewer extends Composite implements ISelectionChang
          *
          * @param arg0 the listener to remove
          */
-        public void removeListener( ILabelProviderListener arg0 ) {
+        @Override
+        public void removeListener(ILabelProviderListener arg0) {
             listeners.remove(arg0);
         }
     }
 
+    @Override
     public List<FeatureStore> getSelectedLayers() {
         return selectedLayers;
     }

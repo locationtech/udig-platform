@@ -50,6 +50,12 @@ import org.opengis.style.GraphicalSymbol;
  */
 final class IPaletteCellEditor implements ICellModifier {
 
+    private static final String PROPERTY_NAME_STYLE_EXPRESSION = "styleExpr"; //$NON-NLS-1$
+
+    private static final String PROPERTY_NAME_TITLE = "title"; //$NON-NLS-1$
+
+    private static final String PROPERTY_NAME_COLOUR = "colour"; //$NON-NLS-1$
+
     private final StyleThemePage styleThemePage;
 
     /**
@@ -61,7 +67,7 @@ final class IPaletteCellEditor implements ICellModifier {
 
     @Override
     public boolean canModify(Object element, String property) {
-        if (property.equals("styleExpr")) { //$NON-NLS-1$
+        if (property.equals(PROPERTY_NAME_STYLE_EXPRESSION)) {
             if (element instanceof Rule) {
                 Rule rule = (Rule) element;
                 if (rule.getName().startsWith("rule")) { //$NON-NLS-1$
@@ -73,9 +79,9 @@ final class IPaletteCellEditor implements ICellModifier {
                     return false;
                 }
             }
-        } else if (property.equals("title")) { //$NON-NLS-1$
+        } else if (property.equals(PROPERTY_NAME_TITLE)) {
             return true;
-        } else if (property == "colour") { //$NON-NLS-1$
+        } else if (property.equals(PROPERTY_NAME_COLOUR)) {
             return true;
         }
         return false;
@@ -83,7 +89,7 @@ final class IPaletteCellEditor implements ICellModifier {
 
     @Override
     public Object getValue(Object element, String property) {
-        if (property.equals("styleExpr")) { //$NON-NLS-1$
+        if (property.equals(PROPERTY_NAME_STYLE_EXPRESSION)) {
             if (element instanceof Rule) {
                 Rule rule = (Rule) element;
                 if (rule.isElseFilter()) {
@@ -92,13 +98,13 @@ final class IPaletteCellEditor implements ICellModifier {
                     return StyleGenerator.toStyleExpression(rule.getFilter());
                 }
             }
-        } else if (property.equals("title")) { //$NON-NLS-1$
+        } else if (property.equals(PROPERTY_NAME_TITLE)) {
             if (element instanceof Rule) {
                 Rule rule = (Rule) element;
                 // the title contains the same value, but we'll obtain it from the rule anyways
                 return rule.getDescription().getTitle().toString();
             }
-        } else if (property.equals("colour")) { //$NON-NLS-1$
+        } else if (property.equals(PROPERTY_NAME_COLOUR)) {
             if (element instanceof Rule) {
                 Rule rule = (Rule) element;
                 Color colour = SLDs.toColor(SLDs.colors(rule)[0]);
@@ -112,7 +118,7 @@ final class IPaletteCellEditor implements ICellModifier {
 
     @Override
     public void modify(Object element, String property, Object value) {
-        if (property.equals("styleExpr")) { //$NON-NLS-1$
+        if (property.equals(PROPERTY_NAME_STYLE_EXPRESSION)) {
             if (element instanceof TreeItem) {
                 String newExpr = (String) value;
                 TreeItem item = (TreeItem) element;
@@ -159,7 +165,7 @@ final class IPaletteCellEditor implements ICellModifier {
                 }
                 if (min.size() > 0) {
                     // lets make a range (this will ignore explicit classifiers)
-                    // really you can't mix the two so the ui
+                    // really you can't mix the two so the UI
                     // should probably be made smarter.
                     this.styleThemePage.customBreak = new RangedClassifier(
                             min.toArray(new Double[min.size()]),
@@ -187,7 +193,7 @@ final class IPaletteCellEditor implements ICellModifier {
                 if (this.styleThemePage.inputsValid())
                     this.styleThemePage.generateTheme();
             }
-        } else if (property.equals("title")) { //$NON-NLS-1$
+        } else if (property.equals(PROPERTY_NAME_TITLE)) {
             if (element instanceof TreeItem) {
                 TreeItem item = (TreeItem) element;
                 Object data = item.getData();
@@ -199,7 +205,7 @@ final class IPaletteCellEditor implements ICellModifier {
                 }
                 this.styleThemePage.treeViewer.refresh();
             }
-        } else if (property.equals("colour")) { //$NON-NLS-1$
+        } else if (property.equals(PROPERTY_NAME_COLOUR)) {
             if (value == null)
                 return;
             if (element instanceof Item) {
@@ -254,7 +260,7 @@ final class IPaletteCellEditor implements ICellModifier {
                 if (this.styleThemePage.customPalette == null) {
                     int numClasses = Integer.valueOf(
                             this.styleThemePage.getCombo(StyleThemePage.COMBO_CLASSES).getText())
-                                    .intValue();
+                            .intValue();
                     // create the palette from the current one
                     BrewerPalette pal = (BrewerPalette) ((StructuredSelection) this.styleThemePage.paletteTable
                             .getSelection()).getFirstElement();
