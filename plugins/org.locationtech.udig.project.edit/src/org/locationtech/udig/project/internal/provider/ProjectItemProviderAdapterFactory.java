@@ -9,9 +9,6 @@ package org.locationtech.udig.project.internal.provider;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.locationtech.udig.project.internal.impl.SynchronizedEList;
-import org.locationtech.udig.project.internal.util.ProjectAdapterFactory;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -27,6 +24,8 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.locationtech.udig.project.internal.impl.SynchronizedEList;
+import org.locationtech.udig.project.internal.util.ProjectAdapterFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -42,7 +41,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This keeps track of the root adapter factory that delegates to this adapter factory. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected ComposedAdapterFactory parentAdapterFactory;
@@ -50,7 +49,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -60,7 +59,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    protected Collection<Object> supportedTypes = new ArrayList<Object>();
+    protected Collection<Object> supportedTypes = new ArrayList<>();
 
     /**
      * This constructs an instance.
@@ -100,7 +99,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This creates an adapter for a {@link org.locationtech.udig.project.internal.Layer}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -114,25 +113,22 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
 
     /**
      * This keeps track of the one adapter used for all {@link org.locationtech.udig.project.internal.Map} instances.
+     * But because of refreshing problems in the LayersView we do NOT use it.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
+     * @generated but unused
      */
     protected MapItemProvider mapItemProvider;
 
     /**
      * This creates an adapter for a {@link org.locationtech.udig.project.internal.Map}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
+     *
+     * @generated but changed manually
      */
     @Override
     public Adapter createMapAdapter() {
-        if (mapItemProvider == null) {
-            mapItemProvider = new MapItemProvider(this);
-        }
-
-        return mapItemProvider;
+        return new MapItemProvider(this);
     }
 
     /**
@@ -146,7 +142,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This creates an adapter for a {@link org.locationtech.udig.project.internal.Project}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -213,7 +209,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This creates an adapter for a {@link org.locationtech.udig.project.internal.StyleEntry}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -258,7 +254,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This creates an adapter for a {@link org.locationtech.udig.project.internal.Blackboard}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -449,7 +445,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This implementation substitutes the factory itself as the key for the adapter. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -509,7 +505,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     /**
      * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -522,7 +518,7 @@ public class ProjectItemProviderAdapterFactory extends ProjectAdapterFactory
     }
 
     /**
-     * This disposes all of the item providers created by this factory. 
+     * This disposes all of the item providers created by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

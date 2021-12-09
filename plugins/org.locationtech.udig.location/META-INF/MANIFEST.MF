@@ -16,3 +16,14 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig.location,org.locationtech.udig.l
  ocation.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.apache.xmlrpc,
+ org.apache.xmlrpc.client,
+ org.apache.xmlrpc.client.util,
+ org.apache.xmlrpc.common,
+ org.apache.xmlrpc.jaxb,
+ org.apache.xmlrpc.metadata,
+ org.apache.xmlrpc.parser,
+ org.apache.xmlrpc.serializer,
+ org.apache.xmlrpc.server,
+ org.apache.xmlrpc.util,
+ org.apache.xmlrpc.webserver

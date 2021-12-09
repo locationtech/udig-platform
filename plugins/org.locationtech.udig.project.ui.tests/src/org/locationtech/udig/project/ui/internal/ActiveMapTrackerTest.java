@@ -107,7 +107,7 @@ public class ActiveMapTrackerTest {
     @Test
     public void trackMapPartOnlyOnPartOpened() {
         final ActiveMapTracker instance = new ActiveMapTracker();
-        final MapEditorPart mapPart = mock(MapEditorPart.class);
+        final MapPart mapPart = mock(MapPart.class);
         final IViewPart anotherPart = mock(IViewPart.class);
 
         when(partRef.getPart(false)).thenReturn(mapPart);
@@ -134,8 +134,8 @@ public class ActiveMapTrackerTest {
     public void mostRecentOpenedMapFirst() {
         final ActiveMapTracker instance = new ActiveMapTracker();
         IWorkbenchPartReference partRef = mock(IWorkbenchPartReference.class);
-        final MapEditorPart mapPart1 = mock(MapEditorPart.class);
-        final MapEditorPart mapPart2 = mock(MapEditorPart.class);
+        final MapPart mapPart1 = mock(MapPart.class);
+        final MapPart mapPart2 = mock(MapPart.class);
 
         when(partRef.getPart(false)).thenReturn(mapPart1);
 
@@ -156,5 +156,36 @@ public class ActiveMapTrackerTest {
         assertEquals(2, instance.getOpenMapParts().size());
         assertEquals(mapPart2, instance.getMostRecentOpenedPart());
         verify(partRef, times(2)).getPart(false);
+    }
+
+    @Test
+    public void openingTwoMaps_ActivateFirstOne_FirstOneIsActive() {
+        final ActiveMapTracker instance = new ActiveMapTracker();
+        IWorkbenchPartReference partRef = mock(IWorkbenchPartReference.class);
+        final MapEditorPart mapPart1 = mock(MapEditorPart.class);
+        final MapEditorPart mapPart2 = mock(MapEditorPart.class);
+
+        when(partRef.getPart(false)).thenReturn(mapPart1);
+
+        instance.partOpened(partRef);
+        instance.partActivated(partRef);
+
+        assertTrue(instance.getOpenMapParts().contains(mapPart1));
+        assertEquals(mapPart1, instance.getActiveMapPart());
+        assertEquals(1, instance.getOpenMapParts().size());
+
+        when(partRef.getPart(false)).thenReturn(mapPart2);
+
+        instance.partOpened(partRef);
+        instance.partActivated(partRef);
+
+        assertTrue(instance.getOpenMapParts().contains(mapPart2));
+        assertEquals(mapPart2, instance.getActiveMapPart());
+        assertEquals(2, instance.getOpenMapParts().size());
+
+        when(partRef.getPart(false)).thenReturn(mapPart1);
+        instance.partActivated(partRef);
+
+        assertEquals(mapPart1, instance.getActiveMapPart());
     }
 }

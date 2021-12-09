@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,22 +22,25 @@ import org.geotools.styling.Rule;
 
 /**
  * A wrapper for the {@link FeatureTypeStyle} object to ease gui use.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class FeatureTypeStyleWrapper {
     private FeatureTypeStyle featureTypeStyle;
+
     private String name;
-    private List<RuleWrapper> rulesWrapperList = new ArrayList<RuleWrapper>();
+
+    private List<RuleWrapper> rulesWrapperList = new ArrayList<>();
+
     private final StyleWrapper parent;
 
-    public FeatureTypeStyleWrapper( FeatureTypeStyle featureTypeStyle, StyleWrapper parent ) {
+    public FeatureTypeStyleWrapper(FeatureTypeStyle featureTypeStyle, StyleWrapper parent) {
         this.featureTypeStyle = featureTypeStyle;
         this.parent = parent;
         name = featureTypeStyle.getName();
 
         List<Rule> rules = featureTypeStyle.rules();
-        for( Rule rule : rules ) {
+        for (Rule rule : rules) {
             RuleWrapper ruleWrapper = new RuleWrapper(rule, this);
             rulesWrapperList.add(ruleWrapper);
         }
@@ -53,22 +56,21 @@ public class FeatureTypeStyleWrapper {
 
     public String getName() {
         int indexOf = parent.getStyle().featureTypeStyles().indexOf(featureTypeStyle);
-        name = "group" + indexOf;
+        name = "group" + indexOf; //$NON-NLS-1$
         featureTypeStyle.setName(name);
         return name;
     }
 
-    public void setName( String name ) {
+    public void setName(String name) {
         this.name = name;
         featureTypeStyle.setName(name);
     }
 
     /**
      * Getter for the list of {@link RuleWrapper}s.
-     * 
-     * @return an unmodifiable list of {@link RuleWrapper}. 
-     *              To add or remove items use {@link #addRule(Rule, Class)}
-     *              and {@link #removeRule(RuleWrapper)}.
+     *
+     * @return an unmodifiable list of {@link RuleWrapper}. To add or remove items use
+     *         {@link #addRule(Rule, Class)} and {@link #removeRule(RuleWrapper)}.
      */
     public List<RuleWrapper> getRulesWrapperList() {
         return Collections.unmodifiableList(rulesWrapperList);
@@ -76,13 +78,13 @@ public class FeatureTypeStyleWrapper {
 
     /**
      * Add a supplied or new {@link Rule} to the {@link FeatureTypeStyle}.
-     * 
+     *
      * @param tmpRule the new {@link Rule} or null to create a new one.
-     * @param symbolizerWrapperClass the class for which to create the symbolizer wrapper. 
-     *                  Needed only in the case of new creation of rule. 
+     * @param symbolizerWrapperClass the class for which to create the symbolizer wrapper. Needed
+     *        only in the case of new creation of rule.
      * @return the {@link RuleWrapper} for the new {@link Rule}.
      */
-    public RuleWrapper addRule( Rule tmpRule, Class< ? > symbolizerWrapperClass ) {
+    public RuleWrapper addRule(Rule tmpRule, Class<?> symbolizerWrapperClass) {
         if (tmpRule == null) {
             if (symbolizerWrapperClass.isAssignableFrom(PointSymbolizerWrapper.class)) {
                 tmpRule = createDefaultPointRule();
@@ -104,11 +106,11 @@ public class FeatureTypeStyleWrapper {
 
     /**
      * Remove a {@link RuleWrapper} from the list.
-     * 
+     *
      * @param remRule the {@link Rule} to remove.
      * @return the {@link FeatureTypeStyleWrapper} for the new {@link FeatureTypeStyle}.
      */
-    public void removeRule( RuleWrapper remRule ) {
+    public void removeRule(RuleWrapper remRule) {
         Rule rule = remRule.getRule();
         featureTypeStyle.rules().remove(rule);
         rulesWrapperList.remove(remRule);
@@ -124,11 +126,11 @@ public class FeatureTypeStyleWrapper {
 
     /**
      * Swap two elements of the list.
-     * 
+     *
      * @param src the position first element.
-     * @param dest the position second element. 
+     * @param dest the position second element.
      */
-    public void swap( int src, int dest ) {
+    public void swap(int src, int dest) {
         List<Rule> rules = featureTypeStyle.rules();
         if (src >= 0 && src < rules.size() && dest >= 0 && dest < rules.size()) {
             Collections.swap(rules, src, dest);

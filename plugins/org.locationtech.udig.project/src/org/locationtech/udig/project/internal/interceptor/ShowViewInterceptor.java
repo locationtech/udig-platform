@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -51,24 +52,23 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
- * If a filter or a query is in the layer style blackboard under the key: the
- * {@link #KEY} then this interceptor will return the "view" see
- * {@link DataStore#getView(Query)}.
- * 
+ * If a filter or a query is in the layer style blackboard under the key: the {@link #KEY} then this
+ * interceptor will return the "view" see {@link DataStore#getView(Query)}.
+ *
  * <p>
- * The style content class ensures that the view will be returned each time the
- * map is reloaded.
+ * The style content class ensures that the view will be returned each time the map is reloaded.
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
-public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<SimpleFeatureType, SimpleFeature>> {
+public class ShowViewInterceptor
+        implements IResourceInterceptor<FeatureSource<SimpleFeatureType, SimpleFeature>> {
 
     /**
-     * The key that is checked to see if a filter is on the Map Blackboard or
-     * the Layer Properties.
+     * The key that is checked to see if a filter is on the Map Blackboard or the Layer Properties.
      * <p>
+     *
      * @see ProjectBlackboardConstants#LAYER__DATA_QUERY
      */
     public static final String KEY = ProjectBlackboardConstants.LAYER__DATA_QUERY;
@@ -84,44 +84,46 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
      * <li>AOI flag</li>
      * <li>etc...</li>
      * </ul>
+     *
      * @return true if the provided value is some kind of filter
      */
-    public static boolean isFilter( Object value ){
-        if( value == null ){
+    public static boolean isFilter(Object value) {
+        if (value == null) {
             return false;
-        }
-        else if( value instanceof Filter ){
+        } else if (value instanceof Filter) {
             Filter filter = (Filter) value;
-            if( filter == Filter.INCLUDE){
+            if (filter == Filter.INCLUDE) {
                 return false;
             }
             return true;
-        }
-        else if (value instanceof Query ){
+        } else if (value instanceof Query) {
             Query query = (Query) value;
-            if( query == Query.ALL ){
-                return false;                
-            }
-            if( query.getFilter() == Filter.INCLUDE && query.getPropertyNames() == Query.ALL_NAMES ){
+            if (query == Query.ALL) {
                 return false;
             }
-            if( Query.ALL.equals(query)){
+            if (query.getFilter() == Filter.INCLUDE
+                    && query.getPropertyNames() == Query.ALL_NAMES) {
+                return false;
+            }
+            if (Query.ALL.equals(query)) {
                 return false;
             }
             return true;
         }
         return false;
     }
-    
-    public FeatureSource<SimpleFeatureType, SimpleFeature> run(ILayer layer, FeatureSource<SimpleFeatureType, SimpleFeature> resource,
+
+    @Override
+    public FeatureSource<SimpleFeatureType, SimpleFeature> run(ILayer layer,
+            FeatureSource<SimpleFeatureType, SimpleFeature> resource,
             Class<? super FeatureSource<SimpleFeatureType, SimpleFeature>> requestedType) {
-        
+
         Object prop = layer.getStyleBlackboard().get(KEY);
-        if( prop==null ){
+        if (prop == null) {
             prop = layer.getBlackboard().get(KEY);
         }
-        
-        if( !isFilter( prop )){
+
+        if (!isFilter(prop)) {
             return resource;
         }
 
@@ -129,11 +131,11 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
             try {
                 IGeoResource geoResource = layer.findGeoResource(FeatureSource.class);
                 IService service = geoResource.service(ProgressManager.instance().get());
-                
+
                 if (service != null) {
                     DataStore ds = service.resolve(DataStore.class,
                             ProgressManager.instance().get());
-                    if (ds == null){
+                    if (ds == null) {
                         return resource; // not a datastore give up!
                     }
                     String typeName = resource.getSchema().getTypeName();
@@ -144,26 +146,26 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                     } else {
                         query = (Query) prop;
                     }
-                    if( !layer.getStyleBlackboard().contains(KEY) ){
+                    if (!layer.getStyleBlackboard().contains(KEY)) {
                         layer.getStyleBlackboard().put(KEY, query);
                     }
 
                     if (!typeName.equals(query.getTypeName())) {
-                        query = createQuery(query.getFilter(), query
-                                .getCoordinateSystem(), query
-                                .getCoordinateSystemReproject(), query
-                                .getHandle(), query.getMaxFeatures(), query
-                                .getNamespace(), query.getPropertyNames(),
-                                typeName);
+                        query = createQuery(query.getFilter(), query.getCoordinateSystem(),
+                                query.getCoordinateSystemReproject(), query.getHandle(),
+                                query.getMaxFeatures(), query.getNamespace(),
+                                query.getPropertyNames(), typeName);
                     }
                     // provide our own default view wrapper (will be required in GeoTools 2.7)
-                    SimpleFeatureSource view = new DefaultView((SimpleFeatureSource) resource, query);
-                    
+                    SimpleFeatureSource view = new DefaultView((SimpleFeatureSource) resource,
+                            query);
+
                     // check that view is of the requested type
-                    if (requestedType.isInstance(view)){
+                    if (requestedType.isInstance(view)) {
                         return view;
                     } else {
-                        // view was not of the requested type - return null indicating it is not available
+                        // view was not of the requested type - return null indicating it is not
+                        // available
                         return null;
                     }
                 }
@@ -176,14 +178,12 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
         return resource;
     }
 
-    private static Query createQuery(Filter filter,
-            CoordinateReferenceSystem crs, CoordinateReferenceSystem reproject,
-            String handle, Integer maxFeature, URI namespace,
+    private static Query createQuery(Filter filter, CoordinateReferenceSystem crs,
+            CoordinateReferenceSystem reproject, String handle, Integer maxFeature, URI namespace,
             String[] propertyNames, String typeName) {
         Query query = new Query();
         if (namespace != null) {
-            query = new Query(typeName, namespace, filter, maxFeature,
-                    propertyNames, handle);
+            query = new Query(typeName, namespace, filter, maxFeature, propertyNames, handle);
         }
         if (crs != null) {
             query.setCoordinateSystem(crs);
@@ -211,18 +211,24 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
 
     /**
      * Persists Query and Filters saved on the style blackboard.
-     * 
+     *
      * @author Jesse
      */
     public static class ViewStyleContent extends StyleContent {
 
-        private static final String CRS = "CRS";
-        private static final String REPOJECT = "REPOJECT";
-        private static final String HANDLE = "HANDLE";
-        private static final String MAX_FEATURES = "MAX_FEATURES";
-        private static final String NAMESPACE = "NAMESPACE";
-        private static final String TYPENAME = "TYPENAME";
-        private static final String PROPERTY_NAMES = "PROPERTY_NAMES";
+        private static final String CRS = "CRS"; //$NON-NLS-1$
+
+        private static final String REPOJECT = "REPOJECT"; //$NON-NLS-1$
+
+        private static final String HANDLE = "HANDLE"; //$NON-NLS-1$
+
+        private static final String MAX_FEATURES = "MAX_FEATURES"; //$NON-NLS-1$
+
+        private static final String NAMESPACE = "NAMESPACE"; //$NON-NLS-1$
+
+        private static final String TYPENAME = "TYPENAME"; //$NON-NLS-1$
+
+        private static final String PROPERTY_NAMES = "PROPERTY_NAMES"; //$NON-NLS-1$
 
         public ViewStyleContent() {
             super(KEY);
@@ -249,8 +255,7 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                 filter = readFilter(decode(textData));
             }
             CoordinateReferenceSystem crs = readCRS(memento.getString(CRS));
-            CoordinateReferenceSystem reproject = readCRS(memento
-                    .getString(REPOJECT));
+            CoordinateReferenceSystem reproject = readCRS(memento.getString(REPOJECT));
             String handle = decode(memento.getString(HANDLE));
             Integer maxFeature = memento.getInteger(MAX_FEATURES);
             URI namespace;
@@ -267,14 +272,14 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
             String propNameString = decode(memento.getString(PROPERTY_NAMES));
             String[] propertyNames;
             if (propNameString != null) {
-                propertyNames = propNameString.split(",");
+                propertyNames = propNameString.split(","); //$NON-NLS-1$
             } else {
                 propertyNames = Query.ALL_NAMES;
             }
             String typeName = decode(memento.getString(TYPENAME));
 
-            Query query = createQuery(filter, crs, reproject, handle,
-                    maxFeature, namespace, propertyNames, typeName);
+            Query query = createQuery(filter, crs, reproject, handle, maxFeature, namespace,
+                    propertyNames, typeName);
             return query;
         }
 
@@ -287,17 +292,14 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
         }
 
         private Filter readFilter(String textData) {
-            if ("all".equals(textData)) {
+            if ("all".equals(textData)) { //$NON-NLS-1$
                 return Filter.EXCLUDE;
             }
             InputSource input = new InputSource(new StringReader(textData));
             SimpleFilterHandler simpleFilterHandler = new SimpleFilterHandler();
-            FilterFilter filterFilter = new FilterFilter(simpleFilterHandler,
-                    null);
-            GMLFilterGeometry filterGeometry = new GMLFilterGeometry(
-                    filterFilter);
-            GMLFilterDocument filterDocument = new GMLFilterDocument(
-                    filterGeometry);
+            FilterFilter filterFilter = new FilterFilter(simpleFilterHandler, null);
+            GMLFilterGeometry filterGeometry = new GMLFilterGeometry(filterFilter);
+            GMLFilterDocument filterDocument = new GMLFilterDocument(filterGeometry);
 
             try {
                 // parse xml
@@ -312,8 +314,7 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
         }
 
         @Override
-        public Object load(URL url, IProgressMonitor monitor)
-                throws IOException {
+        public Object load(URL url, IProgressMonitor monitor) throws IOException {
             return null;
         }
 
@@ -322,11 +323,10 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
             Query viewRestriction;
             if (value instanceof Filter) {
                 Filter filter = (Filter) value;
-                viewRestriction = new Query("Feature", filter);
-            } else if (value instanceof Query ){
+                viewRestriction = new Query("Feature", filter); //$NON-NLS-1$
+            } else if (value instanceof Query) {
                 viewRestriction = (Query) value;
-            }
-            else {
+            } else {
                 viewRestriction = Query.ALL;
             }
             Filter filter;
@@ -359,14 +359,13 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
 
                 try {
                     if (filter == Filter.EXCLUDE) {
-                        memento.putTextData("all");
+                        memento.putTextData("all"); //$NON-NLS-1$
                     } else {
-                        memento.putTextData(encode(transformer
-                                .transform(filter)));
+                        memento.putTextData(encode(transformer.transform(filter)));
                     }
                 } catch (TransformerException e) {
                     throw new RuntimeException(
-                            "Unable to convert filter to string I couldn't save the view query");
+                            "Unable to convert filter to string I couldn't save the view query"); //$NON-NLS-1$
                 }
             }
             if (crs != null) {
@@ -379,7 +378,7 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                 memento.putString(HANDLE, encode(handle));
             }
             if (maxFeature != Integer.MAX_VALUE) {
-                memento.putInteger(MAX_FEATURES, new Integer(maxFeature));
+                memento.putInteger(MAX_FEATURES, Integer.valueOf(maxFeature));
             }
             if (namespace != null) {
                 memento.putString(NAMESPACE, encode(namespace.toString()));
@@ -388,8 +387,7 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                 memento.putString(TYPENAME, encode(typeName));
             }
             if (propertyNames != null) {
-                memento.putString(PROPERTY_NAMES, encode(propertyNamesString
-                        .toString()));
+                memento.putString(PROPERTY_NAMES, encode(propertyNamesString.toString()));
             }
 
         }
@@ -399,7 +397,7 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                 return null;
             }
             try {
-                return URLEncoder.encode(toEncode, "UTF-8");
+                return URLEncoder.encode(toEncode, "UTF-8"); //$NON-NLS-1$
             } catch (UnsupportedEncodingException e) {
                 return toEncode;
             }
@@ -410,7 +408,7 @@ public class ShowViewInterceptor implements IResourceInterceptor<FeatureSource<S
                 return null;
             }
             try {
-                return URLDecoder.decode(toDecode, "UTF-8");
+                return URLDecoder.decode(toDecode, "UTF-8"); //$NON-NLS-1$
             } catch (UnsupportedEncodingException e) {
                 return toDecode;
             }

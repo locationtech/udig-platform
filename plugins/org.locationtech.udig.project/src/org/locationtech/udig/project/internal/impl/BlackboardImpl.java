@@ -1,8 +1,12 @@
 /**
- * <copyright>
- * </copyright>
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
  *
- * $Id$
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.project.internal.impl;
 
@@ -18,17 +22,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.locationtech.udig.core.internal.ExtensionPointProcessor;
-import org.locationtech.udig.core.internal.ExtensionPointUtil;
-import org.locationtech.udig.project.BlackboardEvent;
-import org.locationtech.udig.project.IBlackboard;
-import org.locationtech.udig.project.IBlackboardListener;
-import org.locationtech.udig.project.IPersister;
-import org.locationtech.udig.project.IProvider;
-import org.locationtech.udig.project.internal.Blackboard;
-import org.locationtech.udig.project.internal.BlackboardEntry;
-import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IStatus;
@@ -41,10 +34,21 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ui.XMLMemento;
+import org.locationtech.udig.core.internal.ExtensionPointProcessor;
+import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.project.BlackboardEvent;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.IBlackboardListener;
+import org.locationtech.udig.project.IPersister;
+import org.locationtech.udig.project.IProvider;
+import org.locationtech.udig.project.internal.Blackboard;
+import org.locationtech.udig.project.internal.BlackboardEntry;
+import org.locationtech.udig.project.internal.ProjectPackage;
+import org.locationtech.udig.project.internal.ProjectPlugin;
 
 /**
  * A blackboard that saves its state out as an EObject.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -53,12 +57,12 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * underlying container *
-     * 
+     *
      * @uml.property name="blackboard"
      * @uml.associationEnd qualifier="key:java.lang.Object
      *                     org.locationtech.udig.project.internal.impl.BlackboardEntryImpl"
      */
-    HashMap<String, BlackboardEntry> blackboard = new HashMap<String, BlackboardEntry>();
+    HashMap<String, BlackboardEntry> blackboard = new HashMap<>();
 
     /** persisters */
     ArrayList<IPersister<?>> persisters;
@@ -71,6 +75,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     /**
      * The cached value of the '{@link #getEntries() <em>Entries</em>}' containment reference list.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getEntries()
      * @generated
      * @ordered
@@ -79,6 +84,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     protected BlackboardImpl() {
@@ -87,6 +93,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -96,21 +103,21 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
-    @SuppressWarnings("unchecked")
     public List<BlackboardEntry> getEntries() {
         if (entries == null) {
-            entries = new EObjectContainmentEList<BlackboardEntry>(BlackboardEntry.class, this,
+            entries = new EObjectContainmentEList<>(BlackboardEntry.class, this,
                     ProjectPackage.BLACKBOARD__ENTRIES);
         }
         return entries;
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -124,8 +131,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -138,8 +145,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -155,8 +162,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -170,8 +177,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -185,6 +192,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
+     *
      * @see org.locationtech.udig.project.IBlackboard#contains(java.lang.String)
      */
     @Override
@@ -194,10 +202,11 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
+     *
      * @see org.locationtech.udig.project.IBlackboard#get(java.lang.String)
      */
     @Override
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
     public Object get(String key) {
         if (!initialized) {
             initialize();
@@ -230,7 +239,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                     }
                 } catch (Exception e) {
                     String msg = "Error loading content: " + entry.getObjectClass(); //$NON-NLS-1$
-                    IStatus status = new Status(IStatus.WARNING, ProjectPlugin.ID, 0, msg, e); 
+                    IStatus status = new Status(IStatus.WARNING, ProjectPlugin.ID, 0, msg, e);
                     ProjectPlugin.getPlugin().getLog().log(status);
                 }
 
@@ -248,7 +257,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                     }
                 } catch (Exception e) {
                     String msg = "provider exception :" + key; //$NON-NLS-1$
-                    String id = provider.getExtension().getNamespace();
+                    String id = provider.getExtension().getNamespaceIdentifier();
                     IStatus status = new Status(IStatus.WARNING, id, 0, msg, e);
 
                     ProjectPlugin.getPlugin().getLog().log(status);
@@ -293,6 +302,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
+     *
      * @see org.locationtech.udig.project.IBlackboard#put(java.lang.String, java.lang.Object)
      */
     @Override
@@ -353,6 +363,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
+     *
      * @see org.locationtech.udig.project.IBlackboard#getFloat(java.lang.String)
      */
     @Override
@@ -367,6 +378,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
+     *
      * @see org.locationtech.udig.project.IBlackboard#getInteger(java.lang.String)
      */
     @Override
@@ -381,6 +393,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
+     *
      * @see org.locationtech.udig.project.IBlackboard#getString(java.lang.String)
      */
     @Override
@@ -395,6 +408,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
+     *
      * @see org.locationtech.udig.project.IBlackboard#putFloat(java.lang.String, float)
      */
     @Override
@@ -404,6 +418,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
+     *
      * @see org.locationtech.udig.project.IBlackboard#putInteger(java.lang.String, int)
      */
     @Override
@@ -414,6 +429,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
+     *
      * @see org.locationtech.udig.project.IBlackboard#putString(java.lang.String, java.lang.String)
      */
     @Override
@@ -423,6 +439,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     /*
      * (non-Javadoc)
+     *
      * @see org.locationtech.udig.project.IBlackboard#clear()
      */
     @Override
@@ -433,7 +450,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         }
     }
 
-    CopyOnWriteArraySet<IBlackboardListener> listeners = new CopyOnWriteArraySet<IBlackboardListener>();
+    CopyOnWriteArraySet<IBlackboardListener> listeners = new CopyOnWriteArraySet<>();
 
     @Override
     public boolean addListener(IBlackboardListener listener) {
@@ -457,7 +474,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
 
     private IProvider findProvider(String key) {
         if (providers == null) {
-            providers = new ArrayList<IProvider<Object>>();
+            providers = new ArrayList<>();
             ProviderProcessor p = new ProviderProcessor(providers);
             ExtensionPointUtil.process(ProjectPlugin.getPlugin(), IProvider.XPID, p);
         }
@@ -471,7 +488,6 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         return null;
     }
 
-    @SuppressWarnings("unchecked")
     private BlackboardEntryImpl createEntry(String key, Object object) {
 
         BlackboardEntryImpl entry = new BlackboardEntryImpl();
@@ -491,7 +507,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         if (persisters == null) {
             synchronized (this) {
                 if (persisters == null) {
-                    persisters = new ArrayList<IPersister<?>>();
+                    persisters = new ArrayList<>();
                     PersisterProcessor p = new PersisterProcessor(persisters);
                     ExtensionPointUtil.process(ProjectPlugin.getPlugin(), IPersister.XPID, p);
                 }
@@ -499,7 +515,7 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         }
 
         // look for a class closest down in the class hierarchy
-        ArrayList<IPersister<?>> possible = new ArrayList<IPersister<?>>();
+        ArrayList<IPersister<?>> possible = new ArrayList<>();
 
         for (IPersister<?> persister : persisters) {
             Class<?> persistenceTarget = persister.getPersistee();
@@ -515,8 +531,8 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
             }
             Class objectClass = entry.getObjectClass();
             if (objectClass == null && memento != null) {
-                String className = memento.getString("internalObjectClassStorage");
-                if (className.equals(persistenceTarget)) {
+                String className = memento.getString("internalObjectClassStorage"); //$NON-NLS-1$
+                if (className.equals(persistenceTarget.getName())) {
                     possible.add(persister);
                     continue; // we are good on this one
                 } else {
@@ -532,10 +548,11 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
                             possible.add(persister);
                         }
                     } catch (Exception e) {
-                        if (ProjectPlugin.isDebugging("blackboard")) {
+                        if (ProjectPlugin.isDebugging("blackboard")) { //$NON-NLS-1$
                             ProjectPlugin.trace(BlackboardImpl.class,
                                     persister.getExtension().getExtensionPointUniqueIdentifier()
-                                            + "unable to load " + className, //$NON-NLS-1$
+                                            + "unable to load " //$NON-NLS-1$
+                                            + className,
                                     e);
                         }
                         continue; // skip this one
@@ -632,17 +649,16 @@ public class BlackboardImpl extends EObjectImpl implements Blackboard {
         return this.blackboard.keySet();
     }
 
-    @SuppressWarnings("nls")
     @Override
     public String toString() {
         StringBuffer buf = new StringBuffer();
-        buf.append("StyleBlackBoardImpl: ");
+        buf.append("StyleBlackBoardImpl: "); //$NON-NLS-1$
         buf.append(blackboard.size());
-        buf.append(" entries");
+        buf.append(" entries"); //$NON-NLS-1$
         for (Map.Entry entry : blackboard.entrySet()) {
-            buf.append("\n\t");
+            buf.append("\n\t"); //$NON-NLS-1$
             buf.append(entry.getKey());
-            buf.append("=");
+            buf.append("="); //$NON-NLS-1$
             buf.append(entry.getValue());
         }
         return buf.toString();

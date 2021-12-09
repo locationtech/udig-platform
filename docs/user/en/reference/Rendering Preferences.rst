@@ -45,7 +45,23 @@ Available Preferences
    As stated this is an advanced option so do not modify it unless you understand the image formats
    and the ramifications of using one image type over another.
 
- 
+Other Preferences
+`````````````````
+
+.. _project_preferences-hide-renderer-job:
+
+HIDE_RENDER_JOB
+~~~~~~~~~~~~~~~
+Allows to control, if executed jobs are shown in Progress View. If this option is
+available or set to **true**, the jobs are not shown. Otherwise, which is the default, jobs
+are shown in Progress View. This option is not intended to be set or changed at runtime.
+Use *.option* file in installation folder to configure application behavior:
+
+.. code-block::
+   :caption: .options file
+
+       org.locationtech.udig.project/HIDE_RENDER_JOB=true
+
 **Related reference**
 
 :doc:`Catalog Preferences`

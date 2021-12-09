@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2011, Refractions Research Inc.
  *
@@ -15,72 +16,75 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.Project;
-
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
-import org.osgi.service.prefs.BackingStoreException;
 import org.locationtech.udig.bookmarks.Bookmark;
 import org.locationtech.udig.bookmarks.BookmarkListener;
 import org.locationtech.udig.bookmarks.BookmarksPlugin;
 import org.locationtech.udig.bookmarks.IBookmark;
 import org.locationtech.udig.bookmarks.IBookmarkService;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.Project;
+import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * This class provides a bookmark repository and associated management functions.
  * <p>
  * </p>
- * 
+ *
  * @author paul.pfeiffer
  * @version 1.3.0
  */
 public class BookmarkServiceImpl implements IBookmarkService {
     private HashMap<URI, Vector<MapReference>> projectsHash;
+
     private HashMap<URI, Vector<Bookmark>> mapsHash;
+
     private HashMap<URI, MapReference> mapReferences;
+
     private int count = 0;
-    
+
     /**
      * A list of listeners to be notified when the Strategy changes
      */
-    protected Set<BookmarkListener> listeners = new CopyOnWriteArraySet<BookmarkListener>();
+    protected Set<BookmarkListener> listeners = new CopyOnWriteArraySet<>();
 
     /**
-     * 
+     *
      */
     public BookmarkServiceImpl() {
-        projectsHash = new HashMap<URI, Vector<MapReference>>();
-        mapsHash = new HashMap<URI, Vector<Bookmark>>();
-        mapReferences = new HashMap<URI, MapReference>();
+        projectsHash = new HashMap<>();
+        mapsHash = new HashMap<>();
+        mapReferences = new HashMap<>();
     }
-    
+
     @Override
-    public void addBookmark( Bookmark bookmark ) {
-        load( bookmark );
+    public void addBookmark(Bookmark bookmark) {
+        load(bookmark);
         try {
             BookmarksPlugin.getDefault().storeToPreferences();
         } catch (BackingStoreException e) {
             ILog log = BookmarksPlugin.getDefault().getLog();
-            IStatus status = new Status( IStatus.WARNING,BookmarksPlugin.ID,"Unable to save to BookmarksPlugin");
+            IStatus status = new Status(IStatus.WARNING, BookmarksPlugin.ID,
+                    "Unable to save to BookmarksPlugin"); //$NON-NLS-1$
             log.log(status);
         }
-        Set<IBookmark> bookmarks = new CopyOnWriteArraySet<IBookmark>();
+        Set<IBookmark> bookmarks = new CopyOnWriteArraySet<>();
         notifyListeners(new BookmarkListener.Event(bookmarks));
     }
-    
+
     @Override
-    public void load( Bookmark bookmark ) {
-        if (bookmark.getName() == null || bookmark.getName() == "") { //$NON-NLS-1$
+    public void load(Bookmark bookmark) {
+        if (bookmark.getName() == null || bookmark.getName().equals("")) { //$NON-NLS-1$
             bookmark.setName(Messages.BookmarkManager_bookmarkdefaultname + (++count));
         }
         MapReference map = bookmark.getMap();
         URI project = map.getProjectID();
         if (!projectsHash.containsKey(project)) {
-            Vector<MapReference> projectMaps = new Vector<MapReference>();
+            Vector<MapReference> projectMaps = new Vector<>();
             projectMaps.add(map);
             projectsHash.put(project, projectMaps);
         } else {
@@ -90,7 +94,7 @@ public class BookmarkServiceImpl implements IBookmarkService {
             }
         }
         if (!mapsHash.containsKey(map.getMapID())) {
-            Vector<Bookmark> bookmarks = new Vector<Bookmark>();
+            Vector<Bookmark> bookmarks = new Vector<>();
             bookmarks.add(bookmark);
             mapsHash.put(map.getMapID(), bookmarks);
         } else {
@@ -116,18 +120,18 @@ public class BookmarkServiceImpl implements IBookmarkService {
 
     @Override
     public Collection<URI> getProjects() {
-        Vector<URI> projects = new Vector<URI>(this.projectsHash.keySet());
+        Vector<URI> projects = new Vector<>(this.projectsHash.keySet());
         return projects;
     }
 
     @Override
-    public Collection<MapReference> getMaps( URI project ) {
+    public Collection<MapReference> getMaps(URI project) {
         Vector<MapReference> maps = projectsHash.get(project);
         return maps;
     }
 
     @Override
-    public Collection<Bookmark> getBookmarks( MapReference map ) {
+    public Collection<Bookmark> getBookmarks(MapReference map) {
         if (!mapsHash.containsKey(map.getMapID())) {
             mapsHash.put(map.getMapID(), new Vector<Bookmark>());
         }
@@ -137,10 +141,10 @@ public class BookmarkServiceImpl implements IBookmarkService {
 
     @Override
     public Collection<IBookmark> getBookmarks() {
-        Collection<IBookmark> bookmarks = new Vector<IBookmark>();
+        Collection<IBookmark> bookmarks = new Vector<>();
         for (URI project : getProjects()) {
             for (MapReference map : getMaps(project)) {
-                for (IBookmark  bookmark : getBookmarks(map)) {
+                for (IBookmark bookmark : getBookmarks(map)) {
                     if (!bookmarks.contains(bookmark)) {
                         bookmarks.add(bookmark);
                     }
@@ -161,7 +165,7 @@ public class BookmarkServiceImpl implements IBookmarkService {
     }
 
     @Override
-    public void removeBookmark( Bookmark bookmark ) {
+    public void removeBookmark(Bookmark bookmark) {
         MapReference map = bookmark.getMap();
         mapsHash.get(map.getMapID()).remove(bookmark);
         if (mapsHash.get(map.getMapID()).isEmpty()) {
@@ -172,13 +176,13 @@ public class BookmarkServiceImpl implements IBookmarkService {
                 projectsHash.remove(projectID);
             }
         }
-        Set<IBookmark> bookmarks = new CopyOnWriteArraySet<IBookmark>();
+        Set<IBookmark> bookmarks = new CopyOnWriteArraySet<>();
         notifyListeners(new BookmarkListener.Event(bookmarks));
     }
 
     @Override
-    public void removeBookmarks( Collection<IBookmark> elements ) {
-        for( Object element : elements ) {
+    public void removeBookmarks(Collection<IBookmark> elements) {
+        for (Object element : elements) {
             if (element instanceof Bookmark) {
                 Bookmark bmark = (Bookmark) element;
                 this.removeBookmark(bmark);
@@ -188,7 +192,7 @@ public class BookmarkServiceImpl implements IBookmarkService {
     }
 
     @Override
-    public void removeMap( MapReference map ) {
+    public void removeMap(MapReference map) {
         mapsHash.remove(map.getMapID());
         URI projectID = map.getProjectID();
         Vector<MapReference> maps = projectsHash.get(projectID);
@@ -202,8 +206,8 @@ public class BookmarkServiceImpl implements IBookmarkService {
     }
 
     @Override
-    public void removeMaps( Collection<MapReference> elements ) {
-        for( Object element : elements ) {
+    public void removeMaps(Collection<MapReference> elements) {
+        for (Object element : elements) {
             if (element instanceof MapReference) {
                 MapReference map = (MapReference) element;
                 this.removeMap(map);
@@ -213,18 +217,18 @@ public class BookmarkServiceImpl implements IBookmarkService {
     }
 
     @Override
-    public void removeProject( URI project ) {
+    public void removeProject(URI project) {
         Vector<MapReference> maps = projectsHash.get(project);
         projectsHash.remove(project);
-        for( MapReference map : maps ) {
+        for (MapReference map : maps) {
             maps.remove(map);
         }
         notifyListeners(new BookmarkListener.Event(null));
     }
 
     @Override
-    public void removeProjects( Collection<URI> elements ) {
-        for( Object element : elements ) {
+    public void removeProjects(Collection<URI> elements) {
+        for (Object element : elements) {
             if (element instanceof URI) {
                 URI project = (URI) element;
                 this.removeProject(project);
@@ -234,7 +238,7 @@ public class BookmarkServiceImpl implements IBookmarkService {
     }
 
     @Override
-    public MapReference getMapReference( IMap map ) {
+    public MapReference getMapReference(IMap map) {
         MapReference ref = null;
         if (!mapReferences.containsKey(map.getID())) {
             // TODO fix this when IProject has a getID() method
@@ -251,34 +255,34 @@ public class BookmarkServiceImpl implements IBookmarkService {
     }
 
     @Override
-    public void addListener( BookmarkListener listener ) {
+    public void addListener(BookmarkListener listener) {
         if (listener == null) {
-            throw new NullPointerException("BookmarkService listener required to be non null");
+            throw new NullPointerException("BookmarkService listener required to be non null"); //$NON-NLS-1$
         }
         listeners.add(listener);
     }
 
     @Override
-    public void removeListener( BookmarkListener listener ) {
+    public void removeListener(BookmarkListener listener) {
         if (listeners.contains(listener)) {
             listeners.remove(listener);
         }
     }
 
-    /*
+    /**
      * Notifies listener that the value of the filter has changed.
      */
-    private void notifyListeners( BookmarkListener.Event event ) {
+    private void notifyListeners(BookmarkListener.Event event) {
         if (event == null) {
             event = new BookmarkListener.Event(getBookmarks());
         }
-        for( BookmarkListener listener : listeners ) {
+        for (BookmarkListener listener : listeners) {
             try {
                 if (listener != null) {
                     listener.handleEvent(event);
                 }
             } catch (Exception e) {
-                UiPlugin.log(getClass(), "notifyListeners", e);
+                UiPlugin.log(getClass(), "notifyListeners", e); //$NON-NLS-1$
             }
         }
     }

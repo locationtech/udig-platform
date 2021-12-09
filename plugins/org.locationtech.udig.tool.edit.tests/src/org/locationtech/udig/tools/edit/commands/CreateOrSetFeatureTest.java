@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -36,85 +37,106 @@ import org.opengis.filter.FilterFactory;
 
 /**
  * Test Command
+ *
  * @author jones
  * @since 1.1.0
  */
 public class CreateOrSetFeatureTest {
 
     private Map map;
+
     private ILayer layer;
+
     private SimpleFeature original;
+
     private FeatureSource<SimpleFeatureType, SimpleFeature> resource;
 
     @Before
     public void setUp() throws Exception {
-        map=MapTests.createDefaultMap("TypeName", 1, true, new Dimension(10,10)); //$NON-NLS-1$
-        layer=map.getMapLayers().get(0);
+        map = MapTests.createDefaultMap("TypeName", 1, true, new Dimension(10, 10)); //$NON-NLS-1$
+        layer = map.getMapLayers().get(0);
         resource = layer.getResource(FeatureSource.class, new NullProgressMonitor());
-        original=resource.getFeatures().features().next();
+        original = resource.getFeatures().features().next();
     }
-    
-    /*
-     * Test method for 'org.locationtech.udig.tools.edit.commands.CreateOrSetFeature.run(IProgressMonitor)'
+
+    /**
+     * Test method for
+     * 'org.locationtech.udig.tools.edit.commands.CreateOrSetFeature.run(IProgressMonitor)'
      */
     @Test
     public void testCreateNew() throws Exception {
-        GeometryFactory fac=new GeometryFactory();
-        fac.createPoint(new Coordinate(10,10));
-        CreateNewOrSelectExitingFeatureCommand command=new CreateNewOrSelectExitingFeatureCommand("newID", layer, fac.createPoint(new Coordinate(10,10))); //$NON-NLS-1$
+        GeometryFactory fac = new GeometryFactory();
+        fac.createPoint(new Coordinate(10, 10));
+        CreateNewOrSelectExistingFeatureCommand command = new CreateNewOrSelectExistingFeatureCommand(
+                "newID", layer, fac.createPoint(new Coordinate(10, 10))); //$NON-NLS-1$
         command.setMap(map);
         NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
         command.run(nullProgressMonitor);
-        
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
+
+        FilterFactory filterFactory = CommonFactoryFinder
+                .getFilterFactory(GeoTools.getDefaultHints());
         Filter filter = filterFactory.id(FeatureUtils.stringToId(filterFactory, original.getID()));
         filter = filterFactory.not(filter);
-		SimpleFeature feature=resource.getFeatures(
-				filter).features().next();
+        SimpleFeature feature = resource.getFeatures(filter).features().next();
         assertEquals(2, getCount());
-        assertEquals(new Coordinate(10,10), ((Geometry) feature.getDefaultGeometry()).getCoordinates()[0]);
-        assertFalse( feature.getID().equals(original));
+        assertEquals(new Coordinate(10, 10),
+                ((Geometry) feature.getDefaultGeometry()).getCoordinates()[0]);
+        assertFalse(feature.getID().equals(original.getID()));
         command.rollback(nullProgressMonitor);
-        
+
         assertEquals(1, getCount());
-        feature=resource.getFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory,original.getID()))).features().next();
+        feature = resource
+                .getFeatures(
+                        filterFactory.id(FeatureUtils.stringToId(filterFactory, original.getID())))
+                .features().next();
         assertEquals(original.getID(), feature.getID());
-        assertFalse( new Coordinate(10,10).equals(((Geometry) feature.getDefaultGeometry()).getCoordinates()[0] ));
-        
+        assertFalse(new Coordinate(10, 10)
+                .equals(((Geometry) feature.getDefaultGeometry()).getCoordinates()[0]));
+
     }
-    
-    /*
-     * Test method for 'org.locationtech.udig.tools.edit.commands.CreateOrSetFeature.run(IProgressMonitor)'
+
+    /**
+     * Test method for
+     * 'org.locationtech.udig.tools.edit.commands.CreateOrSetFeature.run(IProgressMonitor)'
      */
     @Test
     public void testModifyExistingFeature() throws Exception {
-        GeometryFactory fac=new GeometryFactory();
-        fac.createPoint(new Coordinate(10,10));
-        CreateNewOrSelectExitingFeatureCommand command=new CreateNewOrSelectExitingFeatureCommand(original.getID(), layer, fac.createPoint(new Coordinate(10,10)));
+        GeometryFactory fac = new GeometryFactory();
+        fac.createPoint(new Coordinate(10, 10));
+        CreateNewOrSelectExistingFeatureCommand command = new CreateNewOrSelectExistingFeatureCommand(
+                original.getID(), layer, fac.createPoint(new Coordinate(10, 10)));
         command.setMap(map);
         NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
         command.run(nullProgressMonitor);
-        
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-		SimpleFeature feature=resource.getFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory, original.getID()))).
-					features().next();
+
+        FilterFactory filterFactory = CommonFactoryFinder
+                .getFilterFactory(GeoTools.getDefaultHints());
+        SimpleFeature feature = resource
+                .getFeatures(
+                        filterFactory.id(FeatureUtils.stringToId(filterFactory, original.getID())))
+                .features().next();
         assertEquals(1, getCount());
         assertEquals(original.getID(), feature.getID());
-        assertEquals(new Coordinate(10,10), ((Geometry) feature.getDefaultGeometry()).getCoordinates()[0]);
-        
+        assertEquals(new Coordinate(10, 10),
+                ((Geometry) feature.getDefaultGeometry()).getCoordinates()[0]);
+
         command.rollback(nullProgressMonitor);
-        
-        feature=resource.getFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory, original.getID()))).features().next();
+
+        feature = resource
+                .getFeatures(
+                        filterFactory.id(FeatureUtils.stringToId(filterFactory, original.getID())))
+                .features().next();
         assertEquals(original.getID(), feature.getID());
-        assertFalse( new Coordinate(10,10).equals(((Geometry) feature.getDefaultGeometry()).getCoordinates()[0] ));
-        
+        assertFalse(new Coordinate(10, 10)
+                .equals(((Geometry) feature.getDefaultGeometry()).getCoordinates()[0]));
+
     }
 
     private int getCount() throws Exception {
-        FeatureCollection<SimpleFeatureType, SimpleFeature>  features = resource.getFeatures();
-        FeatureIterator<SimpleFeature> iter=features.features();
-        int i=0;
-        while(iter.hasNext()){
+        FeatureCollection<SimpleFeatureType, SimpleFeature> features = resource.getFeatures();
+        FeatureIterator<SimpleFeature> iter = features.features();
+        int i = 0;
+        while (iter.hasNext()) {
             iter.next();
             i++;
         }

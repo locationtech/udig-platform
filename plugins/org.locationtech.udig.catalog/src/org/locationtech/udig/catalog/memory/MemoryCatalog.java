@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,6 +19,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.swt.widgets.Display;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalogInfo;
 import org.locationtech.udig.catalog.ID;
@@ -33,74 +39,78 @@ import org.locationtech.udig.catalog.internal.Messages;
 import org.locationtech.udig.catalog.util.AST;
 import org.locationtech.udig.catalog.util.ASTFactory;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.swt.widgets.Display;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
-import org.locationtech.jts.geom.Envelope;
-
 /**
  * A very simple catalog to hold search results in memory.
- * 
+ *
  * @author Jody Garnett
  * @since 1.2.4
  */
 public class MemoryCatalog extends ISearch {
 
     ICatalogInfo info;
+
     List<IService> services;
+
     private ID id;
+
     private String title;
 
     /**
      * Create a catalog; id often determined from search results.
      * <p>
      * Example:
-     * 
+     *
      * <pre>
      * IRepository local = CatalogPlugin.getDefault().getLocalCatalog();
+     *
      * MemoryCatalog localFile = new ID(local.getID(), &quot;file&quot;);
      * </pre>
-     * 
+     *
      * @param id
      */
-    public MemoryCatalog( ID id, String title, List<IService> services ) {
+    public MemoryCatalog(ID id, String title, List<IService> services) {
         this.id = id;
         this.title = title;
         this.services = services;
     }
 
-    public <T> boolean canResolve( Class<T> adaptee ) {
+    @Override
+    public <T> boolean canResolve(Class<T> adaptee) {
         return false;
     }
+
     @Override
     public Status getStatus() {
         return Status.CONNECTED;
     }
 
+    @Override
     public Throwable getMessage() {
         return null;
     }
 
+    @Override
     public URL getIdentifier() {
         return id.toURL();
     }
 
+    @Override
     public ID getID() {
         return id;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
     @Override
-    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
-        if (adaptee == null) return null;
+    public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
+        if (adaptee == null)
+            return null;
 
-        if (monitor == null) monitor = new NullProgressMonitor();
+        if (monitor == null)
+            monitor = new NullProgressMonitor();
 
         try {
             if (adaptee.isInstance(this)) {
@@ -117,15 +127,15 @@ public class MemoryCatalog extends ISearch {
     }
 
     @Override
-    public List<IResolve> find( ID resourceId, IProgressMonitor monitor ) {
-        if (monitor == null) monitor = new NullProgressMonitor();
+    public List<IResolve> find(ID resourceId, IProgressMonitor monitor) {
+        if (monitor == null)
+            monitor = new NullProgressMonitor();
 
         URL query = resourceId.toURL();
-        Set<IResolve> found = new LinkedHashSet<IResolve>();
+        Set<IResolve> found = new LinkedHashSet<>();
 
-        monitor.beginTask("find " + resourceId, services.size());
-        for( IService service : services ) {
-            ID id = service.getID();
+        monitor.beginTask("find " + resourceId, services.size()); //$NON-NLS-1$
+        for (IService service : services) {
             URL identifier = service.getIdentifier();
 
             if (URLUtils.urlEquals(query, identifier, true)) {
@@ -141,17 +151,18 @@ public class MemoryCatalog extends ISearch {
             monitor.worked(1);
         }
         monitor.done();
-        return new ArrayList<IResolve>(found);
+        return new ArrayList<>(found);
     }
 
     @Override
-    public <T extends IResolve> T getById( Class<T> type, ID id, IProgressMonitor monitor ) {
+    public <T extends IResolve> T getById(Class<T> type, ID id, IProgressMonitor monitor) {
         return null;
     }
 
-    IResolve getChildById( IResolve handle, final ID id, IProgressMonitor monitor ) {
+    IResolve getChildById(IResolve handle, final ID id, IProgressMonitor monitor) {
 
-        if (monitor == null) monitor = new NullProgressMonitor();
+        if (monitor == null)
+            monitor = new NullProgressMonitor();
 
         if (id.equals(handle.getID())) {
             // rough match
@@ -159,12 +170,12 @@ public class MemoryCatalog extends ISearch {
         }
 
         try {
-            List< ? extends IResolve> children = handle.members(monitor);
+            List<? extends IResolve> children = handle.members(monitor);
 
             if (children == null || children.isEmpty()) {
                 return null;
             }
-            for( IResolve child : children ) {
+            for (IResolve child : children) {
                 IResolve found = getChildById(child, id, null);
                 if (found != null) {
                     return found;
@@ -177,16 +188,17 @@ public class MemoryCatalog extends ISearch {
     }
 
     @Override
-    public List<IResolve> search( String pattern, Envelope bbox, IProgressMonitor monitor )
+    public List<IResolve> search(String pattern, Envelope bbox, IProgressMonitor monitor)
             throws IOException {
         if (CatalogPlugin.getDefault().isDebugging()) {
             if (Display.getCurrent() != null) {
-                throw new IllegalStateException("search called from display thread");
+                throw new IllegalStateException("search called from display thread"); //$NON-NLS-1$
             }
         }
-        if (monitor == null) monitor = new NullProgressMonitor();
-        
-        List<IResolve> result = new LinkedList<IResolve>();
+        if (monitor == null)
+            monitor = new NullProgressMonitor();
+
+        List<IResolve> result = new LinkedList<>();
         if ((pattern == null || pattern.trim().length() == 0) && (bbox == null || bbox.isNull())) {
             // nothing to find
             return result;
@@ -195,39 +207,38 @@ public class MemoryCatalog extends ISearch {
         if (ast == null) {
             return result;
         }
-        HashSet<IService> searchScope = new HashSet<IService>();
+        HashSet<IService> searchScope = new HashSet<>();
         searchScope.addAll(this.services);
         try {
             monitor.beginTask(Messages.CatalogImpl_finding, searchScope.size() * 10);
-            SERVICE: for( IService service : searchScope ) {
+            SERVICE: for (IService service : searchScope) {
                 ID serviceID = service.getID();
                 if (check(service, ast)) {
                     result.add(service);
                 }
-                // Iterator< ? extends IGeoResource> resources;
-                SubProgressMonitor submonitor = new SubProgressMonitor(monitor, 10);
+
+                SubMonitor submonitor = SubMonitor.convert(monitor, 10);
                 try {
-                    List< ? extends IGeoResource> members = service.resources(submonitor);
+                    List<? extends IGeoResource> members = service.resources(submonitor);
                     if (members == null) {
                         continue SERVICE;
                     }
-                    for( IGeoResource resource : members ) {
+                    for (IGeoResource resource : members) {
                         ID resoruceID = resource.getID();
                         try {
                             if (check(resource, ast, bbox)) {
                                 result.add(resource);
                             }
                         } catch (Throwable t) {
-                            CatalogPlugin.log("Could not search in resource:" + resoruceID, t);
+                            CatalogPlugin.log("Could not search in resource:" + resoruceID, t); //$NON-NLS-1$
                         }
                     }
                 } catch (IOException e) {
-                    CatalogPlugin.log("Could not search in service:" + serviceID, e);
+                    CatalogPlugin.log("Could not search in service:" + serviceID, e); //$NON-NLS-1$
                 } finally {
                     submonitor.done();
                 }
-                Thread.yield(); // allow other threads to have a go... makes search view more
-                                // responsive
+                Thread.yield(); // allow other threads to have a go... makes search view more responsive
             }
             return result;
         } finally {
@@ -235,8 +246,10 @@ public class MemoryCatalog extends ISearch {
         }
     }
 
-    /* check the fields we catre about */
-    protected static boolean check( IService service, AST pattern ) {
+    /**
+     * Check the fields we care about
+     */
+    protected static boolean check(IService service, AST pattern) {
         if (pattern == null) {
             return false;
         }
@@ -253,7 +266,7 @@ public class MemoryCatalog extends ISearch {
                 t = pattern.accept(info.getTitle());
             if (!t && info.getKeywords() != null) {
                 String[] keys = info.getKeywords().toArray(new String[0]);
-                for( int i = 0; !t && i < keys.length; i++ )
+                for (int i = 0; !t && i < keys.length; i++)
                     if (keys[i] != null)
                         t = pattern.accept(keys[i]);
             }
@@ -266,8 +279,11 @@ public class MemoryCatalog extends ISearch {
         }
         return t;
     }
-    /* check the fields we catre about */
-    protected static boolean check( IGeoResource resource, AST pattern ) {
+
+    /**
+     * Check the fields we care about
+     */
+    protected static boolean check(IGeoResource resource, AST pattern) {
         if (pattern == null) {
             return true;
         }
@@ -288,7 +304,7 @@ public class MemoryCatalog extends ISearch {
             return true;
         }
         if (info.getKeywords() != null) {
-            for( String key : info.getKeywords() ) {
+            for (String key : info.getKeywords()) {
                 if (pattern.accept(key)) {
                     return true;
                 }
@@ -303,7 +319,7 @@ public class MemoryCatalog extends ISearch {
         return false;
     }
 
-    protected static boolean check( IGeoResource resource, AST pattern, Envelope bbox ) {
+    protected static boolean check(IGeoResource resource, AST pattern, Envelope bbox) {
         if (!check(resource, pattern)) {
             return false;
         }

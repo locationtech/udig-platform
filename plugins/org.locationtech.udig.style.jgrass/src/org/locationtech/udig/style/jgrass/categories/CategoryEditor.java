@@ -1,6 +1,6 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,20 +12,15 @@ package org.locationtech.udig.style.jgrass.categories;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.StringTokenizer;
-
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.internal.Layer;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -37,39 +32,49 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Label;
 import org.geotools.gce.grassraster.JGrassConstants;
-
+import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.JGRasterChooserDialog;
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
 import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.style.jgrass.JGrassrasterStyleActivator;
 
 /**
  * The composite holding the JGrass Raster map editing logic
- * 
+ *
  * @author Andrea Antonello - www.hydrologis.com
  */
 public class CategoryEditor extends Composite implements SelectionListener {
 
     private ArrayList<CategoryRule> listOfRules = null;
+
     private Button addRuleButton = null;
+
     private Button removeRuleButton = null;
+
     private Button moveRuleUpButton = null;
+
     private Button moveRuleDownButton = null;
+
     private Composite rulesComposite = null;
+
     private ScrolledComposite scrolledRulesComposite = null;
+
     private Layer layer;
+
     private String[] mapsetPathAndMapName;
+
     private File catsFile;
-    private final Label alphaLabel = null;
+
     private Button loadFromFileButton = null;
+
     private Button loadFromMapButton = null;
 
-    public CategoryEditor( Composite parent, int style ) {
+    public CategoryEditor(Composite parent, int style) {
         super(parent, style);
-        listOfRules = new ArrayList<CategoryRule>();
+        listOfRules = new ArrayList<>();
         initialize();
     }
 
@@ -99,11 +104,11 @@ public class CategoryEditor extends Composite implements SelectionListener {
         gridData.grabExcessHorizontalSpace = true;
         gridData.verticalAlignment = GridData.CENTER;
         addRuleButton = new Button(this, SWT.NONE);
-        addRuleButton.setText("+");
+        addRuleButton.setText("+"); //$NON-NLS-1$
         addRuleButton.setLayoutData(gridData);
         addRuleButton.addSelectionListener(this);
         removeRuleButton = new Button(this, SWT.NONE);
-        removeRuleButton.setText("-");
+        removeRuleButton.setText("-"); //$NON-NLS-1$
         removeRuleButton.setLayoutData(gridData1);
         removeRuleButton.addSelectionListener(this);
         moveRuleUpButton = new Button(this, SWT.UP | SWT.ARROW);
@@ -120,11 +125,11 @@ public class CategoryEditor extends Composite implements SelectionListener {
         this.setLayoutData(gd);
         createScrolledRulesComposite();
         loadFromFileButton = new Button(this, SWT.NONE);
-        loadFromFileButton.setText("load from file");
+        loadFromFileButton.setText("load from file"); //$NON-NLS-1$
         loadFromFileButton.setLayoutData(gridData11);
         loadFromFileButton.addSelectionListener(this);
         loadFromMapButton = new Button(this, SWT.NONE);
-        loadFromMapButton.setText("load from map");
+        loadFromMapButton.setText("load from map"); //$NON-NLS-1$
         loadFromMapButton.setLayoutData(gridData21);
         loadFromMapButton.addSelectionListener(this);
         createRulesComposite();
@@ -166,10 +171,12 @@ public class CategoryEditor extends Composite implements SelectionListener {
         scrolledRulesComposite.setMinSize(300, 500);
     }
 
-    public void widgetDefaultSelected( SelectionEvent e ) {
+    @Override
+    public void widgetDefaultSelected(SelectionEvent e) {
     }
 
-    public void widgetSelected( SelectionEvent e ) {
+    @Override
+    public void widgetSelected(SelectionEvent e) {
         Button selectedButton = (Button) e.getSource();
         if (selectedButton.equals(addRuleButton)) {
             // add an empty rule to te composite
@@ -177,7 +184,7 @@ public class CategoryEditor extends Composite implements SelectionListener {
             listOfRules.add(r);
             redoLayout();
         } else if (selectedButton.equals(removeRuleButton)) {
-            for( int i = 0; i < listOfRules.size(); i++ ) {
+            for (int i = 0; i < listOfRules.size(); i++) {
                 CategoryRule r = listOfRules.get(i);
                 if (r.isActive()) {
                     listOfRules.remove(r);
@@ -188,7 +195,7 @@ public class CategoryEditor extends Composite implements SelectionListener {
             }
             redoLayout();
         } else if (selectedButton.equals(moveRuleUpButton)) {
-            for( int i = 0; i < listOfRules.size(); i++ ) {
+            for (int i = 0; i < listOfRules.size(); i++) {
                 CategoryRule r = listOfRules.get(i);
                 if (r.isActive()) {
                     if (i > 0) {
@@ -199,7 +206,7 @@ public class CategoryEditor extends Composite implements SelectionListener {
             }
             redoLayout();
         } else if (selectedButton.equals(moveRuleDownButton)) {
-            for( int i = 0; i < listOfRules.size(); i++ ) {
+            for (int i = 0; i < listOfRules.size(); i++) {
                 CategoryRule r = listOfRules.get(i);
                 if (r.isActive()) {
                     if (i < listOfRules.size() - 1) {
@@ -230,7 +237,7 @@ public class CategoryEditor extends Composite implements SelectionListener {
         }
     }
 
-    public void makeSomeCategories( String catspath ) {
+    public void makeSomeCategories(String catspath) {
 
         File catsFile = new File(catspath);
         BufferedReader inputReader = null;
@@ -238,7 +245,7 @@ public class CategoryEditor extends Composite implements SelectionListener {
             inputReader = new BufferedReader(new FileReader(catsFile));
 
             String line = null;
-            LinkedHashMap<String, String> cats = new LinkedHashMap<String, String>();
+            LinkedHashMap<String, String> cats = new LinkedHashMap<>();
             if (catsFile.exists()) {
                 // jump over the first 4 lines
                 line = inputReader.readLine();
@@ -246,12 +253,12 @@ public class CategoryEditor extends Composite implements SelectionListener {
                 line = inputReader.readLine();
                 line = inputReader.readLine();
 
-                while( (line = inputReader.readLine()) != null ) {
-                    if (line == null || line.equals("")) {
+                while ((line = inputReader.readLine()) != null) {
+                    if (line == null || line.equals("")) { //$NON-NLS-1$
                         return;
                     }
 
-                    StringTokenizer valtok = new StringTokenizer(line, ":");
+                    StringTokenizer valtok = new StringTokenizer(line, ":"); //$NON-NLS-1$
                     if (valtok.countTokens() > 1) {
                         cats.put(valtok.nextToken(), valtok.nextToken());
                     } else {
@@ -261,7 +268,7 @@ public class CategoryEditor extends Composite implements SelectionListener {
 
                 listOfRules.clear();
                 Set<Entry<String, String>> entrySet = cats.entrySet();
-                for( Entry<String, String> entry : entrySet ) {
+                for (Entry<String, String> entry : entrySet) {
                     String key = entry.getKey();
                     String value = entry.getValue();
                     listOfRules.add(new CategoryRule(key, value, true));
@@ -287,18 +294,19 @@ public class CategoryEditor extends Composite implements SelectionListener {
     /**
      * Set the layer that called this style editor. Needed for putting the alpha value into the
      * blackboard whenever it something changes.
-     * 
+     *
      * @param layer
      */
-    public void setLayer( Layer layer ) {
+    public void setLayer(Layer layer) {
         this.layer = layer;
         IGeoResource resource = layer.getGeoResource();
-        mapsetPathAndMapName = JGrassCatalogUtilities.getMapsetpathAndMapnameFromJGrassMapGeoResource(resource);
-        catsFile = new File(mapsetPathAndMapName[0] + File.separator + JGrassConstants.CATS + File.separator
-                + mapsetPathAndMapName[1]);
+        mapsetPathAndMapName = JGrassCatalogUtilities
+                .getMapsetpathAndMapnameFromJGrassMapGeoResource(resource);
+        catsFile = new File(mapsetPathAndMapName[0] + File.separator + JGrassConstants.CATS
+                + File.separator + mapsetPathAndMapName[1]);
     }
 
-    public void setRulesList( ArrayList<CategoryRule> listOfRules ) {
+    public void setRulesList(ArrayList<CategoryRule> listOfRules) {
         this.listOfRules = listOfRules;
         redoLayout();
     }
@@ -306,12 +314,12 @@ public class CategoryEditor extends Composite implements SelectionListener {
     protected void redoLayout() {
         // remove the rules from the composite
         Control[] rulesControls = rulesComposite.getChildren();
-        for( int i = 0; i < rulesControls.length; i++ ) {
+        for (int i = 0; i < rulesControls.length; i++) {
             rulesControls[i].dispose();
         }
 
         // recreate the rules composites from the list
-        for( CategoryRule rule : listOfRules ) {
+        for (CategoryRule rule : listOfRules) {
             new CategoryRuleComposite(rulesComposite, SWT.BORDER, rule);
         }
 
@@ -333,15 +341,15 @@ public class CategoryEditor extends Composite implements SelectionListener {
                 }
 
                 StringBuffer header = new StringBuffer();
-                header.append("# " + listOfRules.size() + "\n");
-                header.append(mapsetPathAndMapName[1] + "\n");
-                header.append("\n");
-                header.append("0.00 0.00 0.00 0.00\n");
+                header.append("# " + listOfRules.size() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+                header.append(mapsetPathAndMapName[1] + "\n"); //$NON-NLS-1$
+                header.append("\n"); //$NON-NLS-1$
+                header.append("0.00 0.00 0.00 0.00\n"); //$NON-NLS-1$
                 bw.write(header.toString());
 
-                for( CategoryRule r : listOfRules ) {
+                for (CategoryRule r : listOfRules) {
                     if (r.isActive())
-                        bw.write(r.ruleToString() + "\n");
+                        bw.write(r.ruleToString() + "\n"); //$NON-NLS-1$
                 }
 
             } catch (IOException e1) {
@@ -360,19 +368,21 @@ public class CategoryEditor extends Composite implements SelectionListener {
 
     }
 
-    public void update( Object updatedObject ) {
+    public void update(Object updatedObject) {
         if (updatedObject instanceof List) {
             String mapName = null;
             String mapsetPath = null;
             List layers = (List) updatedObject;
-            for( Object layer : layers ) {
+            for (Object layer : layers) {
                 if (layer instanceof JGrassMapGeoResource) {
                     JGrassMapGeoResource rasterMapResource = (JGrassMapGeoResource) layer;
                     try {
                         mapName = rasterMapResource.getInfo(null).getTitle();
-                        mapsetPath = ((JGrassMapsetGeoResource) rasterMapResource.parent(null)).getFile().getAbsolutePath();
+                        mapsetPath = ((JGrassMapsetGeoResource) rasterMapResource.parent(null))
+                                .getFile().getAbsolutePath();
                         if (mapName != null && mapsetPath != null) {
-                            String catsPath = mapsetPath + File.separator + JGrassConstants.CATS + File.separator + mapName;
+                            String catsPath = mapsetPath + File.separator + JGrassConstants.CATS
+                                    + File.separator + mapName;
                             makeSomeCategories(catsPath);
                         }
                     } catch (IOException e) {

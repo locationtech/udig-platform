@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2006, Refractions Research Inc.
  *
@@ -11,11 +12,6 @@ package org.locationtech.udig.bookmarks.internal.actions;
 
 import java.util.Collection;
 import java.util.List;
-
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.command.MapCommand;
-import org.locationtech.udig.project.render.IViewportModel;
-import org.locationtech.udig.project.ui.ApplicationGIS;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -33,6 +29,7 @@ import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.bookmarks.Bookmark;
 import org.locationtech.udig.bookmarks.BookmarkCommandFactory;
 import org.locationtech.udig.bookmarks.BookmarksPlugin;
@@ -42,24 +39,25 @@ import org.locationtech.udig.bookmarks.internal.MapReference;
 import org.locationtech.udig.bookmarks.internal.MapWrapper;
 import org.locationtech.udig.bookmarks.internal.Messages;
 import org.locationtech.udig.bookmarks.internal.ui.BookmarksView;
-
-import org.locationtech.jts.geom.Envelope;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.command.MapCommand;
+import org.locationtech.udig.project.render.IViewportModel;
+import org.locationtech.udig.project.ui.ApplicationGIS;
 
 /**
- * The action delegate the provides all of the actions for working with
- * bookmarks.
+ * The action delegate the provides all of the actions for working with bookmarks.
  * <p>
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
-public class BookmarkAction extends Action implements IObjectActionDelegate,
-        IViewActionDelegate, IDoubleClickListener {
+public class BookmarkAction extends Action
+        implements IObjectActionDelegate, IViewActionDelegate, IDoubleClickListener {
     /**
      * id for action to remove a bookmark
      */
-    public static final String REMOVE_BOOKMARK_ACTION_ID = "bookmarks.actions.removebookmarkaction"; //$NON-NLS-N$
+    public static final String REMOVE_BOOKMARK_ACTION_ID = "bookmarks.actions.removebookmarkaction"; //$NON-NLS-1$
 
     /**
      * id for action to remove a bookmark
@@ -102,7 +100,9 @@ public class BookmarkAction extends Action implements IObjectActionDelegate,
     public static final String RESTORE_BOOKMARKS_ACTION_ID = "bookmarks.actions.restorebookmarksaction"; //$NON-NLS-1$
 
     private IViewPart view;
+
     private IStructuredSelection selection;
+
     private IBookmarkService bmManager;
 
     /**
@@ -112,29 +112,20 @@ public class BookmarkAction extends Action implements IObjectActionDelegate,
         // nothing to do
     }
 
-    // public void run() {
-    // ViewportModel v =
-    // (ViewportModel)(PlatformGIS.getActiveMap().getViewportModel());
-    // IStructuredSelection selection =
-    // (IStructuredSelection)this.view.viewer.getSelection();
-    // Bookmark bookmark = (Bookmark)selection.getFirstElement();
-    // v.setBounds(bookmark.getEnvelope());
-    // }
-
+    @Override
     public void setActivePart(IAction action, IWorkbenchPart targetPart) {
         if (targetPart != null && targetPart instanceof IViewPart) {
             view = (IViewPart) targetPart;
         }
     }
 
+    @Override
     public void run(IAction action) {
         try {
             if (REMOVE_ALL_ACTION_ID.equals(action.getId())) {
-                if (MessageDialog
-                        .openConfirm(
-                                Display.getCurrent().getActiveShell(),
-                                Messages.BookmarkAction_dialogtitle_removebookmarks,
-                                Messages.BookmarkAction_dialogprompt_removeallbookmarks)) {
+                if (MessageDialog.openConfirm(Display.getCurrent().getActiveShell(),
+                        Messages.BookmarkAction_dialogtitle_removebookmarks,
+                        Messages.BookmarkAction_dialogprompt_removeallbookmarks)) {
                     if (bmManager == null) {
                         bmManager = BookmarksPlugin.getBookmarkService();
                     }
@@ -145,28 +136,21 @@ public class BookmarkAction extends Action implements IObjectActionDelegate,
                 int size = selection.size();
                 if (size > 0) {
                     if (size > 1) {
-                        if (MessageDialog
-                                .openConfirm(
-                                        Display.getCurrent().getActiveShell(),
-                                        Messages.BookmarkAction_dialogtitle_removebookmarks,
-                                        Messages.BookmarkAction_dialogprompt_removemapbookmarks)) {
-                            MapReference map = (MapReference) selection
-                                    .getFirstElement();
+                        if (MessageDialog.openConfirm(Display.getCurrent().getActiveShell(),
+                                Messages.BookmarkAction_dialogtitle_removebookmarks,
+                                Messages.BookmarkAction_dialogprompt_removemapbookmarks)) {
+                            MapReference map = (MapReference) selection.getFirstElement();
                             if (bmManager == null) {
-                                bmManager = BookmarksPlugin
-                                        .getBookmarkService();
+                                bmManager = BookmarksPlugin.getBookmarkService();
                             }
                             bmManager.removeMap(map);
                         }
                     } else {
-                        if (MessageDialog
-                                .openConfirm(
-                                        Display.getCurrent().getActiveShell(),
-                                        Messages.BookmarkAction_dialogtitle_removebookmarks,
-                                        Messages.BookmarkAction_dialogprompt_removeselectedmaps)) {
+                        if (MessageDialog.openConfirm(Display.getCurrent().getActiveShell(),
+                                Messages.BookmarkAction_dialogtitle_removebookmarks,
+                                Messages.BookmarkAction_dialogprompt_removeselectedmaps)) {
                             if (bmManager == null) {
-                                bmManager = BookmarksPlugin
-                                        .getBookmarkService();
+                                bmManager = BookmarksPlugin.getBookmarkService();
                             }
                             List wrappedMaps = selection.toList();
                             Collection maps = MapWrapper.unwrap(wrappedMaps);
@@ -175,68 +159,26 @@ public class BookmarkAction extends Action implements IObjectActionDelegate,
                     }
                     refreshView();
                 }
-                // }else if(REMOVE_PROJECT_ACTION_ID.equals(action.getId())){
-                // int size = selection.size();
-                // if(size > 0){
-                // if(size > 1){
-                // if( MessageDialog.openConfirm(
-                // Display.getCurrent().getActiveShell(),
-                // Messages..BOOKMARK_ACTION_DIALOGTITLE_REMOVEBOOKMARKS,
-                // //$NON-NLS-1$
-                // Messages..BOOKMARK_ACTION_DIALOGPROMPT_REMOVEPROJECTBOOKMARKS)
-                // ){ //$NON-NLS-1$
-                // ProjectWrapper wrapper =
-                // (ProjectWrapper)selection.getFirstElement();
-                // if(bmManager == null){
-                // bmManager = BookmarksPlugin.getBookmarkService();
-                // }
-                // // bmManager.removeProject(wrapper.getProject());
-                // }
-                // }else {
-                // if( MessageDialog.openConfirm(
-                // Display.getCurrent().getActiveShell(),
-                // Messages..BOOKMARK_ACTION_DIALOGTITLE_REMOVEBOOKMARKS,
-                // //$NON-NLS-1$
-                // Messages..BOOKMARK_ACTION_DIALOGPROMPT_REMOVESELECTEDPROJECTS)
-                // ){ //$NON-NLS-1$
-                // if(bmManager == null){
-                // bmManager = BookmarksPlugin.getBookmarkService();
-                // }
-                // List wrappedProjects = selection.toList();
-                // Collection<IProject> projects =
-                // ProjectWrapper.unwrap(wrappedProjects);
-                // bmManager.removeProjects(projects);
-                // }
-                // }
-                // refreshView();
-                // }
             } else if (REMOVE_BOOKMARK_ACTION_ID.equals(action.getId())) {
                 int size = selection.size();
                 if (size > 0) {
                     if (size > 1) {
-                        if (MessageDialog
-                                .openConfirm(
-                                        Display.getCurrent().getActiveShell(),
-                                        Messages.BookmarkAction_dialogtitle_removebookmarks,
-                                        Messages.BookmarkAction_dialogprompt_removeselectedbookmarks)) {
+                        if (MessageDialog.openConfirm(Display.getCurrent().getActiveShell(),
+                                Messages.BookmarkAction_dialogtitle_removebookmarks,
+                                Messages.BookmarkAction_dialogprompt_removeselectedbookmarks)) {
                             List bookmarks = selection.toList();
                             if (bmManager == null) {
-                                bmManager = BookmarksPlugin
-                                        .getBookmarkService();
+                                bmManager = BookmarksPlugin.getBookmarkService();
                             }
                             bmManager.removeBookmarks(bookmarks);
                         }
                     } else {
-                        if (MessageDialog
-                                .openConfirm(
-                                        Display.getCurrent().getActiveShell(),
-                                        Messages.BookmarkAction_dialogtitle_removebookmark,
-                                        Messages.BookmarkAction_dialogprompt_removebookmark)) {
-                            Bookmark bookmark = (Bookmark) selection
-                                    .getFirstElement();
+                        if (MessageDialog.openConfirm(Display.getCurrent().getActiveShell(),
+                                Messages.BookmarkAction_dialogtitle_removebookmark,
+                                Messages.BookmarkAction_dialogprompt_removebookmark)) {
+                            Bookmark bookmark = (Bookmark) selection.getFirstElement();
                             if (bmManager == null) {
-                                bmManager = BookmarksPlugin
-                                        .getBookmarkService();
+                                bmManager = BookmarksPlugin.getBookmarkService();
                             }
                             bmManager.removeBookmark(bookmark);
                         }
@@ -259,8 +201,7 @@ public class BookmarkAction extends Action implements IObjectActionDelegate,
                     }
                     MapReference ref = bmManager.getMapReference(map);
                     Bookmark bookmark = new Bookmark(bounds, ref, null);
-                    InputDialog dialog = new InputDialog(
-                            Display.getCurrent().getActiveShell(),
+                    InputDialog dialog = new InputDialog(Display.getCurrent().getActiveShell(),
                             Messages.BookmarkAction_dialogtitle_bookmarklocation,
                             Messages.BookmarkAction_dialogprompt_enterbookmarkname,
                             bookmark.getName(), null);
@@ -272,16 +213,14 @@ public class BookmarkAction extends Action implements IObjectActionDelegate,
                         bmManager.addBookmark(bookmark);
                         refreshView();
                     }
-                    ((BookmarksView) view)
-                            .selectReveal(new StructuredSelection(bookmark));
+                    ((BookmarksView) view).selectReveal(new StructuredSelection(bookmark));
                 }
             } else if (RENAME_BOOKMARK_ACTION_ID.equals(action.getId())) {
                 IBookmark bookmark = (IBookmark) selection.getFirstElement();
-                InputDialog dialog = new InputDialog(Display.getCurrent()
-                        .getActiveShell(),
+                InputDialog dialog = new InputDialog(Display.getCurrent().getActiveShell(),
                         Messages.BookmarkAction_dialogtitle_renamebookmark,
-                        Messages.BookmarkAction_dialogprompt_enterbookmarkname,
-                        bookmark.getName(), null);
+                        Messages.BookmarkAction_dialogprompt_enterbookmarkname, bookmark.getName(),
+                        null);
                 dialog.open();
                 if (dialog.getReturnCode() == Window.OK) {
                     String name = dialog.getValue();
@@ -308,9 +247,8 @@ public class BookmarkAction extends Action implements IObjectActionDelegate,
 
     /**
      * Go to the given bookmark
-     * 
-     * @param bookmark
-     *            The bookmark to go to
+     *
+     * @param bookmark The bookmark to go to
      */
     private void gotoBookmark(Bookmark bookmark) {
         BookmarkCommandFactory factory = BookmarkCommandFactory.getInstance();
@@ -318,6 +256,7 @@ public class BookmarkAction extends Action implements IObjectActionDelegate,
         ApplicationGIS.getActiveMap().sendCommandASync(cmd);
     }
 
+    @Override
     public void init(IViewPart viewPart) {
         if (viewPart != null) {
             this.view = viewPart;
@@ -327,15 +266,15 @@ public class BookmarkAction extends Action implements IObjectActionDelegate,
         }
     }
 
+    @Override
     public void selectionChanged(IAction action, ISelection newSelection) {
         this.selection = (IStructuredSelection) newSelection;
     }
 
+    @Override
     public void doubleClick(DoubleClickEvent event) {
-        final IStructuredSelection eventSelection = (IStructuredSelection) event
-                .getSelection();
-        if (eventSelection.size() > 0
-                && eventSelection.getFirstElement() instanceof Bookmark) {
+        final IStructuredSelection eventSelection = (IStructuredSelection) event.getSelection();
+        if (eventSelection.size() > 0 && eventSelection.getFirstElement() instanceof Bookmark) {
             Bookmark bookmark = (Bookmark) eventSelection.getFirstElement();
             gotoBookmark(bookmark);
         }

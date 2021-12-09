@@ -34,6 +34,7 @@ import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.IProject;
 import org.locationtech.udig.project.command.NavCommand;
 import org.locationtech.udig.project.command.UndoableComposite;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.FeatureEditorLoader;
@@ -50,58 +51,71 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 /**
  * Represents a problem or issue with a feature. The map containing the feature and the
  * FeatureEditor will both be show. The map will be zoomed to show the feature.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
 public class FeatureIssue extends AbstractIssue {
-	public static final String EXT_ID="org.locationtech.udig.issues.featureIssue"; //$NON-NLS-1$
+    public static final String EXT_ID = "org.locationtech.udig.issues.featureIssue"; //$NON-NLS-1$
+
     private static final String MAP_KEY = "map"; //$NON-NLS-1$
+
     private static final String LAYER_KEY = "layer"; //$NON-NLS-1$
+
     private static final String PROJECT_KEY = "project"; //$NON-NLS-1$
+
     private static final String FEATURE_KEY = "feature"; //$NON-NLS-1$
-    
+
     private SimpleFeature feature;
+
     private String viewid;
+
     private FeatureEditorLoader featureEditorLoader;
-	private ILayer layer;
+
+    private ILayer layer;
+
     private String featureID;
+
     private String mapID;
+
     private String layerID;
+
     private String projectID;
+
     /**
      * ONLY USE THIS FOR TESTING!!!!!!!
      */
-    private static boolean testing=false;
+    private static boolean testing = false;
 
-    public FeatureIssue( ){
-        
+    public FeatureIssue() {
+
     }
-    
-    public FeatureIssue( Priority priority, String description, ILayer containingLayer, SimpleFeature feature, String groupId ) {
-    	assert groupId!=null && priority!=null && containingLayer!=null && feature!=null;
-    	
+
+    public FeatureIssue(Priority priority, String description, ILayer containingLayer,
+            SimpleFeature feature, String groupId) {
+        assert groupId != null && priority != null && containingLayer != null && feature != null;
+
         setPriority(priority);
         setDescription(description);
-        this.layer=containingLayer;
+        this.layer = containingLayer;
         this.feature = feature;
-		featureEditorLoader = ApplicationGISInternal.getFeatureEditorLoader(feature);
-		viewid = featureEditorLoader.getViewId();
-        
-		setGroupId(groupId);
+        featureEditorLoader = ApplicationGISInternal.getFeatureEditorLoader(feature);
+        viewid = featureEditorLoader.getViewId();
+
+        setGroupId(groupId);
         setBounds(new ReferencedEnvelope(feature.getBounds()));
     }
-    
+
     @Override
-    public void setId( String id ) {
+    public void setId(String id) {
         super.setId(id);
     }
-    
+
     @Override
     public String getEditorID() {
-    	return MapEditorWithPalette.ID;
+        return MapEditorWithPalette.ID;
     }
-    
+
     @Override
     public IEditorInput getEditorInput() {
         return new MapEditorInput(getLayer().getMap());
@@ -109,84 +123,93 @@ public class FeatureIssue extends AbstractIssue {
 
     @Override
     public String getViewPartId() {
-        if( viewid==null ){
-            
+        if (viewid == null) {
+
         }
         return viewid;
     }
 
+    @Override
     public String getProblemObject() {
-    	SimpleFeature feature = getFeature();
-    	SimpleFeatureType featureType = feature.getFeatureType();
-    	String text = null;
-    	text = getAttribute(feature, featureType, Messages.FeatureIssue_attributeName);
-		if( text==null ){
-			text = getAttribute(feature, featureType, Messages.FeatureIssue_idAttempt1);
-		}
-		if( text==null ){
-			text = getAttribute(feature, featureType, Messages.FeatureIssue_idAttempt2);
-		}
-		if( text==null ){
-			text = feature.getID();
-		}
+        SimpleFeature feature = getFeature();
+        SimpleFeatureType featureType = feature.getFeatureType();
+        String text = null;
+        text = getAttribute(feature, featureType, Messages.FeatureIssue_attributeName);
+        if (text == null) {
+            text = getAttribute(feature, featureType, Messages.FeatureIssue_idAttempt1);
+        }
+        if (text == null) {
+            text = getAttribute(feature, featureType, Messages.FeatureIssue_idAttempt2);
+        }
+        if (text == null) {
+            text = feature.getID();
+        }
 
         return text;
     }
 
-	private String getAttribute(SimpleFeature feature, SimpleFeatureType featureType,
-			String attName) {
-		int attributeIndex = featureType.indexOf(attName); 
-    	if ( attributeIndex!=-1 ){
-    		Object attribute = feature.getAttribute(attributeIndex);
-			return attribute.toString();
-    	}
-    	return null;
-	}
-
-    public void fixIssue( IViewPart part, IEditorPart editor ) {
-    	if( getLayer() == null ){
-    		Display.getDefault().asyncExec(new Runnable() {
-				public void run() {
-					Shell parent = Display.getCurrent().getActiveShell();
-					String title = Messages.FeatureIssue_DialogText;
-					String message = Messages.FeatureIssue_DialogMessage;
-					MessageDialog.openInformation(parent, title, message);
-					
-				}
-			});
-    		return;
-    	}
-        final ToolContext context = ApplicationGISInternal.createContext(getLayer().getMap());
-        final CoordinateReferenceSystem crs=getLayer().getCRS( );
-        ReferencedEnvelope bounds = new ReferencedEnvelope(getFeature().getBounds());
-        double deltax=bounds.getWidth()/4;
-        double deltay=bounds.getHeight()/4;
-        bounds.expandToInclude(bounds.getMinX()-deltax, bounds.getMinY()-deltay);
-        bounds.expandToInclude(bounds.getMaxX()+deltax, bounds.getMaxY()+deltay);
-        UndoableComposite composite = new UndoableComposite();
-        IAction tool = ApplicationGIS.getToolManager().getToolAction("org.locationtech.udig.tools.selectionTool", "org.locationtech.udig.tool.edit.edit"); //$NON-NLS-1$ //$NON-NLS-2$
-        // could be null if tool.edit plug-in is not in distribution.
-        if( tool !=null ){
-        	tool.run();
+    private String getAttribute(SimpleFeature feature, SimpleFeatureType featureType,
+            String attName) {
+        int attributeIndex = featureType.indexOf(attName);
+        if (attributeIndex != -1) {
+            Object attribute = feature.getAttribute(attributeIndex);
+            return attribute.toString();
         }
-        NavCommand zoom = context.getNavigationFactory().createSetViewportBBoxCommand(
-                bounds, crs);
+        return null;
+    }
+
+    @Override
+    public void fixIssue(IViewPart part, IEditorPart editor) {
+        if (getLayer() == null) {
+            Display.getDefault().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    Shell parent = Display.getCurrent().getActiveShell();
+                    String title = Messages.FeatureIssue_DialogText;
+                    String message = Messages.FeatureIssue_DialogMessage;
+                    MessageDialog.openInformation(parent, title, message);
+
+                }
+            });
+            return;
+        }
+        final ToolContext context = ApplicationGISInternal.createContext(getLayer().getMap());
+        final CoordinateReferenceSystem crs = getLayer().getCRS();
+        ReferencedEnvelope bounds = new ReferencedEnvelope(getFeature().getBounds());
+        double deltax = bounds.getWidth() / 4;
+        double deltay = bounds.getHeight() / 4;
+        bounds.expandToInclude(bounds.getMinX() - deltax, bounds.getMinY() - deltay);
+        bounds.expandToInclude(bounds.getMaxX() + deltax, bounds.getMaxY() + deltay);
+        UndoableComposite composite = new UndoableComposite();
+        IAction tool = ApplicationGIS.getToolManager().getToolAction(
+                "org.locationtech.udig.tools.selectionTool", //$NON-NLS-1$
+                "org.locationtech.udig.tool.edit.edit"); //$NON-NLS-1$
+        // could be null if tool.edit plug-in is not in distribution.
+        if (tool != null) {
+            tool.run();
+        }
+        NavCommand zoom = new SetViewportBBoxCommand(bounds, crs);
         context.sendASyncCommand(zoom);
-        composite.getCommands().add(context.getSelectionFactory().createFIDSelectCommand(getLayer(),getFeature()));
-        composite.getCommands().add(context.getEditFactory().createSetEditFeatureCommand(getFeature(), getLayer()));
+        composite.getCommands().add(
+                context.getSelectionFactory().createFIDSelectCommand(getLayer(), getFeature()));
+        composite.getCommands().add(
+                context.getEditFactory().createSetEditFeatureCommand(getFeature(), getLayer()));
         context.sendASyncCommand(composite);
     }
 
-	public String getExtensionID() {
-		return EXT_ID;
-	}
+    @Override
+    public String getExtensionID() {
+        return EXT_ID;
+    }
 
-    public void init( IMemento memento, IMemento viewMemento, String issueId, String groupId, ReferencedEnvelope bounds ) {
-        if( !testing || memento!=null ){
-            mapID=memento.getString(MAP_KEY);
-            layerID=memento.getString(LAYER_KEY);
-            projectID=memento.getString(PROJECT_KEY);
-            featureID=memento.getString(FEATURE_KEY);
+    @Override
+    public void init(IMemento memento, IMemento viewMemento, String issueId, String groupId,
+            ReferencedEnvelope bounds) {
+        if (!testing || memento != null) {
+            mapID = memento.getString(MAP_KEY);
+            layerID = memento.getString(LAYER_KEY);
+            projectID = memento.getString(PROJECT_KEY);
+            featureID = memento.getString(FEATURE_KEY);
         }
         setViewMemento(viewMemento);
         setId(issueId);
@@ -194,7 +217,8 @@ public class FeatureIssue extends AbstractIssue {
         setBounds(bounds);
     }
 
-    public void save( IMemento memento ) {
+    @Override
+    public void save(IMemento memento) {
         memento.putString(MAP_KEY, getLayer().getMap().getID().toString());
         memento.putString(LAYER_KEY, getLayer().getID().toString());
         memento.putString(PROJECT_KEY, getLayer().getMap().getProject().getID().toString());
@@ -202,71 +226,80 @@ public class FeatureIssue extends AbstractIssue {
     }
 
     private SimpleFeature getFeature() {
-        if( feature==null ){
-            ILayer layer=getLayer();
-             FeatureSource<SimpleFeatureType, SimpleFeature> featureSource;
+        if (feature == null) {
+            ILayer layer = getLayer();
+            FeatureSource<SimpleFeatureType, SimpleFeature> featureSource;
             try {
-                featureSource = layer.getResource(FeatureSource.class, ProgressManager.instance().get());
-                FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-				Id id2 = filterFactory.id(FeatureUtils.stringToId(filterFactory,featureID));
-				FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featureSource.getFeatures(id2);
+                featureSource = layer.getResource(FeatureSource.class,
+                        ProgressManager.instance().get());
+                FilterFactory filterFactory = CommonFactoryFinder
+                        .getFilterFactory(GeoTools.getDefaultHints());
+                Id id2 = filterFactory.id(FeatureUtils.stringToId(filterFactory, featureID));
+                FeatureCollection<SimpleFeatureType, SimpleFeature> features = featureSource
+                        .getFeatures(id2);
                 FeatureIterator<SimpleFeature> iter = features.features();
-                try{
-                    if ( iter.hasNext() )
-                        feature=iter.next();
-                }finally{
+                try {
+                    if (iter.hasNext())
+                        feature = iter.next();
+                } finally {
                     iter.close();
                 }
             } catch (IOException e) {
-                throw (RuntimeException) new RuntimeException( ).initCause( e );
+                throw (RuntimeException) new RuntimeException().initCause(e);
             }
         }
-        if( feature==null )
+        if (feature == null)
             // this should get it removed from the issues list
-            throw new IllegalStateException("This issue is not legal for this uDig instance because the feature cannot be loaded."); //$NON-NLS-1$
+            throw new IllegalStateException(
+                    "This issue is not legal for this uDig instance because the feature cannot be loaded."); //$NON-NLS-1$
         return feature;
     }
 
     private ILayer getLayer() {
-        if( layer==null ){
-            List< ? extends IProject> projects = ApplicationGIS.getProjects();
-            IProject found=null;
-            for( IProject project : projects ) {
-                if( project.getID().toString().equals(projectID)){
-                    found=project;
+        if (layer == null) {
+            List<? extends IProject> projects = ApplicationGIS.getProjects();
+            IProject found = null;
+            for (IProject project : projects) {
+                if (project.getID().toString().equals(projectID)) {
+                    found = project;
                     break;
                 }
             }
-            if( found==null )
-                throw new IllegalStateException("This issue is not legal for this uDig instance because the project:"+projectID+" cannot be found."); //$NON-NLS-1$ //$NON-NLS-2$
+            if (found == null)
+                throw new IllegalStateException(
+                        "This issue is not legal for this uDig instance because the project:" //$NON-NLS-1$
+                                + projectID + " cannot be found."); //$NON-NLS-1$
             List<IMap> maps = found.getElements(IMap.class);
-            IMap foundMap=null;
-            for( IMap map : maps ) {
-                if( map.getID().toString().equals(mapID) ){
-                    foundMap=map;
+            IMap foundMap = null;
+            for (IMap map : maps) {
+                if (map.getID().toString().equals(mapID)) {
+                    foundMap = map;
                 }
             }
-            if( foundMap==null )
-                throw new IllegalStateException("This issue is not legal for this uDig instance because the map:"+mapID+" cannot be found.");  //$NON-NLS-1$//$NON-NLS-2$
-    
-            List<ILayer> layers= foundMap.getMapLayers();
-            for( ILayer layer : layers ) {
-                if( layer.getID().toString().equals(layerID) ){
-                    this.layer=layer;
+            if (foundMap == null)
+                throw new IllegalStateException(
+                        "This issue is not legal for this uDig instance because the map:" + mapID //$NON-NLS-1$
+                                + " cannot be found."); //$NON-NLS-1$
+
+            List<ILayer> layers = foundMap.getMapLayers();
+            for (ILayer layer : layers) {
+                if (layer.getID().toString().equals(layerID)) {
+                    this.layer = layer;
                 }
             }
         }
-        if( layer==null )
-            throw new IllegalStateException("This issue is not legal for this uDig instance because the alyer:"+layerID+" cannot be found."); //$NON-NLS-1$ //$NON-NLS-2$
+        if (layer == null)
+            throw new IllegalStateException(
+                    "This issue is not legal for this uDig instance because the alyer:" + layerID //$NON-NLS-1$
+                            + " cannot be found."); //$NON-NLS-1$
         return layer;
     }
 
     /**
      * ONLY USE THIS FOR TESTING!!!!!!!
      */
-    public static void setTesting( boolean b ) {
-        testing=b;
+    public static void setTesting(boolean b) {
+        testing = b;
     }
 
-	
 }

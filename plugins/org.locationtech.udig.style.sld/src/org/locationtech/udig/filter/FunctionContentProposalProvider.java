@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,44 +11,40 @@
 package org.locationtech.udig.filter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
-import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.FunctionFinder;
 import org.opengis.filter.capability.FunctionName;
-import org.opengis.filter.expression.Function;
 
 /**
  * SimpleContentProposalProvider is a class designed to map a static list of Strings to content
  * proposals.
- * 
+ *
  * @see IContentProposalProvider
  * @since 3.2
  */
-@SuppressWarnings("deprecation")
 class FunctionContentProposalProvider implements IContentProposalProvider {
 
     public static Set<String> proposals;
     static {
-        proposals = new TreeSet<String>();
+        proposals = new TreeSet<>();
         FunctionFinder functionFinder = new FunctionFinder(null);
-        
-        for( FunctionName function : functionFinder.getAllFunctionDescriptions() ){
+
+        for (FunctionName function : functionFinder.getAllFunctionDescriptions()) {
             proposals.add(function.getName().toLowerCase());
         }
     }
 
-    /*
+    /**
      * The proposals mapped to IContentProposal. Cached for speed in the case where filtering is not
      * used.
      */
     private IContentProposal[] contentProposals;
 
-    /*
+    /**
      * Boolean that tracks whether filtering is used.
      */
     private boolean filterProposals = false;
@@ -58,24 +54,26 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
     /**
      * Construct a SimpleContentProposalProvider whose content proposals are always the specified
      * array of Objects.
-     * 
+     *
      * @param proposals the array of Strings to be returned whenever proposals are requested.
      */
     public FunctionContentProposalProvider() {
+
     }
 
     /**
      * Return an array of Objects representing the valid content proposals for a field.
-     * 
+     *
      * @param contents the current contents of the field (only consulted if filtering is set to
      *        <code>true</code>)
      * @param position the current cursor position within the field used to select a word
      * @return the array of Objects that represent valid proposals for the field given its current
      *         content.
      */
-    public IContentProposal[] getProposals( String contents, int position ) {
+    @Override
+    public IContentProposal[] getProposals(String contents, int position) {
         String word = contents.substring(0, position);
-        int start = contents.lastIndexOf(" ", position);
+        int start = contents.lastIndexOf(" ", position); //$NON-NLS-1$
         if (start != -1) {
             word = contents.substring(start, position);
         }
@@ -85,35 +83,35 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
         }
 
         if (filterProposals) {
-            ArrayList<IContentProposal> list = new ArrayList<IContentProposal>();
+            ArrayList<IContentProposal> list = new ArrayList<>();
             if (extras != null) {
-                for( String extra : extras ) {
+                for (String extra : extras) {
                     if (extra.length() >= word.length()
                             && extra.substring(0, word.length()).equalsIgnoreCase(word)) {
                         list.add(makeContentProposal(extra));
                     }
                 }
             }
-            for( String proposal : proposals ) {
+            for (String proposal : proposals) {
                 if (proposal.length() >= word.length()
                         && proposal.substring(0, word.length()).equalsIgnoreCase(word)) {
                     list.add(makeContentProposal(proposal));
                 }
             }
-            return (IContentProposal[]) list.toArray(new IContentProposal[list.size()]);
+            return list.toArray(new IContentProposal[list.size()]);
         } else {
             if (contentProposals == null) {
                 final int LENGTH = proposals.size() + (extras == null ? 0 : extras.size());
 
-                contentProposals = new IContentProposal[ LENGTH ];
+                contentProposals = new IContentProposal[LENGTH];
                 int i = 0;
                 if (extras != null && !extras.isEmpty()) {
-                    for( String extra : extras ) {
+                    for (String extra : extras) {
                         contentProposals[i] = makeContentProposal(extra);
                         i++;
                     }
                 }
-                for( String proposal : proposals ) {
+                for (String proposal : proposals) {
                     contentProposals[i] = makeContentProposal(proposal);
                     i++;
                 }
@@ -121,45 +119,50 @@ class FunctionContentProposalProvider implements IContentProposalProvider {
             return contentProposals;
         }
     }
+
     /**
      * Set the boolean that controls whether proposals are filtered according to the current field
      * content.
-     * 
+     *
      * @param filterProposals <code>true</code> if the proposals should be filtered to show only
      *        those that match the current contents of the field, and <code>false</code> if the
      *        proposals should remain the same, ignoring the field content.
      * @since 3.3
      */
-    public void setFiltering( boolean filterProposals ) {
+    public void setFiltering(boolean filterProposals) {
         this.filterProposals = filterProposals;
         // Clear any cached proposals.
         contentProposals = null;
     }
 
-    /*
+    /**
      * Make an IContentProposal for showing the specified String.
      */
-    private IContentProposal makeContentProposal( final String proposal ) {
-        return new IContentProposal(){
+    private IContentProposal makeContentProposal(final String proposal) {
+        return new IContentProposal() {
+            @Override
             public String getContent() {
                 return proposal;
             }
 
+            @Override
             public String getDescription() {
                 return null;
             }
 
+            @Override
             public String getLabel() {
                 return null;
             }
 
+            @Override
             public int getCursorPosition() {
                 return proposal.length();
             }
         };
     }
 
-    public void setExtra( Set<String> names ) {
+    public void setExtra(Set<String> names) {
         this.extras = names;
         this.contentProposals = null;
     }

@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,38 +22,46 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.URLUtils;
 import org.locationtech.udig.catalog.service.FormatProvider;
 import org.locationtech.udig.core.internal.ExtensionPointProcessor;
 import org.locationtech.udig.core.internal.ExtensionPointUtil;
 
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-
 public class FileConnectionFactory extends UDIGConnectionFactory {
 
     private static final String FILE_FORMAT_EXTENSION = "org.locationtech.udig.catalog.ui.fileFormat"; //$NON-NLS-1$
+
     private ArrayList<String> extensionList;
+
     private ArrayList<FileType> typeList;
-    
-    public boolean canProcess( Object context ) {
+
+    @Override
+    public boolean canProcess(Object context) {
         return createConnectionURL(context) != null;
     }
 
-    public Map<String, Serializable> createConnectionParameters( Object context ) {
+    @Override
+    public Map<String, Serializable> createConnectionParameters(Object context) {
         // do nothing, we are not connecting to a specific data store
         return null;
     }
 
-    public URL createConnectionURL( Object context ) {
-        URL url = CatalogPlugin.locateURL(context);
-
-        if (url == null) {
+    @Override
+    public URL createConnectionURL(Object context) {
+        if (context == null) {
             return null;
         }
 
-        url = checkedURL(url);
+        ID id = ID.cast(context);
+
+        if (id == null) {
+            return null;
+        }
+        URL url = checkedURL(id.toURL());
+
         if (url == null || url.getFile() == null) {
             return null;
         }
@@ -63,7 +71,7 @@ public class FileConnectionFactory extends UDIGConnectionFactory {
         if (fileExt != null)
             fileExt = fileExt.toLowerCase();
 
-        for( String goodExt : getExtensionList() ) {
+        for (String goodExt : getExtensionList()) {
             goodExt = goodExt.toLowerCase();
             if (fileExt.equals(goodExt.substring(goodExt.lastIndexOf('.') + 1))) {
                 // actually do a test
@@ -76,7 +84,10 @@ public class FileConnectionFactory extends UDIGConnectionFactory {
     }
 
     /** Check that any trailing #layer is removed from the url */
-    static public URL checkedURL( URL url ) {
+    static public URL checkedURL(URL url) {
+        if (url == null) {
+            return null;
+        }
         String check = url.toExternalForm();
         int hash = check.indexOf('#');
         if (hash == -1) {
@@ -88,128 +99,137 @@ public class FileConnectionFactory extends UDIGConnectionFactory {
             return null;
         }
     }
+
     public static class FileType implements Comparable<FileType> {
         final String name;
+
         final String extensions;
-        FileType( String name, String extensions){
+
+        FileType(String name, String extensions) {
             this.name = name;
             this.extensions = extensions;
         }
+
         public String getName() {
             return name;
         }
+
         public String getExtensions() {
             return extensions;
         }
-        public List<String> getExtensionList(){
-            if( extensions.contains(";") ){
-                return Arrays.asList( extensions.split(";"));
-            }
-            else {
-                return Collections.singletonList( extensions );
+
+        public List<String> getExtensionList() {
+            if (extensions.contains(";")) { //$NON-NLS-1$
+                return Arrays.asList(extensions.split(";")); //$NON-NLS-1$
+            } else {
+                return Collections.singletonList(extensions);
             }
         }
 
         @Override
         public int compareTo(FileType o) {
-            if( o == null || o.name == null){
+            if (o == null || o.name == null) {
                 return -1;
             }
             return name.compareTo(o.name);
         }
     }
-    
+
     /**
      * List of all registered FileTypes.
+     *
      * @return List of all registered FileTypes
      */
     synchronized List<FileType> getTypeList() {
         if (typeList == null) {
-            final Set<FileType> extensionSet = new TreeSet<FileType>();
-            ExtensionPointUtil.process(CatalogUIPlugin.getDefault(),
-                    FILE_FORMAT_EXTENSION, new ExtensionPointProcessor(){ 
-                        public void process( IExtension extension, IConfigurationElement element )
+            final Set<FileType> extensionSet = new TreeSet<>();
+            ExtensionPointUtil.process(CatalogUIPlugin.getDefault(), FILE_FORMAT_EXTENSION,
+                    new ExtensionPointProcessor() {
+                        @Override
+                        public void process(IExtension extension, IConfigurationElement element)
                                 throws Exception {
                             if ("fileService".equals(element.getName())) { //$NON-NLS-1$
                                 String name = element.getAttribute("name"); //$NON-NLS-1$
                                 String ext = element.getAttribute("fileExtension"); //$NON-NLS-1$
-                                
-                                if( name == null && ext.startsWith("*.")){
-                                    if( ext.contains(";") ){
-                                     // *.jpg;*.jpeg --> JPG Files
-                                        name = ext.substring(2,ext.lastIndexOf(';')).toUpperCase()+" Files";
-                                    }
-                                    else {
+
+                                if (name == null && ext.startsWith("*.")) { //$NON-NLS-1$
+                                    if (ext.contains(";")) { //$NON-NLS-1$
+                                        // *.jpg;*.jpeg --> JPG Files
+                                        name = ext.substring(2, ext.lastIndexOf(';')).toUpperCase()
+                                                + " Files"; //$NON-NLS-1$
+                                    } else {
                                         // *.gif --> GIF Files
-                                        name =ext.substring(2).toUpperCase()+" Files";
+                                        name = ext.substring(2).toUpperCase() + " Files"; //$NON-NLS-1$
                                     }
                                 }
-                                if( !name.contains("(")){
-                                    name += " ("+ext.replace(";",",")+")";
+                                if (!name.contains("(")) { //$NON-NLS-1$
+                                    name += " (" + ext.replace(";", ",") + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                                 }
-                                FileType type = new FileType(name, ext );
-                                extensionSet.add( type );
+                                FileType type = new FileType(name, ext);
+                                extensionSet.add(type);
                             }
-                            if ("provider".equals(element.getName())) {
+                            if ("provider".equals(element.getName())) { //$NON-NLS-1$
                                 FormatProvider provider = (FormatProvider) element
-                                        .createExecutableExtension("class");
-                                
+                                        .createExecutableExtension("class"); //$NON-NLS-1$
+
                                 String name = null;
-                                if( name == null ){
+                                if (name == null) {
                                     name = provider.getClass().getSimpleName();
-                                    if( name.equals("FileDataStoreFormatProvider")){
-                                        name = "GeoTools DataStore Files";
-                                    }
-                                    else if( name.endsWith("FormatProvider")){
-                                        name = name.substring(0,name.length()-14); // trim FormatProvider
-                                        
-                                        name += "Files"; // GDALFormatProvider --> GDAL Files
+                                    if (name.equals("FileDataStoreFormatProvider")) { //$NON-NLS-1$
+                                        name = "GeoTools DataStore Files"; //$NON-NLS-1$
+                                    } else if (name.endsWith("FormatProvider")) { //$NON-NLS-1$
+                                        name = name.substring(0, name.length() - 14); // trim
+                                                                                      // FormatProvider
+
+                                        name += "Files"; // GDALFormatProvider --> GDAL Files //$NON-NLS-1$
                                     }
                                 }
                                 StringBuilder ext = new StringBuilder();
                                 Set<String> providerExtensions = provider.getExtensions();
-                                if( !providerExtensions.isEmpty() ){
-                                    for( String fileExtension : providerExtensions ){
-                                        if( ext.length() != 0 ){
-                                            ext.append(";");
+                                if (!providerExtensions.isEmpty()) {
+                                    for (String fileExtension : providerExtensions) {
+                                        if (ext.length() != 0) {
+                                            ext.append(";"); //$NON-NLS-1$
                                         }
                                         ext.append(fileExtension);
                                     }
-                                    if( !name.contains("(")){
-                                        if( providerExtensions.size() > 4 ){
-                                            // Shorter name for providers supporting multiple formats 
+                                    if (!name.contains("(")) { //$NON-NLS-1$
+                                        if (providerExtensions.size() > 4) {
+                                            // Shorter name for providers supporting multiple
+                                            // formats
                                             String first = providerExtensions.iterator().next();
-                                            name += " ( "+first+" and "+(providerExtensions.size()-1)+" more)";
-                                        }
-                                        else {
-                                            name += " ("+ext.toString().replace(";",",")+")";
+                                            name += " ( " + first + " and " //$NON-NLS-1$ //$NON-NLS-2$
+                                                    + (providerExtensions.size() - 1) + " more)"; //$NON-NLS-1$
+                                        } else {
+                                            name += " (" + ext.toString().replace(";", ",") + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                                         }
                                     }
-                                    FileType type = new FileType( name, ext.toString() );
+                                    FileType type = new FileType(name, ext.toString());
                                     extensionSet.add(type);
                                 }
                             }
                         }
                     });
-            typeList = new ArrayList<FileType>(extensionSet);
+            typeList = new ArrayList<>(extensionSet);
         }
-        return Collections.unmodifiableList( typeList );
+        return Collections.unmodifiableList(typeList);
     }
-    
+
     /**
-     * List of all known extensions to be used as a quick test that a provided file can be expected to work.
-     * 
+     * List of all known extensions to be used as a quick test that a provided file can be expected
+     * to work.
+     *
      * @return List of all known extensions
      */
     @SuppressWarnings("unchecked")
     synchronized List<String> getExtensionList() {
         if (extensionList == null) {
-            final List<String> extensionSet = new ArrayList<String>();
-            for( FileType type : getTypeList() ){
+            final List<String> extensionSet = new ArrayList<>();
+            for (FileType type : getTypeList()) {
                 List<String> extensions = type.getExtensionList();
-                extensionSet.addAll( extensions );
+                extensionSet.addAll(extensions);
             }
-            extensionList = new ArrayList<String>(extensionSet);
+            extensionList = new ArrayList<>(extensionSet);
         }
         return (List<String>) extensionList.clone();
     }

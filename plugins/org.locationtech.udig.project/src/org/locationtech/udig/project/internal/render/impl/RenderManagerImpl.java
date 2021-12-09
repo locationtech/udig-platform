@@ -1,5 +1,12 @@
 /**
- * <copyright></copyright> $Id$
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.project.internal.render.impl;
 
@@ -12,6 +19,15 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.impl.NotificationChainImpl;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.internal.Map;
@@ -34,21 +50,10 @@ import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.render.Tile;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.notify.impl.NotificationChainImpl;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
-import org.locationtech.jts.geom.Envelope;
-
 /**
- * An unresponsive implementation of IRenderManager.  It will not rerender if the viewport model changes.  
- * In fact it does not register for any events.
- * 
+ * An unresponsive implementation of IRenderManager. It will not rerender if the viewport model
+ * changes. In fact it does not register for any events.
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -57,7 +62,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     /**
      * The cached value of the '{@link #getRenderExecutor() <em>Render Executor</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getRenderExecutor()
      * @generated NOT
      * @ordered
@@ -65,9 +70,9 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     protected RenderExecutor renderExecutor;
 
     /**
-     * The cached value of the '{@link #getRendererCreator() <em>Renderer Creator</em>}'
-     * containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The cached value of the '{@link #getRendererCreator() <em>Renderer Creator</em>}' containment
+     * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getRendererCreator()
      * @generated NOT
      * @ordered
@@ -77,7 +82,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     /**
      * The default value of the '{@link #getMapDisplay() <em>Map Display</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMapDisplay()
      * @generated
      * @ordered
@@ -87,7 +92,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     /**
      * The cached value of the '{@link #getMapDisplay() <em>Map Display</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMapDisplay()
      * @generated
      * @ordered
@@ -97,7 +102,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     /**
      * The cached value of the '{@link #getMapInternal() <em>Map Internal</em>}' reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMapInternal()
      * @generated
      * @ordered
@@ -105,8 +110,9 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     protected Map mapInternal;
 
     /**
-     * The cached value of the '{@link #getViewportModelInternal() <em>Viewport Model Internal</em>}' reference.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The cached value of the '{@link #getViewportModelInternal() <em>Viewport Model
+     * Internal</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getViewportModelInternal()
      * @generated
      * @ordered
@@ -119,8 +125,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     protected volatile boolean disposed = false;
 
     /**
-     * Indicates if the current render manager is a viewer or is the "real"
-     * render manager for the map
+     * Indicates if the current render manager is a viewer or is the "real" render manager for the
+     * map
      */
     boolean viewer = false;
 
@@ -129,7 +135,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     protected RenderManagerImpl() {
@@ -162,6 +168,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -215,6 +222,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -234,6 +242,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public Map basicGetMapInternal() {
@@ -242,6 +251,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public NotificationChain basicSetMapInternal(Map newMapInternal, NotificationChain msgs) {
@@ -260,6 +270,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public void setMapInternalGen(Map newMapInternal) {
@@ -312,6 +323,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -321,6 +333,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -334,7 +347,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -345,7 +358,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -356,6 +369,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public NotificationChain basicSetViewportModelInternal(ViewportModel newViewportModelInternal,
@@ -376,7 +390,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -402,13 +416,6 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * @throws IOException
-     * @see org.locationtech.udig.project.internal.render.RenderManager#getInfo(java.awt.Point)
-     *      public List getInfo(Point screenLocation) throws IOException { return
-     *      getRenderExecutor().getInfo(screenLocation); }
-     */
-
-    /**
-     * @throws IOException
      * @see org.locationtech.udig.project.internal.render.RenderManager#createInfo(java.awt.Point)
      *      public List getInfo(Point screenLocation) throws IOException { return
      *      getRenderExecutor().getInfo(screenLocation); }
@@ -426,6 +433,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -440,32 +448,31 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * If subclasses override this method make sure that super.dispose() is called <b>AT THE END<b>
-     * of the overridding method.
-     * 
+     * of the overriding method.
+     *
      * @generated NOT
      */
     @Override
     public void dispose() {
         checkState();
         if (renderExecutor != null) {
-            ((RenderContextImpl) renderExecutor.getContext()).dispose();
             getRenderExecutor().dispose();
+            ((RenderContextImpl) renderExecutor.getContext()).dispose();
         }
 
         mapDisplay = null;
 
         renderExecutor = null;
+        rendererCreator = null;
 
         getMapInternal().setRenderManagerInternal(null);
 
         disposed = true;
-
-        // Runtime.getRuntime().gc();
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -488,8 +495,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -505,8 +512,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -527,8 +534,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -551,8 +558,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -575,8 +582,8 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -602,6 +609,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -616,56 +624,37 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
         return result.toString();
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.RenderManager#refresh(org.locationtech.udig.project.Layer,
-     *      org.locationtech.jts.geom.Envelope)
-     */
     @Override
     public void refresh(ILayer layer, Envelope bounds) {
         throw new UnsupportedOperationException();
 
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.RenderManager#refresh(org.locationtech.jts.geom.Envelope)
-     */
     @Override
     public void refresh(Envelope bounds) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.RenderManager#refreshImage()
-     */
     @Override
     public void refreshImage() {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.RenderManager#refreshSelection(org.locationtech.jts.geom.Envelope)
-     */
     @Override
     public void refreshSelection(ILayer layer, Envelope bounds) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.IRenderManager#getMap()
-     */
     @Override
     public IMap getMap() {
         checkState();
         return getMapInternal();
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.IRenderManager#getRenderers()
-     */
     @Override
     public List<IRenderer> getRenderers() {
         checkState();
-        final List<IRenderer> renderers = new ArrayList<IRenderer>();
+        final List<IRenderer> renderers = new ArrayList<>();
         getRenderExecutor().visit(new ExecutorVisitor() {
 
             @Override
@@ -717,11 +706,6 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
         if (renderExecutor == null || renderExecutor.getState() == IRenderer.NEVER
                 || getRenderExecutor().getContext() == null)
             return null;
-        //        try {
-        //            ((CompositeRendererImpl)getRenderExecutor()).refreshImage();
-        //        } catch (RenderException e) {
-        //            throw (RuntimeException) new RuntimeException( e );
-        //        }
         return getRenderExecutor().getContext().getImage();
     }
 
@@ -742,47 +726,48 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     @Override
     public boolean isRenderingEnabled() {
-        return renderingEnabled;
+        return renderingEnabled && getMapDisplay() != null && getMapDisplay().getWidth() > 0
+                && getMapDisplay().getHeight() > 0;
     }
 
     /**
-     * 
-     * Returns true if these two layers are related in any way.  Two layers are related if:
+     *
+     * Returns true if these two layers are related in any way. Two layers are related if:
      * <ul>
-     *   <li>They are the same (layer = contained)
-     *   <li>Layer is a part of a composite context and contained is also part of that context.</li>
+     * <li>They are the same (layer = contained)</li>
+     * <li>Layer is a part of a composite context and contained is also part of that context.</li>
      * </ul>
      *
      * @param layer
      * @param contained
-     * 
+     *
      * @returns true if the two layers are part of the same context
      */
     @Override
     public boolean areLayersRelatedByContext(ILayer layer, ILayer contained) {
-        //they are the same; so they are related
+        // they are the same; so they are related
         if (layer == contained)
             return true;
 
-        //for each renderer check the contexts
+        // for each renderer check the contexts
         for (Iterator<IRenderer> iterator = getRenderers().iterator(); iterator.hasNext();) {
             IRenderContext context = iterator.next().getContext();
             if (context instanceof CompositeRenderContext) {
                 if (((CompositeRenderContext) context).getLayers().contains(layer)) {
                     if (((CompositeRenderContext) context).getLayers().contains(contained)) {
-                        //composite context and contains layer + contained
-                        //these layers are related through a composite context
+                        // composite context and contains layer + contained
+                        // these layers are related through a composite context
                         return true;
                     } else {
-                        //composite context that contains layer but not contained
-                        //cannot be related
+                        // composite context that contains layer but not contained
+                        // cannot be related
                         return false;
                     }
                 }
             } else {
                 if (context.getLayer() == layer) {
-                    //layer is not part of a composite context and cannot be related in 
-                    //any way to contained
+                    // layer is not part of a composite context and cannot be related in
+                    // any way to contained
                     return false;
                 }
             }

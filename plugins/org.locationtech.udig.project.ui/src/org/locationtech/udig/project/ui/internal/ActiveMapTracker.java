@@ -125,14 +125,26 @@ public class ActiveMapTracker implements IStartup, IPartListener2, IWindowListen
 
     private MapPart getActiveMapPartInternal() {
         if (Display.getCurrent() != null) {
-            MapPart part = getActiveMapPartFromWorkbench();
-            if (part == null) {
-                part = getMostRecentOpenedPart();
+            MapPart mapPart = null;
+            if (!activeParts.isEmpty()) {
+                mapPart = activeParts.get(0);
             }
-            if (!activeParts.isEmpty() && part != activeParts.get(0)) {
-                addActivePart(part);
+
+            if (mapPart == null) {
+                mapPart = getActiveMapPartFromWorkbench();
+                if (mapPart != null) {
+                    addActivePart(mapPart);
+                }
             }
-            return part;
+
+            if (mapPart == null) {
+                mapPart = getMostRecentOpenedPart();
+                if (mapPart != null) {
+                    addActivePart(mapPart);
+                }
+            }
+
+            return mapPart;
         }
         return null;
     }
@@ -275,7 +287,7 @@ public class ActiveMapTracker implements IStartup, IPartListener2, IWindowListen
     public void partHidden(IWorkbenchPartReference partRef) {
         IWorkbenchPart part = partRef.getPart(false);
         if (part instanceof MapPart) {
-            visibleMaps.remove((MapPart)part);
+            visibleMaps.remove(part);
         }
     }
 

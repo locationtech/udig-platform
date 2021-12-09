@@ -1,8 +1,8 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004-2007, Refractions Research Inc.
- *    (C) 2007,      Adrian Custer.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004-2007, Refractions Research Inc.
+ * (C) 2007,      Adrian Custer.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,15 +26,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.locationtech.udig.catalog.IResolve;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.internal.oracle.OraclePlugin;
-import org.locationtech.udig.catalog.internal.oracle.OracleServiceExtension;
-import org.locationtech.udig.catalog.oracle.internal.Messages;
-import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
-import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
-import org.locationtech.udig.catalog.ui.wizard.DataBaseConnInfo;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -45,10 +36,18 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.data.oracle.OracleNGDataStoreFactory;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.oracle.OraclePlugin;
+import org.locationtech.udig.catalog.internal.oracle.OracleServiceExtension;
+import org.locationtech.udig.catalog.oracle.internal.Messages;
+import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryDatastoreWizardPage;
+import org.locationtech.udig.catalog.ui.preferences.AbstractProprietaryJarPreferencePage;
+import org.locationtech.udig.catalog.ui.wizard.DataBaseConnInfo;
 
 /**
  * Enter Oracle connection parameters.
- * 
+ *
  * @author David Zwiers, dzwiers, for Refractions Research, Inc.
  * @author Jesse Eichar, jeichar, for Refractions Research, Inc.
  * @author Justin Deoliveira, jdeolive, for Refractions Research, Inc.
@@ -60,14 +59,14 @@ import org.geotools.data.oracle.OracleNGDataStoreFactory;
  */
 public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardPage {
 
-    // TITLE IMAGE
     public static final String IMAGE_KEY = ""; //$NON-NLS-1$
-    // STORED SETTINGS
+
     private static final String ORACLE_WIZARD = "ORACLE_WIZARD"; //$NON-NLS-1$
+
     private static final String ORACLE_RECENT = "ORACLE_RECENT"; //$NON-NLS-1$
-    // CONNECTION
-    private static final DataBaseConnInfo DEFAULT_ORACLE_CONN_INFO = new DataBaseConnInfo(
-            "", "1521", "", "", "", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+
+    private static final DataBaseConnInfo DEFAULT_ORACLE_CONN_INFO = new DataBaseConnInfo("", //$NON-NLS-1$
+            "1521", "", "", "", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
     public OracleSpatialWizardPage() {
 
@@ -88,16 +87,12 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
         currentDBCI.setParameters(defaultDBCI);
         String[] recent = settings.getArray(ORACLE_RECENT);
         if (null != recent) {
-            for( String s : recent ) {
+            for (String s : recent) {
                 DataBaseConnInfo dbs = new DataBaseConnInfo(s);
                 if (!storedDBCIList.contains(dbs))
                     storedDBCIList.add(dbs);
             }
         }
-
-        // Populate the db and schema exclusion lists
-        //        dbExclusionList.add("");                                                //$NON-NLS-1$
-        //        schemaExclusionList.add("");                                            //$NON-NLS-1$
 
         // Populate the Char and CharSeq exclusion lists
         // TODO: when we activate Verification
@@ -123,10 +118,10 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
     }
 
     @Override
-    protected void doCreateWizardPage( Composite parent ) {
+    protected void doCreateWizardPage(Composite parent) {
 
         // For Drag 'n Drop as well as for general selections
-        // look for a url as part of the selction
+        // look for a URL as part of the selection
         // TODO: sync with Postgis plugin
         ISelection tmpSelection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage().getSelection();
@@ -138,7 +133,7 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
         }
 
         String selectedText = null;
-        for( Iterator< ? > itr = selection.iterator(); itr.hasNext(); ) {
+        for (Iterator<?> itr = selection.iterator(); itr.hasNext();) {
             Object o = itr.next();
             if (o instanceof URL || o instanceof String) {
                 selectedText = (String) o;
@@ -168,11 +163,11 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
         }
     }
 
-    public boolean canProcess( Object object ) {
+    public boolean canProcess(Object object) {
         return getOracleURL(object) != null;
     }
 
-    protected String getOracleURL( Object data ) {
+    protected String getOracleURL(Object data) {
         String url = null;
         if (data instanceof String) {
             String[] strings = ((String) data).split("\n"); //$NON-NLS-1$
@@ -185,14 +180,17 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
         return url;
     }
 
-    protected Group createAdvancedControl( Composite arg0 ) {
+    @Override
+    protected Group createAdvancedControl(Composite arg0) {
         return null;
     }
 
+    @Override
     protected OracleNGDataStoreFactory getDataStoreFactorySpi() {
         return OracleServiceExtension.getFactory();
     }
 
+    @Override
     public Map<String, Serializable> getParams() {
         if (!OracleSpatialPreferences.isInstalled()) {
             return null;
@@ -202,12 +200,14 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
             return null;
         }
 
-        Map<String, Serializable> params = new HashMap<String, Serializable>();
+        Map<String, Serializable> params = new HashMap<>();
 
-        params.put(OracleNGDataStoreFactory.DBTYPE.key, (Serializable) OracleNGDataStoreFactory.DBTYPE.sample ); //$NON-NLS-1$
+        params.put(OracleNGDataStoreFactory.DBTYPE.key,
+                (Serializable) OracleNGDataStoreFactory.DBTYPE.sample);
         params.put(OracleNGDataStoreFactory.HOST.key, currentDBCI.getHostString());
         try {
-            params.put(OracleNGDataStoreFactory.PORT.key, new Integer(currentDBCI.getPortString()));
+            params.put(OracleNGDataStoreFactory.PORT.key,
+                    Integer.valueOf(currentDBCI.getPortString()));
         } catch (NumberFormatException e) {
             // use default port
         }
@@ -216,18 +216,16 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
         params.put(OracleNGDataStoreFactory.DATABASE.key, currentDBCI.getDbString());
         params.put(OracleNGDataStoreFactory.SCHEMA.key, currentDBCI.getSchemaString());
 
-        // not sureabout this line
-        // params.put(dbParams[7].key,"MAPINFO"); //$NON-NLS-1$
-
         return params;
     }
 
     /**
      * Grab a DataSource using the current connection parameters.
-     * 
+     *
      * @see org.locationtech.udig.catalog.internal.ui.datastore.DataBaseRegistryWizardPage#getConnection()
      * @return DataSource, or null if could not connect
      */
+    @Override
     protected DataSource getDataSource() {
         final String hostText = currentDBCI.getHostString();
         final String portText = currentDBCI.getPortString();
@@ -240,10 +238,11 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
             return null;
         }
         if (dataSource == null) {
-            runInPage(new IRunnableWithProgress(){
+            runInPage(new IRunnableWithProgress() {
 
-                public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                        InterruptedException {
+                @Override
+                public void run(IProgressMonitor monitor)
+                        throws InvocationTargetException, InterruptedException {
                     if (monitor == null)
                         monitor = new NullProgressMonitor();
 
@@ -263,27 +262,28 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
                                 // it's dead anyhow
                             }
                         }
-                        Map<String, Serializable> params = new HashMap<String, Serializable>();
+                        Map<String, Serializable> params = new HashMap<>();
                         params.put(OracleNGDataStoreFactory.HOST.key, hostText);
                         params.put(OracleNGDataStoreFactory.PORT.key,
                                 (Integer) OracleNGDataStoreFactory.PORT.parse(portText));
                         params.put(OracleNGDataStoreFactory.DATABASE.key, db);
-                        params.put(OracleNGDataStoreFactory.USER.key, userText );
-                        params.put(OracleNGDataStoreFactory.PASSWD.key, passText );
+                        params.put(OracleNGDataStoreFactory.USER.key, userText);
+                        params.put(OracleNGDataStoreFactory.PASSWD.key, passText);
                         dataSource = OracleServiceExtension.getFactory().createDataSource(params);
 
                         // Is this needed/useful?
                         DriverManager.setLoginTimeout(3);
                         monitor.worked(1);
-                        monitor.subTask("establish connection");
+                        monitor.subTask("establish connection"); //$NON-NLS-1$
 
                         if (monitor.isCanceled()) {
                             dataSource.close();
                             dataSource = null;
+                        } else {
+                            connection = dataSource.getConnection();
                         }
-                        connection = dataSource.getConnection();
 
-                        monitor.subTask("connected");
+                        monitor.subTask("connected"); //$NON-NLS-1$
                         monitor.worked(1);
                     } catch (Throwable shame) {
                         if (dataSource != null) {
@@ -305,10 +305,6 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
                             }
                         }
                     }
-                    /*
-                     * Postgis DB checks monitor here if( monitor.isCanceled()){ if( dataSource !=
-                     * null ){ dataSource.close(); dataSource = null; } }
-                     */
                 }
             });
         }
@@ -317,10 +313,11 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
 
     /**
      * TODO summary sentence for hasSchema ...
-     * 
+     *
      * @see org.locationtech.udig.catalog.internal.ui.datastore.DataBaseRegistryWizardPage#dbmsUsesSchema()
      * @return
      */
+    @Override
     protected boolean dbmsUsesSchema() {
         return true;
     }
@@ -334,7 +331,7 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
         return r;
     }
 
-    public List<IResolve> getResources( IProgressMonitor monitor ) throws Exception {
+    public List<IResolve> getResources(IProgressMonitor monitor) throws Exception {
         if (!isPageComplete())
             return null;
 
@@ -342,7 +339,7 @@ public class OracleSpatialWizardPage extends AbstractProprietaryDatastoreWizardP
         IService service = creator.createService(null, getParams());
         service.getInfo(monitor); // load
 
-        List<IResolve> servers = new ArrayList<IResolve>();
+        List<IResolve> servers = new ArrayList<>();
         servers.add(service);
         return servers;
     }

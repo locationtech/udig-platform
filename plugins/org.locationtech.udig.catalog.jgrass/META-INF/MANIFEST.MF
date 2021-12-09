@@ -16,13 +16,21 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.project.ui,
  org.locationtech.udig.mapgraphic,
  org.locationtech.udig.style
-Eclipse-LazyStart: true
-Export-Package: org.locationtech.udig.catalog.jgrass,org.locationtech.
- udig.catalog.jgrass.activeregion,org.locationtech.udig.catalog.jgrass
- .activeregion.dialogs,org.locationtech.udig.catalog.jgrass.core,org.l
- ocationtech.udig.catalog.jgrass.messages,org.locationtech.udig.catalo
- g.jgrass.operations,org.locationtech.udig.catalog.jgrass.utils,org.lo
- cationtech.udig.catalog.jgrass.workspacecreation
+Bundle-ActivationPolicy: lazy
+Export-Package: org.locationtech.udig.catalog.jgrass,
+ org.locationtech.udig.catalog.jgrass.activeregion,
+ org.locationtech.udig.catalog.jgrass.activeregion.dialogs,
+ org.locationtech.udig.catalog.jgrass.core,
+ org.locationtech.udig.catalog.jgrass.messages,
+ org.locationtech.udig.catalog.jgrass.operations,
+ org.locationtech.udig.catalog.jgrass.utils,
+ org.locationtech.udig.catalog.jgrass.workspacecreation
 Import-Package: javax.media.jai,
- javax.media.jai.iterator
-
+ javax.media.jai.iterator,
+ org.apache.commons.io;version="2.4.0",
+ org.apache.commons.io.comparator;version="2.4.0",
+ org.apache.commons.io.filefilter;version="2.4.0",
+ org.apache.commons.io.input;version="2.4.0",
+ org.apache.commons.io.monitor;version="2.4.0",
+ org.apache.commons.io.output;version="2.4.0",
+ org.apache.commons.io.serialization;version="2.4.0"

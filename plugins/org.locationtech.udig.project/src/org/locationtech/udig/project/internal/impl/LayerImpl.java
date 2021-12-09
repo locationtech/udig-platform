@@ -1,5 +1,12 @@
 /**
- * <copyright></copyright> $Id$
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.project.internal.impl;
 
@@ -24,6 +31,48 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.ISafeRunnable;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.model.IWorkbenchAdapter;
+import org.eclipse.ui.model.WorkbenchAdapter;
+import org.geotools.data.FeatureEvent;
+import org.geotools.data.FeatureListener;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.FeatureStore;
+import org.geotools.data.Query;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.geometry.jts.JTS;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
+import org.geotools.referencing.crs.DefaultEngineeringCRS;
+import org.geotools.referencing.operation.transform.IdentityTransform;
+import org.geotools.util.Range;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.ID;
@@ -61,46 +110,6 @@ import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.ProgressManager;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 import org.locationtech.udig.ui.palette.ColourScheme;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.ISafeRunnable;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.eclipse.emf.ecore.util.EcoreEMap;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.model.IWorkbenchAdapter;
-import org.eclipse.ui.model.WorkbenchAdapter;
-import org.geotools.data.Query;
-import org.geotools.data.FeatureEvent;
-import org.geotools.data.FeatureListener;
-import org.geotools.data.FeatureSource;
-import org.geotools.data.FeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.util.factory.GeoTools;
-import org.geotools.geometry.jts.JTS;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
-import org.geotools.referencing.crs.DefaultEngineeringCRS;
-import org.geotools.referencing.operation.transform.IdentityTransform;
-import org.geotools.util.Range;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -110,12 +119,9 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import org.locationtech.jts.geom.Envelope;
-import org.locationtech.jts.geom.GeometryFactory;
-
 /**
  * Standard implementation of a Layer.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -123,7 +129,7 @@ import org.locationtech.jts.geom.GeometryFactory;
 public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getFilter() <em>Filter</em>}' attribute.
-     * 
+     *
      * @see #getFilter()
      * @generated NOT
      * @ordered
@@ -133,7 +139,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getFilter() <em>Filter</em>}' attribute. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getFilter()
      * @generated NOT
      * @ordered
@@ -143,7 +149,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getStyleBlackboard() <em>Style Blackboard</em>}' containment
      * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getStyleBlackboard()
      * @generated NOT
      * @ordered
@@ -154,7 +160,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getZorder() <em>Zorder</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getZorder()
      * @generated
      * @ordered
@@ -174,7 +180,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getStatus() <em>Status</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getStatus()
      * @generated
      * @ordered
@@ -194,7 +200,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
          * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
          */
         @Override
-        @SuppressWarnings("unchecked")
         public void notifyChanged(Notification msg) {
             registerWithContainers(msg);
             raiseEvents(msg);
@@ -264,11 +269,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     FeatureListener featureListener = new FeatureListener() {
 
         @Override
-        @SuppressWarnings("unchecked")
         public void changed(FeatureEvent featureEvent) {
             try {
-                FeatureSource<?, ?> featureSource = featureEvent
-                        .getFeatureSource();
+                FeatureSource<?, ?> featureSource = featureEvent.getFeatureSource();
                 FeatureSource<?, ?> resource = getResource(FeatureSource.class,
                         new NullProgressMonitor());
 
@@ -334,10 +337,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * Listeners to this layer.
      * <p>
-     * Note this will need to be hooked into the usual EMF adapater mechasim.
+     * Note this will need to be hooked into the usual EMF adapter mechanism.
      * </p>
      */
-    CopyOnWriteArraySet<ILayerListener> listeners = new CopyOnWriteArraySet<ILayerListener>();
+    CopyOnWriteArraySet<ILayerListener> listeners = new CopyOnWriteArraySet<>();
 
     /**
      * Ensures that a warning about georesources not found is only logged once
@@ -371,7 +374,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @SuppressWarnings("unchecked")
@@ -482,7 +485,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * Get ZOrder of layer with regards to content model
-     * 
+     *
      * @model
      */
     @Override
@@ -494,7 +497,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -635,12 +638,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * getGeoResource() is a blocking method but it must not block UI thread. With this purpose the
      * new imlementation is done to avoid UI thread blocking because of synchronization. </b> <!--
      * end-user-doc -->
-     * 
+     *
      * @uml.property name="geoResources"
      * @generated NOT
      */
     @Override
-    @SuppressWarnings("unchecked")
     public List<IGeoResource> getGeoResources() {
 
         assert assertNotInDisplayAccess();
@@ -666,7 +668,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
             if (!catalogRef.isLoaded()) {
                 catalogRef.load();
             }
-            final List<IGeoResource> resourceList = new ArrayList<IGeoResource>();
+            final List<IGeoResource> resourceList = new ArrayList<>();
 
             final ICatalog connections = CatalogPlugin.getDefault().getLocalCatalog();
 
@@ -717,7 +719,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 geoResources = NULL;
             } else {
                 eSetDeliver(false);
-                geoResources = new EDataTypeUniqueEList<IGeoResource>(IGeoResource.class, this,
+                geoResources = new EDataTypeUniqueEList<>(IGeoResource.class, this,
                         ProjectPackage.LAYER__GEO_RESOURCES);
                 geoResources.addAll(resourceList);
                 eSetDeliver(true);
@@ -747,23 +749,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     static public final EList<IGeoResource> NULL;
     static {
-        NULL = new BasicEList<IGeoResource>(Collections.singletonList(new NullGeoResource()));
-    }
-
-    /**
-     * @see org.locationtech.udig.project.internal.Layer#getGeoResources(int)
-     * @deprecated
-     */
-    @Deprecated
-    @Override
-    public <T> IGeoResource getGeoResource(Class<T> clazz) {
-        List<IGeoResource> resources = getGeoResources();
-        for (IGeoResource resource : resources) {
-            if (resource.canResolve(clazz))
-                return resource;
-        }
-
-        return null;
+        NULL = new BasicEList<>(Collections.singletonList(new NullGeoResource()));
     }
 
     @Override
@@ -787,7 +773,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="geoResource"
      * @generated NOT
      */
@@ -820,7 +806,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="catalogRef"
      * @generated NOT
      */
@@ -879,7 +865,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @uml.property name="styleBlackboard"
      * @generated NOT
      */
@@ -928,7 +914,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -981,7 +967,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -1084,7 +1070,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -1138,7 +1124,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @see #getName()
      * @generated not
      * @ordered
@@ -1148,7 +1134,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getCatalogRef() <em>Catalog Ref</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getCatalogRef()
      * @generated
      * @ordered
@@ -1158,7 +1144,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getCatalogRef() <em>Catalog Ref</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getCatalogRef()
      * @generated NOT
      * @ordered
@@ -1178,7 +1164,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getID() <em>ID</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @see #getID()
      * @generated NOT
      * @ordered
@@ -1188,7 +1174,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #isVisible() <em>Visible</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #isVisible()
      * @generated NOT
      * @ordered
@@ -1198,7 +1184,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #isVisible() <em>Visible</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #isVisible()
      * @generated not
      * @ordered
@@ -1208,7 +1194,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getGeoResource() <em>Geo Resource</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getGeoResource()
      * @generated
      * @ordered
@@ -1218,7 +1204,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getGeoResource() <em>Geo Resource</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getGeoResource()
      * @generated NOT
      * @ordered
@@ -1228,7 +1214,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getGeoResources() <em>Geo Resources</em>}' attribute list.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getGeoResources()
      * @generated NOT
      * @ordered
@@ -1248,7 +1234,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getCRS() <em>CRS</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @see #getCRS()
      * @generated NOT
      * @ordered
@@ -1258,7 +1244,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getProperties() <em>Properties</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getProperties()
      * @generated NOT
      * @ordered
@@ -1268,7 +1254,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getColourScheme() <em>Colour Scheme</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getColourScheme()
      * @generated
      * @ordered
@@ -1278,7 +1264,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getColourScheme() <em>Colour Scheme</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getColourScheme()
      * @generated not
      * @ordered
@@ -1288,7 +1274,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getDefaultColor() <em>Default Color</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getDefaultColor()
      * @generated
      * @ordered
@@ -1298,7 +1284,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getDefaultColor() <em>Default Color</em>}' attribute. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getDefaultColor()
      * @generated NOT
      * @ordered
@@ -1308,7 +1294,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getFeatureChanges() <em>SimpleFeature Changes</em>}'
      * attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getFeatureChanges()
      * @generated NOT
      * @ordered
@@ -1318,7 +1304,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getMinScaleDenominator() <em>Min Scale Denominator</em>}'
      * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMinScaleDenominator()
      * @generated not
      * @ordered
@@ -1328,7 +1314,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getMinScaleDenominator() <em>Min Scale Denominator</em>}'
      * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMinScaleDenominator()
      * @generated not
      * @ordered
@@ -1338,7 +1324,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The default value of the '{@link #getMaxScaleDenominator() <em>Max Scale Denominator</em>}'
      * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMaxScaleDenominator()
      * @generated not
      * @ordered
@@ -1348,7 +1334,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getMaxScaleDenominator() <em>Max Scale Denominator</em>}'
      * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getMaxScaleDenominator()
      * @generated not
      * @ordered
@@ -1358,7 +1344,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * The cached value of the '{@link #getInteractionMap() <em>Interaction Map</em>}' map. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see #getInteractionMap()
      * @generated
      * @ordered
@@ -1471,7 +1457,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * Logic to sort out a good default value for the request interaction.
-     * 
+     *
      * @param interaction
      * @return <code>true</code> if the interaction defaults to on
      */
@@ -1483,7 +1469,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         if (Interaction.SELECT.equals(interaction)) {
             return true; // selection is supported by most layers
         } else if (Interaction.EDIT.equals(interaction)) {
-            IGeoResource found = this.getGeoResource(FeatureStore.class);
+            IGeoResource found = this.findGeoResource(FeatureStore.class);
             return found != null;
         }
         return false;
@@ -1503,7 +1489,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -1602,7 +1588,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated not
      */
     @Override
@@ -1670,7 +1656,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
             max = Double.MAX_VALUE;
         }
 
-        return new Pair<Double, Double>(min, max);
+        return new Pair<>(min, max);
     }
 
     /**
@@ -1719,7 +1705,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     @Override
     public Map<Interaction, Boolean> getInteractionMap() {
         if (interactionMap == null) {
-            interactionMap = new EcoreEMap<Interaction, Boolean>(
+            interactionMap = new EcoreEMap<>(
                     ProjectPackage.Literals.INTERACTION_TO_EBOOLEAN_OBJECT_MAP_ENTRY,
                     InteractionToEBooleanObjectMapEntryImpl.class, this,
                     ProjectPackage.LAYER__INTERACTION_MAP);
@@ -2130,7 +2116,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * queries the georesources for a CRS
-     * 
+     *
      * @param monitor
      * @return
      */
@@ -2272,7 +2258,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
             }
 
         };
-        FutureTask<IGeoResourceInfo> task = new FutureTask<IGeoResourceInfo>(job);
+        FutureTask<IGeoResourceInfo> task = new FutureTask<>(job);
         Thread t = new Thread(task);
         t.start();
         IGeoResourceInfo info = null;
@@ -2288,7 +2274,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * Creates A geometry filter for the given layer.
-     * 
+     *
      * @param boundingBox in the same crs as the viewport model.
      * @return a Geometry filter in the correct CRS or null if an exception occurs.
      */
@@ -2344,7 +2330,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     @Override
     public <T> T getAdapter(final Class<T> adapter, IProgressMonitor monitor) throws IOException {
         if (hasResource(adapter)) {
-            final List<T> list = new ArrayList<T>();
+            final List<T> list = new ArrayList<>();
             monitor.beginTask(Messages.LayerImpl_resolveAdapter, IProgressMonitor.UNKNOWN);
             list.add(getResource(adapter, monitor));
             return list.get(0);
@@ -2556,7 +2542,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
         }
         Collection<AbstractRenderMetrics> metrics = rendererCreator
                 .getAvailableRendererMetrics(this);
-        Set<Range> allRanges = new HashSet<Range>();
+        Set<Range> allRanges = new HashSet<>();
         for (AbstractRenderMetrics metrics2 : metrics) {
             try {
                 if (metrics2.getRenderMetricsFactory().canRender(metrics2.getRenderContext())) {

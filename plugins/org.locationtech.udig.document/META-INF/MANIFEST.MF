@@ -18,5 +18,11 @@ Export-Package: org.locationtech.udig.document,
  org.locationtech.udig.document.model;x-friends:="org.locationtech.udig.tests.info",
  org.locationtech.udig.document.source,
  org.locationtech.udig.document.ui
-Import-Package: net.miginfocom.swt;version="[3.7.0,3.8.0)"
-
+Import-Package: net.miginfocom.swt;version="[3.7.0,3.8.0)",
+ org.apache.commons.io;version="2.4.0",
+ org.apache.commons.io.comparator;version="2.4.0",
+ org.apache.commons.io.filefilter;version="2.4.0",
+ org.apache.commons.io.input;version="2.4.0",
+ org.apache.commons.io.monitor;version="2.4.0",
+ org.apache.commons.io.output;version="2.4.0",
+ org.apache.commons.io.serialization;version="2.4.0"

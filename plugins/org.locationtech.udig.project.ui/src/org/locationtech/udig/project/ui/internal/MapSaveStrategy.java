@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -31,105 +32,95 @@ import org.locationtech.udig.project.internal.LayerFactory;
 import org.locationtech.udig.project.internal.StyleBlackboard;
 
 public final class MapSaveStrategy extends CatalogExport {
-	private final ExportResourceSelectionState state;
-	private MapEditorPart editor;
+    private final ExportResourceSelectionState state;
 
-	public MapSaveStrategy(ExportResourceSelectionState state, MapEditorPart editor) {
-		super(false);
-		this.state = state;
-		this.editor = editor;
+    private MapPart mapPart;
 
-		initWorkflow();
-	}
+    public MapSaveStrategy(ExportResourceSelectionState state, MapPart mapPart) {
+        super(false);
+        this.state = state;
+        this.mapPart = mapPart;
 
-	@Override
-	protected Workflow createWorkflow() {
-		final Workflow workflow = new Workflow(new State[] { state });
+        initWorkflow();
+    }
 
-		// create the workflow for the export wizard
-		return workflow;
-	}
+    @Override
+    protected Workflow createWorkflow() {
+        final Workflow workflow = new Workflow(new State[] { state });
 
-	@Override
-	protected WorkflowWizard createWorkflowWizard(Workflow workflow,
-			java.util.Map<Class<? extends State>, WorkflowWizardPageProvider> map) {
-		CatalogExportWizard catalogExportWizard = new CatalogExportWizard(
-				workflow, map) {
-			@Override
-			protected boolean performFinish(IProgressMonitor monitor) {
-				boolean result = super.performFinish(monitor);
-				replaceExportedLayers(state);
-				try {
-					editor.getMap().getEditManagerInternal()
-							.commitTransaction();
-					editor.setDirty(false);
-				} catch (IOException e) {
-					ProjectUIPlugin.log("failed committing transaction", e); //$NON-NLS-1$
-					MessageDialog.openError(null, Messages.MapSaveStrategy_error_title, Messages.MapSaveStrategy_error_messages);
-				}
-				return result;
-			}
+        // create the workflow for the export wizard
+        return workflow;
+    }
 
-			private void replaceExportedLayers(
-					final ExportResourceSelectionState layerState) {
-				List<Data> exportedLayers = layerState.getExportData();
-				for (Data data : exportedLayers) {
-					Collection<IGeoResource> exported = data
-							.getExportedResources();
-					replaceLayer(data.getResource(), exported);
-				}
-			}
+    @Override
+    protected WorkflowWizard createWorkflowWizard(Workflow workflow,
+            java.util.Map<Class<? extends State>, WorkflowWizardPageProvider> map) {
+        CatalogExportWizard catalogExportWizard = new CatalogExportWizard(workflow, map) {
+            @Override
+            protected boolean performFinish(IProgressMonitor monitor) {
+                boolean result = super.performFinish(monitor);
+                replaceExportedLayers(state);
+                try {
+                    mapPart.getMap().getEditManagerInternal().commitTransaction();
+                    mapPart.setDirty(false);
+                } catch (IOException e) {
+                    ProjectUIPlugin.log("failed committing transaction", e); //$NON-NLS-1$
+                    MessageDialog.openError(null, Messages.MapSaveStrategy_error_title,
+                            Messages.MapSaveStrategy_error_messages);
+                }
+                return result;
+            }
 
-			private void replaceLayer(IGeoResource resource,
-					Collection<IGeoResource> exported) {
-				List<Layer> layers = MapSaveStrategy.this.editor.getMap()
-						.getLayersInternal();
-				Layer found;
-				do {
-					found = null;
-					for (Layer layer : layers) {
-						if (URLUtils.urlEquals(layer.getID(), resource
-								.getIdentifier(), false)) {
-							found = layer;
-							break;
-						}
-					}
+            private void replaceExportedLayers(final ExportResourceSelectionState layerState) {
+                List<Data> exportedLayers = layerState.getExportData();
+                for (Data data : exportedLayers) {
+                    Collection<IGeoResource> exported = data.getExportedResources();
+                    replaceLayer(data.getResource(), exported);
+                }
+            }
 
-					if (found != null) {
-						layers.addAll(layers.indexOf(found), toLayers(found,
-								exported));
-						layers.remove(found);
-					}
-				} while (found != null);
+            private void replaceLayer(IGeoResource resource, Collection<IGeoResource> exported) {
+                List<Layer> layers = MapSaveStrategy.this.mapPart.getMap().getLayersInternal();
+                Layer found;
+                do {
+                    found = null;
+                    for (Layer layer : layers) {
+                        if (URLUtils.urlEquals(layer.getID(), resource.getIdentifier(), false)) {
+                            found = layer;
+                            break;
+                        }
+                    }
 
-			}
+                    if (found != null) {
+                        layers.addAll(layers.indexOf(found), toLayers(found, exported));
+                        layers.remove(found);
+                    }
+                } while (found != null);
 
-			private Collection<Layer> toLayers(Layer found,
-					Collection<IGeoResource> exported) {
-				LayerFactory layerFactory = MapSaveStrategy.this.editor
-						.getMap().getLayerFactory();
-				Collection<Layer> newLayers = new ArrayList<Layer>();
+            }
 
-				for (IGeoResource exportedResource : exported) {
-					try {
-						Layer createLayer = layerFactory
-								.createLayer(exportedResource);
-						StyleBlackboard clone = (StyleBlackboard) found
-								.getStyleBlackboard().clone();
-						createLayer.setStyleBlackboard(clone);
-						newLayers.add(createLayer);
-					} catch (IOException e) {
-						throw (RuntimeException) new RuntimeException()
-								.initCause(e);
-					}
-				}
+            private Collection<Layer> toLayers(Layer found, Collection<IGeoResource> exported) {
+                LayerFactory layerFactory = MapSaveStrategy.this.mapPart.getMap().getLayerFactory();
+                Collection<Layer> newLayers = new ArrayList<>();
 
-				return newLayers;
-			}
+                for (IGeoResource exportedResource : exported) {
+                    try {
+                        Layer createLayer = layerFactory.createLayer(exportedResource);
+                        StyleBlackboard clone = (StyleBlackboard) found.getStyleBlackboard()
+                                .clone();
+                        createLayer.setStyleBlackboard(clone);
+                        newLayers.add(createLayer);
+                    } catch (IOException e) {
+                        throw (RuntimeException) new RuntimeException().initCause(e);
+                    }
+                }
 
-		};
-		catalogExportWizard.setSelectExportedInCatalog(false);
-		return catalogExportWizard;
-	}
-	
+                return newLayers;
+            }
+
+        };
+        catalogExportWizard.setSelectExportedInCatalog(false);
+        return catalogExportWizard;
+    }
+
 }

@@ -13,8 +13,22 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-
 import java.util.SortedSet;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EFactoryImpl;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.geotools.data.Query;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.core.internal.ExtensionPointList;
 import org.locationtech.udig.project.internal.ProjectFactory;
@@ -30,25 +44,8 @@ import org.locationtech.udig.project.internal.render.RendererDecorator;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 import org.locationtech.udig.project.render.RenderException;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplay;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.impl.EFactoryImpl;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.geotools.data.Query;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.joda.time.DateTime;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.osgi.framework.Bundle;
-
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory </b>! <!--
@@ -151,8 +148,6 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
             return createSortedSetFromString(eDataType, initialValue);
         case RenderPackage.REFERENCED_ENVELOPE:
             return createReferencedEnvelopeFromString(eDataType, initialValue);
-        case RenderPackage.DATE_TIME:
-            return createDateTimeFromString(eDataType, initialValue);
         case RenderPackage.ILLEGAL_ARGUMENT_EXCEPTION:
             return createIllegalArgumentExceptionFromString(eDataType, initialValue);
         default:
@@ -200,8 +195,6 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
             return convertSortedSetToString(eDataType, instanceValue);
         case RenderPackage.REFERENCED_ENVELOPE:
             return convertReferencedEnvelopeToString(eDataType, instanceValue);
-        case RenderPackage.DATE_TIME:
-            return convertDateTimeToString(eDataType, instanceValue);
         case RenderPackage.ILLEGAL_ARGUMENT_EXCEPTION:
             return convertIllegalArgumentExceptionToString(eDataType, instanceValue);
         default:
@@ -253,7 +246,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
     /**
      * <!-- begin-user-doc --> Processes the RenderExecutor Extension Point and
      * creates the appropriate Executor <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     @Override
@@ -271,7 +264,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * searches through the RenderExecutor Extension point and locates the
      * RenderExecutor whose associated renderer is closest in hierarchical terms
      * to the renderer parameter.
-     * 
+     *
      * @return The closest renderexecutor for the renderer.
      */
     private RenderExecutor locateClosestFit(Renderer r) {
@@ -280,7 +273,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
             ofInterest = ((RendererDecorator) r).getRenderer();
         }
         final Renderer renderer = ofInterest;
-        List<IConfigurationElement> list = new ArrayList<IConfigurationElement>();
+        List<IConfigurationElement> list = new ArrayList<>();
         for (Iterator<IConfigurationElement> iter = ExtensionPointList
                 .getExtensionPointList(RenderExecutor.EXTENSION_ID).iterator(); iter.hasNext();) {
             IConfigurationElement elem = iter.next();
@@ -354,7 +347,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
      * searches through the RenderExecutor Extension point and locates the
      * RenderExecutor whose associated renderer and exact match to the renderer
      * class passed in as a parameter
-     * 
+     *
      * @return a renderExecutor for the renderer
      */
     private RenderExecutor locateMatch(Renderer renderer) {
@@ -362,7 +355,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
         if (renderer instanceof RendererDecorator) {
             ofInterest = ((RendererDecorator) renderer).getRenderer();
         }
-        List<IConfigurationElement> list = new ArrayList<IConfigurationElement>();
+        List<IConfigurationElement> list = new ArrayList<>();
         for (Iterator<IConfigurationElement> iter = ExtensionPointList
                 .getExtensionPointList(RenderExecutor.EXTENSION_ID).iterator(); iter.hasNext();) {
             IConfigurationElement elem = iter.next();
@@ -387,7 +380,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
     /**
      * Creates a new RenderContext object for a renderer that renders
      * selections.
-     * 
+     *
      * @param selection
      *            Indicates whether the getQuery method will return a query for
      *            selected features.
@@ -483,7 +476,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated public InfoList createInfoListFromString(EDataType eDataType,
      *            String initialValue) { return
      *            (InfoList)super.createFromString(eDataType, initialValue); }
@@ -560,7 +553,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public CoordinateReferenceSystem createCoordinateReferenceSystemFromString(EDataType eDataType,
@@ -572,7 +565,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public String convertCoordinateReferenceSystemToString(EDataType eDataType,
@@ -583,7 +576,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public Envelope createEnvelopeFromString(EDataType eDataType, String initialValue) {
@@ -593,7 +586,7 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public String convertEnvelopeToString(EDataType eDataType, Object instanceValue) {
@@ -618,24 +611,6 @@ public class RenderFactoryImpl extends EFactoryImpl implements RenderFactory {
     public String convertReferencedEnvelopeToString(EDataType eDataType, Object instanceValue) {
         return ProjectFactory.eINSTANCE
                 .convertToString(ProjectPackage.eINSTANCE.getReferencedEnvelope(), instanceValue);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public DateTime createDateTimeFromString(EDataType eDataType, String initialValue) {
-        return (DateTime) super.createFromString(eDataType, initialValue);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String convertDateTimeToString(EDataType eDataType, Object instanceValue) {
-        return super.convertToString(eDataType, instanceValue);
     }
 
     /**

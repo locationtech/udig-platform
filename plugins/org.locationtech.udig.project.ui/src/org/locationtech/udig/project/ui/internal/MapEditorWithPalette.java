@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -22,7 +23,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -122,20 +123,20 @@ import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * This class is the Eclipse editor Part in which a ViewportPane is embedded. The ViewportPane
- * displays and edits Maps. MapViewport is used to intialize ViewportPane and the RenderManager.
+ * displays and edits Maps. MapViewport is used to initialize ViewportPane and the RenderManager.
  * <p>
  * Note:
  * <ul>
- * <li>The super class GraphicalEditorWithFlyoutPalette will smoothly switch between displaying
- * the palette inline; and hiding it when the normal PaletteView is opened
- * </li>
+ * <li>The super class GraphicalEditorWithFlyoutPalette will smoothly switch between displaying the
+ * palette inline; and hiding it when the normal PaletteView is opened</li>
  * </ul>
  *
  * @author Jesse Eichar
  * @version $Revision: 1.9 $
  */
 // TODO: Rename this to MapEditor to prevent code bloat / code duplication
-public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette implements IDropTargetProvider, IAdaptable, MapEditorPart {
+public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
+        implements IDropTargetProvider, IAdaptable, MapEditorPart {
 
     public static final int STATUS_LINE_HEIGHT;
     static {
@@ -150,12 +151,12 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     public static final String ID = "org.locationtech.udig.project.ui.mapEditor"; //$NON-NLS-1$
 
     /**
-     * This is responsible for tracking the active tool; it is a facility provided
-     * by GEF. We are not using GEF tools directly; simply borrowing some of their
-     * infrastructure to support a nice visual palette.
+     * This is responsible for tracking the active tool; it is a facility provided by GEF. We are
+     * not using GEF tools directly; simply borrowing some of their infrastructure to support a nice
+     * visual palette.
      * <p>
-     * The *id* of the current tool in the editDomain is used to determine the
-     * active tool for the map.
+     * The *id* of the current tool in the editDomain is used to determine the active tool for the
+     * map.
      * <p>
      * Holds onto the paletteViewer while delegating to ToolManager
      */
@@ -163,7 +164,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
     final StatusLineManager statusLineManager = new StatusLineManager();
 
-    private MapEditorSite mapEditorSite;
+    private MapSite mapSite;
 
     private boolean dirty = false;
 
@@ -174,6 +175,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     private IContributionItem crsContributionItem;
 
     private IContributionItem scaleContributionItem;
+
     /**
      * This composite is used to hold the view; and the status line.
      */
@@ -214,13 +216,13 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     }
 
     /**
-     * The layer listener will listen for edit events and mark the
-     * map as dirty if the layer is modified.
+     * The layer listener will listen for edit events and mark the map as dirty if the layer is
+     * modified.
      */
-    ILayerListener layerListener = new ILayerListener(){
+    ILayerListener layerListener = new ILayerListener() {
 
         @Override
-        public void refresh( LayerEvent event ) {
+        public void refresh(LayerEvent event) {
             if (event.getType() == LayerEvent.EventType.EDIT_EVENT) {
                 setDirty(true);
                 event.getSource().getBlackboard().put(LAYER_DIRTY_KEY, "true"); //$NON-NLS-1$
@@ -228,27 +230,28 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         }
 
     };
+
     /**
      * This listener is called when layers are added and removed.
      * <p>
      * This method will add the layerListener to each layer on the map.
      * </p>
      */
-    IMapCompositionListener mapCompositionListener = new IMapCompositionListener(){
+    IMapCompositionListener mapCompositionListener = new IMapCompositionListener() {
 
         @Override
         @SuppressWarnings("unchecked")
-        public void changed( MapCompositionEvent event ) {
-            switch( event.getType() ) {
+        public void changed(MapCompositionEvent event) {
+            switch (event.getType()) {
             case MANY_ADDED:
                 Collection<ILayer> added = (Collection<ILayer>) event.getNewValue();
-                for( ILayer layer : added ) {
+                for (ILayer layer : added) {
                     layer.addListener(layerListener);
                 }
                 break;
             case MANY_REMOVED:
                 Collection<ILayer> removed = (Collection<ILayer>) event.getOldValue();
-                for( ILayer layer : removed ) {
+                for (ILayer layer : removed) {
                     removeListenerFromLayer(event, layer);
                 }
                 break;
@@ -272,21 +275,21 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
             }
         }
 
-        private void removeListenerFromLayer( MapCompositionEvent event, ILayer removedLayer ) {
+        private void removeListenerFromLayer(MapCompositionEvent event, ILayer removedLayer) {
             removedLayer.removeListener(layerListener);
             setDirty(isMapDirty());
         }
 
     };
+
     /**
-     * Listens to the Map and will change the editor title if the map name
-     * is changed. Also marks a layer as ditry if the edit manager has
-     * some kind of event.
+     * Listens to the Map and will change the editor title if the map name is changed. Also marks a
+     * layer as dirty if the edit manager has some kind of event.
      */
-    IMapListener mapListener = new IMapListener(){
+    IMapListener mapListener = new IMapListener() {
 
         @Override
-        public void changed( final MapEvent event ) {
+        public void changed(final MapEvent event) {
             if (composite == null)
                 return; // the composite hasn't been created so chill out
             if (getMap() == null || composite.isDisposed()) {
@@ -294,15 +297,15 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                 return;
             }
 
-            MapEditorWithPalette.this.composite.getDisplay().asyncExec(new Runnable(){
+            MapEditorWithPalette.this.composite.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
-                    switch( event.getType() ) {
+                    switch (event.getType()) {
                     case NAME:
                         setPartName((String) event.getNewValue()); // rename the map
                         break;
                     case EDIT_MANAGER:
-                        for( ILayer layer : event.getSource().getMapLayers() ) {
+                        for (ILayer layer : event.getSource().getMapLayers()) {
                             if (layer.hasResource(ITransientResolve.class)) {
                                 setDirty(true);
                                 break;
@@ -319,14 +322,14 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     };
 
     /**
-     * Listens to the edito manager; will clear the dirty status after a commit or
-     * after a rollback (as long as a map does not have temporary layers).
+     * Listens to the edit manager; will clear the dirty status after a commit or after a rollback
+     * (as long as a map does not have temporary layers).
      */
-    IEditManagerListener editListener = new IEditManagerListener(){
+    IEditManagerListener editListener = new IEditManagerListener() {
 
         @Override
-        public void changed( EditManagerEvent event ) {
-            switch( event.getType() ) {
+        public void changed(EditManagerEvent event) {
+            switch (event.getType()) {
             case EditManagerEvent.POST_COMMIT:
                 if (!hasTemporaryLayers()) {
                     setDirty(false);
@@ -348,7 +351,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
             List<Layer> layers = getMap().getLayersInternal();
             if (layers == null)
                 return false;
-            for( Layer layer : layers ) {
+            for (Layer layer : layers) {
                 if (layer.hasResource(ITransientResolve.class)) {
                     return true;
                 }
@@ -360,7 +363,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     private LayerSelectionListener layerSelectionListener;
 
     private ReplaceableSelectionProvider replaceableSelectionProvider;
-    private PreShutdownTask shutdownTask = new PreShutdownTask(){
+
+    private PreShutdownTask shutdownTask = new PreShutdownTask() {
 
         @Override
         public int getProgressMonitorSteps() {
@@ -368,16 +372,16 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         }
 
         @Override
-        public boolean handlePreShutdownException( Throwable t, boolean forced ) {
+        public boolean handlePreShutdownException(Throwable t, boolean forced) {
             ProjectUIPlugin.log("error prepping map editors for shutdown", t); //$NON-NLS-1$
             return true;
         }
 
         @Override
-        public boolean preShutdown( IProgressMonitor monitor, IWorkbench workbench, boolean forced )
+        public boolean preShutdown(IProgressMonitor monitor, IWorkbench workbench, boolean forced)
                 throws Exception {
-            monitor.beginTask("Saving Map Editor", 3); //$NON-NLS-1$
-            save(new SubProgressMonitor(monitor, 1));
+            monitor.beginTask("Saving Map Editor", 3);
+            save(SubMonitor.convert(monitor, 1));
             if (dirty) {
                 if (!forced) {
                     return false;
@@ -388,8 +392,10 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
             removeTemporaryLayers(ProjectPlugin.getPlugin().getPreferenceStore());
             monitor.worked(1);
 
-            // save the map's URI in the preferences so that it will be loaded the next time udig is
-            // run.
+            /**
+             * Save the map's URI in the preferences so that it will be loaded the next time uDig is
+             * run.
+             */
             Resource resource = getMap().eResource();
             if (resource != null) {
                 // save editor
@@ -413,13 +419,13 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
             return true;
         }
 
-        private void save( final IProgressMonitor monitor ) {
+        private void save(final IProgressMonitor monitor) {
             if (dirty) {
-                PlatformGIS.syncInDisplayThread(new Runnable(){
+                PlatformGIS.syncInDisplayThread(new Runnable() {
                     @Override
                     public void run() {
-                        IconAndMessageDialog d = new SaveDialog(Display.getCurrent()
-                                .getActiveShell(), getMap());
+                        IconAndMessageDialog d = new SaveDialog(
+                                Display.getCurrent().getActiveShell(), getMap());
                         int result = d.open();
 
                         if (result == IDialogConstants.YES_ID)
@@ -435,7 +441,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     };
 
     @Override
-    public Object getAdapter( Class adaptee ) {
+    public Object getAdapter(Class adaptee) {
         if (adaptee.isAssignableFrom(Map.class)) {
             return getMap();
         }
@@ -447,13 +453,13 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
     private void clearLayerDirtyFlag() {
         List<ILayer> layers = getMap().getMapLayers();
-        for( ILayer layer : layers ) {
+        for (ILayer layer : layers) {
             layer.getBlackboard().put(LAYER_DIRTY_KEY, null);
         }
     }
 
     @Override
-    public void setFont( Control control ) {
+    public void setFont(Control control) {
         viewer.setFont(control);
     }
 
@@ -477,8 +483,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
         deregisterFeatureFlasher();
         page.removePartListener(partlistener);
-        if( viewer != null ){
-        	viewer.getViewport().removePaneListener(getMap().getViewportModelInternal());
+        if (viewer != null) {
+            viewer.getViewport().removePaneListener(getMap().getViewportModelInternal());
         }
         getMap().getViewportModelInternal().setInitialized(false);
 
@@ -487,7 +493,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
         statusLineManager.dispose();
 
-        MapToolPaletteFactory.dispose( paletteRoot );
+        MapToolPaletteFactory.dispose(paletteRoot);
         paletteRoot = null;
 
         final ScopedPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
@@ -497,13 +503,13 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                 // kill rending now - even if it is moving
                 getRenderManager().dispose();
             } catch (Throwable t) {
-                ProjectUIPlugin.log("Shutting down rendering - " + t, null);
+                ProjectUIPlugin.log("Shutting down rendering - " + t, null); //$NON-NLS-1$
             }
             getMap().getEditManagerInternal().setEditFeature(null, null);
             try {
-                PlatformGIS.run(new ISafeRunnable(){
+                PlatformGIS.run(new ISafeRunnable() {
                     @Override
-                    public void handleException( Throwable exception ) {
+                    public void handleException(Throwable exception) {
                         ProjectUIPlugin.log("error saving map: " + getMap().getName(), exception); //$NON-NLS-1$
                     }
 
@@ -517,9 +523,9 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                                 p.eResource().save(ProjectPlugin.getPlugin().saveOptions);
                             }
 
-                            /*
-                             * when closing a map the platform wants to save the map resource,
-                             * but if you are removing the map, its no longer available.
+                            /**
+                             * When closing a map the platform wants to save the map resource, but
+                             * if you are removing the map, its no longer available.
                              */
                             final Map map = getMap();
                             final Resource resource = map.eResource();
@@ -535,11 +541,10 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                             if (resource != null)
                                 resource.save(ProjectPlugin.getPlugin().saveOptions);
                         }
-                        if( viewer != null ){
+                        if (viewer != null) {
                             viewer.dispose();
                             viewer = null;
                         }
-                        // setMap(null);
                     }
 
                 });
@@ -555,8 +560,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     private void runMapClosingInterceptors() {
         List<IConfigurationElement> interceptors = ExtensionPointList
                 .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT);
-        for( IConfigurationElement element : interceptors ) {
-            if (!MapInterceptor.CLOSING_ID.equals(element.getName())) //$NON-NLS-1$
+        for (IConfigurationElement element : interceptors) {
+            if (!MapInterceptor.CLOSING_ID.equals(element.getName())) // $NON-NLS-1$
                 continue;
             try {
                 MapInterceptor interceptor = (MapInterceptor) element
@@ -568,13 +573,14 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         }
     }
 
-    private void removeTemporaryLayers( IPreferenceStore store ) {
-        if (store
-                .getBoolean(org.locationtech.udig.project.preferences.PreferenceConstants.P_REMOVE_LAYERS)) {
+    private void removeTemporaryLayers(IPreferenceStore store) {
+        if (store.getBoolean(
+                org.locationtech.udig.project.preferences.PreferenceConstants.P_REMOVE_LAYERS)) {
             List<Layer> layers = getMap().getLayersInternal();
-            List<Layer> layersToRemove = new ArrayList<Layer>();
-            for( Layer layer : layers ) {
-                if (!layer.getGeoResources().isEmpty() && layer.getGeoResources().get(0).canResolve(ITransientResolve.class)) {
+            List<Layer> layersToRemove = new ArrayList<>();
+            for (Layer layer : layers) {
+                if (!layer.getGeoResources().isEmpty()
+                        && layer.getGeoResources().get(0).canResolve(ITransientResolve.class)) {
                     layersToRemove.add(layer);
                 }
             }
@@ -588,8 +594,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     }
 
     @Override
-    public void doSave( IProgressMonitor monitor ) {
-        final boolean[] success = new boolean[]{false};
+    public void doSave(IProgressMonitor monitor) {
+        final boolean[] success = new boolean[] { false };
 
         PlatformGIS.syncInDisplayThread(new SaveMapPaletteRunnable(this, success));
 
@@ -603,11 +609,11 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
     @Override
     public void doSaveAs() {
-        throw new UnsupportedOperationException("Do Save As is not implemented yet");
+        throw new UnsupportedOperationException("Do Save As is not implemented yet"); //$NON-NLS-1$
     }
 
     @Override
-    public void init( IEditorSite site, IEditorInput input ) {
+    public void init(IEditorSite site, IEditorInput input) {
         setSite(site);
         setInput(input);
         // initialize ToolManager
@@ -615,7 +621,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     }
 
     @Override
-    protected void setInput( IEditorInput input ) {
+    protected void setInput(IEditorInput input) {
         if (getEditorInput() != null) {
             Map map = (Map) ((UDIGEditorInput) getEditorInput()).getProjectElement();
             if (viewer != null) {
@@ -644,7 +650,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
     private boolean isMapDirty() {
         boolean mapIsDirty = false;
-        for( ILayer layer : getMap().getMapLayers() ) {
+        for (ILayer layer : getMap().getMapLayers()) {
             if (layer.hasResource(ITransientResolve.class)) {
                 mapIsDirty = true;
             }
@@ -662,7 +668,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     }
 
     @Override
-    public void setDirty( boolean dirty ) {
+    public void setDirty(boolean dirty) {
         if (dirty == this.dirty)
             return;
 
@@ -672,7 +678,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
             clearLayerDirtyFlag();
         }
 
-        Display.getDefault().asyncExec(new Runnable(){
+        Display.getDefault().asyncExec(new Runnable() {
             /**
              * @see java.lang.Runnable#run()
              */
@@ -688,29 +694,28 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         return true;
     }
 
-
     /**
      * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
      */
     @Override
-    public void createPartControl( final Composite parent ) {
+    public void createPartControl(final Composite parent) {
         ShutdownTaskList.instance().addPreShutdownTask(shutdownTask);
-        if( editDomain == null ){
+        if (editDomain == null) {
             editDomain = new MapEditDomain(this);
         }
-        setEditDomain( editDomain );
+        setEditDomain(editDomain);
 
         // super class sets up the splitter; it needs the setEditDomain to be defined
         // prior to the method being called (so the FlyoutPaletteComposite split can latch on)
 
-    	super.createPartControl(parent);
-    	// the above sets up a splitter; and then calls GraphicalEditor.createGraphicalViewer
-    	// which we can use to set up our display area...
+        super.createPartControl(parent);
+        // the above sets up a splitter; and then calls GraphicalEditor.createGraphicalViewer
+        // which we can use to set up our display area...
     }
 
     @Override
     protected Control getGraphicalControl() {
-    	return composite;
+        return composite;
     }
 
     /**
@@ -731,7 +736,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         setTitleToolTip(Messages.MapEditor_titleToolTip);
         setTitleImage(ProjectUIPlugin.getDefault().getImage(ISharedImages.MAP_OBJ));
 
-        viewer = new MapViewer(composite, SWT.DOUBLE_BUFFERED);
+        viewer = new MapViewer(composite, this, SWT.DOUBLE_BUFFERED);
         // we need an edit domain for GEF
         // This represents the "Current Tool" for the Palette
         // We should not duplicate the idea of current tools so we may
@@ -739,7 +744,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         // editDomain = new MapEditDomain(this);
         // setEditDomain( editDomain );
 
-        // allow the viewer to open our context menu; work with our selection proivder etc
+        // allow the viewer to open our context menu; work with our selection provider etc
         viewer.init(this);
 
         // if a map was provided as input we can ask the viewer to use it
@@ -775,7 +780,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
         getSite().getPage().addPostSelectionListener(layerSelectionListener);
 
-        for( Layer layer : getMap().getLayersInternal() ) {
+        for (Layer layer : getMap().getLayersInternal()) {
             layer.addListener(layerListener);
         }
 
@@ -783,9 +788,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         this.replaceableSelectionProvider = new ReplaceableSelectionProvider();
         getSite().setSelectionProvider(replaceableSelectionProvider);
         runMapOpeningInterceptor(getMap());
-        mapEditorSite = new MapEditorSite(super.getSite(), this);
-        final IContributionManager statusBar = mapEditorSite.getActionBars().getStatusLineManager();
-
+        mapSite = new MapSite(super.getSite(), this);
+        final IContributionManager statusBar = mapSite.getActionBars().getStatusLineManager();
 
         scaleContributionItem = new ScaleRatioLabel(this);
         scaleContributionItem.setVisible(true);
@@ -799,10 +803,10 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         crsContributionItem.update();
         statusBar.update(true);
 
-        getMap().getViewportModel().addViewportModelListener(new IViewportModelListener(){
+        getMap().getViewportModel().addViewportModelListener(new IViewportModelListener() {
 
             @Override
-            public void changed( ViewportModelEvent event ) {
+            public void changed(ViewportModelEvent event) {
                 if (getMap() == null) {
                     event.getSource().removeViewportModelListener(this);
                     return;
@@ -812,13 +816,13 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         });
 
         setDirty(isMapDirty());
-	}
+    }
 
-    private void runMapOpeningInterceptor( Map map ) {
+    private void runMapOpeningInterceptor(Map map) {
         List<IConfigurationElement> interceptors = ExtensionPointList
                 .getExtensionPointList(MapInterceptor.MAP_INTERCEPTOR_EXTENSIONPOINT);
-        for( IConfigurationElement element : interceptors ) {
-            if (!MapInterceptor.OPENING_ID.equals(element.getName())) //$NON-NLS-1$
+        for (IConfigurationElement element : interceptors) {
+            if (!MapInterceptor.OPENING_ID.equals(element.getName())) // $NON-NLS-1$
                 continue;
             try {
                 MapInterceptor interceptor = (MapInterceptor) element
@@ -831,8 +835,11 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     }
 
     private FlashFeatureListener selectFeatureListener = new FlashFeatureListener();
+
     private boolean flashFeatureRegistered = false;
+
     private Action propertiesAction;
+
     /**
      * registers a listener with the current page that flashes a feature each time the current
      * selected feature changes.
@@ -856,9 +863,9 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         if (menu == null) {
             final MenuManager contextMenu = new MenuManager();
             contextMenu.setRemoveAllWhenShown(true);
-            contextMenu.addMenuListener(new IMenuListener(){
+            contextMenu.addMenuListener(new IMenuListener() {
                 @Override
-                public void menuAboutToShow( IMenuManager mgr ) {
+                public void menuAboutToShow(IMenuManager mgr) {
                     IToolManager tm = ApplicationGIS.getToolManager();
 
                     contextMenu.add(tm.getENTERAction());
@@ -869,12 +876,11 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                     contextMenu.add(tm.getBACKWARD_HISTORYAction());
                     contextMenu.add(tm.getFORWARD_HISTORYAction());
                     contextMenu.add(new Separator());
-                    //contextMenu.add(tm.createCUTAction(MapEditorWithPalette.this));
                     contextMenu.add(tm.getCOPYAction(MapEditorWithPalette.this));
                     contextMenu.add(tm.getPASTEAction(MapEditorWithPalette.this));
                     contextMenu.add(tm.getDELETEAction());
 
-                    /*
+                    /**
                      * Gets contributions from active modal tool if possible
                      */
                     tm.contributeActiveModalTool(contextMenu);
@@ -910,10 +916,11 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         if (propertiesAction == null) {
             final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
             final PropertyDialogAction tmp = new PropertyDialogAction(new SameShellProvider(shell),
-                    new ISelectionProvider(){
+                    new ISelectionProvider() {
 
                         @Override
-                        public void addSelectionChangedListener( ISelectionChangedListener listener ) {
+                        public void addSelectionChangedListener(
+                                ISelectionChangedListener listener) {
                         }
 
                         @Override
@@ -923,18 +930,19 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
                         @Override
                         public void removeSelectionChangedListener(
-                                ISelectionChangedListener listener ) {
+                                ISelectionChangedListener listener) {
                         }
 
                         @Override
-                        public void setSelection( ISelection selection ) {
+                        public void setSelection(ISelection selection) {
+
                         }
 
                     });
 
-            propertiesAction = new Action(){
+            propertiesAction = new Action() {
                 @Override
-                public void runWithEvent( Event event ) {
+                public void runWithEvent(Event event) {
                     tmp.createDialog().open();
                 }
             };
@@ -964,7 +972,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         if (scaleContributionItem != null) {
             scaleContributionItem.update();
         }
-
     }
 
     /**
@@ -974,7 +981,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
      */
     @Override
     public Map getMap() {
-        // return viewer.getMap();
         UDIGEditorInput editorInput = (UDIGEditorInput) getEditorInput();
         if (editorInput != null) {
             return (Map) editorInput.getProjectElement();
@@ -992,23 +998,23 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         return (SubActionBars2) getEditorSite().getActionBars();
     }
 
-    IPartListener2 partlistener = new IPartListener2(){
+    IPartListener2 partlistener = new IPartListener2() {
         @Override
-        public void partActivated( IWorkbenchPartReference partRef ) {
+        public void partActivated(IWorkbenchPartReference partRef) {
             if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 registerFeatureFlasher();
                 IToolManager tools = ApplicationGIS.getToolManager();
-                tools.setCurrentEditor( MapEditorWithPalette.this );
-                //editor.viewer.setModalTool( (ModalTool) tools.getActiveTool() );
+                tools.setCurrentEditor(MapEditorWithPalette.this);
             }
         }
 
         @Override
-        public void partBroughtToTop( IWorkbenchPartReference partRef ) {
+        public void partBroughtToTop(IWorkbenchPartReference partRef) {
+
         }
 
         @Override
-        public void partClosed( IWorkbenchPartReference partRef ) {
+        public void partClosed(IWorkbenchPartReference partRef) {
             if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 deregisterFeatureFlasher();
                 visible = false;
@@ -1016,17 +1022,17 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         }
 
         @Override
-        public void partDeactivated( IWorkbenchPartReference partRef ) {
+        public void partDeactivated(IWorkbenchPartReference partRef) {
             // do nothing
         }
 
         @Override
-        public void partOpened( IWorkbenchPartReference partRef ) {
+        public void partOpened(IWorkbenchPartReference partRef) {
             // do nothing
         }
 
         @Override
-        public void partHidden( IWorkbenchPartReference partRef ) {
+        public void partHidden(IWorkbenchPartReference partRef) {
             if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 deregisterFeatureFlasher();
                 visible = false;
@@ -1034,7 +1040,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         }
 
         @Override
-        public void partVisible( IWorkbenchPartReference partRef ) {
+        public void partVisible(IWorkbenchPartReference partRef) {
             if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 registerFeatureFlasher();
                 visible = true;
@@ -1042,12 +1048,14 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         }
 
         @Override
-        public void partInputChanged( IWorkbenchPartReference partRef ) {
+        public void partInputChanged(IWorkbenchPartReference partRef) {
+
         }
 
     };
 
     private boolean draggingEnabled;
+
     private volatile boolean visible = false;
 
     /**
@@ -1056,12 +1064,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     @Override
     public void openContextMenu() {
         viewer.openContextMenu();
-        /*getEditorSite().getShell().getDisplay().asyncExec(new Runnable(){
-            public void run() {
-                menu.setVisible(true);
-            }
-        });
-        */
     }
 
     @Override
@@ -1070,7 +1072,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     }
 
     @Override
-    public Object getTarget( DropTargetEvent event ) {
+    public Object getTarget(DropTargetEvent event) {
         return this;
     }
 
@@ -1078,7 +1080,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
      * Enables or disables dragging (drag and drop) from the map editor.
      */
     @Override
-    public void setDragging( boolean enable ) {
+    public void setDragging(boolean enable) {
         if (draggingEnabled == enable)
             return;
         if (enable) {
@@ -1101,7 +1103,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     }
 
     @Override
-    public void setSelectionProvider( IMapEditorSelectionProvider selectionProvider ) {
+    public void setSelectionProvider(IMapEditorSelectionProvider selectionProvider) {
         if (selectionProvider == null) {
             throw new NullPointerException("selection provider must not be null!"); //$NON-NLS-1$
         }
@@ -1113,8 +1115,8 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
     }
 
     @Override
-    public MapEditorSite getMapEditorSite() {
-        return mapEditorSite;
+    public MapSite getMapSite() {
+        return mapSite;
     }
 
     private class FlashFeatureListener implements ISelectionListener {
@@ -1130,7 +1132,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                 public void run() {
                     if (selection instanceof IStructuredSelection) {
                         IStructuredSelection s = (IStructuredSelection) selection;
-                        List<SimpleFeature> features = new ArrayList<SimpleFeature>();
+                        List<SimpleFeature> features = new ArrayList<>();
                         for (Iterator iter = s.iterator(); iter.hasNext();) {
                             Object element = iter.next();
 
@@ -1173,7 +1175,7 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
         }
 
         private IAnimation createAnimation(List<SimpleFeature> current) {
-            final List<IDrawCommand> commands = new ArrayList<IDrawCommand>();
+            final List<IDrawCommand> commands = new ArrayList<>();
             for (SimpleFeature feature : current) {
                 if (feature == null || feature.getFeatureType().getGeometryDescriptor() == null)
                     continue;
@@ -1195,9 +1197,6 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
                 commands.add(command);
             }
             Rectangle2D rect = new Rectangle();
-            // for( IDrawCommand command : commands ) {
-            // rect=rect.createUnion(command.getValidArea());
-            // }
             final Rectangle validArea = (Rectangle) rect;
 
             return new FeatureAnimation(commands, validArea);
@@ -1214,20 +1213,21 @@ public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette imple
 
     @Override
     public IStatusLineManager getStatusLineManager() {
-    	return statusLineManager;
+        return statusLineManager;
     }
 
     @Override
-    public MapEditDomain getEditDomain(){
+    public MapEditDomain getEditDomain() {
         return editDomain;
     }
-    // helper methods for Toolmanager
+
     @Override
     public boolean isTesting() {
         return this.isTesting;
     }
+
     @Override
-    public void setTesting( boolean testing ) {
+    public void setTesting(boolean testing) {
         this.isTesting = testing;
     }
 }

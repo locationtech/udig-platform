@@ -1,6 +1,6 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,8 +16,6 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
@@ -25,28 +23,33 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 /**
  * A composite that represents a facility to create JGrass color rules
- * 
+ *
  * @author Andrea Antonello - www.hydrologis.com
  */
 public class RuleComposite implements MouseListener, SelectionListener, KeyListener {
 
     private Label fromLabel;
+
     private Label toLabel;
+
     private Button enableRuleCheckButton;
+
     private Text fromValueText;
+
     private Text toValueText;
+
     private boolean isActive = true;
+
     private Rule rule = null;
+
     private Composite parent = null;
 
-    public RuleComposite( ColorEditor colorEditor, Composite parent, int style, Rule rule ) {
+    public RuleComposite(ColorEditor colorEditor, Composite parent, int style, Rule rule) {
         this.parent = parent;
 
         GridData gridData10 = new GridData();
@@ -75,9 +78,6 @@ public class RuleComposite implements MouseListener, SelectionListener, KeyListe
         gridData6.verticalAlignment = GridData.FILL;
         GridLayout gridLayout1 = new GridLayout();
         gridLayout1.numColumns = 6;
-        // gridLayout1.marginWidth = 5;
-        // gridLayout1.marginHeight = 5;
-        // gridLayout1.verticalSpacing = 5;
         gridLayout1.makeColumnsEqualWidth = true;
         GridData gridData5 = new GridData();
         gridData5.grabExcessHorizontalSpace = true;
@@ -86,16 +86,16 @@ public class RuleComposite implements MouseListener, SelectionListener, KeyListe
         parent.setLayoutData(gridData5);
         parent.setLayout(gridLayout1);
         fromLabel = new Label(parent, SWT.BORDER);
-        fromLabel.setText("");
+        fromLabel.setText(""); //$NON-NLS-1$
         fromLabel.setLayoutData(gridData6);
         fromLabel.addMouseListener(this);
         fromValueText = new Text(parent, SWT.BORDER);
         fromValueText.setLayoutData(gridData7);
         Label dummylabel = new Label(parent, SWT.NONE);
-        dummylabel.setText("-");
+        dummylabel.setText("-"); //$NON-NLS-1$
         dummylabel.setLayoutData(gridData8);
         toLabel = new Label(parent, SWT.BORDER);
-        toLabel.setText("");
+        toLabel.setText(""); //$NON-NLS-1$
         toLabel.setLayoutData(gridData9);
         toLabel.addMouseListener(this);
         toValueText = new Text(parent, SWT.BORDER);
@@ -107,7 +107,7 @@ public class RuleComposite implements MouseListener, SelectionListener, KeyListe
         fromValueText.addKeyListener(this);
         toValueText.addKeyListener(this);
 
-        /*
+        /**
          * set values if needed
          */
         if (rule == null) {
@@ -118,13 +118,13 @@ public class RuleComposite implements MouseListener, SelectionListener, KeyListe
         enableRuleCheckButton.setSelection(this.rule.isActive());
         String value = null;
         if (this.rule.getFromToValues()[0] != this.rule.getFromToValues()[0]) {
-            value = "";
+            value = ""; //$NON-NLS-1$
         } else {
             value = String.valueOf(this.rule.getFromToValues()[0]);
         }
         fromValueText.setText(value);
         if (this.rule.getFromToValues()[1] != this.rule.getFromToValues()[1]) {
-            value = "";
+            value = ""; //$NON-NLS-1$
         } else {
             value = String.valueOf(this.rule.getFromToValues()[1]);
         }
@@ -141,16 +141,19 @@ public class RuleComposite implements MouseListener, SelectionListener, KeyListe
         return rule;
     }
 
-    public void mouseDoubleClick( MouseEvent e ) {
+    @Override
+    public void mouseDoubleClick(MouseEvent e) {
+
     }
 
-    public void mouseDown( MouseEvent e ) {
+    @Override
+    public void mouseDown(MouseEvent e) {
         Object o = e.getSource();
         if (o instanceof Label) {
             Label l = (Label) o;
             ColorDialog c = new ColorDialog(parent.getShell());
-            c.setRGB(new RGB(l.getBackground().getRed(), l.getBackground().getGreen(), l
-                    .getBackground().getBlue()));
+            c.setRGB(new RGB(l.getBackground().getRed(), l.getBackground().getGreen(),
+                    l.getBackground().getBlue()));
             RGB color = c.open();
             if (color == null) {
                 return;
@@ -167,13 +170,18 @@ public class RuleComposite implements MouseListener, SelectionListener, KeyListe
         }
     }
 
-    public void mouseUp( MouseEvent e ) {
+    @Override
+    public void mouseUp(MouseEvent e) {
+
     }
 
-    public void widgetDefaultSelected( SelectionEvent e ) {
+    @Override
+    public void widgetDefaultSelected(SelectionEvent e) {
+
     }
 
-    public void widgetSelected( SelectionEvent e ) {
+    @Override
+    public void widgetSelected(SelectionEvent e) {
         Button b = (Button) e.getSource();
         if (b.equals(enableRuleCheckButton)) {
             isActive = b.getSelection();
@@ -181,24 +189,26 @@ public class RuleComposite implements MouseListener, SelectionListener, KeyListe
         }
     }
 
-    public void keyPressed( KeyEvent e ) {
+    @Override
+    public void keyPressed(KeyEvent e) {
 
     }
 
-    public void keyReleased( KeyEvent e ) {
+    @Override
+    public void keyReleased(KeyEvent e) {
         Object o = e.widget;
         if (o instanceof Text) {
             float[] tmp = rule.getFromToValues();
             try {
                 tmp[0] = Float.parseFloat(fromValueText.getText());
             } catch (NumberFormatException ne) {
-                fromValueText.setText("0");
+                fromValueText.setText("0"); //$NON-NLS-1$
                 return;
             }
             try {
                 tmp[1] = Float.parseFloat(toValueText.getText());
             } catch (NumberFormatException ne) {
-                toValueText.setText("0");
+                toValueText.setText("0"); //$NON-NLS-1$
                 return;
             }
             rule.setFromToValues(tmp);

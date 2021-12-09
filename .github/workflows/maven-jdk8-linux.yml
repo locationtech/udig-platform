@@ -34,13 +34,15 @@ jobs:
     - uses: BSFishy/pip-action@v1
       with:
         packages: |
-          sphinx==1.8.5
+          sphinx==4.2.0
     - name: Build docs with sphinx
       run: mvn install -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs
-    - name: Run uDig product & sdk build with tests
+    - name: Run uDig product & sdk build (parallel)
+      run: mvn install -B -Pproduct,sdk,test -DskipTests --fail-at-end -T4
+    - name: Run uDig tests
       uses: GabrielBB/xvfb-action@v1
       with:
-         run: mvn verify -B -Pproduct -Psdk -Ptest --fail-at-end -T4
+         run: mvn integration-test -B -Ptest --fail-at-end
     - name: provide Windows product for download
       uses: actions/upload-artifact@v2
       with:

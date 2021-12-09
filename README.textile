@@ -6,10 +6,10 @@ The User-friendly Desktop Internet GIS (uDig) is an open source ("EPL":http://ww
 * uDig can be extended with RCP "plug-ins"
 * uDig can be used as a plug-in in an existing RCP application
 
-uDig is an open project, with developers from multiple companies participating in the decision making process and project direction. All decisions are made transparently, on the public mailing list, or in open "IRC":http://en.wikipedia.org/wiki/IRC discussions.
+uDig is an open project, with developers from multiple companies participating in the decision making process and project direction, or open discussions using chat tools such as "Gitter":https://gitter.im/uDig or mailing lists:
 
-* <a href="irc://us.freenode.net/udig">#udig</a> on "freenode":http://freenode.net/irc_servers.shtml
-* <a href="irc://us.freenode.net/geotools">#geotools</a> on "freenode":http://freenode.net/irc_servers.shtml
+* "uDig User":https://accounts.eclipse.org/mailing-list/udig-users (How to use uDig as RCP Application)
+* "uDig Developer":https://accounts.eclipse.org/mailing-list/udig-dev (How to develop uDig and build Applications with SDK)
 
 h2. Website
 
@@ -34,164 +34,64 @@ h2. Steering Committee
 
 h2. Contributing
 
-Join us in working on uDig:
-
-* "Contributing":CONTRIBUTING.textile
+Join us in working on uDig: "Contributing":CONTRIBUTING.textile
 
 There are two ways to take part: indirectly using github pull requests; and directly by obtaining commit access. Remember that a pull request is the start of a conversation!
 
+
+
 h1. Build Instructions
 
-1. We have two branches in our short term roadmap:
-   
-   * https://github.com/locationtech/udig-platform (luna)
-   * https://github.com/locationtech/udig-platform/tree/1.5.x (indigo)
+1. Check out Repository
    
    Check out the branch you wish to work with (or fork as you see fit).
 
    To check it out:
-   <pre><code>
-     git https://github.com/locationtech/udig-platform udig
-     cd udig
-     git checkout master
-   </pre></code>
+<pre>
+<code>
+git clone https://github.com/locationtech/udig-platform udig
+cd udig
+</code>
+</pre>
 
 2. Download stuff (using maven to launch small ant download scripts):
-   <pre><code>
-     mvn clean install -f pom-libs.xml
 
-     [INFO] ------------------------------------------------------------------------
-     [INFO] BUILD SUCCESS
-     [INFO] ------------------------------------------------------------------------
-     [INFO] Total time: 8:05.291s
-   </code></pre>
+<pre>
+<code>
+mvn clean install -f pom-libs.xml
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 8:05.291s
+</code>
+</pre>
 
 h2. Option - Command Line Build
 
 1. Tycho Build
-   <pre><code>
-      mvn clean install -Pproduct -Psdk -Pdocs
 
-      [INFO] ------------------------------------------------------------------------
-      [INFO] BUILD SUCCESS
-      [INFO] ------------------------------------------------------------------------
-      [INFO] Total time: 12:44.827s
-   </code></pre>
+   For requirements to build docs with profile `docs` ("Sphinx reStructuredText":https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html)
+   consult "detailed doc description":docs/devel/en/docguide/sphinxEnvironment.rst :
 
-2. Packaging, branding and installers::
-   <pre><code>
-      cd deploy
-      ./all.sh
+<pre>
+<code>
+mvn clean install -Pproduct -Psdk -Pdocs
 
-      ..snip..
-      Releasing linux64
-      Creating ./build/linux64/udig
-      Building ./build/udig-2.0.0-SNAPSHOT.linux.gtk.x86_64.zip ...
-      Extracting ./../features/org.locationtech.udig-product/target/products/org.locationtech.udig-product-linux.gtk.x86_64.zip
-      Preparing ./build/linux64 with ./jre/jre1.6.0_25.lin64_gdal_ecw
-      Looking for ./jre/jre1.6.0_25.lin64_gdal_ecw.tar.gz
-      Extracting ./jre/jre1.6.0_25.lin64_gdal_ecw.tar.gz
-      Preparing ./build/linux64 with start up scripts and html files
-      Assemble ./build/udig-2.0.0-SNAPSHOT.linux.gtk.x86_64.zip
-   </code></pre>
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 12:44.827s
+</code>
+</pre>
 
-3. Upload to website
+2. Test an individual module
 
-See results at http://udig.refractions.net/download/unstable/ there should be a 2.0.0-SNAPSHOT by the time you read this.
+   This requires successful previous step with install goal
 
-4. To test an individual module::
-      
-      cd plugins/org.locationtech.catalog.tests.ui
-      mvn clean install -Ptest -fae
-
-h2. Option - Eclipse Build
-
-We have tested these instructions with Eclipse 4.3 Kepler.
-
-We have found incompatibilities with target definition when trying newer versions of Eclipse.
-
-
-h3. Preferences
-
-From the Eclipse **Preferences** screen:
-
-1. **Java --> Code Style --> Coding Template**
-     
-   Use the **Import** button and select the file `extras/org.locationtech.udig.dev/codetemplates.xml`
-     
-   Confirm the uDig header is available for **New Java Files** as shown::
-<pre><code>/* uDig - User Friendly Desktop Internet GIS client
- * http://udig.refractions.net
- * (C) 2015, Refractions Research Inc.
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
- * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
- */</code></pre>
-
-2. **Java --> Code Style --> Code Formatter**
-     
-   Use the **Import** button and select the file `extras/org.locationtech.udig.dev/codeformatter.xml`
- 
-3. **Java --> Compiler --> Errors/Warnings**
-      
-   Open the **Code Style** category and change **Non-externalized strings** to 'Warning'.
-     
-4. **Plug-in Development --> API Baselines**
-     
-    Change the **Missing API baseline** to 'Warning'.
-     
-h3. Target Platform and Running uDig
-
-uDig makes use of a target platform, in order to download and reference bundles from:
-
-* Eclipse Rich Client Platform (Indigo or Luna)
-* Babel Project (providing translations)
-* Orbit (open source components that have been checked by the Eclipse legal team)
-
-Here is how to set that up:
-
-1. Use the **Import Existing Projects** wizard to import the "extras/org.locationtech.udig.target":extras/org.locationtech.udig.target project into workspace.
-
-!extras/images/import_projects_targets.png!
-
-2. Open up "org.locationtech.udig.target.target":extras/org.locationtech.udig.target/org.locationtech.udig.target.target and click on Set as Target Platform
-
-!extras/images/target.png!
-
-This will reset the target platform which will take some time.
-   
-3. Save a copy of the target-platform locally
-
-Since the target definition uses online resources it's a good idea to export it for offline development purposes.
-To do so, click on the export action top right in the target platform editor.
-  
-!extras/images/export-target-platform-01.png!
-
-Choose a destination folder to store features and bundles as a local P2 repository resolved via the target defintion file.
-
-!extras/images/export-target-platform-02.png!
-
-Later if there is a need to work offline you can easily create a new target platform definion, for details consult "eclipse online help":http://help.eclipse.org/indigo/index.jsp?topic=%2Forg.eclipse.pde.doc.user%2Fguide%2Ftools%2Fpreference_pages%2Ftarget_platform.htm.
-
-4. Once the target platform is finished you can import the remaining uDig projects.
-
-5. Open up "org.locationtech.udig/udig.product":plugins/org.locationtech.udig/udig.product and click *Launch the product*
-
-!extras/images/product.png!
-
-Tips:
-
-* Edit your Run Configuration to turn on tracing when debugging
-* Check your Run Configuration has been created with Java 7
-
-h3. Find Bugs
-
-We use **FindBugs** to catch many small issues as part of our review process:
-
-1. Select **Help --> Eclipse marketplace** from the menu bar
-2. Search for **FindBugs** and Install
-3. You will be asked to restart eclipse
-
-Take a moment to run **FindBugs** before submitting a pull request.
+<pre>
+<code>
+cd plugins/org.locationtech.udig.catalog.ui.tests
+mvn clean install -Ptest -fae
+</code>
+</pre>

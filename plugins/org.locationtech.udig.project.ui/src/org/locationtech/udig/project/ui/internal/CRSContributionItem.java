@@ -1,3 +1,13 @@
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
+ */
 package org.locationtech.udig.project.ui.internal;
 
 import org.eclipse.jface.action.ContributionItem;
@@ -61,7 +71,7 @@ public final class CRSContributionItem extends ContributionItem {
     }
 
     /**
-     * Updates the crs label in the statusbar.
+     * Updates the CRS label in the statusbar.
      */
     @Override
     public void update() {
@@ -128,8 +138,7 @@ public final class CRSContributionItem extends ContributionItem {
 
         if (buttonLabel.length() > MAX_LENGTH) {
             final int start2 = buttonLabel.length() - MAX_LENGTH / 2;
-            buttonLabel = buttonLabel.substring(0, MAX_LENGTH / 2)
-                    + "..." //$NON-NLS-1$
+            buttonLabel = buttonLabel.substring(0, MAX_LENGTH / 2) + "..." //$NON-NLS-1$
                     + buttonLabel.substring(start2, buttonLabel.length());
         }
         button.setText(buttonLabel);
@@ -138,7 +147,7 @@ public final class CRSContributionItem extends ContributionItem {
             button.setToolTipText(crs.toWKT());
         } catch (Exception e) {
             // ignore any exception creating readable string for CRS
-            button.setToolTipText("");
+            button.setToolTipText(""); //$NON-NLS-1$
         }
     }
 }

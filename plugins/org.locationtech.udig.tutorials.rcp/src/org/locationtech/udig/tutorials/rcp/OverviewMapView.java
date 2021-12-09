@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,23 +9,6 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.tutorials.rcp;
-
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.ProjectFactory;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.MapPart;
-import org.locationtech.udig.project.ui.internal.tool.display.ToolManager;
-import org.locationtech.udig.project.ui.internal.wizard.MapImport;
-import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
-import org.locationtech.udig.project.ui.tool.IToolManager;
-import org.locationtech.udig.project.ui.tool.ModalTool;
-import org.locationtech.udig.project.ui.viewers.MapEditDomain;
-import org.locationtech.udig.project.ui.viewers.MapViewer;
-import org.locationtech.udig.tools.internal.ScrollPanTool;
-import org.locationtech.udig.tools.internal.Zoom;
-import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
-import org.locationtech.udig.tutorials.tracking.glasspane.TrackSeagullOp;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.Action;
@@ -45,6 +28,21 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.udig.internal.ui.UDIGDropHandler;
+import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.internal.ProjectFactory;
+import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.MapSite;
+import org.locationtech.udig.project.ui.internal.wizard.MapImport;
+import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
+import org.locationtech.udig.project.ui.tool.ModalTool;
+import org.locationtech.udig.project.ui.viewers.MapEditDomain;
+import org.locationtech.udig.project.ui.viewers.MapViewer;
+import org.locationtech.udig.tools.internal.ScrollPanTool;
+import org.locationtech.udig.tools.internal.Zoom;
+import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
+import org.locationtech.udig.tutorials.tracking.glasspane.TrackSeagullOp;
 
 /**
  * A sample map view that contains an overview map in the lower left corner.
@@ -52,7 +50,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * This overview map tracks the main map and displays a blue box that outlines the area you are
  * currently zoomed to.
  * </p>
- * 
+ *
  * @author Emily Gouge
  * @since 1.2.0
  * @version 1.3.0
@@ -62,40 +60,52 @@ public class OverviewMapView extends ViewPart implements MapPart {
     public static final String ID = "org.locationtech.udig.tutorials.rcp.mapViewOverview"; //$NON-NLS-1$
 
     private MapViewer mapviewer; // main map viewer
+
+    private MapSite mapSite;
+
+    @SuppressWarnings("unused")
+    private boolean isDirty = false;
+
     private OverviewMapViewer overviewmapviewer; // overview map viewer
 
-	private MapEditDomain editDomain;
+    private MapEditDomain editDomain;
 
     public OverviewMapView() {
         super();
     }
+
+    @Override
     public Map getMap() {
         return mapviewer.getMap();
     }
 
+    @Override
     public void openContextMenu() {
         mapviewer.openContextMenu();
     }
 
-    public void setFont( Control textArea ) {
+    @Override
+    public void setFont(Control textArea) {
         mapviewer.getViewport().getControl().setFocus();
     }
 
-    public void setSelectionProvider( IMapEditorSelectionProvider selectionProvider ) {
+    @Override
+    public void setSelectionProvider(IMapEditorSelectionProvider selectionProvider) {
         mapviewer.setSelectionProvider(selectionProvider);
     }
 
     @Override
-    public void createPartControl( Composite parent ) {
+    public void createPartControl(Composite parent) {
         parent.setLayout(new FormLayout());
 
         // create two maps
-        final Map overviewmap = (Map) ProjectFactory.eINSTANCE.createMap();
-        final Map mainmap = (Map) ProjectFactory.eINSTANCE.createMap();
+        final Map overviewmap = ProjectFactory.eINSTANCE.createMap();
+        final Map mainmap = ProjectFactory.eINSTANCE.createMap();
 
+        mapSite = new MapSite(getViewSite(), this);
         // create overview
-        overviewmapviewer = new OverviewMapViewer(parent, SWT.MULTI | SWT.NO_BACKGROUND
-                | SWT.BORDER, mainmap);
+        overviewmapviewer = new OverviewMapViewer(parent, this,
+                SWT.MULTI | SWT.NO_BACKGROUND | SWT.BORDER, mainmap);
         int size = 25;
         FormData fd = new FormData();
         fd.left = new FormAttachment(0);
@@ -105,9 +115,9 @@ public class OverviewMapView extends ViewPart implements MapPart {
         overviewmapviewer.getControl().setLayoutData(fd);
 
         // create map
-    	editDomain = new MapEditDomain(null);
+        editDomain = new MapEditDomain(null);
 
-        mapviewer = new MapViewer(parent, SWT.MULTI | SWT.NO_BACKGROUND);
+        mapviewer = new MapViewer(parent, this, SWT.MULTI | SWT.NO_BACKGROUND);
         mapviewer.setMap(mainmap);
         fd = new FormData();
         fd.left = new FormAttachment(0);
@@ -116,7 +126,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
         fd.bottom = new FormAttachment(100);
         mapviewer.getControl().setLayoutData(fd);
 
-        // must be called after the mainmap has a mapviewer otherwise
+        // must be called after the main map has a MapViewer otherwise
         // we cannot correctly add necessary listeners
         overviewmapviewer.setMap(overviewmap);
         overviewmapviewer.createLocationBox(mapviewer.getViewport());
@@ -139,11 +149,13 @@ public class OverviewMapView extends ViewPart implements MapPart {
     public void setFocus() {
         mapviewer.getViewport().getControl().setFocus();
     }
+
     @Override
-    public void init( IViewSite site ) throws PartInitException {
+    public void init(IViewSite site) throws PartInitException {
         super.init(site);
         // Normally we might do other stuff here.
     }
+
     @Override
     public void dispose() {
         if (mapviewer != null && mapviewer.getViewport() != null && getMap() != null) {
@@ -160,6 +172,8 @@ public class OverviewMapView extends ViewPart implements MapPart {
         }
 
         private ScrollPanTool tool = new ScrollPanTool();
+
+        @Override
         public void run() {
             setActive(tool);
         }
@@ -167,29 +181,37 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
     class SetZoomExtentToolAction extends Action {
         Zoom tool = new Zoom();
+
         public SetZoomExtentToolAction() {
             super("Zoom"); //$NON-NLS-1$
         }
+
+        @Override
         public void run() {
             setActive(tool);
         }
     }
+
     ModalTool activeTool = null;
-    public void setActive( ModalTool tool ){
-        if( activeTool == tool ){
+
+    public void setActive(ModalTool tool) {
+        if (activeTool == tool) {
             return; // no change
         }
-        if( activeTool != null ){
+        if (activeTool != null) {
             activeTool.setActive(false);
             activeTool = null;
         }
         tool.setActive(true);
         activeTool = tool;
     }
+
     class SetZoomToMapToolAction extends Action {
         public SetZoomToMapToolAction() {
             super("Zoom to Map"); //$NON-NLS-1$
         }
+
+        @Override
         public void run() {
             ReferencedEnvelope bounds = getMap().getBounds(new NullProgressMonitor());
             getMap().sendCommandASync(new SetViewportBBoxCommand(bounds));
@@ -200,6 +222,8 @@ public class OverviewMapView extends ViewPart implements MapPart {
         public SetRefreshToolAction() {
             super("Refresh Map"); //$NON-NLS-1$
         }
+
+        @Override
         public void run() {
             mapviewer.getRenderManager().refresh(null);
         }
@@ -207,9 +231,12 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
     class SetGlassSeagullsAction extends Action {
         private SeagullGlassPaneOp seagullOp;
+
         public SetGlassSeagullsAction() {
             super("Add Glass Seagulls layer"); //$NON-NLS-1$
         }
+
+        @Override
         public void run() {
             Display display = Display.getCurrent();
             if (seagullOp == null) {
@@ -227,9 +254,12 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
     class SetTrackGlassSeagullsAction extends Action {
         private TrackSeagullOp seagullOp;
+
         public SetTrackGlassSeagullsAction() {
             super("Add Glass Seagull Tracking layer"); //$NON-NLS-1$
         }
+
+        @Override
         public void run() {
             Display display = Display.getCurrent();
             if (seagullOp == null) {
@@ -245,13 +275,22 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
     }
 
+    @Override
+    public UDIGDropHandler getDropHandler() {
+        // view has no drop support
+        return null;
+    }
+
     class SetBackgroundWMSCAction extends Action {
         public SetBackgroundWMSCAction() {
             super("Add Background layer..."); //$NON-NLS-1$
         }
+
+        @Override
         public void run() {
             Display display = Display.getCurrent();
-            display.syncExec(new Runnable(){
+            display.syncExec(new Runnable() {
+                @Override
                 public void run() {
                     MapImport mapImport = new MapImport();
                     mapImport.getDialog().open();
@@ -260,21 +299,43 @@ public class OverviewMapView extends ViewPart implements MapPart {
         }
     }
 
-	@Override
-	public IStatusLineManager getStatusLineManager() {
-		return getViewSite().getActionBars().getStatusLineManager();
-	}
+    @Override
+    public IStatusLineManager getStatusLineManager() {
+        return getViewSite().getActionBars().getStatusLineManager();
+    }
+
+    @Override
+    public MapSite getMapSite() {
+        return mapSite;
+    }
+
+    @Override
+    public boolean isDragging() {
+        return false;
+    }
+
+    @Override
+    public void setDragging(boolean isDragging) {
+        // ignore drag source
+    }
+
+    @Override
+    public void setDirty(boolean isDirty) {
+        this.isDirty = isDirty;
+    }
+
 }
 
 class OverviewLayoutManager extends Layout {
 
     @Override
-    protected Point computeSize( Composite composite, int hint, int hint2, boolean flushCache ) {
+    protected Point computeSize(Composite composite, int hint, int hint2, boolean flushCache) {
         return null;
     }
 
     @Override
-    protected void layout( Composite composite, boolean flushCache ) {
+    protected void layout(Composite composite, boolean flushCache) {
+
     }
 
 }

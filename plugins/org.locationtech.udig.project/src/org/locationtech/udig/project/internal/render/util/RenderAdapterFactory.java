@@ -3,6 +3,10 @@
  */
 package org.locationtech.udig.project.internal.render.util;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+import org.eclipse.emf.ecore.EObject;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.internal.render.MultiLayerRenderer;
 import org.locationtech.udig.project.internal.render.RenderExecutor;
@@ -17,16 +21,11 @@ import org.locationtech.udig.project.render.IRenderer;
 import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener;
 
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * TODO Purpose of org.locationtech.udig.project.internal.render.util
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  * @generated
@@ -34,7 +33,7 @@ import org.eclipse.emf.ecore.EObject;
 public class RenderAdapterFactory extends AdapterFactoryImpl {
     /**
      * The cached model package. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     static RenderPackage modelPackage;
@@ -150,7 +149,7 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
     /**
      * Creates an adapter for the <code>target</code>. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @param target the object to adapt.
      * @return the adapter for the <code>target</code>.
      * @generated
@@ -244,7 +243,7 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see org.locationtech.udig.project.internal.render.RenderManager
      * @generated
@@ -272,7 +271,7 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see org.locationtech.udig.project.internal.render.ViewportModel
      * @generated
@@ -287,7 +286,7 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see org.locationtech.udig.project.internal.render.RenderExecutor
      * @generated
@@ -301,7 +300,7 @@ public class RenderAdapterFactory extends AdapterFactoryImpl {
      * begin-user-doc --> This default implementation returns null so that we can easily ignore
      * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
      * end-user-doc -->
-     * 
+     *
      * @return the new adapter.
      * @see Comparable
      * @generated

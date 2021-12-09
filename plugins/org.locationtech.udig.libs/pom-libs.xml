@@ -27,7 +27,6 @@
 	<properties>
 		<!-- see geotools root pom for details -->
 		<jaiext.version>1.0.26</jaiext.version>
-		<jfreechart.version>1.0.13</jfreechart.version>
 		<jt.version>1.4.0</jt.version>
 		<!--<jts.version>1.14.0</jts.version>-->
 		<solrj.version>7.2.1</solrj.version>
@@ -82,29 +81,12 @@
 			<version>1.6.4</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- required only be location bundles -->
 		<dependency>
-			<groupId>org.apache.xmlrpc</groupId>
-			<artifactId>xmlrpc-common</artifactId>
-			<version>3.0</version>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlrpc</groupId>
-			<artifactId>xmlrpc-client</artifactId>
-			<version>3.0</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-jxpath</groupId>
-			<artifactId>commons-jxpath</artifactId>
-			<version>1.3</version>
-		</dependency>
-
-		<dependency>
-			<groupId>net.sourceforge.findbugs</groupId>
-			<artifactId>jsr305</artifactId>
-			<version>1.3.2</version>
-		</dependency>
-
 		<!-- geotools library -->
 		<dependency>
 			<groupId>org.geotools</groupId>
@@ -143,11 +125,6 @@
 			<artifactId>gt-brewer</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
-
-		<!-- gt-11 no longer under development. <dependency> <groupId>org.geotools</groupId> 
-			<artifactId>gt-shapefile-renderer</artifactId> <version>${geotools.version}</version> 
-			</dependency> -->
-
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-validation</artifactId>
@@ -194,11 +171,21 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-imagemosaic</artifactId>
 			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-imagemosaic-jdbc</artifactId>
-			<version>${geotools.version}</version>
+			<!-- see test-case which verifies if it is still possible to parse indexer.xml with jaxb 2.2 runtime (see imported packages)-->
+			<exclusions>
+				<exclusion>
+					<groupId>javax.xml.bind</groupId>
+					<artifactId>jaxb-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.glassfish.jaxb</groupId>
+					<artifactId>jaxb-runtime</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.activation</groupId>
+					<artifactId>javax.activation-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.geotools</groupId>
@@ -235,11 +222,6 @@
 			<artifactId>gt-shapefile</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
-
-		<!-- gt-11: shapefile-ng was merged in shapefile <dependency> <groupId>org.geotools</groupId> 
-			<artifactId>gt-shapefile-ng</artifactId> <version>${geotools.version}</version> 
-			</dependency> -->
-
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-wfs-ng</artifactId>
@@ -269,6 +251,21 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-charts</artifactId>
 			<version>${geotools.version}</version>
+			<exclusions>
+				<!-- see org.locationtech.udig.libs.jfreechart -->
+				<exclusion>
+					<groupId>jfree</groupId>
+					<artifactId>eastwood</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>jfree</groupId>
+					<artifactId>jfreechart</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>jfree</groupId>
+					<artifactId>jcommon</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.geotools</groupId>
@@ -358,12 +355,6 @@
 			<version>${geotools.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-geobuf</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-
 		<!-- others -->
 		<dependency>
 			<groupId>org.geotools</groupId>
@@ -375,6 +366,13 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-coverage-api</artifactId>
 			<version>${geotools.version}</version>
+			<exclusions>
+				<exclusion>
+					<!-- its an unused dependency -->
+					<groupId>com.github.spotbugs</groupId>
+					<artifactId>spotbugs-annotations</artifactId>				
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -393,75 +391,6 @@
 			<artifactId>gt-gtopo30</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
-
-		<!-- geotools unsupported modules (ie legacy) -->
-
-		<!-- stuff for jgrass contributions -->
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy</artifactId>
-			<version>2.4.14</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geoscript</groupId>
-			<artifactId>geoscript-groovy</artifactId>
-			<version>1.10.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.geotools</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.codehaus.groovy</groupId>
-					<artifactId>groovy</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.geoscript</groupId>
-					<artifactId>geocss_2.9.1</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.geotools.jdbc</groupId>
-					<artifactId>gt-jdbc-spatialite</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>net.sf.opencsv</groupId>
-					<artifactId>opencsv</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>bouncycastle</groupId>
-					<artifactId>bcmail-jdk14</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>bouncycastle</groupId>
-					<artifactId>bcprov-jdk14</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>bouncycastle</groupId>
-					<artifactId>bctsp-jdk14</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.bouncycastle</groupId>
-					<artifactId>bcprov-jdk14</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.bouncycastle</groupId>
-					<artifactId>bcmail-jdk14</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.lowagie</groupId>
-					<artifactId>itext</artifactId>
-				</exclusion>
-				<exclusion>
-				    <groupId>com.vividsolutions</groupId>
-				    <artifactId>jts</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>1.6</version>
-		</dependency>
 		<dependency>
 			<groupId>it.geosolutions.imageio-ext</groupId>
 			<artifactId>imageio-ext-streams</artifactId>
@@ -476,6 +405,21 @@
 			<groupId>it.geosolutions.imageio-ext</groupId>
 			<artifactId>imageio-ext-geocore</artifactId>
 			<version>${imageio-ext.version}</version>
+			<!--  geocore requires jaxb 2.4 we do not have in OSGi at the moment, so we might loose support for GDAL PAM Auxiliary files -->
+			<exclusions>
+				<exclusion>
+					<groupId>javax.xml.bind</groupId>
+					<artifactId>jaxb-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.glassfish.jaxb</groupId>
+					<artifactId>jaxb-runtime</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.activation</groupId>
+					<artifactId>javax.activation-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -519,6 +463,24 @@
 			<groupId>ant</groupId>
 			<artifactId>ant-optional</artifactId>
 			<version>1.5.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>1.0.b2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xml</groupId>
+			<artifactId>xml-commons-resolver</artifactId>
+			<version>1.2</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -609,24 +571,16 @@
 			<version>2.0.8</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.ant</groupId>
-			<artifactId>ant</artifactId>
-			<version>1.8.1</version>
-		</dependency>
-		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-math</artifactId>
-			<version>2.2</version>
+			<version>2.6</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- EMF -->
@@ -653,14 +607,6 @@
 			<artifactId>org.eclipse.xsd</artifactId>
 			<version>2.12.0</version>
 		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>provided</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -668,60 +614,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- antlr dependencies ================== Both groovy and jiffle depend 
-			on the antlr.jar, while only requring the antlr runtime. -->
-		<dependency>
-			<groupId>org.antlr</groupId>
-			<artifactId>antlr</artifactId>
-			<version>3.3</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.antlr</groupId>
-			<artifactId>antlr-runtime</artifactId>
-			<version>3.3</version>
-		</dependency>
-		<!-- omsbox dependencies =================== Note that these do not necessarily 
-			need to be added to the libs runtime environment. The spatial toolbox needs 
-			them to be there as library but will pick them on its own. -->
-
-		<!-- tools.jar provided by refresh.xml -->
-		<!-- <dependency> <groupId>com.sun</groupId> <artifactId>tools</artifactId> 
-			<version>1.6.0_25</version> <scope>provided</scope> </dependency> -->
-		<!-- <dependency> <groupId>org.codehaus.groovy</groupId> <artifactId>groovy-all</artifactId> 
-			<version>1.7.1</version> </dependency> -->
-		
-		<dependency>
-			<groupId>org.jgrasstools</groupId>
-			<artifactId>jgt-oms3</artifactId>
-			<version>0.7.6</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.codehaus.groovy</groupId>
-					<artifactId>groovy-all</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>javassist</groupId>
-			<artifactId>javassist</artifactId>
-			<version>3.8.0.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.scannotation</groupId>
-			<artifactId>scannotation</artifactId>
-			<version>1.0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>jline</groupId>
-			<artifactId>jline</artifactId>
-			<version>0.9.94</version>
-		</dependency>
-		<dependency>
-			<groupId>org.fusesource.jansi</groupId>
-			<artifactId>jansi</artifactId>
-			<version>1.3</version>
-		</dependency>
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-grid</artifactId>
