@@ -63,6 +63,7 @@ import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.project.render.ILabelPainter;
 import org.locationtech.udig.project.render.IRenderContext;
 import org.locationtech.udig.project.render.RenderException;
+import org.locationtech.udig.project.render.RendererUtils;
 import org.locationtech.udig.render.feature.basic.internal.Messages;
 import org.locationtech.udig.style.filter.FilterStyle;
 import org.locationtech.udig.ui.ProgressManager;
@@ -320,7 +321,6 @@ public class BasicFeatureRenderer extends RendererImpl {
      * @param clear
      * @throws RenderException
      */
-    @SuppressWarnings("unchecked")
     private void render(Graphics2D graphics, ReferencedEnvelope bounds, IProgressMonitor monitor,
             boolean clear) throws RenderException {
 
@@ -430,9 +430,17 @@ public class BasicFeatureRenderer extends RendererImpl {
             rendererHints.put(StreamingRenderer.LABEL_CACHE_KEY,
                     new LabelCacheDecorator(labelPainter, origin, layerId));
 
+            if (RendererUtils.isAdvancedProjectionSupportEnabled()) {
+                rendererHints.put(StreamingRenderer.ADVANCED_PROJECTION_HANDLING_KEY, true);
+                rendererHints.put(StreamingRenderer.CONTINUOUS_MAP_WRAPPING, true);
+            } else {
+                rendererHints.remove(StreamingRenderer.ADVANCED_PROJECTION_HANDLING_KEY);
+                rendererHints.remove(StreamingRenderer.CONTINUOUS_MAP_WRAPPING);
+            }
+
             geotToolsRenderer.setRendererHints(rendererHints);
 
-            RenderingHints hints = new RenderingHints(Collections.EMPTY_MAP);
+            RenderingHints hints = new RenderingHints(Collections.emptyMap());
             hints.add(new RenderingHints(RenderingHints.KEY_RENDERING,
                     RenderingHints.VALUE_RENDER_SPEED));
             hints.add(new RenderingHints(RenderingHints.KEY_DITHERING,
@@ -463,7 +471,6 @@ public class BasicFeatureRenderer extends RendererImpl {
             if (paintArea == null || paintArea.isEmpty() || validBounds == null
                     || validBounds.isEmpty() || validBounds.isNull() || validBounds.getWidth() <= 0
                     || validBounds.getHeight() <= 0) {
-                System.out.println("nothing to draw"); //$NON-NLS-1$
                 // nothing to draw yet
             } else {
                 geotToolsRenderer.paint(graphics, paintArea, validBounds);
