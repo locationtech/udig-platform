@@ -64,7 +64,7 @@ public final class PreferenceConstants {
      * Constant to denote that the render job is to be shown in the UI. Per default render jobs are
      * shown in progress view and are not hidden.
      * <p>
-     * If the property is <code>true</code> then jobs are not shown in Progress View.
+     * If this property is <code>true</code> then jobs are not shown in Progress View.
      * </br>
      * Use</br>
      *
@@ -72,10 +72,28 @@ public final class PreferenceConstants {
      *    {@value ProjectPlugin#ID}/{@value #P_HIDE_RENDER_JOB}=true
      * </code>
      *</br>
-     * to configure in <code>.options</code> file.
+     * to configure the property in <code>.options</code> file and include this file
+     * for instance with the Eclipse command line option -pluginCustomization.
      * </p>
      */
     public static final String P_HIDE_RENDER_JOB = "HIDE_RENDER_JOB"; //$NON-NLS-1$
+
+    /**
+     * Constant to denote that advanced projection support and continuous map wrapping are enabled
+     * for feature renderings such as shape files. Per default this is disabled.
+     * <p>
+     * If this property is <code>true</code> then features such as shape files are wrapped
+     * continuously to the left and the right. </br>
+     * Use</br>
+     *
+     * <code>
+     *    {@value ProjectPlugin#ID}/{@value #P_ADVANCED_PROJECTION_SUPPORT}=true
+     * </code> </br>
+     * to configure the property in <code>.options</code> file and include this file
+     * for instance with the Eclipse command line option -pluginCustomization.
+     * </p>
+     */
+    public static final String P_ADVANCED_PROJECTION_SUPPORT = "ADVANCED_PROJECTION_SUPPORT"; //$NON-NLS-1$
 
     /**
      * The property value for the preferred scale to ZOOM IN when extents of the layer

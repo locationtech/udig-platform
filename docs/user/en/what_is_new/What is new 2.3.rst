@@ -12,7 +12,7 @@ Improvements and Fixes
 ----------------------
 * `#398 <https://github.com/locationtech/udig-platform/issues/398>`_ : valid state for layer in Layers View as checked if visible
 * `#415 <https://github.com/locationtech/udig-platform/issues/415>`_ : fixed NullPointerExecption if tool category extension has name attribut not set
-* `#420 <https://github.com/locationtech/udig-platform/issues/420>`_ & `#611 <https://github.com/locationtech/udig-platform/issues/611>`_ : allows to hide composite renderer jobs with preferences `org.locationtech.udig.project/HIDE_RENDER_JOB=true`, see :ref:`HIDE_RENDER_JOB Preferences <project_preferences-hide-renderer-job>`
+* `#420 <https://github.com/locationtech/udig-platform/issues/420>`_ & `#611 <https://github.com/locationtech/udig-platform/issues/611>`_ : allows to hide composite renderer jobs with preference `org.locationtech.udig.project/HIDE_RENDER_JOB=true`, see :ref:`Hide render jobs in Progress View <project_preferences-hide-renderer-job>`
 * `#432 <https://github.com/locationtech/udig-platform/issues/432>`_ : allows translate Progress View label and nl-specific icon
 * `#439 <https://github.com/locationtech/udig-platform/issues/439>`_ : uses Mockito as Test-Mockup framework rather than EasyMock
 * `#443 <https://github.com/locationtech/udig-platform/issues/443>`_ : moved jfreechart libaries into seperate bundle, to allow to choose other/newer version for sdk-users
@@ -21,6 +21,7 @@ Improvements and Fixes
 * `#433 <https://github.com/locationtech/udig-platform/issues/433>`_ : removed deprecated classes org.locationtech.udig.project.ui.PlatformGIS.java (use ApplicationGIS instead)
 * `#451 <https://github.com/locationtech/udig-platform/issues/451>`_ : migrated from travis build to github workflow to get feedback for any change
 * `#435 <https://github.com/locationtech/udig-platform/issues/435>`_ : fixed print issue on Windows OS
+* `#640 <https://github.com/locationtech/udig-platform/issues/640>`_ : allows to enable advanced projection support and continuous map wrapping with preference `org.locationtech.udig.project/ADVANCED_PROJECTION_SUPPORT=true`, see :ref:`Advanced projection support <project_preferences-advanced-projection-support>`
 * fixed Exceptions
   (
   `#415 <https://github.com/locationtech/udig-platform/issues/415>`_,

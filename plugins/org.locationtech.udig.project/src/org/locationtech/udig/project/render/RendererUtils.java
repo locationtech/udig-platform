@@ -23,6 +23,16 @@ public final class RendererUtils {
     }
 
     /**
+     * @return true if advanced projection support and continuous map wrapping should be enabled for
+     *         feature renderings such as shape files so they will be wrapped continuously to the
+     *         left and the right.
+     */
+    public static boolean isAdvancedProjectionSupportEnabled() {
+        return ProjectPlugin.getPlugin().getPreferenceStore()
+                .getBoolean(PreferenceConstants.P_ADVANCED_PROJECTION_SUPPORT);
+    }
+
+    /**
      * @return true if renderer Jobs should be System-Jobs to avoid continuously showing 'Rendering
      *         Map' in Progress View on streamed updates on Layer Data source.
      */
