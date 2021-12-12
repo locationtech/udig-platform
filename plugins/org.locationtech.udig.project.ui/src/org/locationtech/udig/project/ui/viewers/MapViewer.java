@@ -312,10 +312,11 @@ public class MapViewer {
             data = control.getFont().getFontData();
         }
         for (int i = 0; i < data.length; i++) {
-            if (Platform.OS_MACOSX == Platform.getOS())
+            if (Platform.OS_MACOSX.equals(Platform.getOS())) {
                 data[i].setHeight(12);
-            else
+            } else {
                 data[i].setHeight(10);
+            }
         }
         control.setFont(new Font(control.getDisplay(), data));
     }
