@@ -13,9 +13,10 @@ package org.locationtech.udig.catalog.ui.operation;
 import static java.text.MessageFormat.format;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.dialogs.Dialog;
@@ -64,10 +65,10 @@ import net.miginfocom.swt.MigLayout;
  */
 public class ReshapeDialog extends Dialog {
 
-    private final class Null_Action implements PostReshapeAction {
+    private final class NullAction implements PostReshapeAction {
         @Override
         public void execute(IGeoResource original, IGeoResource reshaped) {
-
+            // nullActions that do anything on executes
         }
     }
 
@@ -89,15 +90,13 @@ public class ReshapeDialog extends Dialog {
 
     private ControlDecoration feedbackDecorator;
 
-    private Composite panel;
-
     private Listener listener = new Listener() {
         @Override
         public void handleEvent(Event event) {
             try {
                 feedbackDecorator.hide();
                 feedbackDecorator.hideHover();
-                List<Definition> list = createTransformProcessDefinitionList();
+                List<Definition> list = createTransformProcessDefinitionList(text.getText());
 
                 int count = 0;
                 boolean changed = false;
@@ -137,7 +136,7 @@ public class ReshapeDialog extends Dialog {
     @Override
     protected Control createDialogArea(Composite parent) {
         getShell().setText(Messages.ReshapeOperation_DialogText);
-        panel = (Composite) super.createDialogArea(parent);
+        Composite panel = (Composite) super.createDialogArea(parent);
 
         // parent uses Grid Data hense the fun here
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -173,7 +172,7 @@ public class ReshapeDialog extends Dialog {
     private void actionCombo(Combo actionCombo) {
         actionCombo.add(Messages.ReshapeOperation_noAction);
         actionCombo.setData(Messages.ReshapeOperation_noAction,
-                new StaticProvider<PostReshapeAction>(new Null_Action()));
+                new StaticProvider<PostReshapeAction>(new NullAction()));
 
         int i = 1;
         String lastSelection = CatalogUIPlugin.getDefault().getDialogSettings()
@@ -217,7 +216,7 @@ public class ReshapeDialog extends Dialog {
     }
 
     String getDefaultText() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         for (AttributeDescriptor descriptor : originalFeatureType.getAttributeDescriptors()) {
             buffer.append(descriptor.getName());
             buffer.append("="); //$NON-NLS-1$
@@ -232,7 +231,7 @@ public class ReshapeDialog extends Dialog {
     protected void okPressed() {
         boolean ok = false;
         try {
-            transform = createTransformProcessDefinitionList();
+            transform = createTransformProcessDefinitionList(text.getText());
             featureType = createFeatureType();
             ok = featureType != null;
             String selected = actionCombo.getItem(actionCombo.getSelectionIndex());
@@ -314,7 +313,7 @@ public class ReshapeDialog extends Dialog {
 
         SimpleFeatureTypeBuilder build = new SimpleFeatureTypeBuilder();
 
-        transform = createTransformProcessDefinitionList();
+        transform = createTransformProcessDefinitionList(text.getText());
 
         for (Definition definition : transform) {
             String name = definition.name;
@@ -368,12 +367,12 @@ public class ReshapeDialog extends Dialog {
      *
      * @return Transform definition
      */
-    public List<TransformProcess.Definition> createTransformProcessDefinitionList() {
-        List<TransformProcess.Definition> list = new ArrayList<>();
+    public List<TransformProcess.Definition> createTransformProcessDefinitionList(String text) {
+        if (StringUtils.isEmpty(text)) {
+            return Collections.emptyList();
+        }
 
-        String definition = text.getText().replaceAll("\r", "\n").replaceAll("[\n\r][\n\r]", "\n"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-
-        list = TransformProcess.toDefinition(definition);
-        return list;
+        return TransformProcess
+                .toDefinition(text.replaceAll("\r", "\n").replaceAll("[\n\r][\n\r]", "\n"));//$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
 }
