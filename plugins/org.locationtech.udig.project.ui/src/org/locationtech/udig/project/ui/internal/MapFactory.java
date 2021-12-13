@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -61,6 +61,7 @@ import org.locationtech.udig.ui.PlatformGIS;
  *
  * @deprecated use {@link ApplicationGIS}
  */
+@Deprecated
 public class MapFactory {
 
     /**
@@ -76,9 +77,9 @@ public class MapFactory {
     }
 
     /**
-     * For each URL in <code>resources</code>, load the services at that location and access
-     * their layers. Then add the layers to the current map, or a new one if it doesn't exist. The
-     * new map will be created in the current project.
+     * For each URL in <code>resources</code>, load the services at that location and access their
+     * layers. Then add the layers to the current map, or a new one if it doesn't exist. The new map
+     * will be created in the current project.
      * <p>
      * This is equivalent to calling <code>processURLs(resources, null)</code>.
      * </p>
@@ -86,13 +87,14 @@ public class MapFactory {
      * @param resources a List of URLs pointing to services (WMS, Shapefile, etc)
      * @deprecated use {@link ApplicationGIS#createAndOpenMap(List)}
      */
-    public void processURLs( List<URL> resources ) {
+    @Deprecated
+    public void processURLs(List<URL> resources) {
         processURLs(resources, null);
     }
 
     /**
-     * For each URL in <code>resources</code>, load the services at that location and access
-     * their layers.
+     * For each URL in <code>resources</code>, load the services at that location and access their
+     * layers.
      * <p>
      * The layers will then be added to the current map, if it exists, otherwise, a new map will be
      * created in the project designated by <code>target</code>.
@@ -103,15 +105,17 @@ public class MapFactory {
      *
      * @param resources a List of URLs pointing to services (WMS, Shapefile, etc)
      * @param target Project to use if a new map is going to be created
-     * @deprecated use {@link ApplicationGIS#createAndOpenMap(List, org.locationtech.udig.project.IProject)}
+     * @deprecated use
+     *             {@link ApplicationGIS#createAndOpenMap(List, org.locationtech.udig.project.IProject)}
      */
-    public void processURLs( List<URL> resources, Project target ) {
+    @Deprecated
+    public void processURLs(List<URL> resources, Project target) {
         processURLs(resources, target, false);
     }
 
     /**
-     * For each URL in <code>resources</code>, load the services at that location and access
-     * their layers.
+     * For each URL in <code>resources</code>, load the services at that location and access their
+     * layers.
      * <p>
      * If <code>newMap</code> is set to <code>true</code> or there is no current map, the layers
      * will be added to a new map, contained in the project designated by <code>target</code>, or
@@ -121,10 +125,14 @@ public class MapFactory {
      * @param resources a List of URLs pointing to services (WMS, Shapefile, etc)
      * @param target Project to use if a new map is going to be created
      * @param newMap if true, a new map will be created even if there is one already open
-     * @deprecated use {@link ApplicationGIS#addLayersToMap(org.locationtech.udig.project.IProject, List)} or {@link ApplicationGIS#createAndOpenMap(List, org.locationtech.udig.project.IProject)}
+     * @deprecated use
+     *             {@link ApplicationGIS#addLayersToMap(org.locationtech.udig.project.IProject, List)}
+     *             or
+     *             {@link ApplicationGIS#createAndOpenMap(List, org.locationtech.udig.project.IProject)}
      *
      */
-    public void processURLs( List<URL> resources, Project target, boolean newMap ) {
+    @Deprecated
+    public void processURLs(List<URL> resources, Project target, boolean newMap) {
         process(target, resources, newMap);
     }
 
@@ -141,7 +149,7 @@ public class MapFactory {
      * @param target Project to use if a new map is going to be created
      * @param newMap if true, a new map will be created even if there is one already open
      */
-    public void processResolves( List<IResolve> resources, Project target, boolean newMap ) {
+    public void processResolves(List<IResolve> resources, Project target, boolean newMap) {
         process(target, resources, newMap);
     }
 
@@ -153,22 +161,23 @@ public class MapFactory {
      * @param resources a List of IResolves
      * @param newMap forces a new map to be created
      */
-    public void process( final Project target, final List resources, final boolean newMap ) {
+    public void process(final Project target, final List resources, final boolean newMap) {
         if (resources == null) {
             throw new InvalidParameterException("Parameter 'resources' cannot be null."); //$NON-NLS-1$
         }
 
-        Job job = new Job(Messages.ProjectUIPlugin_loadingServices_title){
+        Job job = new Job(Messages.ProjectUIPlugin_loadingServices_title) {
+            @Override
             @SuppressWarnings("unchecked")
-            protected IStatus run( final IProgressMonitor monitor ) {
+            protected IStatus run(final IProgressMonitor monitor) {
 
-                List<Throwable> exceptions = new ArrayList<Throwable>();
+                List<Throwable> exceptions = new ArrayList<>();
 
-                List<IResolve> services = new ArrayList<IResolve>();
-                List<IGeoResource> geoResources = new ArrayList<IGeoResource>();
-                List<Layer> layers = new ArrayList<Layer>();
+                List<IResolve> services = new ArrayList<>();
+                List<IGeoResource> geoResources = new ArrayList<>();
+                List<Layer> layers = new ArrayList<>();
 
-                for( Object object : resources ) {
+                for (Object object : resources) {
                     if (monitor.isCanceled()) {
                         return Status.CANCEL_STATUS;
                     }
@@ -178,7 +187,8 @@ public class MapFactory {
                             services.addAll(handleURL((URL) object, monitor));
                         } else if (object instanceof File) {
                             try {
-                                services.addAll(handleURL(((File) object).toURL(), monitor));
+                                services.addAll(
+                                        handleURL(((File) object).toURI().toURL(), monitor));
                             } catch (MalformedURLException e) {
                                 // ignore non-URL strings
                             }
@@ -195,8 +205,8 @@ public class MapFactory {
                         } else if (object instanceof Layer) {
                             layers.add((Layer) object);
                         } else if (object instanceof java.util.Map) {
-                            services.addAll(CatalogPlugin.getDefault().getServiceFactory().createService(
-                                    (java.util.Map) object));
+                            services.addAll(CatalogPlugin.getDefault().getServiceFactory()
+                                    .createService((java.util.Map) object));
                         }
                     } catch (IOException e) {
                         exceptions.add(e);
@@ -206,11 +216,11 @@ public class MapFactory {
                     monitor.worked(1);
                 }
 
-                List<IResolve> unChosenServices = new ArrayList<IResolve>();
+                List<IResolve> unChosenServices = new ArrayList<>();
 
-                for( IResolve resolve : services ) {
-                    monitor.beginTask(
-                            Messages.ProjectUIPlugin_loadingServices_task, services.size());
+                for (IResolve resolve : services) {
+                    monitor.beginTask(Messages.ProjectUIPlugin_loadingServices_task,
+                            services.size());
                     if (monitor.isCanceled()) {
                         return Status.CANCEL_STATUS;
                     }
@@ -239,15 +249,18 @@ public class MapFactory {
 
                 Map map = new CurrentMapFinder().getCurrentMap();
                 boolean mapExists = (map != null); // this is used later, and I don't understand
-                                                    // what for!
+                                                   // what for!
                 if (map == null || newMap) {
                     map = getMap(monitor, target, newMap);
                 }
 
-                if( map.getBlackboard().get(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR)==null ){
+                if (map.getBlackboard()
+                        .get(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR) == null) {
                     IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-                    RGB background = PreferenceConverter.getColor(store, PreferenceConstants.P_BACKGROUND);
-                    map.getBlackboard().put(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR, new Color(background.red, background.green, background.blue ));
+                    RGB background = PreferenceConverter.getColor(store,
+                            PreferenceConstants.P_BACKGROUND);
+                    map.getBlackboard().put(ProjectBlackboardConstants.MAP__BACKGROUND_COLOR,
+                            new Color(background.red, background.green, background.blue));
                 }
 
                 if (monitor.isCanceled()) {
@@ -263,7 +276,7 @@ public class MapFactory {
                     return Status.CANCEL_STATUS;
                 }
 
-                for( IGeoResource resource : geoResources ) {
+                for (IGeoResource resource : geoResources) {
                     monitor.beginTask(Messages.MapFactory_retrieveTask, geoResources.size());
                     if (monitor.isCanceled()) {
                         return Status.CANCEL_STATUS;
@@ -283,8 +296,8 @@ public class MapFactory {
                     }
                     monitor.worked(1);
                 }
-                if( !layers.isEmpty() )
-                map.getLayersInternal().addAll(layers);
+                if (!layers.isEmpty())
+                    map.getLayersInternal().addAll(layers);
                 if (map.getLayersInternal().size() > 0 || newMap == true) {
                     ProjectExplorer.getProjectExplorer().open(map);
                 } else if (!mapExists) {
@@ -305,21 +318,23 @@ public class MapFactory {
                 monitor.done();
 
                 return new Status(IStatus.OK, ProjectUIPlugin.ID, IStatus.OK,
-                		Messages.ProjectUIPlugin_success, null);
+                        Messages.ProjectUIPlugin_success, null);
             }
         };
         job.schedule();
     }
 
-    private List<IGeoResource> getResourcesFromUser( List<IResolve> unChosenServices ) {
+    private List<IGeoResource> getResourcesFromUser(List<IResolve> unChosenServices) {
         final ResourceSelectionPage page = new ResourceSelectionPage(
-        		Messages.ProjectUIPlugin_resourceSelectionPage_title);
+                Messages.ProjectUIPlugin_resourceSelectionPage_title);
         page.setResources(unChosenServices, null);
-        final List<IGeoResource> chosenResources = new ArrayList<IGeoResource>();
+        final List<IGeoResource> chosenResources = new ArrayList<>();
 
-        PlatformGIS.syncInDisplayThread(new Runnable(){
+        PlatformGIS.syncInDisplayThread(new Runnable() {
+            @Override
             public void run() {
-                Wizard wizard = new Wizard(){
+                Wizard wizard = new Wizard() {
+                    @Override
                     public void addPages() {
                         addPage(page);
                     }
@@ -327,7 +342,7 @@ public class MapFactory {
                     @Override
                     public boolean performFinish() {
                         List<Object> list = page.getCheckedElements();
-                        for( Object object : list ) {
+                        for (Object object : list) {
                             if (object instanceof IGeoResource)
                                 chosenResources.add((IGeoResource) object);
                         }
@@ -345,19 +360,19 @@ public class MapFactory {
         return chosenResources;
     }
 
-    private List<IGeoResource> handleResolve( IResolve resolve, IProgressMonitor monitor )
+    private List<IGeoResource> handleResolve(IResolve resolve, IProgressMonitor monitor)
             throws IOException {
-        if( resolve instanceof IService ){
+        if (resolve instanceof IService) {
             IService service = (IService) resolve;
             resources(service.resources(monitor));
         }
         return Collections.emptyList();
     }
 
-    private List<IService> handleURL( URL url, IProgressMonitor monitor ) throws IOException {
+    private List<IService> handleURL(URL url, IProgressMonitor monitor) throws IOException {
         if (url.getFile().toLowerCase().endsWith(".udig")) { //$NON-NLS-1$
             handleProjectURL(url, monitor);
-            return Collections.<IService>emptyList();
+            return Collections.<IService> emptyList();
         }
 
         // Process URL (we are expecting a IService)
@@ -369,12 +384,12 @@ public class MapFactory {
         }
     }
 
-    private void handleProjectURL( URL url, IProgressMonitor monitor ) {
+    private void handleProjectURL(URL url, IProgressMonitor monitor) {
         monitor = validateMonitor(monitor);
         monitor.subTask(Messages.ProjectUIPlugin_loadingProject_task);
         File file = URLUtils.urlToFile(url);
 
-        ProjectPlugin.getPlugin().getProjectRegistry().getProject( file.getAbsolutePath() );
+        ProjectPlugin.getPlugin().getProjectRegistry().getProject(file.getAbsolutePath());
         return;
     }
 
@@ -385,7 +400,7 @@ public class MapFactory {
      * @param resources
      * @return
      */
-    public List<Layer> processResources( IProgressMonitor monitor, List<Object> resources ) {
+    public List<Layer> processResources(IProgressMonitor monitor, List<Object> resources) {
         return processResources(monitor, resources, null);
     }
 
@@ -399,17 +414,17 @@ public class MapFactory {
      * @return
      * @throws IOException
      */
-    List<IService> acquireGoodServices( URL url, IProgressMonitor monitor ) throws IOException {
+    List<IService> acquireGoodServices(URL url, IProgressMonitor monitor) throws IOException {
         if (url == null)
-            return Collections.<IService>emptyList();
+            return Collections.<IService> emptyList();
         IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
         List<IService> result = factory.createService(url);
         if (result.isEmpty()) {
             throw new IOException("Could not acquire a working service for " + url); //$NON-NLS-1$
         }
-        List<IService> good = new ArrayList<IService>();
+        List<IService> good = new ArrayList<>();
         IOException notGood = null;
-        for( IService service : result ) {
+        for (IService service : result) {
 
             try {
                 if (service.resources(monitor) != null) {
@@ -428,6 +443,7 @@ public class MapFactory {
 
         return good;
     }
+
     /**
      * Processes each element within the list of resources and returns all the Layers that have been
      * discovered as a result. This is typically used to turn URLs, Files, IServices and
@@ -439,19 +455,19 @@ public class MapFactory {
      * @return a List <Layer>containing all discovered layers
      */
     @SuppressWarnings("unchecked")
-    public List<Layer> processResources( IProgressMonitor monitor, List<Object> resources,
-            Object target ) {
+    public List<Layer> processResources(IProgressMonitor monitor, List<Object> resources,
+            Object target) {
 
         monitor = validateMonitor(monitor);
 
-        List<Layer> layers = new ArrayList<Layer>();
-        List<IResolve> services = new ArrayList<IResolve>();
-        List<IGeoResource> georesources = new ArrayList<IGeoResource>();
+        List<Layer> layers = new ArrayList<>();
+        List<IResolve> services = new ArrayList<>();
+        List<IGeoResource> georesources = new ArrayList<>();
 
         if (resources.isEmpty())
             return layers;
 
-        for( Object object : resources ) {
+        for (Object object : resources) {
             if (monitor.isCanceled())
                 return null;
             if (object instanceof Layer) {
@@ -462,27 +478,27 @@ public class MapFactory {
             } else if (object instanceof IGeoResource) {
                 georesources.add((IGeoResource) object);
             } else if (object instanceof java.util.Map) {
-                services.addAll(CatalogPlugin.getDefault().getServiceFactory().createService(
-                        (java.util.Map) object));
+                services.addAll(CatalogPlugin.getDefault().getServiceFactory()
+                        .createService((java.util.Map) object));
             }
         }
 
         return layers;
     }
 
-    List<IGeoResource> resources( List< ? extends IResolve> resolveList ) throws IOException {
-        List<IGeoResource> build = new ArrayList<IGeoResource>();
-        for( IResolve resolve : resolveList ) {
+    List<IGeoResource> resources(List<? extends IResolve> resolveList) throws IOException {
+        List<IGeoResource> build = new ArrayList<>();
+        for (IResolve resolve : resolveList) {
             if (resolve instanceof IGeoResource) {
                 build.add((IGeoResource) resolve);
-            } else if( resolve instanceof IService){
+            } else if (resolve instanceof IService) {
                 build.addAll(resources(((IService) resolve).resources(null)));
             }
         }
         return build;
     }
 
-    public Map getMap( IProgressMonitor monitor, Project project2, boolean createMap ) {
+    public Map getMap(IProgressMonitor monitor, Project project2, boolean createMap) {
 
         Map map = null;
         if (!createMap) {
@@ -491,7 +507,7 @@ public class MapFactory {
         if (map != null) {
             return map;
         }
-        Project project=project2;
+        Project project = project2;
         if (project == null) {
             project = ProjectPlugin.getPlugin().getProjectRegistry().getCurrentProject();
         }
@@ -509,6 +525,7 @@ public class MapFactory {
 
     private static class CurrentMapFinder implements Runnable {
         Map map = null;
+
         /**
          * @return
          */
@@ -523,6 +540,7 @@ public class MapFactory {
          *
          * @see java.lang.Runnable#run()
          */
+        @Override
         public void run() {
             if (isMapOpen()) {
                 UDIGEditorInput input = (UDIGEditorInput) PlatformUI.getWorkbench()
@@ -545,7 +563,7 @@ public class MapFactory {
         }
     }
 
-    private String getNewMapName( Project currentProject ) {
+    private String getNewMapName(Project currentProject) {
         String name = Messages.ProjectUIPlugin_newMap_name;
 
         int count = currentProject.getElementsInternal().size() + 1;
@@ -553,7 +571,7 @@ public class MapFactory {
         return name + count;
     }
 
-    IProgressMonitor validateMonitor( IProgressMonitor monitor ) {
+    IProgressMonitor validateMonitor(IProgressMonitor monitor) {
         if (monitor == null) {
             return new NullProgressMonitor();
         }

@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,21 +27,20 @@ import org.locationtech.udig.ui.ViewerDropLocation;
 
 public class SLDDropAction extends IDropAction {
 
-
     private Style style;
 
     @Override
-    public boolean accept( ) {
-        
-        if( getViewerLocation()==ViewerDropLocation.NONE )
+    public boolean accept() {
+
+        if (getViewerLocation() == ViewerDropLocation.NONE)
             return false;
-        URL url=null;
-        // make sure we can turn the object into an sld
+        URL url = null;
+        // make sure we can turn the object into an SLD
         try {
             if (getData() instanceof URL) {
                 url = (URL) getData();
             } else if (getData() instanceof File) {
-                url = ((File) getData()).toURL();
+                url = ((File) getData()).toURI().toURL();
             } else if (getData() instanceof String) {
                 try {
                     url = new URL((String) getData());
@@ -50,54 +49,56 @@ public class SLDDropAction extends IDropAction {
                     url = new URL("file:///" + (String) getData()); //$NON-NLS-1$
                 }
                 if (url != null) {
-                    if( !url.getFile().toLowerCase().endsWith(".sld") || url.getQuery()!=null ) //$NON-NLS-1$
-                        url=null;
+                    if (!url.getFile().toLowerCase().endsWith(".sld") || url.getQuery() != null) //$NON-NLS-1$
+                        url = null;
                 }
 
             }
         } catch (MalformedURLException e) {
-            String msg = Messages.SLDDropAction_badSldUrl; 
+            String msg = Messages.SLDDropAction_badSldUrl;
             ProjectUIPlugin.log(msg, e);
         }
 
-        if( url==null )
+        if (url == null)
             return false;
         try {
             style = SLDContent.parse(url);
         } catch (Throwable e) {
             return false;
         }
-        
-        return style != null && (getDestination() instanceof Layer || getDestination() instanceof Map);
+
+        return style != null
+                && (getDestination() instanceof Layer || getDestination() instanceof Map);
     }
 
     @Override
-    public void perform( IProgressMonitor monitor ) {
+    public void perform(IProgressMonitor monitor) {
 
-        if ( !accept() )
-            throw new IllegalStateException("Data is not acceptable for this action!  Programatic Error!!!"); //$NON-NLS-1$
+        if (!accept())
+            throw new IllegalStateException(
+                    "Data is not acceptable for this action!  Programatic Error!!!"); //$NON-NLS-1$
         // grab the actual target
         Object target = getDestination();
-        if ( target instanceof Layer) {
+        if (target instanceof Layer) {
             dropOnLayer(monitor, (Layer) target);
-        }else{
-            if( target instanceof Map ){
-                dropOnLayer(monitor, (Layer)((Map)target).getEditManagerInternal().getSelectedLayer());
+        } else {
+            if (target instanceof Map) {
+                dropOnLayer(monitor, ((Map) target).getEditManagerInternal().getSelectedLayer());
             }
         }
 
     }
 
-    private void dropOnLayer( IProgressMonitor monitor, Layer target ) {
-        Layer layer = (Layer) target;
-        // parse the sld object
+    private void dropOnLayer(IProgressMonitor monitor, Layer target) {
+        Layer layer = target;
+        // parse the SLD object
 
         try {
             SLDContent.apply(layer, style, monitor);
             layer.refresh(null);
 
         } catch (IOException e) {
-            String msg = Messages.SLDDropAction_sldParseError; 
+            String msg = Messages.SLDDropAction_sldParseError;
             ProjectUIPlugin.log(msg, e);
         }
     }
