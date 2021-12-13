@@ -125,8 +125,7 @@ public class InMemoryCoverageLoader extends GridCoverageLoader {
             heap = originalHeap * 2;
         }
 
-        String os = Platform.getOS();
-        if (heap > 1024 && os.equals(Platform.OS_WIN32)) {
+        if (heap > 1024 && Platform.OS_WIN32.equals(Platform.getOS())) {
             heap = 1024;
         }
 
