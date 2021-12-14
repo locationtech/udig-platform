@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -16,7 +17,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.geotools.data.FeatureEvent;
@@ -66,8 +66,8 @@ public interface Layer
     /**
      * Filter indicating the selected features.
      * <p>
-     * In order for this value to be useful the layer should be selectable, often a single fid
-     * filter during user edit opperations.
+     * In order for this value to be useful the layer should be selectable, often a single FID
+     * filter during user edit operations.
      * </p>
      * <p>
      * Note: Filter.EXCLUDE indicates no selected Features. (All features are filtered out)
@@ -232,39 +232,6 @@ public interface Layer
     public void setInteraction(Interaction interaction, boolean isApplicable);
 
     /**
-     * Indicates this layer is capable of selectable.
-     * <p>
-     * A Selectable Layer can be used with the Utilities.getQuery opperation. The selection tool
-     * category will maintain a separate user interface concept of applicability. The selection tool
-     * will not be capabile of considering a non selectable layer applicable.
-     * </p>
-     * IMPORTANT FUTURE CHANGE NOTE: future design: Instead of isSelectable and isInfoable a single
-     * boolean isApplicable( String toolkitID ) will be used to determine whether the layer is
-     * applicable to the current tool cateogry. If the layer is not capable of Each tool category
-     * extension will declare a color, which will be an underlay for the layer decorator, and an
-     * optional validator class, to determine whether the capability for the layer can be set.
-     * Indicates this layer is selectable.
-     *
-     * @return <code>true</code> if layer is selectable, <code>false</code> otherwise.
-     * @deprecated use getInteraction(Interaction.SELECT)
-     */
-    @Deprecated
-    public boolean isSelectable();
-
-    /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#isSelectable
-     * <em>Selectable</em>}' attribute. <!-- begin-user-doc --> Used by the user to control which
-     * layers are selectable, may be ignored for GeoResources that do not support editing. <!--
-     * end-user-doc -->
-     *
-     * @param value the new value of the '<em>Selectable</em>' attribute.
-     * @see #isSelectable()
-     * @deprecated use setInteraction(Interaction.SELECT, value)
-     */
-    @Deprecated
-    void setSelectable(boolean value);
-
-    /**
      * Gets the name from the associated metadata.
      *
      * @return the name from the associated metadata
@@ -295,7 +262,7 @@ public interface Layer
      * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getCatalogRef
      * <em>Catalog Ref</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
      *
-     * @param value the new value of the '<em>Catalog Ref</em>' attribute.
+     * @param value the new value of the '<em>CatalogRef</em>' attribute.
      * @see #getCatalogRef()
      * @generated
      */
@@ -351,9 +318,9 @@ public interface Layer
 
     /**
      * Sets the value of the '{@link org.locationtech.udig.project.internal.Layer#getGeoResource
-     * <em>Geo Resource</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <em>GeoResource</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
      *
-     * @param value the new value of the '<em>Geo Resource</em>' attribute.
+     * @param value the new value of the '<em>GeoResource</em>' attribute.
      * @see #getGeoResource()
      * @generated
      */
@@ -372,7 +339,7 @@ public interface Layer
     /**
      * ImageDescriptor for this Layer.
      * <p>
-     * Note we need to do the decorator exention on Layer to reflect status.
+     * Note we need to do the decorator extention on Layer to reflect status.
      *
      * @return Custom glyph - or null if none available.
      * @uml.property name="glyph"
@@ -411,17 +378,6 @@ public interface Layer
     public Query getQuery(boolean selection);
 
     /**
-     * Gets the CRS for the layer. NOTE: THIS METHOD MAY BLOCK!!!
-     *
-     * @param monitor may be null.
-     * @return the CoordinateReferenceSystem of the layer or if the CRS cannot be determined. the
-     *         current map's CRS will be returned, or if this fails the CRS will be WGS84.
-     * @model
-     */
-    @Override
-    CoordinateReferenceSystem getCRS(IProgressMonitor monitor);
-
-    /**
      * A convenience method for getCRS(null). Logs any exceptions with the Plugin log.
      * <p>
      * This method also allows the CRS to be viewed as an attribute by EMF so ui components and
@@ -447,7 +403,7 @@ public interface Layer
     /**
      * Temporary layer properties, used for lightweight collaboration.
      * <p>
-     * Note these values are not persisted, this can act as a blackboard for plugin collabaration.
+     * Note these values are not persisted, this can act as a blackboard for plugin collaboration.
      * These properties are not saved and are reset when a map is opened.
      * </p>
      * If you need long term collaboration we can set up a persistent blackboard in the same manner

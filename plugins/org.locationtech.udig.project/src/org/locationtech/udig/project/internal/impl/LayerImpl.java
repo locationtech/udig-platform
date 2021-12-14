@@ -168,9 +168,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected static final int ZORDER_EDEFAULT = 0;
 
     /**
-     * The cached value of the '{@link #getZorder() <em>Zorder</em>}' attribute.
-     * <!-- begin-user-doc
+     * The cached value of the '{@link #getZorder() <em>Zorder</em>}' attribute. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
+     *
      * @see #getZorder()
      * @generated
      * @ordered
@@ -242,7 +242,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             }
         }
 
-        @SuppressWarnings("unchecked")
         private void registerWithContainers(Notification msg) {
             // register itself with container objects
             switch (msg.getEventType()) {
@@ -343,7 +342,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     CopyOnWriteArraySet<ILayerListener> listeners = new CopyOnWriteArraySet<>();
 
     /**
-     * Ensures that a warning about georesources not found is only logged once
+     * Ensures that a warning about GeoResources not found is only logged once
      */
     private volatile boolean warned = false;
 
@@ -358,7 +357,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     private final Lock geoResourceCacheLock = new UDIGDisplaySafeLock();
 
     /**
-     * indicates whether or not the CRS is a known CRS (the georesources return null when asked for
+     * indicates whether or not the CRS is a known CRS (the GeoResources return null when asked for
      * a CRS). If null then it has not been computed yet. if false and crsLoader !=null then it is
      * being computed.
      */
@@ -366,7 +365,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * Used in {@link #isUnknownCRS()} to lazily compute the CRS. If null and unknownCRS is null
-     * then the crs has not been computed. if not null then the computatin is taking place.
+     * then the CRS has not been computed. if not null then the computation is taking place.
      */
     private volatile ISafeRunnable crsLoader;
 
@@ -389,19 +388,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
         CatalogPlugin.removeListener(this);
     }
 
-    /*
-     * @see
-     * org.locationtech.udig.project.Layer#addListener(org.locationtech.udig.project.LayerListener)
-     */
     @Override
     public void addListener(final ILayerListener listener) {
         listeners.add(listener);
     }
 
-    /*
-     * @see
-     * org.locationtech.udig.project.Layer#removeListener(org.locationtech.udig.project.LayerListener)
-     */
     @Override
     public void removeListener(final ILayerListener listener) {
         listeners.remove(listener);
@@ -428,6 +419,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -437,6 +429,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -448,6 +441,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public NotificationChain basicSetContextModel(ContextModel newContextModel,
@@ -459,6 +453,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -501,7 +496,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated NOT
      */
     @Override
-    @SuppressWarnings("unchecked")
     public void setZorder(int newZorder) {
         if (getContextModel() == null || getMapInternal().getLayersInternal() == null) {
             return;
@@ -518,6 +512,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -527,6 +522,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -540,6 +536,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -549,6 +546,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -603,6 +601,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -612,6 +611,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -636,8 +636,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <b>New implementation of the method:
      * <p>
      * getGeoResource() is a blocking method but it must not block UI thread. With this purpose the
-     * new imlementation is done to avoid UI thread blocking because of synchronization. </b> <!--
-     * end-user-doc -->
+     * new implementation is done to avoid UI thread blocking because of synchronization.
+     * </p>
+     * </b>
+     *
+     * <!-- end-user-doc -->
      *
      * @uml.property name="geoResources"
      * @generated NOT
@@ -739,7 +742,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     private boolean assertNotInDisplayAccess() {
         if (Display.getCurrent() != null) {
-            //            ProjectPlugin.log("getGeoResources was called in display Thread", new Exception("JUST A WARNING NOT CRITICAL")); //$NON-NLS-1$ //$NON-NLS-2$
+            // ProjectPlugin.log("getGeoResources was called in display Thread", new Exception("JUST
+            // A WARNING NOT CRITICAL")); //$NON-NLS-1$ //$NON-NLS-2$
         }
         return true;
     }
@@ -825,6 +829,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public void setCatalogRefGen(CatalogRef newCatalogRef) {
@@ -837,6 +842,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -846,6 +852,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public NotificationChain basicSetStyleBlackboard(StyleBlackboard newStyleBlackboard,
@@ -892,6 +899,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -901,6 +909,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1009,6 +1018,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1018,6 +1028,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * please use getIcon
+     *
      * @deprecated
      * @generated NOT
      */
@@ -1027,8 +1038,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1042,30 +1053,13 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * please use setIcon
+     *
      * @deprecated
      * @generated NOT
      */
     @Deprecated
     public void setGlyph(ImageDescriptor icon) {
         setIcon(icon);
-    }
-
-    /**
-     * @deprecated use getInteraction(Interaction.SELECT)
-     */
-    @Deprecated
-    @Override
-    public boolean isSelectable() {
-        return getInteraction(Interaction.SELECT);
-    }
-
-    /**
-     * @deprecated use setInteraction(Interaction.SELECT, value)
-     */
-    @Deprecated
-    @Override
-    public void setSelectable(boolean newSelectable) {
-        setInteraction(Interaction.SELECT, newSelectable);
     }
 
     /**
@@ -1112,9 +1106,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     private volatile int status;
 
     /**
-     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-     * <!-- begin-user-doc
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
+     *
      * @see #getName()
      * @generated
      * @ordered
@@ -1152,9 +1146,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected volatile CatalogRef catalogRef = new CatalogRef(this);
 
     /**
-     * The default value of the '{@link #getID() <em>ID</em>}' attribute.
-     * <!-- begin-user-doc -->
+     * The default value of the '{@link #getID() <em>ID</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     *
      * @see #getID()
      * @generated
      * @ordered
@@ -1222,9 +1216,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected volatile EList<IGeoResource> geoResources = null;
 
     /**
-     * The default value of the '{@link #getCRS() <em>CRS</em>}' attribute.
-     * <!-- begin-user-doc -->
+     * The default value of the '{@link #getCRS() <em>CRS</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     *
      * @see #getCRS()
      * @generated
      * @ordered
@@ -1352,9 +1346,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected EMap<Interaction, Boolean> interactionMap;
 
     /**
-     * The default value of the '{@link #isShown() <em>Shown</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The default value of the '{@link #isShown() <em>Shown</em>}' attribute. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     *
      * @see #isShown()
      * @generated
      * @ordered
@@ -1362,9 +1356,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected static final boolean SHOWN_EDEFAULT = false;
 
     /**
-     * The cached value of the '{@link #isShown() <em>Shown</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The cached value of the '{@link #isShown() <em>Shown</em>}' attribute. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     *
      * @see #isShown()
      * @generated
      * @ordered
@@ -1372,9 +1366,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected boolean shown = SHOWN_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getIcon() <em>Icon</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The default value of the '{@link #getIcon() <em>Icon</em>}' attribute. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     *
      * @see #getIcon()
      * @generated
      * @ordered
@@ -1382,9 +1376,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected static final ImageDescriptor ICON_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getIcon() <em>Icon</em>}' attribute.
-     * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getIcon() <em>Icon</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     *
      * @see #getIcon()
      * @generated
      * @ordered
@@ -1393,9 +1387,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     private volatile String statusMessage = Messages.LayerImpl_status;
 
-    /**
-     * @see org.locationtech.udig.project.internal.Layer#getSchema()
-     */
     @Override
     public SimpleFeatureType getSchema() {
         FeatureSource<SimpleFeatureType, SimpleFeature> data;
@@ -1407,41 +1398,14 @@ public class LayerImpl extends EObjectImpl implements Layer {
         } catch (IOException e) {
             ProjectPlugin.log(null, e);
         }
-        // XXX: rgould how do I process a getWMS().createDescribeLayerRequest()?
-
-        // URL wfsURL = null;
-        //
-        // try {
-        // DescribeLayerRequest request = null;
-        // request = getWMS().createDescribeLayerRequest();
-        // request.setLayers(getName());
-        // DescribeLayerResponse response = (DescribeLayerResponse)
-        // getWMS().issueRequest(request);
-        // wfsURL = response.getLayerDescs()[0].getWfs();
-        // } catch (SAXException e1) {
-        // // TODO Catch e1
-        // } catch (UnsupportedOperationException e) {
-        // // TODO Catch e
-        // } catch (IOException e) {
-        // // TODO Catch e
-        // }
-
-        // WFS URL now possibly has a URL
-
         return null;
     }
 
-    /**
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(ILayer arg0) {
         return doComparison(this, arg0);
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.Layer#getInteraction(java.lang.String)
-     */
     @Override
     public boolean getInteraction(Interaction interaction) {
         // special cases handled as fields
@@ -1475,9 +1439,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
         return false;
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.Layer#setInteraction(java.lang.String, boolean)
-     */
     @Override
     public void setInteraction(Interaction interaction, boolean applicable) {
         if (Interaction.VISIBLE.equals(interaction)) {
@@ -1494,7 +1455,10 @@ public class LayerImpl extends EObjectImpl implements Layer {
      */
     @Override
     public CoordinateReferenceSystem getCRS() {
-        return getCRS(null);
+        if (cRS == null) {
+            return UNKNOWN_CRS;
+        }
+        return cRS;
     }
 
     /**
@@ -1519,6 +1483,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public void setCRSGen(CoordinateReferenceSystem newCRS) {
@@ -1544,6 +1509,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1553,6 +1519,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1566,6 +1533,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1575,6 +1543,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1686,6 +1655,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1700,6 +1670,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1714,8 +1685,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1724,8 +1695,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1737,9 +1708,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
                     oldShown, shown));
     }
 
-    /**
-     * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
-     */
     @Override
     @SuppressWarnings("unchecked")
     public Object getAdapter(final Class adapter) {
@@ -1786,7 +1754,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
             }
         }
 
-        /*
+        /**
          * Adapt to an IWorkbenchAdapter. Other aspects of Eclipse can read the properties we
          * provide access to. (example: Property page dialogs can read the label and display that in
          * their title.)
@@ -1805,16 +1773,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
         return Platform.getAdapterManager().getAdapter(this, adapter);
     }
 
-    @Override
-    public CoordinateReferenceSystem getCRS(IProgressMonitor monitor) {
-
-        if (cRS != null)
-            return cRS;
-        return getCRSInternal(monitor);
-    }
-
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1831,6 +1792,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1850,6 +1812,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1864,6 +1827,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1920,6 +1884,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -1991,6 +1956,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -2059,6 +2025,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -2112,34 +2079,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return ICON_EDEFAULT == null ? icon != null : !ICON_EDEFAULT.equals(icon);
         }
         return super.eIsSet(featureID);
-    }
-
-    /**
-     * queries the georesources for a CRS
-     *
-     * @param monitor
-     * @return
-     */
-    private CoordinateReferenceSystem getCRSInternal(IProgressMonitor monitor) {
-        try {
-            CoordinateReferenceSystem crs = getGeoResource().getInfo(monitor).getCRS();
-            if (crs != null)
-                return crs;
-        } catch (Exception e) {
-            ProjectPlugin.log(null, e);
-        }
-
-        List<IGeoResource> list = getGeoResources();
-        for (IGeoResource resource : list) {
-            try {
-                if (resource.getInfo(monitor).getCRS() != null)
-                    return resource.getInfo(monitor).getCRS();
-            } catch (Exception e) {
-                ProjectPlugin.log(null, e);
-            }
-        }
-
-        return UNKNOWN_CRS;
     }
 
     @Override
@@ -2228,7 +2167,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     private ReferencedEnvelope obtainBoundsFromResources(IProgressMonitor monitor) {
         ReferencedEnvelope result = null;
         for (IGeoResource resource : getGeoResources()) {
-            //IGeoResourceInfo info = resource.getInfo(monitor);
+            // IGeoResourceInfo info = resource.getInfo(monitor);
             IGeoResourceInfo info = getInfo(resource, monitor);
             Envelope tmp = null;
             if (info != null)
@@ -2275,7 +2214,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     /**
      * Creates A geometry filter for the given layer.
      *
-     * @param boundingBox in the same crs as the viewport model.
+     * @param boundingBox in the same CRS as the viewport model.
      * @return a Geometry filter in the correct CRS or null if an exception occurs.
      */
     @Override
@@ -2304,9 +2243,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
         return bboxFilter;
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.Layer#getMap()
-     */
     @Override
     public org.locationtech.udig.project.internal.Map getMapInternal() {
         ContextModel context = getContextModel();
@@ -2315,18 +2251,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
         return context.getMap();
     }
 
-    /**
-     * @see org.locationtech.udig.project.ILayer#getMap()
-     */
     @Override
     public IMap getMap() {
         return getMapInternal();
     }
 
-    /**
-     * @see org.locationtech.udig.core.IBlockingAdaptable#getAdapter(java.lang.Class,
-     *      org.eclipse.core.runtime.IProgressMonitor)
-     */
     @Override
     public <T> T getAdapter(final Class<T> adapter, IProgressMonitor monitor) throws IOException {
         if (hasResource(adapter)) {
@@ -2336,14 +2265,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
             return list.get(0);
         }
         if (adapter.isAssignableFrom(CoordinateReferenceSystem.class)) {
-            return adapter.cast(getCRS(monitor));
+            return adapter.cast(getCRS());
         }
         return null;
     }
 
-    /**
-     * @see org.locationtech.udig.core.IBlockingAdaptable#canAdaptTo(java.lang.Class)
-     */
     @Override
     public <T> boolean canAdaptTo(Class<T> adapter) {
         return hasResource(adapter) || adapter.isAssignableFrom(CoordinateReferenceSystem.class);

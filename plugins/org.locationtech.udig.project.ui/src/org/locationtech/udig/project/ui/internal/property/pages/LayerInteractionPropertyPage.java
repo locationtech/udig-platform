@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2011, Refractions Research Inc.
  *
@@ -30,29 +31,33 @@ import org.opengis.feature.type.GeometryDescriptor;
 
 /**
  * Preference page for controlling Layer interaction with user.
- * 
+ *
  * @author pfeiffp
  */
 public class LayerInteractionPropertyPage extends PropertyPage implements IWorkbenchPropertyPage {
 
     private Button visibleButton;
+
     private Button layerButton;
+
     private Button informationButton;
+
     private Button selectButton;
+
     private Button editButton;
+
     private Button backgroundButton;
+
     private Button aoiButton;
+
     private Layer layer;
+
     private boolean isPolygon = false;
+
     private boolean isRaster = false;
-    
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse.swt.widgets.Composite)
-     */
+
     @Override
-    protected Control createContents( Composite parent ) {
+    protected Control createContents(Composite parent) {
         layer = (Layer) getElement();
 
         SimpleFeatureType schema = layer.getSchema();
@@ -61,9 +66,9 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         if (schema != null) {
             GeometryDescriptor geomDescriptor = schema.getGeometryDescriptor();
             if (geomDescriptor != null) {
-                Class< ? extends Geometry> binding = (Class< ? extends Geometry>) geomDescriptor
+                Class<? extends Geometry> binding = (Class<? extends Geometry>) geomDescriptor
                         .getType().getBinding();
-                switch( Geometries.getForBinding(binding) ) {
+                switch (Geometries.getForBinding(binding)) {
                 case MULTIPOLYGON:
                 case POLYGON:
                     isPolygon = true;
@@ -101,12 +106,15 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         layerButton.setText(Messages.LayerInteraction_Layer);
         layerButton.setLocation(20, 20);
         layerButton.pack();
-        layerButton.addSelectionListener(new SelectionListener(){
-            public void widgetSelected( SelectionEvent event ) {
+        layerButton.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent event) {
                 setBackgroundLayer(!layerButton.getSelection());
                 setApplyButton();
             }
-            public void widgetDefaultSelected( SelectionEvent event ) {
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent event) {
             }
         });
 
@@ -132,12 +140,15 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         backgroundButton.setText(Messages.LayerInteraction_Background);
         backgroundButton.setLocation(20, 100);
         backgroundButton.pack();
-        backgroundButton.addSelectionListener(new SelectionListener(){
-            public void widgetSelected( SelectionEvent event ) {
+        backgroundButton.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent event) {
                 setBackgroundLayer(backgroundButton.getSelection());
                 setApplyButton();
             }
-            public void widgetDefaultSelected( SelectionEvent event ) {
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent event) {
             }
         });
 
@@ -150,26 +161,29 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         loadLayer();
         return interactionPage;
     }
-    
-    /*
+
+    /**
      * Returns a new default selection listener to add to buttons
      */
     private SelectionListener defaultSelectionListener() {
-        return new SelectionListener(){
-            public void widgetSelected( SelectionEvent event ) {
+        return new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent event) {
                 setApplyButton();
             }
-            public void widgetDefaultSelected( SelectionEvent event ) {
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent event) {
             }
         };
     }
-    
+
     @Override
     public boolean performOk() {
         saveLayer();
         return super.performOk();
     }
-    
+
     @Override
     protected void performApply() {
         saveLayer();
@@ -181,111 +195,109 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
         loadLayer();
         super.performDefaults();
     }
-    
+
     /** Update the apply and revert buttons if anything has been modified ... */
-    protected void setApplyButton(){
-        boolean changed = (
-                visibleButton.getSelection() != layer.isVisible()
-                || backgroundButton.getSelection() != layer.getInteraction( Interaction.BACKGROUND )
-                || informationButton.getSelection() != layer.getInteraction( Interaction.INFO )
-                || selectButton.getSelection() != layer.isSelectable()
-                || editButton.getSelection() != layer.getInteraction( Interaction.EDIT )
-                || aoiButton.getSelection() != layer.getInteraction( Interaction.AOI ) 
-        );
-        
+    protected void setApplyButton() {
+        boolean changed = (visibleButton.getSelection() != layer.isVisible()
+                || backgroundButton.getSelection() != layer.getInteraction(Interaction.BACKGROUND)
+                || informationButton.getSelection() != layer.getInteraction(Interaction.INFO)
+                || selectButton.getSelection() != layer.getInteraction(Interaction.SELECT)
+                || editButton.getSelection() != layer.getInteraction(Interaction.EDIT)
+                || aoiButton.getSelection() != layer.getInteraction(Interaction.AOI));
+
         this.getApplyButton().setEnabled(changed);
         this.getDefaultsButton().setEnabled(changed);
     }
-    
-    /*
+
+    /**
      * Saves any changes in interaction values for this layer
      */
     private void saveLayer() {
-        if( visibleButton.getSelection() != layer.isVisible() ){
+        if (visibleButton.getSelection() != layer.isVisible()) {
             layer.setVisible(visibleButton.getSelection());
         }
-        if( backgroundButton.getSelection() != layer.getInteraction( Interaction.BACKGROUND )){
+        if (backgroundButton.getSelection() != layer.getInteraction(Interaction.BACKGROUND)) {
             layer.setInteraction(Interaction.BACKGROUND, backgroundButton.getSelection());
         }
-        if( informationButton.getSelection() != layer.getInteraction( Interaction.INFO )){
+        if (informationButton.getSelection() != layer.getInteraction(Interaction.INFO)) {
             layer.setInteraction(Interaction.INFO, informationButton.getSelection());
         }
-        if( selectButton.getSelection() != layer.isSelectable() ){
-            layer.setSelectable(selectButton.getSelection());
+        if (selectButton.getSelection() != layer.getInteraction(Interaction.SELECT)) {
+            layer.setInteraction(Interaction.SELECT, selectButton.getSelection());
         }
-        if( editButton.getSelection() != layer.getInteraction( Interaction.EDIT )){
+        if (editButton.getSelection() != layer.getInteraction(Interaction.EDIT)) {
             layer.setInteraction(Interaction.EDIT, editButton.getSelection());
         }
-        if( aoiButton.getSelection() != layer.getInteraction( Interaction.AOI )){
+        if (aoiButton.getSelection() != layer.getInteraction(Interaction.AOI)) {
             layer.setInteraction(Interaction.AOI, aoiButton.getSelection());
         }
     }
-    
-    /* Grabs the layer and fills in the current page. */
+
+    /**
+     * Grabs the layer and fills in the current page.
+     */
     private void loadLayer() {
-        
+
         // set values and enable / disable buttons
         visibleButton.setSelection(layer.isVisible());
-        
+
         // set background layer
         boolean isBackgroundLayer = layer.getInteraction(Interaction.BACKGROUND);
-		backgroundButton.setSelection(isBackgroundLayer);
+        backgroundButton.setSelection(isBackgroundLayer);
         layerButton.setSelection(!isBackgroundLayer);
         setBackgroundLayer(isBackgroundLayer);
     }
-    
-    /*
-     * enables button and sets the selection to the value supplied
+
+    /**
+     * Enables button and sets the selection to the value supplied
      */
     private void enableButton(Button button, boolean selection) {
         button.setEnabled(true);
         button.setSelection(selection);
     }
-    
-    /*
-     * disables the button and sets selection to false
+
+    /**
+     * Disables the button and sets selection to false
      */
     private void disableButton(Button button) {
         button.setEnabled(false);
         button.setSelection(false);
     }
-    
-    /*
+
+    /**
      * Sets background layer options based on layer properties
      */
     private void setBackgroundLayer(boolean selection) {
         if (selection) {
             // enable background layer options if applicable
             setPolygonLayer();
-            
+
             // disable non background layer options
             disableButton(informationButton);
             disableButton(selectButton);
             disableButton(editButton);
-        }
-        else {
+        } else {
             // check if raster layer
             setRasterLayer();
-            
+
             // disable background layer options
             disableButton(aoiButton);
         }
     }
 
-    /*
+    /**
      * Sets polygon layer options based on layer properties
      */
     private void setPolygonLayer() {
         aoiButton.setEnabled(isPolygon);
         if (isPolygon) {
             aoiButton.setSelection(layer.getInteraction(Interaction.AOI));
-        }
-        else {
+        } else {
             aoiButton.setSelection(false);
         }
     }
-    
-    /*
+
+    /**
      * Sets raster layer options based on layer properties
      */
     private void setRasterLayer() {
@@ -295,13 +307,12 @@ public class LayerInteractionPropertyPage extends PropertyPage implements IWorkb
             // disable non raster options
             disableButton(selectButton);
             disableButton(editButton);
-        }
-        else {
+        } else {
             enableButton(informationButton, layer.getInteraction(Interaction.INFO));
-            enableButton(selectButton, layer.isSelectable());
+            enableButton(selectButton, layer.getInteraction(Interaction.SELECT));
             enableButton(editButton, layer.getInteraction(Interaction.EDIT));
         }
-        
+
     }
 
 }

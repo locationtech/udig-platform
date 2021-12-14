@@ -43,7 +43,7 @@ import org.opengis.filter.Id;
 
 /**
  * Tests {@link ShowViewInterceptor}
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -64,7 +64,7 @@ public class ShowViewInterceptorTest {
                 CatalogTests.createGeoResource("type2", 3, true)); //$NON-NLS-1$
         map.getLayersInternal().add(layer2);
         featureSource = layer.getResource(SimpleFeatureSource.class,new NullProgressMonitor());
-        f = (SimpleFeature) featureSource.getFeatures().features().next();
+        f = featureSource.getFeatures().features().next();
         FilterFactory filterFactory = CommonFactoryFinder
                 .getFilterFactory(GeoTools.getDefaultHints());
         filter = filterFactory.id(FeatureUtils.stringToId(filterFactory, f
@@ -132,7 +132,7 @@ public class ShowViewInterceptorTest {
         FeatureCollection<SimpleFeatureType, SimpleFeature>  features = assertFilter(layer, 1);
         assertEquals(f, features.features().next());
         assertFilter(layer2, 3);
-        
+
         layer.getStyleBlackboard().clear();
 
         assertFilter(layer, 5);

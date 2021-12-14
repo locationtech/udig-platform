@@ -337,18 +337,6 @@ public interface ILayer extends ILegendItem, Comparable<ILayer> {
     /**
      * Gets the CRS for the layer. NOTE: THIS METHOD MAY BLOCK!!!
      *
-     * @param monitor may be null.
-     * @return the CoordinateReferenceSystem of the layer or if the CRS cannot be determined. the
-     *         current map's CRS will be returned, or if this fails the CRS will be WGS84.
-     *
-     * @deprecated use getCRS()
-     */
-    @Deprecated
-    CoordinateReferenceSystem getCRS(IProgressMonitor monitor);
-
-    /**
-     * Gets the CRS for the layer. NOTE: THIS METHOD MAY BLOCK!!!
-     *
      * @return the CoordinateReferenceSystem of the layer or if the CRS cannot be determined. the
      *         current map's CRS will be returned, or if this fails the CRS will be WGS84.
      */
