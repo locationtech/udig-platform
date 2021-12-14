@@ -1,5 +1,12 @@
 /**
- * <copyright></copyright> $Id$
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.project.internal;
 
@@ -29,9 +36,9 @@ import org.locationtech.udig.ui.ShutdownTaskList;
 import org.osgi.framework.BundleContext;
 
 /**
- * This is the central singleton for the Project model plugin.
- * <!-- begin-user-doc --> <!--
+ * This is the central singleton for the Project model plugin. <!-- begin-user-doc --> <!--
  * end-user-doc -->
+ *
  * @generated
  */
 public final class ProjectPlugin extends EMFPlugin {
@@ -39,8 +46,8 @@ public final class ProjectPlugin extends EMFPlugin {
     public static final String ID = "org.locationtech.udig.project"; //$NON-NLS-1$
 
     /**
-     * Keep track of the singleton.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public static final ProjectPlugin INSTANCE = new ProjectPlugin();
@@ -53,8 +60,8 @@ public final class ProjectPlugin extends EMFPlugin {
     static Implementation plugin;
 
     /**
-     * Create the instance.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Create the instance. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public ProjectPlugin() {
@@ -62,9 +69,9 @@ public final class ProjectPlugin extends EMFPlugin {
     }
 
     /**
-     * Returns the singleton instance of the Eclipse plugin.
-     * <!-- begin-user-doc --> <!--
+     * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     *
      * @return the singleton instance.
      * @generated
      */
@@ -101,9 +108,9 @@ public final class ProjectPlugin extends EMFPlugin {
     }
 
     /**
-     * Returns the singleton instance of the Eclipse plugin.
-     * <!-- begin-user-doc --> <!--
+     * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     *
      * @return the singleton instance.
      * @generated
      */
@@ -113,8 +120,6 @@ public final class ProjectPlugin extends EMFPlugin {
 
     /**
      * TODO Purpose of org.locationtech.udig.project.internal
-     * <p>
-     * </p>
      *
      * @author Jesse
      * @since 1.0.0
@@ -123,25 +128,20 @@ public final class ProjectPlugin extends EMFPlugin {
     public static class Implementation extends EclipsePlugin {
 
         /**
-         * Creates an instance.
-         * <!-- begin-user-doc --> <!-- end-user-doc -->
+         * Creates an instance. <!-- begin-user-doc --> <!-- end-user-doc -->
+         *
          * @generated
          */
         public Implementation() {
             super();
-
             // Remember the static instance.
-            //
             plugin = this;
         }
 
         /**
          * Controls whether the warning message of non-undoable commands is shown.
-         *
-         * @deprecated Use the getter and setter methods.
          */
-        @Deprecated
-        public boolean undoableCommandWarning = true;
+        private boolean undoableCommandWarning = true;
 
         public void setUndoableCommandWarning(boolean value) {
             undoableCommandWarning = value;
@@ -151,9 +151,6 @@ public final class ProjectPlugin extends EMFPlugin {
             return undoableCommandWarning;
         }
 
-        /**
-         * @see org.eclipse.core.runtime.Plugin#start(org.osgi.framework.BundleContext)
-         */
         @Override
         public void start(BundleContext context) throws Exception {
             super.start(context);
@@ -219,9 +216,6 @@ public final class ProjectPlugin extends EMFPlugin {
             saveOptions.put(XMLResource.OPTION_ENCODING, ENCODING);
         }
 
-        /**
-         * @see org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
-         */
         @Override
         public void stop(BundleContext context) throws Exception {
             super.stop(context);
@@ -247,10 +241,10 @@ public final class ProjectPlugin extends EMFPlugin {
         }
 
         /**
-         * Returns the preference store for this UI plug-in.
-         * This preference store is used to hold persistent settings for this plug-in in
-         * the context of a workbench. Some of these settings will be user controlled,
-         * whereas others may be internal setting that are never exposed to the user.
+         * Returns the preference store for this UI plug-in. This preference store is used to hold
+         * persistent settings for this plug-in in the context of a workbench. Some of these
+         * settings will be user controlled, whereas others may be internal setting that are never
+         * exposed to the user.
          * <p>
          * If an error occurs reading the preference store, an empty preference store is quietly
          * created, initialized with defaults, and returned.
@@ -308,10 +302,14 @@ public final class ProjectPlugin extends EMFPlugin {
      * It is much preferred to do this:
      *
      * <pre>
-     * <code> private static final String RENDERING = "org.locationtech.udig.project/render/trace";
-     * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
-     *      System.out.println( "your message here" );
-     *
+     * <code>
+     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
+     * if (ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase(RENDERING)) {
+     *     System.out.println("your message here");
+     * }
+     * </code>
+     * </pre>
+     * </p>
      */
     private static void trace(String message, Throwable e) {
         if (getPlugin().isDebugging()) {
@@ -326,7 +324,8 @@ public final class ProjectPlugin extends EMFPlugin {
 
     /**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
-     * Available trace options can be found in the Trace class.  (They must also be part of the .options file)
+     * Available trace options can be found in the Trace class. (They must also be part of the
+     * .options file)
      */
     public static void trace(String traceID, Class caller, String message, Throwable e) {
         if (isDebugging(traceID)) {
@@ -350,7 +349,7 @@ public final class ProjectPlugin extends EMFPlugin {
      * <p>
      * Note: ProjectUIPlugin.getDefault().isDebugging() must also be on.
      * <ul>
-     * <li>Trace.RENDER - trace rendering progress
+     * <li>Trace.RENDER - trace rendering progress</li>
      * </ul>
      * </p>
      *
