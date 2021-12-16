@@ -40,7 +40,7 @@ In case the organization would like to disallow to change CRS, the Preference Co
 
 .. code-block:: python
 
-    org.locationtech.udig.project\DISABLE_CRS_SELECTION=true
+    org.locationtech.udig.project/DISABLE_CRS_SELECTION=true
 
 can be used to disable CRS Chooser Dialog. If not set - this is the default (*false*) - the
 Application behaves like before. There is no option for this Prefenences in the Preferences Dialog to change behavior on demand.
@@ -55,7 +55,7 @@ of other long-running Tasks.
 
 .. code-block:: python
 
-    org.locationtech.udig.project\HIDE_RENDER_JOB=true
+    org.locationtech.udig.project/HIDE_RENDER_JOB=true
 
 can be used to hide Render Jobs. If not set - this is the default (*false*) - the
 Application behaves like before and the Jobs are shown in Progress View. There is no option for this Prefenences in
@@ -114,7 +114,7 @@ The default value is -1.
 
 .. code-block:: python
 
-    org.locationtech.udig.project\defaultCRSPreference=<EPSG-Code>
+    org.locationtech.udig.project/defaultCRSPreference=<EPSG-Code>
 
 For <EPSG-Code> use the number such es 4326 for EPSG:4326.
 
