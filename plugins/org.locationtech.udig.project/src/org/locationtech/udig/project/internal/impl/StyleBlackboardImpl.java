@@ -672,17 +672,17 @@ public class StyleBlackboardImpl extends EObjectImpl implements StyleBlackboard 
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
-        buf.append("StyleBlackBoardImpl: "); //$NON-NLS-1$
-        buf.append(content.size());
-        buf.append(" entries"); //$NON-NLS-1$
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("StyleBlackBoardImpl: "); //$NON-NLS-1$
+        stringBuilder.append(content.size());
+        stringBuilder.append(" entries"); //$NON-NLS-1$
         for (StyleEntry entry : content) {
-            buf.append("\n\t"); //$NON-NLS-1$
-            buf.append(entry.getID());
-            buf.append("="); //$NON-NLS-1$
-            buf.append(entry.getStyle());
+            stringBuilder.append("\n\t"); //$NON-NLS-1$
+            stringBuilder.append(entry.getID());
+            stringBuilder.append("="); //$NON-NLS-1$
+            stringBuilder.append(entry.getStyle());
         }
-        return buf.toString();
+        return stringBuilder.toString();
     }
 
 } // StyleBlackboardImpl
