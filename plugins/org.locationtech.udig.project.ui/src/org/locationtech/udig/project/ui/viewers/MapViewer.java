@@ -296,7 +296,7 @@ public class MapViewer {
     /**
      * @return tool context (used to teach tools about our MapViewer facilities)
      */
-    protected synchronized ToolContext getToolContext() {
+    private synchronized ToolContext getToolContext() {
         if (toolcontext == null) {
             toolcontext = new ToolContextImpl();
             toolcontext.setMapInternal(map);
