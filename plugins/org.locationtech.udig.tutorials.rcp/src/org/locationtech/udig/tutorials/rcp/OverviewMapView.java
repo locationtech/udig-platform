@@ -63,9 +63,6 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
     private MapSite mapSite;
 
-    @SuppressWarnings("unused")
-    private boolean isDirty = false;
-
     private OverviewMapViewer overviewmapviewer; // overview map viewer
 
     private MapEditDomain editDomain;
@@ -321,7 +318,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
 
     @Override
     public void setDirty(boolean isDirty) {
-        this.isDirty = isDirty;
+        // ignore dirty state
     }
 
 }

@@ -345,8 +345,7 @@ public class ReshapeDialog extends Dialog {
             if (Geometry.class.isAssignableFrom(binding)) {
                 CoordinateReferenceSystem crs;
                 AttributeType originalAttributeType = originalFeatureType.getType(name);
-                if (originalAttributeType != null
-                        && originalAttributeType instanceof GeometryType) {
+                if (originalAttributeType instanceof GeometryType) {
                     crs = ((GeometryType) originalAttributeType).getCoordinateReferenceSystem();
                 } else {
                     crs = originalFeatureType.getCoordinateReferenceSystem();

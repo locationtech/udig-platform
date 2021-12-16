@@ -79,13 +79,13 @@ public final class PreferenceConstants {
     public static final String P_HIDE_RENDER_JOB = "HIDE_RENDER_JOB"; //$NON-NLS-1$
 
     /**
-     * Constant to denote that advanced projection support and continuous map wrapping are enabled
-     * for feature renderings such as shape files. Per default this is disabled.
+     * Constant to allow to disable Map CRS Selection Contribution Item.
      * <p>
-     * If this property is <code>true</code> then features such as shape files are wrapped
-     * continuously to the left and the right. </br>
-     * Use</br>
-     *
+     * If the property is <code>true</code> the user cannot change the CRS for the map.
+     */
+    public static final String P_DISABLE_CRS_SELECTION = "DISABLE_CRS_SELECTION"; //$NON-NLS-1$
+
+    /**
      * <code>
      *    {@value ProjectPlugin#ID}/{@value #P_ADVANCED_PROJECTION_SUPPORT}=true
      * </code> </br>
