@@ -39,7 +39,7 @@ import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 import org.locationtech.udig.project.ui.tool.ModalTool;
 import org.locationtech.udig.project.ui.viewers.MapEditDomain;
 import org.locationtech.udig.project.ui.viewers.MapViewer;
-import org.locationtech.udig.tools.internal.ScrollPanTool;
+import org.locationtech.udig.tools.internal.PanTool;
 import org.locationtech.udig.tools.internal.Zoom;
 import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
 import org.locationtech.udig.tutorials.tracking.glasspane.TrackSeagullOp;
@@ -171,7 +171,7 @@ public class OverviewMapView extends ViewPart implements MapPart {
             super("Pan"); //$NON-NLS-1$
         }
 
-        private ScrollPanTool tool = new ScrollPanTool();
+        private PanTool tool = new PanTool();
 
         @Override
         public void run() {
