@@ -29,6 +29,37 @@ Number of possible steps to undo
 
 Default is 10
 
+.. _pref_project_DISABLE_CRS_SELECTION:
+
+Disable CRS Chooser
+```````````````````
+In the Map Editor is an option to choose different :ref:`Coordinate Reference System <map_editor_crs_display>` for the Map. See
+`EPSG code of default CRS`_ how to set a different default Coordinate Reference System for maps using an EPSG code.
+
+In case the organization would like to disallow to change CRS, the Preference Constant
+
+.. code-block:: python
+
+    org.locationtech.udig.project/DISABLE_CRS_SELECTION=true
+
+can be used to disable CRS Chooser Dialog. If not set - this is the default (*false*) - the
+Application behaves like before. There is no option for this Prefenences in the Preferences Dialog to change behavior on demand.
+
+.. _pref_project_HIDE_RENDER_JOB:
+
+Hide Render Jobs in Progress View
+`````````````````````````````````
+In case of a Map has many layers configured and the Progress Views is open, lots of processes are shown "Rendering ..".
+The follwoing Prefenences Constant allows to hide Rendering Jobs displayed in Progress View. It helps to see the state
+of other long-running Tasks.
+
+.. code-block:: python
+
+    org.locationtech.udig.project/HIDE_RENDER_JOB=true
+
+can be used to hide Render Jobs. If not set - this is the default (*false*) - the
+Application behaves like before and the Jobs are shown in Progress View. There is no option for this Prefenences in
+the Preferences Dialog to change behavior on demand.
 
 Layer Preferences
 -----------------
@@ -80,6 +111,12 @@ You may wish to change this setting when working with a large number of shapefil
 the same projection.
 
 The default value is -1.
+
+.. code-block:: python
+
+    org.locationtech.udig.project/defaultCRSPreference=<EPSG-Code>
+
+For <EPSG-Code> use the number such es 4326 for EPSG:4326.
 
 Default map background color
 ````````````````````````````
