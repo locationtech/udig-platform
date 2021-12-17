@@ -37,7 +37,6 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.locationtech.udig.core.AdapterUtil;
-import org.locationtech.udig.internal.ui.URLImageDescriptor;
 import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.internal.ui.operations.OperationCategory;
 import org.locationtech.udig.internal.ui.operations.OperationMenuFactory;
@@ -106,7 +105,7 @@ public class OpAction extends Action implements ISelectionListener {
 
     private ImageDescriptor createImageDescriptor(String icon, IConfigurationElement element) {
         URL url = Platform.getBundle(element.getNamespaceIdentifier()).getEntry(icon);
-        return new URLImageDescriptor(url);
+        return ImageDescriptor.createFromURL(url);
     }
 
     @Override

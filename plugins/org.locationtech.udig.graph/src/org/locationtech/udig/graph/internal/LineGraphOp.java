@@ -29,6 +29,7 @@ import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.URLUtils;
 import org.locationtech.udig.catalog.util.GeoToolsAdapters;
 import org.locationtech.udig.core.internal.CorePlugin;
 import org.locationtech.udig.project.IBlackboard;
@@ -89,19 +90,19 @@ public class LineGraphOp implements IOp {
         ILayer graphLayer = null;
         ILayer pathLayer = null;
 
-        ID GRAPH_ID = new ID(new URL(null, GraphMapGraphic.ID, CorePlugin.RELAXED_HANDLER));
-        ID PATH_ID = new ID(new URL(null, PathMapGraphic.ID, CorePlugin.RELAXED_HANDLER));
+        ID graphId = new ID(new URL(null, GraphMapGraphic.ID, CorePlugin.RELAXED_HANDLER));
+        ID pathId = new ID(new URL(null, PathMapGraphic.ID, CorePlugin.RELAXED_HANDLER));
 
         for (ILayer look : map.getMapLayers()) {
             URL id = look.getGeoResource().getIdentifier();
-            if (GRAPH_ID.toURL().equals(id)) {
+            if (URLUtils.urlEquals(id, graphId.toURL(), false)) {
                 graphLayer = look;
                 break;
             }
         }
         if (graphLayer == null) {
             ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-            IGeoResource resource = catalog.getById(IGeoResource.class, GRAPH_ID,
+            IGeoResource resource = catalog.getById(IGeoResource.class, graphId,
                     new NullProgressMonitor());
             if (resource == null) {
                 return; // not available?
@@ -119,14 +120,14 @@ public class LineGraphOp implements IOp {
 
         for (ILayer look : map.getMapLayers()) {
             URL id = look.getGeoResource().getIdentifier();
-            if (PATH_ID.toURL().equals(id)) {
+            if (URLUtils.urlEquals(id, pathId.toURL(), false)) {
                 pathLayer = look;
                 break;
             }
         }
         if (pathLayer == null) {
             ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
-            IGeoResource resource = catalog.getById(IGeoResource.class, PATH_ID,
+            IGeoResource resource = catalog.getById(IGeoResource.class, pathId,
                     new NullProgressMonitor());
             if (resource == null) {
                 return; // not available?

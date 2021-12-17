@@ -22,6 +22,7 @@ import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceInfo;
 import org.locationtech.udig.catalog.ServiceExtension;
+import org.locationtech.udig.catalog.URLUtils;
 import org.locationtech.udig.catalog.URLUtilsTest;
 
 public class MoreInterestingService implements ServiceExtension {
@@ -79,11 +80,11 @@ public class MoreInterestingService implements ServiceExtension {
         } catch (Exception e) {
         }
         Serializable paramId = params.get("id"); //$NON-NLS-1$
-        if (paramId == null || !paramId.equals(testURL)) {
-            return null;
+        if (paramId instanceof URL && URLUtils.urlEquals(testURL, (URL) paramId, false)) {
+            return new MoreInterestingServiceImpl((URL) params.get("id")); //$NON-NLS-1$
         }
+        return null;
 
-        return new MoreInterestingServiceImpl((URL) params.get("id")); //$NON-NLS-1$
     }
 
     @Override

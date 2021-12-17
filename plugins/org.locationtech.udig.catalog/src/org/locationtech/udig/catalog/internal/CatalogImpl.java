@@ -209,7 +209,8 @@ public class CatalogImpl extends ICatalog {
         List<IResolveDelta> childChanges = new ArrayList<>();
         try {
             List<? extends IGeoResource> newChildren = replacement.resources(null);
-            List<? extends IGeoResource> oldChildren = service.resources(null);
+            List<? extends IGeoResource> oldChildren = (service == null ? null
+                    : service.resources(null));
             if (oldChildren != null)
                 for (IGeoResource oldChild : oldChildren) {
                     String oldName = oldChild.getIdentifier().toString();
@@ -253,7 +254,7 @@ public class CatalogImpl extends ICatalog {
         runInterceptor(replacement, ServiceInterceptor.ADDED_ID);
         event = new ResolveChangeEvent(this, IResolveChangeEvent.Type.POST_CHANGE, deltas);
 
-        if (!id.toURL().equals(replacement.getIdentifier())) {
+        if (!URLUtils.urlEquals(id.toURL(), replacement.getIdentifier(), false)) {
             // the service has actually moved
             IService moved = new MovedService(id, replacement.getID());
             services.add(moved);
@@ -585,17 +586,18 @@ public class CatalogImpl extends ICatalog {
     public <T extends IResolve> T getById(Class<T> type, final ID id, IProgressMonitor monitor) {
 
         IProgressMonitor monitor2 = monitor;
-        ;
+
         if (monitor2 == null)
             monitor2 = new NullProgressMonitor();
         if (id == null)
             return null;
 
-        if (IService.class.isAssignableFrom(type)) {
+        IService serviceFromId = getServiceById(id);
+
+        if (IService.class.isAssignableFrom(type) && serviceFromId != null) {
             monitor2.beginTask(Messages.CatalogImpl_monitorTask, 1);
-            IService service = getServiceById(id);
             monitor2.done();
-            return type.cast(service);
+            return type.cast(serviceFromId);
         }
 
         URL url = id.toURL();
@@ -693,10 +695,8 @@ public class CatalogImpl extends ICatalog {
     public synchronized List<IResolve> search(String pattern, Envelope bbox,
             IProgressMonitor monitor2) {
 
-        if (CatalogPlugin.getDefault().isDebugging()) {
-            if (Display.getCurrent() != null) {
-                throw new IllegalStateException("search called from display thread"); //$NON-NLS-1$
-            }
+        if (CatalogPlugin.getDefault().isDebugging() && Display.getCurrent() != null) {
+            throw new IllegalStateException("search called from display thread"); //$NON-NLS-1$
         }
 
         IProgressMonitor monitor = monitor2;
@@ -720,7 +720,6 @@ public class CatalogImpl extends ICatalog {
                 if (check(service, ast)) {
                     result.add(service);
                 }
-                // Iterator< ? extends IGeoResource> resources;
                 SubMonitor subMonitor = SubMonitor.convert(monitor, 10);
                 try {
                     List<? extends IGeoResource> members = service.resources(subMonitor);
@@ -814,7 +813,7 @@ public class CatalogImpl extends ICatalog {
         }
         if (info.getKeywords() != null) {
             for (String key : info.getKeywords()) {
-                if (pattern.accept(key)) {
+                if (key != null && pattern.accept(key)) {
                     return true;
                 }
             }
@@ -861,7 +860,7 @@ public class CatalogImpl extends ICatalog {
      *         resource, ICatalogChangeEvent.Type.POST_CHANGE, cDelta ) ); }
      */
     public void fire(IResolveChangeEvent event) {
-        if (catalogListeners.isEmpty()) {
+        if (catalogListeners == null || catalogListeners.isEmpty()) {
             return;
         }
 
@@ -1202,8 +1201,7 @@ public class CatalogImpl extends ICatalog {
                     }
 
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    CatalogPlugin.trace("something went wrong in CatalogImp#prioritise()", e);
                 }
                 return 0;
             }
@@ -1222,9 +1220,9 @@ public class CatalogImpl extends ICatalog {
         for (IService service : constructServiceList) {
 
             ID id = service.getID();
-            IService found = getById(IService.class, id, new NullProgressMonitor());
+            IService serviceById = getById(IService.class, id, new NullProgressMonitor());
 
-            if (!(found == null)) {
+            if (serviceById != null) {
                 catalogServices.add(service);
             }
 
@@ -1256,7 +1254,7 @@ public class CatalogImpl extends ICatalog {
             monitor = new NullProgressMonitor();
 
         if (url == null) {
-            return null;
+            return Collections.emptyList();
         }
 
         int urlProcessCount = 0;
@@ -1301,7 +1299,7 @@ public class CatalogImpl extends ICatalog {
         } finally {
             monitor.done();
         }
-        return prioritise(availableServices, monitor); // return a prioritise list
+        return prioritise(availableServices, monitor); // return a prioritized list
     }
 
     @Override
