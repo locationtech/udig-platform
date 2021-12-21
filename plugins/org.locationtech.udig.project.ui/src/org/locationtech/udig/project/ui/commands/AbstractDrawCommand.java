@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,7 +22,7 @@ import org.locationtech.udig.ui.graphics.ViewportGraphics;
  * graphics object will be set just prior to the execution of the command and is used to execute
  * draw commands. Subclasses do not need to be concerned about resetting the graphics2D because the
  * RenderManager, which executes the command will handle the issue.
- * 
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -33,37 +33,34 @@ public abstract class AbstractDrawCommand extends AbstractCommand implements IDr
      * execute draw commands.
      */
     protected ViewportGraphics graphics;
+
     private boolean valid = true;
+
     protected ViewportPane display;
 
-    /**
-     * @see org.locationtech.udig.project.internal.commands.draw.IDrawCommand#setGraphics(org.locationtech.udig.project.render.ViewportGraphics,
-     *      org.locationtech.udig.project.render.MapDisplay)
-     */
-    public void setGraphics( ViewportGraphics graphics, IMapDisplay display ) {
+    @Override
+    public void setGraphics(ViewportGraphics graphics, IMapDisplay display) {
         this.graphics = graphics;
         this.display = (ViewportPane) display;
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.commands.IDrawCommand#setValid(boolean)
-     */
-    public void setValid( boolean valid ) {
+    @Override
+    public void setValid(boolean valid) {
         this.valid = valid;
     }
 
-    /**
-     * @see org.locationtech.udig.project.ui.commands.IDrawCommand#isValid()
-     */
+    @Override
     public boolean isValid() {
         return valid;
     }
 
+    @Override
     public String getName() {
-        return Messages.AbstractDrawCommand_name; 
+        return Messages.AbstractDrawCommand_name;
     }
-    
-    public void dispose(){
+
+    @Override
+    public void dispose() {
         valid = false;
         // do nothing by default
     }
