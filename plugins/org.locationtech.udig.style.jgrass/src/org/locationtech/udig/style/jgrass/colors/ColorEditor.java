@@ -205,7 +205,6 @@ public class ColorEditor extends Composite implements SelectionListener {
 
         createRulesComposite();
         createAlphaGroup();
-        // setSize(new Point(395, 331));
     }
 
     /**
@@ -527,7 +526,7 @@ public class ColorEditor extends Composite implements SelectionListener {
             try {
                 bw = new BufferedWriter(new FileWriter(colrFile));
 
-                if (listOfRules.size() == 0) {
+                if (listOfRules.isEmpty()) {
                     return;
                 }
                 float[] dataRange = new float[] { listOfRules.get(0).getFromToValues()[0],
