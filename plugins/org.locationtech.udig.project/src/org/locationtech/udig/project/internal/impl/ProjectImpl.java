@@ -307,9 +307,6 @@ public class ProjectImpl extends EObjectImpl implements Project {
 
     CommandManager commandManager;
 
-    /**
-     * @see org.locationtech.udig.project.IProject#getElements()
-     */
     @Override
     @SuppressWarnings("unchecked")
     public List getElements() {
@@ -423,7 +420,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
 
             URI normalizedURI = uriConverter.normalize(uri);
             for (Resource resource2 : list) {
-                if (uriConverter.normalize(resource2.getURI()).equals(normalizedURI)) {
+                if (resource2 != null
+                        && uriConverter.normalize(resource2.getURI()).equals(normalizedURI)) {
                     found = true;
                     break;
                 }
