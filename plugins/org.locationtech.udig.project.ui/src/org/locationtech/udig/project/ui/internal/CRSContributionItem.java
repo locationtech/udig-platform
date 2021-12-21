@@ -39,7 +39,7 @@ public final class CRSContributionItem extends ContributionItem {
 
     private static final int MAX_LENGTH = 12;
 
-    private final MapEditorPart mapEditor;
+    private final MapPart mapPart;
 
     private Button button;
 
@@ -55,14 +55,15 @@ public final class CRSContributionItem extends ContributionItem {
     /**
      * Create new StatusBarLabel object
      */
-    public CRSContributionItem(MapEditorPart mapEditor) {
+    public CRSContributionItem(MapPart mapPart) {
         super(CRS_ITEM_ID);
-        this.mapEditor = mapEditor;
-        this.mapEditor.getMap().getViewportModel().addViewportModelListener(viewportModelListener);
+        this.mapPart = mapPart;
+        this.mapPart.getMap().getViewportModel().addViewportModelListener(viewportModelListener);
     }
 
     /**
-     * @return <code>true</code>, if the CRS selection should be disabled. Otherwise <code>false</code>.
+     * @return <code>true</code>, if the CRS selection should be disabled. Otherwise
+     *         <code>false</code>.
      */
     public static boolean isCRSSelectionDisabled() {
         return ProjectPlugin.getPlugin().getPreferenceStore()
@@ -76,8 +77,7 @@ public final class CRSContributionItem extends ContributionItem {
 
     @Override
     public void dispose() {
-        this.mapEditor.getMap().getViewportModel()
-                .removeViewportModelListener(viewportModelListener);
+        this.mapPart.getMap().getViewportModel().removeViewportModelListener(viewportModelListener);
     }
 
     /**
@@ -85,12 +85,11 @@ public final class CRSContributionItem extends ContributionItem {
      */
     @Override
     public void update() {
-        if (mapEditor == null) {
+        if (mapPart == null) {
             return;
         }
-        final Map map = mapEditor.getMap();
+        final Map map = mapPart.getMap();
         if (map == null) {
-            mapEditor.getSite().getPage().closeEditor(mapEditor, false);
             return;
         }
 
@@ -115,22 +114,22 @@ public final class CRSContributionItem extends ContributionItem {
         boolean disableCRSSelection = isCRSSelectionDisabled();
 
         if (!disableCRSSelection) {
-           button.addListener(SWT.Selection, (listener -> promptForCRS()));
+            button.addListener(SWT.Selection, (listener -> promptForCRS()));
         }
 
         update();
     }
 
     private void promptForCRS() {
-        final CoordinateReferenceSystem crs = this.mapEditor.getMap().getViewportModel().getCRS();
-        final CRSChooserDialog dialog = new CRSChooserDialog(this.mapEditor.getSite().getShell(),
+        final CoordinateReferenceSystem crs = this.mapPart.getMap().getViewportModel().getCRS();
+        final CRSChooserDialog dialog = new CRSChooserDialog(this.mapPart.getSite().getShell(),
                 crs);
         final int code = dialog.open();
         if (Window.OK == code) {
             final CoordinateReferenceSystem result = dialog.getResult();
             if (!result.equals(crs)) {
                 update();
-                this.mapEditor.getMap().sendCommandSync(new ChangeCRSCommand(result));
+                this.mapPart.getMap().sendCommandSync(new ChangeCRSCommand(result));
             }
         }
     }
