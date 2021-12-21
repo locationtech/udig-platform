@@ -1,5 +1,12 @@
 /**
- * 
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.tools.edit.support;
 
@@ -16,23 +23,21 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.locationtech.udig.tools.edit.EditPlugin;
-import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
-import org.locationtech.udig.tools.edit.support.EditBlackboardEvent.EventType;
-import org.locationtech.udig.tools.edit.support.PrimitiveShape.Mutator;
-
-import org.opengis.referencing.operation.MathTransform;
-
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryCollection;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.udig.tools.edit.EditPlugin;
+import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
+import org.locationtech.udig.tools.edit.support.EditBlackboardEvent.EventType;
+import org.locationtech.udig.tools.edit.support.PrimitiveShape.Mutator;
+import org.opengis.referencing.operation.MathTransform;
 
 /**
  * Maps between each pixel to a list of coordinates. Also provides convenience methods to move all
  * coordinates at a location
- * 
+ *
  * @author jeichar
  */
 public class EditBlackboard {
@@ -58,12 +63,12 @@ public class EditBlackboard {
 
     private volatile int batchingEvents = 0;
 
-    private List<EditBlackboardEvent> batchedEvents = new LinkedList<EditBlackboardEvent>();
+    private List<EditBlackboardEvent> batchedEvents = new LinkedList<>();
 
     /**
      * Creates a PixelCoordMap. A default GeomShape will be created and can be obtained by
      * {@link #getGeoms()}.get(0)
-     * 
+     *
      * @param width width of the current ViewportPane
      * @param height height of the current ViewportPane
      * @param toScreen transform to take the coordinates to a screen location.
@@ -75,10 +80,10 @@ public class EditBlackboard {
         collapseVertices = true;
         this.width = width;
         this.height = height;
-        coordMapping = new HashMap<Point, List<LazyCoord>>();
-        geomMapping = new HashMap<Point, Set<EditGeom>>();
+        coordMapping = new HashMap<>();
+        geomMapping = new HashMap<>();
         pointCoordCalculator = new PointCoordCalculator(toScreen, layerToMap);
-        geometries = new ArrayList<EditGeom>();
+        geometries = new ArrayList<>();
 
         geometries.add(new EditGeom(this, null));
     }
@@ -86,7 +91,7 @@ public class EditBlackboard {
     /**
      * Returns the list of Listeners so that listeners can be added and removed. This is thread
      * safe. Each Listener can only be added once.
-     * 
+     *
      * @return Returns the listeners.
      */
     public Set<EditBlackboardListener> getListeners() {
@@ -96,18 +101,18 @@ public class EditBlackboard {
     /**
      * Adds a Geometry to the contained geometries. If the Geometry is a MultiGeometry it will not
      * be in the mapping only the sub geometries will be in the geometry.
-     * 
+     *
      * @param geom the geometry that will be added.
      * @param featureId The id of the feature the geometry was part of. Maybe null.
      */
     public Map<Geometry, EditGeom> setGeometries(Geometry geom, String featureId) {
         Map<Geometry, EditGeom> mapping = null;
-        ArrayList<EditGeom> old = new ArrayList<EditGeom>(geometries);
+        ArrayList<EditGeom> old = new ArrayList<>(geometries);
         synchronized (this) {
             geometries.clear();
             coordMapping.clear();
             geomMapping.clear();
-            mapping = new HashMap<Geometry, EditGeom>();
+            mapping = new HashMap<>();
             doAddGeometry(geom, mapping, featureId);
             if (EditPlugin.isDebugging(EditPlugin.RUN_ASSERTIONS)) {
                 for (EditGeom geom2 : mapping.values()) {
@@ -117,7 +122,7 @@ public class EditBlackboard {
         }
         if (mapping != null && !mapping.isEmpty())
             notify(new EditBlackboardEvent(this, this, EventType.SET_GEOMS, old,
-                    new ArrayList<EditGeom>(geometries)));
+                    new ArrayList<>(geometries)));
         return mapping;
 
     }
@@ -125,7 +130,7 @@ public class EditBlackboard {
     /**
      * Adds a Geometry to the contained geometries. If the Geometry is a MultiGeometry it will not
      * be in the mapping only the sub geometries will be in the geometry.
-     * 
+     *
      * @param geom the geometry that will be added.
      * @param featureID The id of the feature the geometry was part of. Maybe null.
      */
@@ -133,10 +138,9 @@ public class EditBlackboard {
         List<EditGeom> unmodifiableList = null;
         Map<Geometry, EditGeom> mapping = null;
         synchronized (this) {
-            mapping = new HashMap<Geometry, EditGeom>();
+            mapping = new HashMap<>();
             doAddGeometry(geom, mapping, featureID);
-            unmodifiableList = Collections
-                    .unmodifiableList(new ArrayList<EditGeom>(mapping.values()));
+            unmodifiableList = Collections.unmodifiableList(new ArrayList<>(mapping.values()));
             if (EditPlugin.isDebugging(EditPlugin.RUN_ASSERTIONS)) {
                 for (EditGeom geom2 : mapping.values()) {
                     geom2.assertValid();
@@ -154,7 +158,7 @@ public class EditBlackboard {
      * <p>
      * If two edges are equidistant the first edge in the geometry will be targeted edge
      * </p>
-     * 
+     *
      * @param x the x screen location to place the new coordinate
      * @param y the x screen location to place the new coordinate
      * @param geom the geometry to append the point to.
@@ -197,9 +201,9 @@ public class EditBlackboard {
      * </p>
      * <p>
      * If the vertex would end up being added to the same location as an existing vertex then no
-     * vertext is added
+     * vertex is added
      * </p>
-     * 
+     *
      * @param x the x screen location to place the new coordinate
      * @param y the x screen location to place the new coordinate
      * @param treatUnknownAsPolygon declares whether to treat geometries of type UNKNOWN as a
@@ -214,7 +218,7 @@ public class EditBlackboard {
             candidates = getCandidates(x, y, treatUnknownAsPolygon);
             Point p = Point.valueOf(x, y);
             Coordinate toCoord = toCoord(p);
-            if (candidates.size() == 0) {
+            if (candidates.isEmpty()) {
                 EditGeom editGeom = getGeoms().get(0);
                 LazyCoord lazyCoord = doAddCoord(p, toCoord, editGeom.getShell());
                 editGeom.getShell().assertValid();
@@ -222,7 +226,7 @@ public class EditBlackboard {
                         EventType.ADD_POINT, null, p);
                 editBlackboardEvent.privateData = lazyCoord;
             } else {
-                Map<EditGeom, PrimitiveShape> changed = new HashMap<EditGeom, PrimitiveShape>();
+                Map<EditGeom, PrimitiveShape> changed = new HashMap<>();
                 for (ClosestEdge edge : candidates) {
                     EditGeom geom = edge.shape;
 
@@ -243,7 +247,7 @@ public class EditBlackboard {
     /**
      * Adds a Coordinate at the x,y location on the screen to the end of the geomtry. Closure of the
      * hole is not enforced.
-     * 
+     *
      * @param x the x screen location to place the new coordinate
      * @param y the x screen location to place the new coordinate
      * @param holeIndex the hole to append to.
@@ -273,7 +277,7 @@ public class EditBlackboard {
 
     /**
      * Insert a coordinate into the provided shape.
-     * 
+     *
      * @param coord
      * @param shape
      * @return Point at which coordinate was added
@@ -284,7 +288,7 @@ public class EditBlackboard {
 
     /**
      * Insert a coordinate into the provided shape.
-     * 
+     *
      * @param coord
      * @param index
      * @param shape // * @return Point at which coordinate was added
@@ -313,7 +317,7 @@ public class EditBlackboard {
      * <p>
      * The index is the position in the coordinate list in the shell of the geometry.
      * </p>
-     * 
+     *
      * @param x the x screen location to place the new coordinate
      * @param y the x screen location to place the new coordinate
      * @param pointIndex the index in terms of points in the shape to add the coordinate.
@@ -344,10 +348,10 @@ public class EditBlackboard {
 
     /**
      * Inserts the list of coordinates into the shape at the index indicated.
-     * 
+     *
      * @param pointIndex the location that the coordinates will be inserted.
-     * @param coords coords that will inserted.insertCoords
-     * @param shape the shape that will have the coords inserted.
+     * @param coords coordinates that will inserted.insertCoords
+     * @param shape the shape that will have the coordinates inserted.
      */
     public void insertCoords(int pointIndex, Point p, List<Coordinate> coords,
             PrimitiveShape shape) {
@@ -360,13 +364,13 @@ public class EditBlackboard {
             lazyCoords = shape.getMutator().addPoint(pointIndex, p, coords);
             List<LazyCoord> mappedCoords = coordMapping.get(p);
             if (mappedCoords == null) {
-                mappedCoords = new ArrayList<LazyCoord>();
+                mappedCoords = new ArrayList<>();
                 coordMapping.put(p, mappedCoords);
             }
             mappedCoords.addAll(lazyCoords);
             Set<EditGeom> geoms = geomMapping.get(p);
             if (geoms == null) {
-                geoms = new HashSet<EditGeom>();
+                geoms = new HashSet<>();
                 geomMapping.put(p, geoms);
             }
             if (!geoms.contains(shape.getEditGeom()))
@@ -390,7 +394,7 @@ public class EditBlackboard {
     /**
      * Returns the GeomShapes that will have the coordinate added if
      * {@linkplain #addToNearestEdge(int, int)} is called.
-     * 
+     *
      * @param x the x screen location to place the new coordinate
      * @param y the x screen location to place the new coordinate
      * @param treatUnknownAsPolygon declares whether to treat geometries of type UNKNOWN as a
@@ -402,9 +406,9 @@ public class EditBlackboard {
             boolean treatUnknownAsPolygon) {
         Point p = Point.valueOf(x, y);
         List<EditGeom> geoms = getGeoms();
-        List<ClosestEdge> candidates = new ArrayList<ClosestEdge>();
+        List<ClosestEdge> candidates = new ArrayList<>();
         int closest = Integer.MAX_VALUE;
-        List<ClosestEdge> closestDistances = new ArrayList<ClosestEdge>();
+        List<ClosestEdge> closestDistances = new ArrayList<>();
 
         for (int i = 0; i < geoms.size(); i++) {
             ClosestEdge geomClosest = geoms.get(i).getClosestEdge(p, treatUnknownAsPolygon);
@@ -432,7 +436,7 @@ public class EditBlackboard {
      * outside of this class then the model is messed up and crazy bugs will happen. The weakness is
      * permitted for performance reasons. I'm trusting people to not be stupid.
      * </p>
-     * 
+     *
      * @return the list of coordinates at location:(x,y). <b>TREAT COORDINATES AS IMMUTABLE!!</b>
      */
     public synchronized List<Coordinate> getCoords(int x, int y) {
@@ -445,17 +449,17 @@ public class EditBlackboard {
 
     /**
      * The list of geometries mapped.
-     * 
+     *
      * @return list of geometries mapped.
      */
     public synchronized List<EditGeom> getGeoms() {
-        return Collections.unmodifiableList(new ArrayList<EditGeom>(geometries));
+        return Collections.unmodifiableList(new ArrayList<>(geometries));
     }
 
     /**
      * Returns a list of the geometries with vertices at the position (x,y). Edges are not
      * calculated.
-     * 
+     *
      * @param x x coordinate of point
      * @param y x coordinate of point
      * @return
@@ -465,20 +469,20 @@ public class EditBlackboard {
         Set<EditGeom> geoms = geomMapping.get(Point.valueOf(x, y));
         if (geoms == null)
             return Collections.<EditGeom> emptyList();
-        return new ArrayList<EditGeom>(geoms);
+        return new ArrayList<>(geoms);
     }
 
     /**
      * Moves all the coordinates at location by an offset of (deltaX, deltaY).
-     * 
-     * @param x x coordinate of coords to move
-     * @param y y coordinate of coords to move
-     * @param deltaX the number of pixels to move coords in the positive x direction(Screen space)
-     * @param deltaY the number of pixels to move coords in the positive y direction(Screen space)
+     *
+     * @param x x coordinate of coordinates to move
+     * @param y y coordinate of coordinates to move
+     * @param deltaX the number of pixels to move coordinates in the positive x direction(Screen space)
+     * @param deltaY the number of pixels to move coordinates in the positive y direction(Screen space)
      */
     public List<Coordinate> moveCoords(int x, int y, int endX, int endY) {
 
-        Set<PrimitiveShape> changed = new HashSet<PrimitiveShape>();
+        Set<PrimitiveShape> changed = new HashSet<>();
         List<LazyCoord> coords = null;
         Point start = Point.valueOf(x, y);
         Point end = Point.valueOf(endX, endY);
@@ -488,8 +492,9 @@ public class EditBlackboard {
                 return Collections.<Coordinate> emptyList();
 
             coords = coordMapping.remove(start);
-            if (coords == null || coords.size() == 0)
+            if (coords == null || coords.isEmpty()) {
                 return Collections.<Coordinate> emptyList();
+            }
 
             List<LazyCoord> endCoords = coordMapping.get(end);
 
@@ -502,7 +507,7 @@ public class EditBlackboard {
             Set<EditGeom> startGeoms = geomMapping.get(start);
             Set<EditGeom> endGeoms = geomMapping.get(end);
 
-            endGeoms = endGeoms == null ? new HashSet<EditGeom>() : endGeoms;
+            endGeoms = endGeoms == null ? new HashSet<>() : endGeoms;
             for (EditGeom geom : startGeoms) {
                 geom.setChanged(true);
                 if (!endGeoms.contains(geom))
@@ -538,7 +543,7 @@ public class EditBlackboard {
 
     /**
      * Moves the selection
-     * 
+     *
      * @param diffX the distance to move the geometry in the x direction. The delta is in pixels.
      * @param diffY the distance to move the geometry in the y direction. The delta is in pixels.
      * @param selection the selection to move.
@@ -556,8 +561,9 @@ public class EditBlackboard {
         if (diffX == 0 && diffY == 0)
             return;
 
-        if (selection.size() == 0)
+        if (selection.isEmpty()) {
             return;
+        }
 
         startBatchingEvents();
         try {
@@ -567,8 +573,8 @@ public class EditBlackboard {
                 // point 1 has the end point x and point 2 has the start point x
                 // point 1 must come after point 2
                 // no circles will build since we have same movement on all points
-                List<Point> orderedStartPointList = new LinkedList<Point>();
-                List<Point> orderedEndPointList = new LinkedList<Point>();
+                List<Point> orderedStartPointList = new LinkedList<>();
+                List<Point> orderedEndPointList = new LinkedList<>();
                 // TODO IBK: ZZ faster sort operation
                 for (Point start : selection) {
                     Point end = Point.valueOf(start.getX() + diffX, start.getY() + diffY);
@@ -596,7 +602,7 @@ public class EditBlackboard {
                     if (endCoords != null) {
                         endCoords.addAll(coords);
                     } else {
-                        coordMapping.put(end, new LinkedList<LazyCoord>(coords));
+                        coordMapping.put(end, new LinkedList<>(coords));
                     }
 
                     Set<EditGeom> startGeoms = geomMapping.get(start);
@@ -605,14 +611,14 @@ public class EditBlackboard {
                      * ProjectPlugin.log("start("+start+"): "+startGeoms);
                      * ProjectPlugin.log("end("+end+"): "+endGeoms);
                      */
-                    Set<PrimitiveShape> changed = new HashSet<PrimitiveShape>();
+                    Set<PrimitiveShape> changed = new HashSet<>();
 
                     if (startGeoms == null)
                         continue;
 
-                    endGeoms = endGeoms == null ? new HashSet<EditGeom>() : endGeoms;
-                    Set<EditGeom> toRemove = new HashSet<EditGeom>();
-                    Set<EditGeom> toAdd = new HashSet<EditGeom>();
+                    endGeoms = endGeoms == null ? new HashSet<>() : endGeoms;
+                    Set<EditGeom> toRemove = new HashSet<>();
+                    Set<EditGeom> toAdd = new HashSet<>();
                     for (Iterator<EditGeom> geomIter = startGeoms.iterator(); geomIter.hasNext();) {
                         EditGeom geom = geomIter.next();
                         geom.setChanged(true);
@@ -659,7 +665,7 @@ public class EditBlackboard {
 
     /**
      * Moves a geometry deltaX, deltaY pixels.
-     * 
+     *
      * @param deltaX the distance to move the geometry in the x direction. The delta is in pixels.
      * @param deltaY the distance to move the geometry in the y direction. The delta is in pixels.
      * @param geom the geometry to move.
@@ -671,8 +677,8 @@ public class EditBlackboard {
         if (deltaX == 0 && deltaY == 0)
             return;
         synchronized (this) {
-            Set<Point> moved = new HashSet<Point>();
-            Map<Point, List<LazyCoord>> newCoordMapping = new HashMap<Point, List<LazyCoord>>();
+            Set<Point> moved = new HashSet<>();
+            Map<Point, List<LazyCoord>> newCoordMapping = new HashMap<>();
 
             startBatchingEvents();
             for (PrimitiveShape shape : geom) {
@@ -702,14 +708,14 @@ public class EditBlackboard {
             for (Map.Entry<Point, List<LazyCoord>> entry : newCoordMapping.entrySet()) {
                 List<LazyCoord> destCoords = coordMapping.get(entry.getKey());
                 if (destCoords == null) {
-                    destCoords = new ArrayList<LazyCoord>();
+                    destCoords = new ArrayList<>();
                     coordMapping.put(entry.getKey(), destCoords);
                 }
                 destCoords.addAll(entry.getValue());
 
                 Set<EditGeom> destGeoms = geomMapping.get(entry.getKey());
                 if (destGeoms == null) {
-                    destGeoms = new HashSet<EditGeom>();
+                    destGeoms = new HashSet<>();
                     destGeoms.add(geom);
                     geomMapping.put(entry.getKey(), destGeoms);
                 } else {
@@ -726,12 +732,12 @@ public class EditBlackboard {
 
     /**
      * Deletes all the coordinates at a location <b>TREAT COORDINATES AS IMMUTABLE!!</b>
-     * 
+     *
      * @return the deleted coordinates. <b>TREAT COORDINATES AS IMMUTABLE!!</b>
      */
     public List<Coordinate> removeCoordsAtPoint(int x, int y) {
         Point p = Point.valueOf(x, y);
-        HashSet<PrimitiveShape> changed = new HashSet<PrimitiveShape>();
+        HashSet<PrimitiveShape> changed = new HashSet<>();
         List<Coordinate> result = null;
         synchronized (this) {
 
@@ -767,7 +773,7 @@ public class EditBlackboard {
 
     /**
      * Deletes the coordinates at the provided point in the provided shape.
-     * 
+     *
      * @param x x coordinate in screen coords
      * @param y y coordinate in screen coords
      * @param shape shape to delete from.
@@ -803,7 +809,7 @@ public class EditBlackboard {
      * Removes a coordinate from the shape. The index indicates which point to remove, the Point
      * parameter is a check to ensure that the correct point is indicated, and the coord is the
      * coordinate that will be removed
-     * 
+     *
      * @param pointIndex index of point in shape
      * @param coord coordinate to remove
      * @param shape shape to remove from
@@ -856,7 +862,7 @@ public class EditBlackboard {
 
     /**
      * Transforms a Coordinate into the point location it would occupy on the screen.
-     * 
+     *
      * @param coord coordinate object
      * @return point coordinate would occupy on the screen.
      */
@@ -867,14 +873,14 @@ public class EditBlackboard {
     /**
      * Modifies the mapping of points to coordinates so that the transform passed in as a parameter
      * is the new toScreen transform.
-     * 
+     *
      * @param transform new transform
      */
     public void setToScreenTransform(AffineTransform newToScreen) {
         if (newToScreen == null)
             return;
         AffineTransform oldToScreen = null;
-        Map<Point, List<Point>> map = new HashMap<Point, List<Point>>();
+        Map<Point, List<Point>> map = new HashMap<>();
         synchronized (this) {
             if (newToScreen.equals(pointCoordCalculator.toScreen))
                 return;
@@ -915,7 +921,7 @@ public class EditBlackboard {
         EditBlackboardEvent event = null;
         synchronized (this) {
             event = new EditBlackboardEvent(this, this, EventType.REMOVE_GEOMS,
-                    new ArrayList<EditGeom>(geometries), null);
+                    new ArrayList<>(geometries), null);
             coordMapping.clear();
             geometries.clear();
             geomMapping.clear();
@@ -928,11 +934,11 @@ public class EditBlackboard {
     /**
      * Removes all the geometries in the list from the blackboard and all the coordinates in the
      * geometries
-     * 
+     *
      * @param geomsToRemove the list of geometries to remove.
      */
     public List<EditGeom> removeGeometries(Collection<EditGeom> geomsToRemove) {
-        ArrayList<EditGeom> removed = new ArrayList<EditGeom>();
+        ArrayList<EditGeom> removed = new ArrayList<>();
         synchronized (this) {
             for (EditGeom geom : geomsToRemove) {
                 if (!geometries.contains(geom)) {
@@ -957,7 +963,7 @@ public class EditBlackboard {
     /**
      * Creates a new EditGeom in the map. If there is only one geometry on the bb and it has no
      * points and has not been editted it will be removed.
-     * 
+     *
      * @param featureId The id of the feature the geometry was part of. Maybe null.
      * @param type the type of geometry to create if null then the type will be unknown
      * @return the created geometry
@@ -1021,7 +1027,7 @@ public class EditBlackboard {
 
     /**
      * Returns the point closest to location. The search is a square of height and width radius + 1.
-     * 
+     *
      * @param location the locations to start searching from.
      * @param radius the distance away from location to search.
      * @return the point closest to location or null if no point exists.
@@ -1033,7 +1039,7 @@ public class EditBlackboard {
     /**
      * Returns the point closest to location. If ignore is true the point at locations will not be
      * returned. The search is a square of height and width radius + 1.
-     * 
+     *
      * @param location the locations to start searching from.
      * @param radius radius the distance away from location to search.
      * @param ignore true if the vertex at location is ignored
@@ -1069,7 +1075,7 @@ public class EditBlackboard {
             if (batchingEvents > 0)
                 return;
             events = this.batchedEvents;
-            this.batchedEvents = new LinkedList<EditBlackboardEvent>();
+            this.batchedEvents = new LinkedList<>();
         }
 
         if (events.isEmpty())
@@ -1127,8 +1133,8 @@ public class EditBlackboard {
         List<LazyCoord> coordList = coordMapping.get(p);
         Set<EditGeom> geomList = geomMapping.get(p);
         if (coordList == null) {
-            coordList = new ArrayList<LazyCoord>();
-            geomList = new HashSet<EditGeom>();
+            coordList = new ArrayList<>();
+            geomList = new HashSet<>();
             coordMapping.put(p, coordList);
             geomMapping.put(p, geomList);
         }
@@ -1211,7 +1217,7 @@ public class EditBlackboard {
 
     /**
      * Searchs for a vertext in a square i pixels away from the location.
-     * 
+     *
      * @param location center of search
      * @param i distance from center to search (is not an area search)
      * @param ignore
@@ -1273,7 +1279,7 @@ public class EditBlackboard {
 
     /**
      * Returns true if the blackboard currently holds the noted feature ID.
-     * 
+     *
      * @param fid SimpleFeature ID
      * @return boolean
      */
@@ -1288,7 +1294,7 @@ public class EditBlackboard {
 
     public void setMapLayerTransform(MathTransform mapToLayer) {
         AffineTransform oldToScreen = null;
-        Map<Point, List<Point>> map = new HashMap<Point, List<Point>>();
+        Map<Point, List<Point>> map = new HashMap<>();
         synchronized (this) {
             if (mapToLayer.equals(pointCoordCalculator.mapToLayer))
                 return;
@@ -1320,7 +1326,7 @@ public class EditBlackboard {
     /**
      * Sets all the coordinates at the point to provided coordinate. <em>The coodinate must still
      * map to the point</em>
-     * 
+     *
      * @param point the point at which all the coordinates will be changed
      * @param newValue the new coordinate value of coordinates at the point
      */
