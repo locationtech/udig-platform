@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -35,30 +35,40 @@ import org.opengis.filter.expression.Expression;
 
 /**
  * A wrapper for a {@link PointSymbolizer} to ease interaction with gui.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class DummySymbolizerWrapper extends SymbolizerWrapper {
 
     private String size;
+
     private String rotation;
 
     private String markName;
+
     private String fillColor;
+
     private String fillOpacity;
+
     private String strokeColor;
+
     private String strokeOpacity;
+
     private String strokeWidth;
 
     private boolean hasFill;
+
     private boolean hasStroke;
+
     private Mark mark;
+
     private Fill fill;
+
     private Stroke stroke;
 
     private Graphic graphic;
 
-    public DummySymbolizerWrapper( Symbolizer symbolizer, RuleWrapper parent ) {
+    public DummySymbolizerWrapper(Symbolizer symbolizer, RuleWrapper parent) {
         super(symbolizer, parent);
 
         PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer;
@@ -91,7 +101,7 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
             yOffset = DEFAULT_OFFSET;
         }
 
-        if (externalGraphicsList.size() == 0) {
+        if (externalGraphicsList.isEmpty()) {
             mark = SLDs.mark(pointSymbolizer);
             if (mark == null) {
                 return;
@@ -147,7 +157,8 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    public <T> T adapt( Class<T> adaptee ) {
+    @Override
+    public <T> T adapt(Class<T> adaptee) {
         if (adaptee.isAssignableFrom(PointSymbolizerWrapper.class)) {
             PointSymbolizerWrapper geometrySymbolizersWrapper = new PointSymbolizerWrapper(
                     Utilities.createDefaultGeometrySymbolizer(SLD.POINT), null);
@@ -171,7 +182,7 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
     }
 
     // ///// GETTERS/SETTERS
-    public void setSize( String size, boolean isProperty ) {
+    public void setSize(String size, boolean isProperty) {
         this.size = size;
         if (isProperty) {
             graphic.setSize(ff.property(size));
@@ -180,7 +191,7 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    public void setRotation( String rotation, boolean isProperty ) {
+    public void setRotation(String rotation, boolean isProperty) {
         this.rotation = rotation;
         if (isProperty) {
             graphic.setRotation(ff.property(rotation));
@@ -189,7 +200,7 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    public void setMarkName( String markName ) {
+    public void setMarkName(String markName) {
         if (markName == null || markName.equals("")) { //$NON-NLS-1$
             return;
         }
@@ -203,7 +214,7 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
         graphic.graphicalSymbols().add(mark);
     }
 
-    public void setFillColor( String fillColor ) {
+    public void setFillColor(String fillColor) {
         if (fillColor == null) {
             hasFill = false;
         } else {
@@ -214,7 +225,7 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
         fill.setColor(ff.literal(fillColor));
     }
 
-    public void setFillOpacity( String fillOpacity, boolean isProperty ) {
+    public void setFillOpacity(String fillOpacity, boolean isProperty) {
         this.fillOpacity = fillOpacity;
         checkFillExists();
         if (isProperty) {
@@ -224,7 +235,7 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    public void setHasStroke( boolean hasStroke ) {
+    public void setHasStroke(boolean hasStroke) {
         this.hasStroke = hasStroke;
         if (hasStroke) {
             checkStrokeExists();
@@ -234,7 +245,7 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    public void setHasFill( boolean hasFill ) {
+    public void setHasFill(boolean hasFill) {
         this.hasFill = hasFill;
         if (hasFill) {
             checkFillExists();
@@ -252,6 +263,7 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
             }
         }
     }
+
     private void checkFillExists() {
         if (fill == null) {
             fill = sf.createFill(ff.literal(fillColor));
@@ -261,7 +273,7 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    public void setStrokeWidth( String strokeWidth, boolean isProperty ) {
+    public void setStrokeWidth(String strokeWidth, boolean isProperty) {
         this.strokeWidth = strokeWidth;
         checkStrokeExists();
         if (isProperty) {
@@ -271,7 +283,7 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    public void setStrokeColor( String strokeColor ) {
+    public void setStrokeColor(String strokeColor) {
         this.strokeColor = strokeColor;
         checkStrokeExists();
         if (strokeColor == null) {
@@ -282,7 +294,7 @@ public class DummySymbolizerWrapper extends SymbolizerWrapper {
         stroke.setColor(ff.literal(strokeColor));
     }
 
-    public void setStrokeOpacity( String strokeOpacity, boolean isProperty ) {
+    public void setStrokeOpacity(String strokeOpacity, boolean isProperty) {
         this.strokeOpacity = strokeOpacity;
         checkStrokeExists();
         if (isProperty) {
