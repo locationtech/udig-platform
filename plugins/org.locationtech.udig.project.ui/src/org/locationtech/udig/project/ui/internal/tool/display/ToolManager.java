@@ -480,18 +480,21 @@ public class ToolManager implements IToolManager {
     private void removeEmptyCategories() {
         List<ToolCategory> toRemove = new ArrayList<>();
         for (ActionToolCategory category : actionCategories) {
-            if (category.items.size() == 0)
+            if (category.items.isEmpty()) {
                 toRemove.add(category);
+            }
         }
         actionCategories.removeAll(toRemove);
         for (ModalToolCategory category : modalCategories) {
-            if (category.items.size() == 0)
+            if (category.items.isEmpty()) {
                 toRemove.add(category);
+            }
         }
         modalCategories.removeAll(toRemove);
         for (MenuToolCategory category : menuCategories) {
-            if (category.items.size() == 0)
+            if (category.items.isEmpty()) {
                 toRemove.add(category);
+            }
         }
         menuCategories.removeAll(toRemove);
     }
@@ -916,9 +919,6 @@ public class ToolManager implements IToolManager {
         try {
             if (redoAction == null) {
                 redoAction = new Action() {
-                    /**
-                     * @see org.eclipse.jface.action.Action#run()
-                     */
                     @Override
                     public void run() {
                         Map activeMap = ApplicationGISInternal.getActiveMap();
@@ -968,9 +968,6 @@ public class ToolManager implements IToolManager {
         try {
             if (undoAction == null) {
                 undoAction = new Action() {
-                    /**
-                     * @see org.eclipse.jface.action.Action#run()
-                     */
                     @Override
                     public void run() {
                         Map activeMap = ApplicationGISInternal.getActiveMap();
@@ -1120,9 +1117,6 @@ public class ToolManager implements IToolManager {
         try {
             if (backwardAction == null) {
                 backwardAction = new Action() {
-                    /**
-                     * @see org.eclipse.jface.action.Action#run()
-                     */
                     @Override
                     public void run() {
                         Map activeMap = ApplicationGISInternal.getActiveMap();
@@ -1422,9 +1416,6 @@ public class ToolManager implements IToolManager {
      * Adds both action tools and modal tools to the manager
      *
      * @deprecated
-     *
-     * @see contributeActionTools(IToolBarManager toolBarManager, IActionBars bars )
-     * @see contributeModalTools(IToolBarManager toolBarManager, IActionBars bars )
      *
      * @param cbmanager
      * @param bars
@@ -2204,7 +2195,7 @@ public class ToolManager implements IToolManager {
                     @Override
                     public void done(IDropAction action, Throwable error) {
 
-                        if (finalActiveEditor == null && finalMap.getMapLayers().size() == 0) {
+                        if (finalActiveEditor == null && finalMap.getMapLayers().isEmpty()) {
                             finalMap.getProjectInternal().getElementsInternal().remove(finalMap);
                         }
 
@@ -2213,7 +2204,7 @@ public class ToolManager implements IToolManager {
 
                     @Override
                     public void noAction(Object data) {
-                        if (finalActiveEditor == null && finalMap.getMapLayers().size() == 0) {
+                        if (finalActiveEditor == null && finalMap.getMapLayers().isEmpty()) {
                             finalMap.getProjectInternal().getElementsInternal().remove(finalMap);
                         }
                         finalDropHandler.removeListener(this);
