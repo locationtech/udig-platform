@@ -53,11 +53,11 @@ import org.opengis.feature.type.FeatureType;
 @SuppressWarnings("unused")
 public class FeaturePanelRegistry {
 
-    private static final String NO_TAB_ERROR = "Schema {0} declares non-existing tab {1}"; //$NON-NLS-1$
+    private static final String NO_TAB_ERROR = "Schema {0} declares non-existing tab {1}";
 
-    private static final String CONTRIBUTOR_ERROR = "Contributor {0} cannot be created."; //$NON-NLS-1$
+    private static final String CONTRIBUTOR_ERROR = "Contributor {0} cannot be created.";
 
-    private static final String TAB_ERROR = "Tab in {0} declares non-existing category {1}."; //$NON-NLS-1$
+    private static final String TAB_ERROR = "Tab in {0} declares non-existing category {1}.";
 
     // extension point constants
 
