@@ -1,9 +1,10 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  * (C) 2006, Axios Engineering S.L. (Axios)
  * (C) 2006, County Council of Gipuzkoa, Department of Environment and Planning
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
@@ -44,221 +45,215 @@ import systems.uom.common.USCustomary;
 import tec.uom.se.quantity.Quantities;
 import tec.uom.se.unit.MetricPrefix;
 
-
 /**
  * Class responsible of managing the most common used units.
- * 
+ *
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
- * 
+ *
  */
 public final class UnitList {
 
-	
-	private static UnitList THIS = null;
-	
-	public static final Unit<?>			PIXEL_UNITS			= Units.PIXEL;
-	
-	protected static final Logger		LOGGER				= Logger.getLogger(UnitList.class.getName());
-	
-	/**
-	 * Commonly used units of length measure
-	 */
-	private static Map<Unit<?>, String>	LENGTH_UNITS= new java.util.HashMap<Unit<?>, String> ();
+    private static UnitList THIS = null;
 
-	private static final Object[][]		DEFAULT_LENGTH_UNITS	= { 
-	        { MetricPrefix.KILO(SI.METRE), Messages.GeoToolsUtils_unitName_kilometers }, //$NON-NLS-1$ 
-			{ PIXEL_UNITS, Messages.GeoToolsUtils_unitName_pixels }, //$NON-NLS-1$ 
-			{ USCustomary.FOOT, Messages.GeoToolsUtils_unitName_feet }, //$NON-NLS-1$ 
-			{ USCustomary.YARD, Messages.GeoToolsUtils_unitName_yards }, //$NON-NLS-1$
-			{ USCustomary.INCH, Messages.GeoToolsUtils_unitName_inches }, //$NON-NLS-1$ 
-			{ MetricPrefix.CENTI(SI.METRE), Messages.GeoToolsUtils_unitName_centimeters }, //$NON-NLS-1$ 
-			{ SI.METRE, Messages.GeoToolsUtils_unitName_meters }, //$NON-NLS-1$ 
-			{ NonSI.DEGREE_ANGLE, Messages.GeoToolsUtils_unitName_degrees } };//$NON-NLS-1$ 
+    public static final Unit<?> PIXEL_UNITS = Units.PIXEL;
 
-	private UnitList(){
-		// singleton 
-	}
-	
-	public static synchronized UnitList getInstance() {
+    protected static final Logger LOGGER = Logger.getLogger(UnitList.class.getName());
 
-		if(THIS != null ){
-			return THIS;
-		} else {
-			THIS = new UnitList();
-			popultate();
-		}
-		return THIS;
-	}
-	
-	private static void popultate()  {
-		BufferedReader reader = null;
-		try {
+    /**
+     * Commonly used units of length measure
+     */
+    private static Map<Unit<?>, String> LENGTH_UNITS = new java.util.HashMap<>();
 
-			for (int i = 0; i < DEFAULT_LENGTH_UNITS.length; i++) {
-				Unit<?> unit = (Unit<?>)DEFAULT_LENGTH_UNITS[i][0];
-				String unitName = (String)DEFAULT_LENGTH_UNITS[i][1];
-				LENGTH_UNITS.put(unit, unitName);
-			}
-			File crsFile = getCRSfile();
-			String line = ""; //$NON-NLS-1$
-			String totalReadedCrs = ""; //$NON-NLS-1$
-			List<String> crsList = new LinkedList<String>();
+    private static final Object[][] DEFAULT_LENGTH_UNITS = {
+            { MetricPrefix.KILO(SI.METRE), Messages.GeoToolsUtils_unitName_kilometers }, // $NON-NLS-1$
+            { PIXEL_UNITS, Messages.GeoToolsUtils_unitName_pixels }, // $NON-NLS-1$
+            { USCustomary.FOOT, Messages.GeoToolsUtils_unitName_feet }, // $NON-NLS-1$
+            { USCustomary.YARD, Messages.GeoToolsUtils_unitName_yards }, // $NON-NLS-1$
+            { USCustomary.INCH, Messages.GeoToolsUtils_unitName_inches }, // $NON-NLS-1$
+            { MetricPrefix.CENTI(SI.METRE), Messages.GeoToolsUtils_unitName_centimeters }, // $NON-NLS-1$
+            { SI.METRE, Messages.GeoToolsUtils_unitName_meters }, // $NON-NLS-1$
+            { NonSI.DEGREE_ANGLE, Messages.GeoToolsUtils_unitName_degrees } };// $NON-NLS-1$
 
-			reader = new BufferedReader(new FileReader(
-					crsFile.getAbsolutePath()));
+    private UnitList() {
+        // singleton
+    }
 
-			// the file contains only one line.
-			while ((line = reader.readLine()) != null
-					&& !line.trim().equals("")) { //$NON-NLS-1$
+    public static synchronized UnitList getInstance() {
 
-				// get the total crsReaded
-				totalReadedCrs = line.substring(0, line.indexOf("|")); //$NON-NLS-1$
-				line = line.substring(line.indexOf("|") + 1); //$NON-NLS-1$ 
-				// fill the CRS list
-				while (line.contains("|")) { //$NON-NLS-1$
-					crsList.add(line.substring(0, line.indexOf("|"))); //$NON-NLS-1$
-					line = line.substring(line.indexOf("|") + 1); //$NON-NLS-1$ 
-				}
-				// add the last part of the line
-				crsList.add(line);
-			}
-			if (crsList.size() == 0) {
-				fillcommonLengthUnits(crsFile);
-			} else {
-				// check if the total of read CRSs are the same.
-				int totalCount = getTotalCrsCount();
-				if (totalCount != Integer.parseInt(totalReadedCrs)) {// different
-					// load all and create the .properties file again.
-					fillcommonLengthUnits(crsFile);
-				} else {
-					loadFromProperties(crsList);
-				}
-			}
-			LENGTH_UNITS = Collections
-					.unmodifiableMap(LENGTH_UNITS);
-		} catch (Exception e) {
-			LOGGER.log(Level.WARNING,  e.getMessage(), e);
-		} finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+        if (THIS != null) {
+            return THIS;
+        } else {
+            THIS = new UnitList();
+            popultate();
+        }
+        return THIS;
+    }
 
-	/**
-	 * Returns a set of the most commonly used units of measure for measuring
-	 * lengths at a GIS application scale
-	 * 
-	 * @return a set of the most common units to use in operations like buffer, Parallels, etc.
-	 * @throws Exception 
-	 */
-	public synchronized Set<Unit<?>> getCommonLengthUnits() throws Exception {
+    private static void popultate() {
+        BufferedReader reader = null;
+        try {
 
-		if (LENGTH_UNITS != null) {
-			return LENGTH_UNITS.keySet();
-		} else {
-			return Collections.emptySet();
-		}
-	}
+            for (int i = 0; i < DEFAULT_LENGTH_UNITS.length; i++) {
+                Unit<?> unit = (Unit<?>) DEFAULT_LENGTH_UNITS[i][0];
+                String unitName = (String) DEFAULT_LENGTH_UNITS[i][1];
+                LENGTH_UNITS.put(unit, unitName);
+            }
+            File crsFile = getCRSfile();
+            String line = ""; //$NON-NLS-1$
+            String totalReadedCrs = ""; //$NON-NLS-1$
+            List<String> crsList = new LinkedList<>();
 
-	private static void loadFromProperties(List<String> crsList) throws Exception {
+            reader = new BufferedReader(new FileReader(crsFile.getAbsolutePath()));
 
-		for (String crsUnit : crsList) {
-			Unit<?> unit = Quantities.getQuantity(crsUnit).getUnit();
-//			Unit<?> unit = new BaseUnit<Quantity>(crsUnit);
+            // the file contains only one line.
+            while ((line = reader.readLine()) != null && !line.trim().equals("")) { //$NON-NLS-1$
 
-			if (!LENGTH_UNITS.containsKey(unit)) {
-				LENGTH_UNITS.put(unit, unit.toString());
-			}
-		}
-	}
+                // get the total crsReaded
+                totalReadedCrs = line.substring(0, line.indexOf("|")); //$NON-NLS-1$
+                line = line.substring(line.indexOf("|") + 1); //$NON-NLS-1$
+                // fill the CRS list
+                while (line.contains("|")) { //$NON-NLS-1$
+                    crsList.add(line.substring(0, line.indexOf("|"))); //$NON-NLS-1$
+                    line = line.substring(line.indexOf("|") + 1); //$NON-NLS-1$
+                }
+                // add the last part of the line
+                crsList.add(line);
+            }
+            if (crsList.isEmpty()) {
+                fillcommonLengthUnits(crsFile);
+            } else {
+                // check if the total of read CRSs are the same.
+                int totalCount = getTotalCrsCount();
+                if (totalCount != Integer.parseInt(totalReadedCrs)) {// different
+                    // load all and create the .properties file again.
+                    fillcommonLengthUnits(crsFile);
+                } else {
+                    loadFromProperties(crsList);
+                }
+            }
+            LENGTH_UNITS = Collections.unmodifiableMap(LENGTH_UNITS);
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, e.getMessage(), e);
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
-	private static int getTotalCrsCount() {
+    /**
+     * Returns a set of the most commonly used units of measure for measuring lengths at a GIS
+     * application scale
+     *
+     * @return a set of the most common units to use in operations like buffer, Parallels, etc.
+     * @throws Exception
+     */
+    public synchronized Set<Unit<?>> getCommonLengthUnits() throws Exception {
 
-		int crsCount = 0;
-		for (Object object : ReferencingFactoryFinder.getCRSAuthorityFactories(null)) {
-			CRSAuthorityFactory factory = (CRSAuthorityFactory) object;
-			try {
-				Set<String> codes = factory.getAuthorityCodes(CoordinateReferenceSystem.class);
-				crsCount = crsCount + codes.size();
-			} catch (Exception e) {
-				LOGGER.warning("exception" + e.getMessage()); //$NON-NLS-1$
-			}
-		}
-		return crsCount;
-	}
+        if (LENGTH_UNITS != null) {
+            return LENGTH_UNITS.keySet();
+        } else {
+            return Collections.emptySet();
+        }
+    }
 
-	private static File getCRSfile() throws IOException {
+    private static void loadFromProperties(List<String> crsList) throws Exception {
 
-		Bundle bundle = Platform.getBundle(Activator.PLUGIN_ID);
+        for (String crsUnit : crsList) {
+            Unit<?> unit = Quantities.getQuantity(crsUnit).getUnit();
+            // Unit<?> unit = new BaseUnit<Quantity>(crsUnit);
 
-		URL internal = bundle.getEntry("crs.properties"); //$NON-NLS-1$
-		URL fileUrl = FileLocator.toFileURL(internal);
+            if (!LENGTH_UNITS.containsKey(unit)) {
+                LENGTH_UNITS.put(unit, unit.toString());
+            }
+        }
+    }
 
-		String externalForm = fileUrl.toExternalForm();
-		String path = externalForm.replaceFirst("file:", ""); //$NON-NLS-1$//$NON-NLS-2$
+    private static int getTotalCrsCount() {
 
-		return new File(path);
-	}
+        int crsCount = 0;
+        for (Object object : ReferencingFactoryFinder.getCRSAuthorityFactories(null)) {
+            CRSAuthorityFactory factory = (CRSAuthorityFactory) object;
+            try {
+                Set<String> codes = factory.getAuthorityCodes(CoordinateReferenceSystem.class);
+                crsCount = crsCount + codes.size();
+            } catch (Exception e) {
+                LOGGER.warning("exception" + e.getMessage()); //$NON-NLS-1$
+            }
+        }
+        return crsCount;
+    }
 
-	private  static void fillcommonLengthUnits(File crsFile) throws IOException {
+    private static File getCRSfile() throws IOException {
 
-		int crsCount = 0;
-		StringBuilder crsSequence = new StringBuilder(); 
+        Bundle bundle = Platform.getBundle(Activator.PLUGIN_ID);
 
-		for (Object object : ReferencingFactoryFinder.getCRSAuthorityFactories(null)) {
-			CRSAuthorityFactory factory = (CRSAuthorityFactory) object;
-			try {
-				CoordinateReferenceSystem crs;
-				Set<String> codes = factory.getAuthorityCodes(CoordinateReferenceSystem.class);
-				for (String code : codes) {
+        URL internal = bundle.getEntry("crs.properties"); //$NON-NLS-1$
+        URL fileUrl = FileLocator.toFileURL(internal);
 
-					crsCount++;
-					try {
-						crs = factory.createCoordinateReferenceSystem(code);
-						Unit<?> unit = GeoToolsUtils.getDefaultCRSUnit(crs);
-						if (!LENGTH_UNITS.containsKey(unit)) {
-							LENGTH_UNITS.put(unit, unit.toString());
+        String externalForm = fileUrl.toExternalForm();
+        String path = externalForm.replaceFirst("file:", ""); //$NON-NLS-1$//$NON-NLS-2$
 
-//							Unit<?> baseUnit = unit.getSystemUnit();
-//							UnitConverter multiply = unit.getSystemUnit();
-							crsSequence.append("|" + unit.toString()); //$NON-NLS-1$
-						}
-					} catch (Exception e) {
-						LOGGER.warning("exception" + e.getMessage()); //$NON-NLS-1$
-					}
-				}
-			} catch (Exception e) {
-				LOGGER.warning("exception" + e.getMessage()); //$NON-NLS-1$
-			}
-		}
-		String finalcrsSequence = crsCount + crsSequence.toString();
-		BufferedWriter writer = new BufferedWriter(new FileWriter(crsFile.getAbsolutePath()));
-		writer.write(finalcrsSequence);
-		writer.close();
-	}
+        return new File(path);
+    }
 
-	/**
-	 * Returns the localized unit name
-	 * 
-	 * @param unit
-	 *            the unit
-	 * @return the localized
-	 */
-	public synchronized String getUnitName(final Unit<?> unit) {
+    private static void fillcommonLengthUnits(File crsFile) throws IOException {
 
-		assert unit != null;
+        int crsCount = 0;
+        StringBuilder crsSequence = new StringBuilder();
 
-		String unitName = LENGTH_UNITS.get(unit);
+        for (Object object : ReferencingFactoryFinder.getCRSAuthorityFactories(null)) {
+            CRSAuthorityFactory factory = (CRSAuthorityFactory) object;
+            try {
+                CoordinateReferenceSystem crs;
+                Set<String> codes = factory.getAuthorityCodes(CoordinateReferenceSystem.class);
+                for (String code : codes) {
 
-		assert unitName != null : "unit name cannot be null"; //$NON-NLS-1$
+                    crsCount++;
+                    try {
+                        crs = factory.createCoordinateReferenceSystem(code);
+                        Unit<?> unit = GeoToolsUtils.getDefaultCRSUnit(crs);
+                        if (!LENGTH_UNITS.containsKey(unit)) {
+                            LENGTH_UNITS.put(unit, unit.toString());
 
-		return unitName;
-	}
+                            // Unit<?> baseUnit = unit.getSystemUnit();
+                            // UnitConverter multiply = unit.getSystemUnit();
+                            crsSequence.append("|" + unit.toString()); //$NON-NLS-1$
+                        }
+                    } catch (Exception e) {
+                        LOGGER.warning("exception" + e.getMessage()); //$NON-NLS-1$
+                    }
+                }
+            } catch (Exception e) {
+                LOGGER.warning("exception" + e.getMessage()); //$NON-NLS-1$
+            }
+        }
+        String finalcrsSequence = crsCount + crsSequence.toString();
+        BufferedWriter writer = new BufferedWriter(new FileWriter(crsFile.getAbsolutePath()));
+        writer.write(finalcrsSequence);
+        writer.close();
+    }
+
+    /**
+     * Returns the localized unit name
+     *
+     * @param unit the unit
+     * @return the localized
+     */
+    public synchronized String getUnitName(final Unit<?> unit) {
+
+        assert unit != null;
+
+        String unitName = LENGTH_UNITS.get(unit);
+
+        assert unitName != null : "unit name cannot be null"; //$NON-NLS-1$
+
+        return unitName;
+    }
 
 }

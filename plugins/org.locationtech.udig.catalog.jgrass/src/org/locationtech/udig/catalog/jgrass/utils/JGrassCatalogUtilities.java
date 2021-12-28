@@ -85,7 +85,7 @@ import org.opengis.parameter.GeneralParameterValue;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
- * Some jgrass catalog related helper methods
+ * Some JGrass catalog related helper methods
  *
  * @author Andrea Antonello - www.hydrologis.com
  */
@@ -114,7 +114,7 @@ public class JGrassCatalogUtilities {
     public static final String COLS = "COLS"; //$NON-NLS-1$
 
     /**
-     * Extract mapset path and mapname from a GeoResource containing a JGrassMapGeoResource
+     * Extract mapset path and map name from a GeoResource containing a JGrassMapGeoResource
      *
      * @param resource
      * @return a String array with mapset path and map name
@@ -123,7 +123,7 @@ public class JGrassCatalogUtilities {
             IGeoResource resource) {
         String[] mapsetPathAndMapName = new String[2];
 
-        // check that the underlying resource is a propertyservice
+        // check that the underlying resource is a PropertyService
         if (resource == null || !resource.canResolve(JGrassMapGeoResource.class)) {
             return null;
         }
@@ -159,7 +159,7 @@ public class JGrassCatalogUtilities {
      */
     public synchronized static String getDirectPathFromJGrassMapGeoResource(IGeoResource resource) {
         String mapPath = null;
-        // check that the underlying resource is a propertyservice
+        // check that the underlying resource is a PropertyService
         if (resource == null || !resource.canResolve(JGrassMapGeoResource.class)) {
             return null;
         }
@@ -300,7 +300,7 @@ public class JGrassCatalogUtilities {
                     }
                     List<? extends ILayer> addedLayers = ApplicationGIS.addLayersToMap(map,
                             geoResources, addPosition);
-                    if (addedLayers.size() == 0) {
+                    if (addedLayers.isEmpty()) {
                         System.out.println("strange"); //$NON-NLS-1$
                     }
                 } catch (IOException e) {
@@ -351,7 +351,7 @@ public class JGrassCatalogUtilities {
         if (!(new File(locationPath).mkdirs()))
             return false;
 
-        /* create the jgrass workspace file */
+        /* create the JGrass workspace file */
         String jgFile = locationPath + File.separator + JGRASS_WORKSPACE_FILENAME;
         File jgF = new File(jgFile);
         try {
@@ -471,7 +471,7 @@ public class JGrassCatalogUtilities {
      * @return
      */
     public static boolean createJGrassFolders(String mapsetpath) {
-        /* Create jgrass directories */
+        /* Create JGrass directories */
         if (!(new File(mapsetpath + File.separator + JGrassConstants.GRASSASCIIRASTER).exists()))
             if (!(new File(mapsetpath + File.separator + JGrassConstants.GRASSASCIIRASTER)
                     .mkdirs()))
@@ -495,7 +495,7 @@ public class JGrassCatalogUtilities {
 
     /**
      * @param locationPath
-     * @return the crs of the supplied location
+     * @return the CRS of the supplied location
      */
     public static synchronized CoordinateReferenceSystem getLocationCrs(String locationPath) {
         CoordinateReferenceSystem readCrs = null;
@@ -537,9 +537,9 @@ public class JGrassCatalogUtilities {
     }
 
     /**
-     * Returns a mapgraphics layer by its class.
+     * Returns a MapGraphics layer by its class.
      *
-     * @param theClass the class of the mapgraphics.
+     * @param theClass the class of the MapGraphics.
      * @return the layer or null, if none was found (not visible or not existing).
      */
     public static ILayer getMapgraphicLayerByClass(Class<?> theClass) {
@@ -587,7 +587,6 @@ public class JGrassCatalogUtilities {
      */
     public synchronized static JGrassMapGeoResource addMapToCatalog(String locationPath,
             String mapsetName, String mapName, String mapType) {
-        // URL mapsetId = JGrassMapsetGeoResource.createId(locationPath, mapsetName);
 
         JGrassMapsetGeoResource mapset = null;
         try {
@@ -602,7 +601,6 @@ public class JGrassCatalogUtilities {
                     ProgressManager.instance().get());
             if (mapset == null) {
                 // try with the service
-                // URL locationId = JGrassService.createId(locationPath);
                 JGrassService locationService = localCatalog.getById(JGrassService.class,
                         locationId, ProgressManager.instance().get());
                 mapset = locationService.getMapsetGeoresourceByName(mapsetName);
@@ -632,7 +630,6 @@ public class JGrassCatalogUtilities {
      */
     public synchronized static void removeMapFromCatalog(String locationPath, String mapsetName,
             String mapName, String mapType) {
-        // URL mapsetId = JGrassMapsetGeoResource.createId(locationPath, mapsetName);
         File locationFile = new File(locationPath);
         URL mapsetUrl = JGrassMapsetGeoResource.createId(locationFile.getAbsolutePath(),
                 mapsetName);
@@ -656,7 +653,6 @@ public class JGrassCatalogUtilities {
      */
     public synchronized static JGrassMapsetGeoResource addMapsetToCatalog(String locationPath,
             String mapsetName) {
-        // URL locationId = JGrassService.createId(locationPath);
         File locationFile = new File(locationPath);
         try {
             ID locationId = new ID(locationFile.toURI().toURL());
@@ -684,7 +680,6 @@ public class JGrassCatalogUtilities {
      */
     public synchronized static void removeMapsetFromCatalog(String locationPath,
             String mapsetName) {
-        // URL locationId = JGrassService.createId(locationPath);
         try {
             File locationFile = new File(locationPath);
             ID locationId = new ID(locationFile.toURI().toURL());
