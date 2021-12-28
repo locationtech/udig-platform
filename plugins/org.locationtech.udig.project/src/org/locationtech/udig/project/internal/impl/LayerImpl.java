@@ -168,9 +168,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected static final int ZORDER_EDEFAULT = 0;
 
     /**
-     * The cached value of the '{@link #getZorder() <em>Zorder</em>}' attribute.
-     * <!-- begin-user-doc
+     * The cached value of the '{@link #getZorder() <em>Zorder</em>}' attribute. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
+     *
      * @see #getZorder()
      * @generated
      * @ordered
@@ -399,8 +399,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /*
-     * @see
-     * org.locationtech.udig.project.Layer#removeListener(org.locationtech.udig.project.LayerListener)
+     * @see org.locationtech.udig.project.Layer#removeListener(org.locationtech.udig.project.
+     * LayerListener)
      */
     @Override
     public void removeListener(final ILayerListener listener) {
@@ -428,6 +428,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -437,6 +438,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -448,6 +450,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public NotificationChain basicSetContextModel(ContextModel newContextModel,
@@ -459,6 +462,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -518,6 +522,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -527,6 +532,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -540,6 +546,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -549,6 +556,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -603,6 +611,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -612,6 +621,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -708,7 +718,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 ProjectPlugin.log("Error getting layer resources", e); //$NON-NLS-1$
             }
 
-            if (resourceList.size() == 0) {
+            if (resourceList.isEmpty()) {
                 if (!warned) {
                     ProjectPlugin.log("Layer: " + getName() //$NON-NLS-1$
                             + " could not find a GeoResource with id:" + getID()); //$NON-NLS-1$
@@ -739,7 +749,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     private boolean assertNotInDisplayAccess() {
         if (Display.getCurrent() != null) {
-            //            ProjectPlugin.log("getGeoResources was called in display Thread", new Exception("JUST A WARNING NOT CRITICAL")); //$NON-NLS-1$ //$NON-NLS-2$
+            // ProjectPlugin.log("getGeoResources was called in display Thread", new Exception("JUST
+            // A WARNING NOT CRITICAL")); //$NON-NLS-1$ //$NON-NLS-2$
         }
         return true;
     }
@@ -825,6 +836,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public void setCatalogRefGen(CatalogRef newCatalogRef) {
@@ -837,6 +849,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -846,6 +859,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public NotificationChain basicSetStyleBlackboard(StyleBlackboard newStyleBlackboard,
@@ -892,6 +906,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -901,6 +916,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1009,6 +1025,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1018,6 +1035,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * please use getIcon
+     *
      * @deprecated
      * @generated NOT
      */
@@ -1027,8 +1045,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1042,6 +1060,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * please use setIcon
+     *
      * @deprecated
      * @generated NOT
      */
@@ -1112,9 +1131,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     private volatile int status;
 
     /**
-     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-     * <!-- begin-user-doc
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
+     *
      * @see #getName()
      * @generated
      * @ordered
@@ -1152,9 +1171,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected volatile CatalogRef catalogRef = new CatalogRef(this);
 
     /**
-     * The default value of the '{@link #getID() <em>ID</em>}' attribute.
-     * <!-- begin-user-doc -->
+     * The default value of the '{@link #getID() <em>ID</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     *
      * @see #getID()
      * @generated
      * @ordered
@@ -1222,9 +1241,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected volatile EList<IGeoResource> geoResources = null;
 
     /**
-     * The default value of the '{@link #getCRS() <em>CRS</em>}' attribute.
-     * <!-- begin-user-doc -->
+     * The default value of the '{@link #getCRS() <em>CRS</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     *
      * @see #getCRS()
      * @generated
      * @ordered
@@ -1352,9 +1371,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected EMap<Interaction, Boolean> interactionMap;
 
     /**
-     * The default value of the '{@link #isShown() <em>Shown</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The default value of the '{@link #isShown() <em>Shown</em>}' attribute. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     *
      * @see #isShown()
      * @generated
      * @ordered
@@ -1362,9 +1381,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected static final boolean SHOWN_EDEFAULT = false;
 
     /**
-     * The cached value of the '{@link #isShown() <em>Shown</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The cached value of the '{@link #isShown() <em>Shown</em>}' attribute. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     *
      * @see #isShown()
      * @generated
      * @ordered
@@ -1372,9 +1391,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected boolean shown = SHOWN_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getIcon() <em>Icon</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The default value of the '{@link #getIcon() <em>Icon</em>}' attribute. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     *
      * @see #getIcon()
      * @generated
      * @ordered
@@ -1382,9 +1401,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
     protected static final ImageDescriptor ICON_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getIcon() <em>Icon</em>}' attribute.
-     * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getIcon() <em>Icon</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     *
      * @see #getIcon()
      * @generated
      * @ordered
@@ -1519,6 +1538,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public void setCRSGen(CoordinateReferenceSystem newCRS) {
@@ -1544,6 +1564,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1553,6 +1574,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1566,6 +1588,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1575,6 +1598,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1686,6 +1710,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1700,6 +1725,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1714,8 +1740,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1724,8 +1750,8 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1815,6 +1841,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1831,6 +1858,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1850,6 +1878,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1864,6 +1893,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1920,6 +1950,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -1991,6 +2022,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -2059,6 +2091,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -2228,7 +2261,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     private ReferencedEnvelope obtainBoundsFromResources(IProgressMonitor monitor) {
         ReferencedEnvelope result = null;
         for (IGeoResource resource : getGeoResources()) {
-            //IGeoResourceInfo info = resource.getInfo(monitor);
+            // IGeoResourceInfo info = resource.getInfo(monitor);
             IGeoResourceInfo info = getInfo(resource, monitor);
             Envelope tmp = null;
             if (info != null)

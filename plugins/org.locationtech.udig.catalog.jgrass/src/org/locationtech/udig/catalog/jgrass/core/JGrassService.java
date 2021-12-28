@@ -227,7 +227,7 @@ public class JGrassService extends IService {
                     props.put(mapsetFile.getName(), mapsetFile.getAbsolutePath());
                 }
             }
-            if (props.size() == 0 && permanentMapsetFile != null) {
+            if (props.isEmpty() && permanentMapsetFile != null) {
                 props.put(JGrassConstants.PERMANENT_MAPSET, permanentMapsetFile.getAbsolutePath());
             }
 

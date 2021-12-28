@@ -64,7 +64,7 @@ public class RasterLegendGraphic implements MapGraphic {
 
         /**
          * get the blackboard from the map and not from the layer. This is due to the fact that we
-         * need the mapreader here to get the legend string. The mapreader is put on blackboard by
+         * need the MapReader here to get the legend string. The MapReader is put on blackboard by
          * the raster renderer.
          */
 
@@ -105,7 +105,7 @@ public class RasterLegendGraphic implements MapGraphic {
         final ViewportGraphics graphics = context.getGraphics();
 
         /** Draw the legend. */
-        if (categories.size() == 0 || categories.size() != colorRules.size()) {
+        if (categories.isEmpty() || categories.size() != colorRules.size()) {
             // draw a color ramp legend
 
             int rulesNum = colorRules.size();

@@ -1,5 +1,12 @@
 /**
- * <copyright></copyright> $Id$
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021 Refractions Research Inc. and others
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.project.internal.impl;
 
@@ -52,9 +59,9 @@ public class ProjectImpl extends EObjectImpl implements Project {
     protected static final String NAME_EDEFAULT = ""; //$NON-NLS-1$
 
     /**
-     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
      * @see #getName()
      * @generated
      * @ordered
@@ -62,8 +69,9 @@ public class ProjectImpl extends EObjectImpl implements Project {
     protected String name = NAME_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getElementsInternal() <em>Elements Internal</em>}' reference list.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The cached value of the '{@link #getElementsInternal() <em>Elements Internal</em>}' reference
+     * list. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getElementsInternal()
      * @generated
      * @ordered
@@ -90,7 +98,6 @@ public class ProjectImpl extends EObjectImpl implements Project {
      *
      * @generated NOT
      */
-    @SuppressWarnings("unchecked")
     protected ProjectImpl() {
         super();
         eAdapters().add(projectPersistenceListener);
@@ -98,6 +105,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -107,6 +115,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -116,6 +125,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -129,6 +139,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated not
      */
     @Override
@@ -159,8 +170,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -176,8 +187,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -191,8 +202,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -207,8 +218,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -227,8 +238,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -245,8 +256,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -279,6 +290,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -327,7 +339,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
     }
 
     /**
-     * Creates a new Resource from map.  The new Resource will be in the same directory as the
+     * Creates a new Resource from map. The new Resource will be in the same directory as the
      * project's resource. The Resource will start with map appended with a number that will make
      * the name unique. The resource will end in .umap.
      */
@@ -348,7 +360,6 @@ public class ProjectImpl extends EObjectImpl implements Project {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private static void doCreation(ProjectElement projectElement, Resource projectResource,
             String elementPath, String projectPath) {
         Resource resource = null;
@@ -364,7 +375,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
         String projectPath = projectURI.toFileString();
         if (projectURI.hasAuthority()) { // remove '//' character (added in URI from emf version 2.9
                                          // and onward
-            projectPath = StringUtils.removeStart(projectPath, "//");
+            projectPath = StringUtils.removeStart(projectPath, "//"); //$NON-NLS-1$
         }
         projectPath = projectPath.substring(0, projectPath.lastIndexOf(File.separatorChar));
         while (projectPath.startsWith(File.separator + File.separator)) {
@@ -381,8 +392,9 @@ public class ProjectImpl extends EObjectImpl implements Project {
         if (projectElement.eResource() != null) {
             URI elementPathUri = projectElement.eResource().getURI();
             elementPath = elementPathUri.toFileString();
-            if (elementPathUri.hasAuthority()) { //remove '//' character (added in URI from emf version 2.9 and onward
-                elementPath = StringUtils.removeStart(elementPath, "//");
+            if (elementPathUri.hasAuthority()) { // remove '//' character (added in URI from emf
+                                                 // version 2.9 and onward
+                elementPath = StringUtils.removeStart(elementPath, "//"); //$NON-NLS-1$
             }
             elementPath = elementPath.substring(0, elementPath.lastIndexOf(File.separatorChar));
             while (elementPath.startsWith(File.separator + File.separator)) {
@@ -396,7 +408,6 @@ public class ProjectImpl extends EObjectImpl implements Project {
         return elementPath;
     }
 
-    @SuppressWarnings("unchecked")
     private static URI createNewResource(Resource projectResource, String projectPath,
             ProjectElement projectElement) {
         int i = 0;
@@ -407,7 +418,7 @@ public class ProjectImpl extends EObjectImpl implements Project {
         do {
             found = false;
             i++;
-            //TODO Add file extension name to ProjectElement
+            // TODO Add file extension name to ProjectElement
             uri = generateResourceName(projectPath, projectElement, i);
 
             URI normalizedURI = uriConverter.normalize(uri);
