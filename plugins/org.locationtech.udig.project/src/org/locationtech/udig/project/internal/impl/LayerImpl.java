@@ -711,7 +711,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
                 ProjectPlugin.log("Error getting layer resources", e); //$NON-NLS-1$
             }
 
-            if (resourceList.size() == 0) {
+            if (resourceList.isEmpty()) {
                 if (!warned) {
                     ProjectPlugin.log("Layer: " + getName() //$NON-NLS-1$
                             + " could not find a GeoResource with id:" + getID()); //$NON-NLS-1$
@@ -1483,7 +1483,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
      * @generated
      */
     public void setCRSGen(CoordinateReferenceSystem newCRS) {

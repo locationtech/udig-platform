@@ -105,14 +105,14 @@ public class LayerDecorator implements Layer, InternalEObject {
     @Override
     public synchronized void removeListener(final ILayerListener listener) {
         listeners.remove(listener);
-        if (listeners.size() == 0) {
+        if (listeners.isEmpty()) {
             layer.removeListener(watcher);
             listeners = null;
         }
     }
 
     protected synchronized void fireLayerChange(LayerEvent event) {
-        if (listeners.size() == 0) {
+        if (listeners.isEmpty()) {
             return; // nobody is listening
         }
         for (ILayerListener listener : listeners) {
@@ -465,6 +465,9 @@ public class LayerDecorator implements Layer, InternalEObject {
         return layer.getGeoResource();
     }
 
+    /**
+     * @deprecated
+     */
     @Deprecated
     @Override
     public void setGeoResource(IGeoResource value) {
