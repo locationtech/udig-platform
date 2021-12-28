@@ -1,9 +1,10 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  * (C) 2006, Axios Engineering S.L. (Axios)
  * (C) 2006, County Council of Gipuzkoa, Department of Environment and Planning
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
@@ -40,16 +41,18 @@ import org.locationtech.jts.geom.Triangle;
  * <p>
  * Sample usage to create an arc centered at <code>0,0</code>, which starts at <code>-10,0</code>,
  * passes through <code>0,10</code> and ends at <code>10,0</code>:
- * 
- * <pre><code>
+ *
+ * <pre>
+ * <code>
  * ArcBuilder builder = new ArcBuilder();
  * builder.setPoints(-10, 0, 0, 10, 10, 0);
  * Arc2D arc = builder.getArc();
  * LineString approxLineStr = builder.getGeometry(15); //15 segments per quadrant
- * </code></pre>
- * 
+ * </code>
+ * </pre>
+ *
  * </p>
- * 
+ *
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
  * @since 1.1.0
@@ -77,12 +80,12 @@ public class ArcBuilder {
      * fact that point1, point2 and point3 are final and their internal coordinates change
      * dynamically
      */
-    private Coordinate[]     ring   = {point1, point2, point3, point1};
+    private Coordinate[] ring = { point1, point2, point3, point1 };
 
     /**
      * Builds and returns an arc of circumference defined by two consecutive chords set by
      * {@link #setPoints(double, double, double, double, double, double) setPoints}
-     * 
+     *
      * @return a Java2D arc built upon the three coordinates settled at
      *         {@link #setPoints(double, double, double, double, double, double)}, or
      *         <code>null</code> of the coordinates are collinear.
@@ -118,12 +121,12 @@ public class ArcBuilder {
 
     /**
      * Builds a JTS LineString
-     * 
+     *
      * @param pointsPerQuadrant how many points per quadrant shall be used to approximate the arc
      *        using line segments
      * @return
      */
-    public LineString getGeometry( final int pointsPerQuadrant ) {
+    public LineString getGeometry(final int pointsPerQuadrant) {
         assert pointsPerQuadrant > 0;
 
         GeometryFactory gf = new GeometryFactory();
@@ -134,17 +137,17 @@ public class ArcBuilder {
 
         double flatness = calculateMaxDistanceToCurve(arc, pointsPerQuadrant);
         PathIterator pathIterator = arc.getPathIterator((AffineTransform) null, flatness);
-        List<Coordinate> coords = new LinkedList<Coordinate>();
+        List<Coordinate> coords = new LinkedList<>();
 
         double[] coordsHolder = new double[6];
 
-        while( !pathIterator.isDone() ) {
+        while (!pathIterator.isDone()) {
             int pathSegType = pathIterator.currentSegment(coordsHolder);
             double x = coordsHolder[0];
             double y = coordsHolder[1];
-            switch( pathSegType ) {
+            switch (pathSegType) {
             case PathIterator.SEG_MOVETO:
-                assert coords.size() == 0;
+                assert coords.isEmpty();
                 break;
             case PathIterator.SEG_LINETO:
                 // ok
@@ -165,11 +168,11 @@ public class ArcBuilder {
      * Calculates the maximum distance that a segment used to approximate the curve is allowed to be
      * separated from the actual curve, if <code>pointsPerQuadrant</code> points per quadrant are
      * going to be used to approximate the curve.
-     * 
+     *
      * @param arc
      * @return
      */
-    private double calculateMaxDistanceToCurve( final Arc2D arc, final int pointsPerQuadrant ) {
+    private double calculateMaxDistanceToCurve(final Arc2D arc, final int pointsPerQuadrant) {
         double centerX = arc.getCenterX();
         double centerY = arc.getCenterY();
 
@@ -194,7 +197,7 @@ public class ArcBuilder {
     /**
      * The segments point1-point2, point2-point3 are taken as the consecutive arc chords from which
      * to calculate the arc center by finding the intersection of their normals
-     * 
+     *
      * @return
      */
     public Coordinate getArcCenter() {
@@ -213,11 +216,11 @@ public class ArcBuilder {
     /**
      * Returns a line segment of the specified <code>lenght</code> the passes through the midpoint
      * of <code>segment</code> and is perpendicular to it.
-     * 
+     *
      * @param segment
      * @return
      */
-    public LineSegment getMidpointNormal( final LineSegment segment, final double lenght ) {
+    public LineSegment getMidpointNormal(final LineSegment segment, final double lenght) {
         Coordinate midPoint = segment.midPoint();
 
         // the angle (in radians) of the segment respect to the X axis
@@ -244,7 +247,7 @@ public class ArcBuilder {
 
     /**
      * Sets the points in device space that define the two chords of the arc to build.
-     * 
+     *
      * @param x1 X ordinate of the arc's start point
      * @param y1 Y ordinate of the arc's start point
      * @param x2 X ordinate of the arc point shared by the two chords
@@ -252,7 +255,7 @@ public class ArcBuilder {
      * @param x3 X ordinate of the arc's end point
      * @param y3 Y ordinate of the arc's end point
      */
-    public void setPoints( double x1, double y1, double x2, double y2, double x3, double y3 ) {
+    public void setPoints(double x1, double y1, double x2, double y2, double x3, double y3) {
         this.point1.x = x1;
         this.point1.y = y1;
         this.point2.x = x2;

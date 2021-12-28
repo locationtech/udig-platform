@@ -417,7 +417,7 @@ public class LegendGraphic implements MapGraphic {
         }
         for (FeatureTypeStyle style : sld.featureTypeStyles()) {
             Set<Name> names = style.featureTypeNames();
-            if (names.size() == 0) {
+            if (names.isEmpty()) {
                 styles.add(style);
             } else {
                 for (Name name : names) {

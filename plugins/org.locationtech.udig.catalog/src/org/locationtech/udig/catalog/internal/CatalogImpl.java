@@ -859,8 +859,9 @@ public class CatalogImpl extends ICatalog {
      *         resource, ICatalogChangeEvent.Type.POST_CHANGE, cDelta ) ); }
      */
     public void fire(IResolveChangeEvent event) {
-        if (catalogListeners.size() == 0)
+        if (catalogListeners.isEmpty()) {
             return;
+        }
 
         HashSet<IResolveChangeListener> copy;
         copy = getListenersCopy();
