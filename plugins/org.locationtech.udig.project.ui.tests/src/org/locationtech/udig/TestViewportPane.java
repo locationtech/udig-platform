@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -28,99 +29,125 @@ import org.locationtech.udig.project.ui.render.glass.GlassPane;
 
 /**
  * A dummy object for testing
- * 
+ *
  * @author jones
  * @since 1.1.0
  */
 @Ignore
 public class TestViewportPane extends TestMapDisplay implements ViewportPane {
 
-    public TestViewportPane( Dimension displaySize ) {
+    public TestViewportPane(Dimension displaySize) {
         super(displaySize);
     }
 
-    public BufferedImage image( int w, int h ) {
+    @Override
+    public BufferedImage image(int w, int h) {
         return null;
     }
-    
-    public void update(){
+
+    @Override
+    public void update() {
     }
 
+    @Override
     public void repaint() {
     }
 
-    public void setCursor( Cursor cursor ) {
+    @Override
+    public void setCursor(Cursor cursor) {
     }
 
-    public void removeMouseListener( MapMouseListener l ) {
+    @Override
+    public void removeMouseListener(MapMouseListener l) {
     }
 
-    public void removeMouseMotionListener( MapMouseMotionListener l ) {
+    @Override
+    public void removeMouseMotionListener(MapMouseMotionListener l) {
     }
 
-    public void removeMouseWheelListener( MapMouseWheelListener l ) {
+    @Override
+    public void removeMouseWheelListener(MapMouseWheelListener l) {
     }
 
-    public void addMouseListener( MapMouseListener l ) {
+    @Override
+    public void addMouseListener(MapMouseListener l) {
     }
 
-    public void addMouseMotionListener( MapMouseMotionListener l ) {
+    @Override
+    public void addMouseMotionListener(MapMouseMotionListener l) {
     }
 
-    public void addMouseWheelListener( MapMouseWheelListener l ) {
+    @Override
+    public void addMouseWheelListener(MapMouseWheelListener l) {
     }
 
-    public void addPaneListener( IMapDisplayListener listener ) {
+    @Override
+    public void addPaneListener(IMapDisplayListener listener) {
     }
 
-    public void removePaneListener( IMapDisplayListener listener ) {
+    @Override
+    public void removePaneListener(IMapDisplayListener listener) {
     }
 
+    @Override
     public void dispose() {
     }
 
-    public void addDrawCommand( IDrawCommand command ) {
+    @Override
+    public void addDrawCommand(IDrawCommand command) {
     }
 
+    @Override
     public void renderStarting() {
     }
 
+    @Override
     public void renderUpdate() {
     }
 
+    @Override
     public void renderDone() {
     }
 
-    public void setRenderManager( RenderManager manager ) {
+    @Override
+    public void setRenderManager(RenderManager manager) {
     }
 
-    public MapPart getMapEditor() {
+    @Override
+    public MapPart getMapPart() {
         return null;
     }
 
+    @Override
     public Control getControl() {
         return null;
     }
 
-    public void repaint( int x, int y, int width, int height ) {
+    @Override
+    public void repaint(int x, int y, int width, int height) {
     }
 
-    public void enableDrawCommands( boolean enable ) {
+    @Override
+    public void enableDrawCommands(boolean enable) {
     }
 
+    @Override
     public boolean isVisible() {
         return false;
     }
 
+    @Override
     public boolean isDisposed() {
         return false;
     }
 
+    @Override
     public GlassPane getGlass() {
         return null;
     }
 
-    public void setGlass( GlassPane glass ) {
+    @Override
+    public void setGlass(GlassPane glass) {
     }
 
 }

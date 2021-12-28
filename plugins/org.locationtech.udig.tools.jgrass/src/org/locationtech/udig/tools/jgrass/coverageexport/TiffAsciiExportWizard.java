@@ -1,6 +1,6 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -49,33 +49,39 @@ import org.opengis.referencing.operation.MathTransform;
 public class TiffAsciiExportWizard extends Wizard implements IExportWizard {
 
     public static boolean canFinish = false;
+
     private TiffAsciiExportWizardPage mainPage;
-    
+
     public TiffAsciiExportWizard() {
         super();
     }
 
-    public void init( IWorkbench workbench, IStructuredSelection selection ) {
+    @Override
+    public void init(IWorkbench workbench, IStructuredSelection selection) {
         setWindowTitle("Coverage export");
-        setDefaultPageImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
-                "icons/export_wiz.png")); //$NON-NLS-1$
+        setDefaultPageImageDescriptor(AbstractUIPlugin
+                .imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID, "icons/export_wiz.png")); //$NON-NLS-1$
         setNeedsProgressMonitor(true);
 
         mainPage = new TiffAsciiExportWizardPage();
     }
 
+    @Override
     public void addPages() {
         super.addPages();
         addPage(mainPage);
     }
 
+    @Override
     public boolean performFinish() {
-        /*
-         * run with backgroundable progress monitoring
+        /**
+         * Run with backgroundable progress monitoring
          */
-        IRunnableWithProgress operation = new IRunnableWithProgress(){
+        IRunnableWithProgress operation = new IRunnableWithProgress() {
 
-            public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
+            @Override
+            public void run(IProgressMonitor pm)
+                    throws InvocationTargetException, InterruptedException {
 
                 IGeoResource geoResource = mainPage.getGeoResource();
                 String folderPath = mainPage.getFolderPath();
@@ -86,7 +92,7 @@ public class TiffAsciiExportWizard extends Wizard implements IExportWizard {
                 boolean isAscii = mainPage.isAscii();
                 boolean isTiff = mainPage.isTiff();
 
-                /*
+                /**
                  * finally do some processing
                  */
                 pm.beginTask("Exporting map...", IProgressMonitor.UNKNOWN);
@@ -100,7 +106,7 @@ public class TiffAsciiExportWizard extends Wizard implements IExportWizard {
                     // double[] availableElevationLevels =
                     // netcdfGeoResource.getAvailableElevationLevels();
                     //
-                    // if (availableTimeSteps.size() == 0) {
+                    // if (availableTimeSteps.isEmpty()) {
                     // availableTimeSteps = new ArrayList<DateTime>();
                     // // add a dummy one to make sure it enters the loop
                     // availableTimeSteps.add(null);
@@ -151,16 +157,21 @@ public class TiffAsciiExportWizard extends Wizard implements IExportWizard {
                     //
                     // } else
                     if (geoResource.canResolve(GridCoverage.class)) {
-                        GridCoverage2D coverage2D = (GridCoverage2D) geoResource.resolve(GridCoverage.class, pm);
+                        GridCoverage2D coverage2D = (GridCoverage2D) geoResource
+                                .resolve(GridCoverage.class, pm);
                         dumpMap(coverage2D, fileCrs, newCrs, newPath, isAscii, isTiff);
                     } else {
-                        throw new IOException("The selected resource doesn't seem to be a coverage layer: " + geoResource.getTitle());
+                        throw new IOException(
+                                "The selected resource doesn't seem to be a coverage layer: " //$NON-NLS-1$
+                                        + geoResource.getTitle());
                     }
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    String message = "An error occurred while exporting the resource: " + geoResource.getTitle();
-                    ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, e);
+                    String message = "An error occurred while exporting the resource: " //$NON-NLS-1$
+                            + geoResource.getTitle();
+                    ExceptionDetailsDialog.openError(null, message, IStatus.ERROR,
+                            JGrassToolsPlugin.PLUGIN_ID, e);
                 }
                 pm.done();
 
@@ -171,12 +182,14 @@ public class TiffAsciiExportWizard extends Wizard implements IExportWizard {
         return true;
     }
 
+    @Override
     public boolean canFinish() {
         return super.canFinish() && canFinish;
     }
 
-    private void dumpMap( GridCoverage2D coverage2D, CoordinateReferenceSystem fileCrs, CoordinateReferenceSystem newCrs,
-            String newFilePath, boolean isAscii, boolean isTiff ) throws FactoryException, IOException {
+    private void dumpMap(GridCoverage2D coverage2D, CoordinateReferenceSystem fileCrs,
+            CoordinateReferenceSystem newCrs, String newFilePath, boolean isAscii, boolean isTiff)
+            throws FactoryException, IOException {
         if (newCrs != null) {
             MathTransform mathTransform = CRS.findMathTransform(fileCrs, newCrs);
             if (!mathTransform.isIdentity()) {
@@ -187,26 +200,24 @@ public class TiffAsciiExportWizard extends Wizard implements IExportWizard {
         if (isTiff) {
             final GeoTiffFormat format = new GeoTiffFormat();
             final GeoTiffWriteParams wp = new GeoTiffWriteParams();
-            // wp.setProgressiveMode(GeoTiffWriteParams.MODE_DEFAULT);
             wp.setCompressionMode(GeoTiffWriteParams.MODE_DEFAULT);
             wp.setTilingMode(GeoToolsWriteParams.MODE_DEFAULT);
             final ParameterValueGroup paramWrite = format.getWriteParameters();
-            paramWrite.parameter(AbstractGridFormat.GEOTOOLS_WRITE_PARAMS.getName().toString()).setValue(wp);
-            File dumpFile = new File(newFilePath + ".tif");
+            paramWrite.parameter(AbstractGridFormat.GEOTOOLS_WRITE_PARAMS.getName().toString())
+                    .setValue(wp);
+            File dumpFile = new File(newFilePath + ".tif"); //$NON-NLS-1$
             GeoTiffWriter gtw = (GeoTiffWriter) format.getWriter(dumpFile);
-            gtw.write(coverage2D, (GeneralParameterValue[]) paramWrite.values().toArray(new GeneralParameterValue[1]));
+            gtw.write(coverage2D, paramWrite.values().toArray(new GeneralParameterValue[1]));
         }
         if (isAscii) {
             final ArcGridFormat format = new ArcGridFormat();
             final ArcGridWriteParams wp = new ArcGridWriteParams();
-            // wp.setProgressiveMode(GeoTiffWriteParams.MODE_DEFAULT);
-            // wp.setCompressionMode(GeoTiffWriteParams.MODE_DEFAULT);
-            // wp.setTilingMode(GeoToolsWriteParams.MODE_DEFAULT);
             final ParameterValueGroup paramWrite = format.getWriteParameters();
-            paramWrite.parameter(AbstractGridFormat.GEOTOOLS_WRITE_PARAMS.getName().toString()).setValue(wp);
-            File dumpFile = new File(newFilePath + ".asc");
+            paramWrite.parameter(AbstractGridFormat.GEOTOOLS_WRITE_PARAMS.getName().toString())
+                    .setValue(wp);
+            File dumpFile = new File(newFilePath + ".asc"); //$NON-NLS-1$
             ArcGridWriter gtw = (ArcGridWriter) format.getWriter(dumpFile);
-            gtw.write(coverage2D, (GeneralParameterValue[]) paramWrite.values().toArray(new GeneralParameterValue[1]));
+            gtw.write(coverage2D, paramWrite.values().toArray(new GeneralParameterValue[1]));
         }
     }
 }

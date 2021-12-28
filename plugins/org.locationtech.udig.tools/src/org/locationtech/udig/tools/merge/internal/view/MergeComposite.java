@@ -1,9 +1,10 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  * (C) 2006, Axios Engineering S.L. (Axios)
  * (C) 2006, County Council of Gipuzkoa, Department of Environment and Planning
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
@@ -15,11 +16,6 @@ import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.command.UndoableMapCommand;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.tool.IToolContext;
 
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -49,16 +45,18 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 import org.geotools.factory.CommonFactoryFinder;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.command.UndoableMapCommand;
+import org.locationtech.udig.project.ui.tool.IToolContext;
+import org.locationtech.udig.tools.internal.i18n.Messages;
+import org.locationtech.udig.tools.internal.ui.util.InfoMessage;
+import org.locationtech.udig.tools.internal.ui.util.LayerUtil;
+import org.locationtech.udig.tools.merge.MergeContext;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
 import org.opengis.filter.identity.FeatureId;
-
-import org.locationtech.udig.tools.internal.i18n.Messages;
-import org.locationtech.udig.tools.internal.ui.util.InfoMessage;
-import org.locationtech.udig.tools.internal.ui.util.LayerUtil;
-import org.locationtech.udig.tools.merge.MergeContext;
 
 /**
  * Merge Controls for composite
@@ -66,7 +64,7 @@ import org.locationtech.udig.tools.merge.MergeContext;
  * Presents the source features in tree view and result feature in table. The user can customize the
  * merge.
  * </p>
- * 
+ *
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
  * @author Marco Foi (www.mcfoi.it)
@@ -329,6 +327,7 @@ class MergeComposite extends Composite {
 
         treeFeatures.addListener(SWT.Selection, new Listener() {
 
+            @Override
             public void handleEvent(Event event) {
 
                 if (event.detail == SWT.CHECK) {
@@ -347,7 +346,7 @@ class MergeComposite extends Composite {
                     // such behaviour is not compatible with MERGEMODE_OPERATION due to filterChange
                     // listeners in place when in that mode, so the function call is allowed just
                     // when in TOOL mode
-                handleTreeEventClick(e);
+                    handleTreeEventClick(e);
                 }
             }
         });
@@ -403,8 +402,8 @@ class MergeComposite extends Composite {
     }
 
     /**
-     * deselects the merged features
-     * 
+     * Deselects the merged features
+     *
      * @param unselectedFeature
      */
     private void unselect(SimpleFeature unselectedFeature) {
@@ -443,7 +442,7 @@ class MergeComposite extends Composite {
 
     /**
      * Display in this composite the features of the indeed layer
-     * 
+     *
      * @param selectedFeatures
      * @param layer
      */
@@ -458,7 +457,7 @@ class MergeComposite extends Composite {
      */
     public void display() {
 
-        //assert mergeBuilder != null : "the merge builder was not been set"; //$NON-NLS-1$
+        // assert mergeBuilder != null : "the merge builder was not been set"; //$NON-NLS-1$
         this.mergeBuilder = getMergeBuilder();
 
         // presents the source in tree view
@@ -469,51 +468,9 @@ class MergeComposite extends Composite {
         changed();
     }
 
-    // /**
-    // * Clears source tree and merge features table data.
-    // */
-    // private void init() {
-    //
-    // treeFeatures.removeAll();
-    // treeFeatures.clearAll(true);
-    // tableMergeFeature.removeAll();
-    // tableMergeFeature.clearAll();
-    // }
-
-    // /**
-    // * Set the builder and adds a change listener.
-    // */
-    // private MergeFeatureBuilder getBuilder() {
-    //
-    // if(this.mergeBuilder != null){
-    // return this.mergeBuilder;
-    // }
-    // // it is required a new builder
-    // this.mergeBuilder = new MergeFeatureBuilder(this.mergeView.getContext().getSelectedLayer());
-    // this.mergeBuilder
-    // .addChangeListener(new MergeFeatureBuilder.ChangeListener() {
-    //
-    // public void attributeChanged(MergeFeatureBuilder builder,
-    // int attributeIndex, Object oldValue) {
-    //
-    // if (attributeIndex == builder.getDefaultGeometryIndex()) {
-    // mergeGeometryChanged(builder);
-    // }
-    // changed();
-    // }
-    //
-    // });
-    // // set up initial feedback
-    // mergeGeometryChanged(mergeBuilder);
-    //
-    // // display();
-    // return this.mergeBuilder;
-    //
-    // }
-
     /**
      * Call back function to report a change in the merged geometry attribute
-     * 
+     *
      * @param builder
      */
     private void mergeGeometryChanged(MergeFeatureBuilder builder) {
@@ -533,7 +490,7 @@ class MergeComposite extends Composite {
 
     /**
      * Set the message showed on the information view.
-     * 
+     *
      * @param usrMessage
      * @param type
      */
@@ -566,7 +523,7 @@ class MergeComposite extends Composite {
      * {@link #setAttributeValue(int, int, boolean)}, the {@link MergeFeatureBuilder} will raise
      * change events that will be catched up by {@link #changed()}
      * </p>
-     * 
+     *
      * @param event
      * @see #setSelectedFeature(int, boolean)
      * @see #selectAttributePropagate(int, int, boolean)
@@ -592,7 +549,7 @@ class MergeComposite extends Composite {
     /**
      * Called when a click is done on the sources tree. If the click was done over the name of a
      * feature, this feature is selected on the map.
-     * 
+     *
      * @param event
      */
     private void handleTreeEventClick(SelectionEvent event) {
@@ -601,19 +558,19 @@ class MergeComposite extends Composite {
         final boolean isFeatureItem = isFeatureItem(item);
         if (isFeatureItem) {
             Object obj = item.getData();
-            
+
             if (obj instanceof Integer) {
                 ILayer layer = mergeBuilder.getLayer();
                 Filter filter = getSelectedFeatureFilter((Integer) obj);
                 LayerUtil.presentSelection(layer, filter);
             }
-            
+
         }
     }
 
     /**
      * Get the filter of the desired feature.
-     * 
+     *
      * @param index The index of this feature.
      * @return The geometry filter for this feature.
      */
@@ -622,7 +579,7 @@ class MergeComposite extends Composite {
         FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
         String id = this.mergeBuilder.getFeature(index).getID();
         FeatureId fid = ff.featureId(id);
-        Set<FeatureId> ids = new HashSet<FeatureId>(1);
+        Set<FeatureId> ids = new HashSet<>(1);
         ids.add(fid);
         Id filter = ff.id(ids);
 
@@ -632,7 +589,7 @@ class MergeComposite extends Composite {
     /**
      * Get the selected item, if it is a feature item, show the context menu with the option of
      * remove that feature from the tree list.
-     * 
+     *
      * @param e
      */
     private void showContextMenu(MouseEvent e) {
@@ -664,7 +621,7 @@ class MergeComposite extends Composite {
     private void updateMergePanel() {
 
         List<SimpleFeature> sourceFeatures = this.mergeBuilder.getSourceFeatures();
-        if (sourceFeatures.size() == 0) {
+        if (sourceFeatures.isEmpty()) {
 
             this.tableMergeFeature.removeAll();
 
@@ -684,8 +641,8 @@ class MergeComposite extends Composite {
                 } else {
                     Object mergeFeatureProperty = this.mergeBuilder.getMergeAttribute(attIndex);
 
-                    strValue = (mergeFeatureProperty == null) ? NULL_LABEL : String
-                            .valueOf(mergeFeatureProperty);
+                    strValue = (mergeFeatureProperty == null) ? NULL_LABEL
+                            : String.valueOf(mergeFeatureProperty);
                 }
                 attrItem.setText(VALUE_COLUMN, strValue);
             }
@@ -712,7 +669,7 @@ class MergeComposite extends Composite {
      * {@link MergeFeatureBuilder#clearMergeAttribute(int)}, the change event will be caught up by
      * {@link #changed()} to reflect the change in the merge feature view
      * </p>
-     * 
+     *
      * @param sourceFeatureIndex the index of the source feature where the UI event event occurred
      * @param attributeIndex the index of the attribute of the source feature where the event
      *        occurred
@@ -755,7 +712,7 @@ class MergeComposite extends Composite {
     /**
      * Simply selects or deselects an item in the source features view, does not make any state
      * change in the {@link MergeFeatureBuilder}
-     * 
+     *
      * @param featureIndex the index of the feature item the desired attribute item belongs to
      * @param attributeIndex the index of the attribute to change the checked state
      * @param checked whether to check or uncheck the pointed attribute item
@@ -773,7 +730,7 @@ class MergeComposite extends Composite {
      * effect to the TreeItems for the attributes of the other features at the same attribute index.
      * In other words, if selecting an attribute of one feature, deselects the same attribute of the
      * other features.
-     * 
+     *
      * @param featureIndex
      * @param attributeIndex
      * @param checked
@@ -793,7 +750,7 @@ class MergeComposite extends Composite {
     /**
      * Checks if <code>item</code> corresponds to the root item of a source feature (a.k.a, it has
      * children)
-     * 
+     *
      * @param item
      * @return <code>true</code> if item is the root item of a Feature, <code>false</code> otherwise
      */
@@ -856,7 +813,7 @@ class MergeComposite extends Composite {
 
     /**
      * Adds the feature as last element in the tree view that shows the source feature list.
-     * 
+     *
      * @param feature
      */
     private void displaySourceFeature(SimpleFeature feature) {
@@ -927,7 +884,7 @@ class MergeComposite extends Composite {
 
     /**
      * Adds the features to the existent source feature set.
-     * 
+     *
      * @param featureList
      */
     public void addSourceFeatures(List<SimpleFeature> featureList) {
@@ -950,7 +907,7 @@ class MergeComposite extends Composite {
 
     /**
      * Checks the conditions to execute the merge operation.
-     * 
+     *
      * @return true if the features could be merge
      */
     private boolean canMerge() {
@@ -971,7 +928,7 @@ class MergeComposite extends Composite {
     /**
      * The builder used to merge the features. This is a factory method if the builder instance is
      * null a new one will be created
-     * 
+     *
      * @return {@link MergeFeatureBuilder}
      */
     public MergeFeatureBuilder getMergeBuilder() {
@@ -983,12 +940,13 @@ class MergeComposite extends Composite {
             this.mergeBuilder = new MergeFeatureBuilder(
                     this.mergeView.getCurrentEventTriggeringLayer());
         } else {
-            this.mergeBuilder = new MergeFeatureBuilder(this.mergeView.getContext()
-                    .getSelectedLayer());
+            this.mergeBuilder = new MergeFeatureBuilder(
+                    this.mergeView.getContext().getSelectedLayer());
         }
 
         this.mergeBuilder.addChangeListener(new MergeFeatureBuilder.ChangeListener() {
 
+            @Override
             public void attributeChanged(MergeFeatureBuilder builder, int attributeIndex,
                     Object oldValue) {
 

@@ -33,13 +33,13 @@ supported version might change over time.
 In Preferences Dialog choose :menuselection:`Java --> Installed JREs` and hit :guilabel:`Add` in the right panel.
 Navigate on file-system and choose installation folder of JRE/JDK to use
 
- .. image: images/ide_jre_selection.png
+ .. image:: images/ide_jre_selection.png
     :width: 60%
 
 In addition to the JRE its recommend to configure a compile-level for the projects of the Eclipse Workspace. In
-:menuselection:`Java --> Compiler` check and set at least :guilabel:`Compiler complaince level` to `1.8`.
+:menuselection:`Java --> Compiler` check and set at least :guilabel:`Compiler compliance level` to `1.8`.
 
- .. image: images/ide_compiler_complaince.png
+ .. image:: images/ide_compiler_compliance.png
     :width: 60%
 
 API Baselines
@@ -61,7 +61,7 @@ Code Formatter
 ``````````````
 Configures the **code formatter** to decide where the spaces go and where to set brackes & Co. On the lefthanded
 side of the Preference dialog choose :menuselection:`Java --> Code Style --> Coding Template`. Import configuration
-from repository checkout location `extras/org.locationtech.udig.dev/codetemplates.xml`.
+from repository checkout location `extras/org.locationtech.udig.dev/codeformatter.xml`.
 
  .. image:: images/ide_code_formatter.png
     :width: 60%

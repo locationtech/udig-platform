@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  *
@@ -11,10 +12,6 @@ package org.locationtech.udig.document.ui;
 
 import java.io.File;
 
-import org.locationtech.udig.catalog.document.IDocument;
-import org.locationtech.udig.catalog.document.IDocument.ContentType;
-import org.locationtech.udig.catalog.document.IDocument.Type;
-import org.locationtech.udig.document.DocumentPlugin;
 import org.eclipse.jface.resource.CompositeImageDescriptor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
@@ -23,31 +20,37 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.program.Program;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.catalog.document.IDocument;
+import org.locationtech.udig.catalog.document.IDocument.ContentType;
+import org.locationtech.udig.catalog.document.IDocument.Type;
+import org.locationtech.udig.document.DocumentPlugin;
 
 /**
  * Image provider for document items. This integrates getting the right image for the document item
  * type, document type and/or file type with creating overlay decorators.
- * 
+ *
  * @author Naz Chan
  */
 public class DocumentImageProvider extends CompositeImageDescriptor {
 
     private ImageData activeImgData = null;
-    
+
     private ImageData topOverlayImgData = null;
+
     private ImageData bottomOverlayImgData = null;
-    
+
     private Point size;
-    
+
     /**
      * Default width for the icon.
      */
     private static final int DEFAULT_WIDTH = 20;
+
     /**
      * Default height for the icon.
      */
     private static final int DEFAULT_HEIGHT = 16;
-    
+
     public DocumentImageProvider() {
         size = new Point(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
@@ -64,29 +67,29 @@ public class DocumentImageProvider extends CompositeImageDescriptor {
             final int xPos = getSize().x - bottomOverlayImgData.width + 1;
             final int yPos = getSize().y - bottomOverlayImgData.height + 1;
             drawImage(bottomOverlayImgData, xPos, yPos);
-        }        
+        }
     }
-    
+
     @Override
     protected Point getSize() {
         return size;
     }
-    
+
     private ImageData getFileImageData(File file) {
         if (file != null) {
             final String extension = DocUtils.getExtension(file);
             if (extension != null) {
                 final Program program = Program.findProgram(extension);
                 if (program != null) {
-                    return program.getImageData();    
-                }                
+                    return program.getImageData();
+                }
             }
         }
         return null;
     }
-    
+
     private ImageData getDefaultImageData(ContentType contentType) {
-        
+
         ImageDescriptor descriptor = null;
         switch (contentType) {
         case FILE:
@@ -106,29 +109,29 @@ public class DocumentImageProvider extends CompositeImageDescriptor {
                     .getImageDescriptor(ISharedImages.IMG_OBJ_ELEMENT);
             break;
         }
-        
+
         if (descriptor != null) {
-            return descriptor.getImageData();
+            return descriptor.getImageData(100);
         }
         return null;
-        
+
     }
-    
+
     private ImageData getAttachmentOverlay() {
         return DocumentPlugin.getDefault().getImageRegistry()
-                .getDescriptor(IDocumentImages.IMG_OVR_ATTACHMENT).getImageData();
+                .getDescriptor(IDocumentImages.IMG_OVR_ATTACHMENT).getImageData(100);
     }
-    
+
     private ImageData getHotlinkOverlay() {
         return DocumentPlugin.getDefault().getImageRegistry()
-                .getDescriptor(IDocumentImages.IMG_OVR_HOTLINK).getImageData();
+                .getDescriptor(IDocumentImages.IMG_OVR_HOTLINK).getImageData(100);
     }
-    
+
     private ImageData getTemplateOverlay() {
         return DocumentPlugin.getDefault().getImageRegistry()
-                .getDescriptor(IDocumentImages.IMG_OVR_TEMPLATE).getImageData();
+                .getDescriptor(IDocumentImages.IMG_OVR_TEMPLATE).getImageData(100);
     }
-    
+
     private Image createDocumentImage(Type type, ContentType contentType, File file,
             boolean isTemplate) {
 
@@ -139,25 +142,26 @@ public class DocumentImageProvider extends CompositeImageDescriptor {
         if (activeImgData == null) {
             activeImgData = getDefaultImageData(contentType);
         }
-        
+
         topOverlayImgData = null;
         if (Type.ATTACHMENT == type) {
             topOverlayImgData = getAttachmentOverlay();
-        } if (Type.HOTLINK == type) {
+        }
+        if (Type.HOTLINK == type) {
             topOverlayImgData = getHotlinkOverlay();
         }
-        
+
         bottomOverlayImgData = null;
         if (isTemplate) {
             bottomOverlayImgData = getTemplateOverlay();
         }
-        
+
         return createImage();
     }
-    
+
     /**
      * Creates an icon for a document. This method draws needed decorators as per document type.
-     * 
+     *
      * @param doc
      * @return icon
      */
@@ -173,12 +177,12 @@ public class DocumentImageProvider extends CompositeImageDescriptor {
 
     /**
      * Creates an icon for a folder.
-     * 
+     *
      * @return icon
      */
     public Image createFolderImage() {
         activeImgData = PlatformUI.getWorkbench().getSharedImages()
-                .getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER).getImageData();
+                .getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER).getImageData(100);
         topOverlayImgData = null;
         bottomOverlayImgData = null;
         return createImage();
@@ -186,15 +190,15 @@ public class DocumentImageProvider extends CompositeImageDescriptor {
 
     /**
      * Creates the default icon for document items.
-     * 
+     *
      * @return icon
      */
     public Image createDefaultImage() {
         activeImgData = PlatformUI.getWorkbench().getSharedImages()
-                .getImageDescriptor(ISharedImages.IMG_OBJ_ELEMENT).getImageData();
+                .getImageDescriptor(ISharedImages.IMG_OBJ_ELEMENT).getImageData(100);
         topOverlayImgData = null;
         bottomOverlayImgData = null;
         return createImage();
     }
-    
+
 }

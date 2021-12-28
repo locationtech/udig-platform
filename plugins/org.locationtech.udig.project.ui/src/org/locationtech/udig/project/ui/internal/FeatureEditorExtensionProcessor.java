@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -56,7 +57,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Processes the feature editor extension points and creates the menu items.
- * 
+ *
  * @author jeichar
  * @since 0.9.0
  */
@@ -64,9 +65,9 @@ public class FeatureEditorExtensionProcessor {
 
     FeatureEditorViewpartListener partListener;
 
-    Map<SimpleFeatureType, EditActionContribution> selectedEditors = new HashMap<SimpleFeatureType, EditActionContribution>();
+    Map<SimpleFeatureType, EditActionContribution> selectedEditors = new HashMap<>();
 
-    List<FeatureEditorLoader> editorLoaders = new ArrayList<FeatureEditorLoader>();
+    List<FeatureEditorLoader> editorLoaders = new ArrayList<>();
 
     static final String CURRENT_LOADER_ID = "FeatureEditorCurrentLoader"; //$NON-NLS-1$
 
@@ -81,11 +82,11 @@ public class FeatureEditorExtensionProcessor {
 
         List<IConfigurationElement> list = ExtensionPointList
                 .getExtensionPointList(FEATURE_EDITOR_ID);
-        for( IConfigurationElement element : list ) {
+        for (IConfigurationElement element : list) {
             FeatureEditorLoader loader = new FeatureEditorLoader(this, element);
             ScopedPreferenceStore preferences = ProjectPlugin.getPlugin().getPreferenceStore();
-            if (loader.id.equals(preferences
-                    .getString(PreferenceConstants.P_DEFAULT_FEATURE_EDITOR)))
+            if (loader.id
+                    .equals(preferences.getString(PreferenceConstants.P_DEFAULT_FEATURE_EDITOR)))
                 editorLoaders.add(0, loader);
             else
                 editorLoaders.add(loader);
@@ -94,10 +95,10 @@ public class FeatureEditorExtensionProcessor {
 
     /**
      * Creates the edit feature action
-     * 
+     *
      * @return the edit feature action
      */
-    public IContributionItem getEditFeatureAction( final ISelection selection ) {
+    public IContributionItem getEditFeatureAction(final ISelection selection) {
         if (selection.isEmpty())
             return new GroupMarker("editAction"); //$NON-NLS-1$
 
@@ -121,14 +122,14 @@ public class FeatureEditorExtensionProcessor {
 
     /**
      * returns the feature editor that is customized closest for the feature(s) in the selection
-     * 
+     *
      * @param selection a selection that contains 1 or more features.
      * @return the feature editor that is customized closest for the feature(s) in the selection.
      */
-    public FeatureEditorLoader getClosestMatch( ISelection selection ) {
+    public FeatureEditorLoader getClosestMatch(ISelection selection) {
         int bestValue = Integer.MAX_VALUE;
         FeatureEditorLoader best = null;
-        for( FeatureEditorLoader loader : editorLoaders ) {
+        for (FeatureEditorLoader loader : editorLoaders) {
             int value = loader.match(selection);
             if (value == -1)
                 continue;
@@ -145,14 +146,14 @@ public class FeatureEditorExtensionProcessor {
 
     /**
      * Creates the edit menu item.
-     * 
+     *
      * @param loader
      * @param selection
      * @param feature
      * @return
      */
-    EditActionContribution createEditAction( final FeatureEditorLoader loader,
-            final ISelection selection, SimpleFeature feature ) {
+    EditActionContribution createEditAction(final FeatureEditorLoader loader,
+            final ISelection selection, SimpleFeature feature) {
         EditActionContribution item;
         item = new EditActionContribution(new EditAction(loader, selection));
         selectedEditors.put(feature.getFeatureType(), item);
@@ -161,9 +162,10 @@ public class FeatureEditorExtensionProcessor {
 
     static class EditAction extends Action {
         private ISelection selection;
+
         private final FeatureEditorLoader loader;
 
-        public EditAction( FeatureEditorLoader loader, ISelection selection ) {
+        public EditAction(FeatureEditorLoader loader, ISelection selection) {
             super(Messages.FeatureEditorExtensionProcessor_editMenu, loader.icon);
             this.selection = selection;
             this.loader = loader;
@@ -171,11 +173,11 @@ public class FeatureEditorExtensionProcessor {
         }
 
         @Override
-        public void runWithEvent( Event event ) {
+        public void runWithEvent(Event event) {
             loader.open(event.display, selection);
         }
 
-        public void setSelection( ISelection selection ) {
+        public void setSelection(ISelection selection) {
             this.selection = selection;
         }
     }
@@ -184,20 +186,20 @@ public class FeatureEditorExtensionProcessor {
 
         private EditAction editAction;
 
-        public EditActionContribution( IAction action ) {
+        public EditActionContribution(IAction action) {
             super(action);
             editAction = (EditAction) action;
         }
 
-        public void setSelection( ISelection selection ) {
+        public void setSelection(ISelection selection) {
             editAction.setSelection(selection);
         }
 
     }
 
-    boolean sameFeatureTypes( IStructuredSelection structuredSelection ) {
+    boolean sameFeatureTypes(IStructuredSelection structuredSelection) {
         SimpleFeatureType type = null;
-        for( Iterator iter = structuredSelection.iterator(); iter.hasNext(); ) {
+        for (Iterator iter = structuredSelection.iterator(); iter.hasNext();) {
             Object obj = iter.next();
             if (!(obj instanceof SimpleFeature))
                 return false;
@@ -213,15 +215,15 @@ public class FeatureEditorExtensionProcessor {
 
     /**
      * Creates the edit/editWith menu items if the current selection is a feature.
-     * 
+     *
      * @return the edit/editWith menu items if the current selection is a feature.
      */
-    public IContributionItem getEditWithFeatureMenu( ISelection selection ) {
+    public IContributionItem getEditWithFeatureMenu(ISelection selection) {
         if (selection.isEmpty())
             return new GroupMarker("editWithMenu"); //$NON-NLS-1$
         MenuManager editWithMenu = new MenuManager(
                 Messages.FeatureEditorExtensionProcessor_editWithMenu);
-        for( FeatureEditorLoader loader : editorLoaders ) {
+        for (FeatureEditorLoader loader : editorLoaders) {
             IAction editorAction = loader.getAction(selection);
             if (editorAction != null)
                 editWithMenu.add(editorAction);
@@ -240,8 +242,8 @@ public class FeatureEditorExtensionProcessor {
             partListener = new FeatureEditorViewpartListener();
         }
         try {
-            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService().addPartListener(
-                    partListener);
+            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService()
+                    .addPartListener(partListener);
             running = true;
         } catch (Exception e) {
             ProjectUIPlugin.log(null, e);
@@ -253,8 +255,8 @@ public class FeatureEditorExtensionProcessor {
      */
     public void stopPartListener() {
         try {
-            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService().addPartListener(
-                    partListener);
+            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService()
+                    .addPartListener(partListener);
         } catch (Exception e) {
             // do nothing
         }
@@ -265,14 +267,14 @@ public class FeatureEditorExtensionProcessor {
 
         ToolContext currentContext;
 
-        private List<IUDIGView> views = new ArrayList<IUDIGView>();
+        private List<IUDIGView> views = new ArrayList<>();
 
         FeatureEditorViewpartListener() {
             IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                     .getActivePage();
             IViewReference[] refs = page.getViewReferences();
 
-            for( IViewReference reference : refs ) {
+            for (IViewReference reference : refs) {
                 IWorkbenchPart part = reference.getPart(false);
                 if (page.isPartVisible(part) && part instanceof IUDIGView)
                     views.add((IUDIGView) part);
@@ -282,7 +284,8 @@ public class FeatureEditorExtensionProcessor {
         /**
          * @see org.eclipse.ui.IPartListener2#partActivated(org.eclipse.ui.IWorkbenchPartReference)
          */
-        public void partActivated( IWorkbenchPartReference partRef ) {
+        @Override
+        public void partActivated(IWorkbenchPartReference partRef) {
             partVisible(partRef);
 
         }
@@ -290,14 +293,16 @@ public class FeatureEditorExtensionProcessor {
         /**
          * @see org.eclipse.ui.IPartListener2#partBroughtToTop(org.eclipse.ui.IWorkbenchPartReference)
          */
-        public void partBroughtToTop( IWorkbenchPartReference partRef ) {
+        @Override
+        public void partBroughtToTop(IWorkbenchPartReference partRef) {
             partVisible(partRef);
         }
 
         /**
          * @see org.eclipse.ui.IPartListener2#partClosed(org.eclipse.ui.IWorkbenchPartReference)
          */
-        public void partClosed( IWorkbenchPartReference partRef ) {
+        @Override
+        public void partClosed(IWorkbenchPartReference partRef) {
             if (partRef.getPart(false) instanceof IUDIGView) {
                 views.remove(partRef.getPart(false));
             } else if (partRef.getPart(false) instanceof MapPart) {
@@ -312,7 +317,7 @@ public class FeatureEditorExtensionProcessor {
                     currentContext.getEditManagerInternal().eAdapters().remove(this);
                     currentContext = null;
                 }
-                for( IUDIGView view : views ) {
+                for (IUDIGView view : views) {
                     view.setContext(null);
                 }
             }
@@ -321,29 +326,33 @@ public class FeatureEditorExtensionProcessor {
         /**
          * @see org.eclipse.ui.IPartListener2#partDeactivated(org.eclipse.ui.IWorkbenchPartReference)
          */
-        public void partDeactivated( IWorkbenchPartReference partRef ) {
+        @Override
+        public void partDeactivated(IWorkbenchPartReference partRef) {
             // do nothing
         }
 
         /**
          * @see org.eclipse.ui.IPartListener2#partOpened(org.eclipse.ui.IWorkbenchPartReference)
          */
-        public synchronized void partOpened( IWorkbenchPartReference partRef ) {
+        @Override
+        public synchronized void partOpened(IWorkbenchPartReference partRef) {
             partVisible(partRef);
         }
 
         /**
          * @see org.eclipse.ui.IPartListener2#partHidden(org.eclipse.ui.IWorkbenchPartReference)
          */
-        public void partHidden( IWorkbenchPartReference partRef ) {
+        @Override
+        public void partHidden(IWorkbenchPartReference partRef) {
             // do nothing
         }
 
         /**
          * @see org.eclipse.ui.IPartListener2#partVisible(org.eclipse.ui.IWorkbenchPartReference)
          */
+        @Override
         @SuppressWarnings("unchecked")
-        public void partVisible( IWorkbenchPartReference partRef ) {
+        public void partVisible(IWorkbenchPartReference partRef) {
             if (partRef.getPart(false) instanceof IUDIGView) {
                 IUDIGView udigview = (IUDIGView) partRef.getPart(false);
                 if (!views.contains(udigview))
@@ -371,15 +380,22 @@ public class FeatureEditorExtensionProcessor {
                     if (currentContext != null
                             && currentContext.getMapInternal() == editor.getMap())
                         return;
-                    if (currentContext != null)
+                    if (currentContext != null && currentContext.getEditManagerInternal() != null
+                            && currentContext.getEditManagerInternal().eAdapters() != null) {
                         currentContext.getEditManagerInternal().eAdapters().remove(this);
+                    }
 
                     currentContext = new ToolContextImpl();
-                    currentContext.setMapInternal(editor.getMap());
-                    currentContext.setRenderManagerInternal(editor.getMap()
-                            .getRenderManagerInternal());
-                    currentContext.getEditManagerInternal().eAdapters().add(this);
-                    for( IUDIGView view : views ) {
+                    if (editor.getMap() != null) {
+                        currentContext.setMapInternal(editor.getMap());
+                        currentContext.setRenderManagerInternal(
+                                editor.getMap().getRenderManagerInternal());
+                    }
+                    if (currentContext.getEditManagerInternal() != null
+                            && currentContext.getEditManagerInternal().eAdapters() != null) {
+                        currentContext.getEditManagerInternal().eAdapters().add(this);
+                    }
+                    for (IUDIGView view : views) {
                         try {
                             view.setContext(currentContext);
                         } catch (Throwable e) {
@@ -390,7 +406,7 @@ public class FeatureEditorExtensionProcessor {
             }
         }
 
-        private boolean validateContext( ToolContext currentContext2 ) {
+        private boolean validateContext(ToolContext currentContext2) {
             if (currentContext2 == null)
                 return false;
             if (currentContext2.getMap() == null)
@@ -410,17 +426,21 @@ public class FeatureEditorExtensionProcessor {
         /**
          * @see org.eclipse.ui.IPartListener2#partInputChanged(org.eclipse.ui.IWorkbenchPartReference)
          */
-        public void partInputChanged( IWorkbenchPartReference partRef ) {
+        @Override
+        public void partInputChanged(IWorkbenchPartReference partRef) {
             // do nothing
         }
 
         /**
          * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
          */
-        public void notifyChanged( final Notification msg ) {
+        @Override
+        public void notifyChanged(final Notification msg) {
             if (msg.getNotifier() instanceof EditManager) {
-                if (msg.getFeatureID(EditManager.class) == ProjectPackage.EDIT_MANAGER__EDIT_FEATURE) {
-                    PlatformGIS.syncInDisplayThread(new Runnable(){
+                if (msg.getFeatureID(
+                        EditManager.class) == ProjectPackage.EDIT_MANAGER__EDIT_FEATURE) {
+                    PlatformGIS.syncInDisplayThread(new Runnable() {
+                        @Override
                         public void run() {
                             updateEditFeatureViews(msg);
                         }
@@ -429,9 +449,9 @@ public class FeatureEditorExtensionProcessor {
             }
         }
 
-        private void updateEditFeatureViews( Notification msg ) {
+        private void updateEditFeatureViews(Notification msg) {
             SimpleFeature newFeature = (SimpleFeature) msg.getNewValue();
-            for( IUDIGView view : views ) {
+            for (IUDIGView view : views) {
                 try {
                     view.editFeatureChanged(newFeature);
                 } catch (Throwable e) {
@@ -448,10 +468,10 @@ public class FeatureEditorExtensionProcessor {
 
         /**
          * Construct <code>EditorDialog</code>.
-         * 
+         *
          * @param parentShell
          */
-        protected EditorDialog( Shell parentShell, IUDIGDialogPage page ) {
+        protected EditorDialog(Shell parentShell, IUDIGDialogPage page) {
             super(parentShell);
             this.page = page;
         }
@@ -459,7 +479,8 @@ public class FeatureEditorExtensionProcessor {
         /**
          * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
          */
-        protected Control createDialogArea( Composite parent ) {
+        @Override
+        protected Control createDialogArea(Composite parent) {
             Composite composite = (Composite) super.createDialogArea(parent);
             page.createControl(composite);
             GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -472,7 +493,7 @@ public class FeatureEditorExtensionProcessor {
 
     /**
      * Indicates whether the listener has been added to the workbench
-     * 
+     *
      * @return
      */
     public boolean isRunning() {

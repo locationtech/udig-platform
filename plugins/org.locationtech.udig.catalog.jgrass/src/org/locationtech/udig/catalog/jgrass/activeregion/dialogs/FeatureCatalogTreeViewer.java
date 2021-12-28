@@ -1,4 +1,4 @@
-/*
+/**
  * JGrass - Free Open Source Java GIS http://www.jgrass.org
  * (C) HydroloGIS - www.hydrologis.com
  *
@@ -17,18 +17,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.ICatalog;
-import org.locationtech.udig.catalog.IResolve;
-import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
-import org.locationtech.udig.catalog.ui.ISharedImages;
-
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -39,6 +32,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
 import org.geotools.data.DataStore;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IResolve;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.ISharedImages;
 
 /**
  * <p>
@@ -49,15 +47,16 @@ import org.geotools.data.DataStore;
  * @since 1.1.0
  */
 public class FeatureCatalogTreeViewer extends Composite
-        implements
-            ISelectionChangedListener,
-            IResourcesSelector {
+        implements ISelectionChangedListener, IResourcesSelector {
 
     public static final int SHAPELAYER = 0;
+
     public static final int GRASSRASTERLAYER = 1;
 
-    private final HashMap<String, DataStore> itemsMap = new HashMap<String, DataStore>();
+    private final HashMap<String, DataStore> itemsMap = new HashMap<>();
+
     private LabelProvider labelProvider = null;
+
     private List<DataStore> itemLayers;
 
     /**
@@ -65,7 +64,7 @@ public class FeatureCatalogTreeViewer extends Composite
      * @param style
      * @param selectionStyle the tree selection style (single or multiple)
      */
-    public FeatureCatalogTreeViewer( Composite parent, int style, int selectionStyle ) {
+    public FeatureCatalogTreeViewer(Composite parent, int style, int selectionStyle) {
         super(parent, style);
         setLayout(new GridLayout(1, false));
         GridData gridData = new GridData();
@@ -77,7 +76,7 @@ public class FeatureCatalogTreeViewer extends Composite
 
         // Create the tree viewer to display the file tree
         PatternFilter patternFilter = new PatternFilter();
-        final FilteredTree filter = new FilteredTree(this, selectionStyle, patternFilter);
+        final FilteredTree filter = new FilteredTree(this, selectionStyle, patternFilter, false);
         final TreeViewer tv = filter.getViewer();
         tv.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
         tv.setContentProvider(new ContentProvider());
@@ -87,21 +86,22 @@ public class FeatureCatalogTreeViewer extends Composite
         tv.addSelectionChangedListener(this);
     }
 
-    public void selectionChanged( SelectionChangedEvent event ) {
+    @Override
+    public void selectionChanged(SelectionChangedEvent event) {
         // if the selection is empty clear the label
         if (event.getSelection().isEmpty()) {
             return;
         }
         if (event.getSelection() instanceof IStructuredSelection) {
             IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-            Vector<String> itemNames = new Vector<String>();
-            for( Iterator iterator = selection.iterator(); iterator.hasNext(); ) {
+            Vector<String> itemNames = new Vector<>();
+            for (Iterator iterator = selection.iterator(); iterator.hasNext();) {
                 Object domain = iterator.next();
                 String value = labelProvider.getText(domain);
                 itemNames.add(value);
             }
-            itemLayers = new ArrayList<DataStore>();
-            for( String name : itemNames ) {
+            itemLayers = new ArrayList<>();
+            for (String name : itemNames) {
                 DataStore tmpLayer = itemsMap.get(name);
                 if (tmpLayer != null) {
                     itemLayers.add(tmpLayer);
@@ -121,18 +121,8 @@ public class FeatureCatalogTreeViewer extends Composite
          * @param arg0 the parent object
          * @return Object[]
          */
-        public Object[] getChildren( Object arg0 ) {
-
-            // if (arg0 instanceof JGrassMapsetGeoResource) {
-            // JGrassMapsetGeoResource map = (JGrassMapsetGeoResource) arg0;
-            // List<IResolve> layers = map.members(null);
-            // if (layers == null)
-            // return null;
-            // return filteredLayers(layers);
-            // } else if (arg0 instanceof JGrassMapGeoResource) {
-            // return null;
-            // }
-
+        @Override
+        public Object[] getChildren(Object arg0) {
             return null;
         }
 
@@ -142,7 +132,8 @@ public class FeatureCatalogTreeViewer extends Composite
          * @param arg0 the object
          * @return Object
          */
-        public Object getParent( Object arg0 ) {
+        @Override
+        public Object getParent(Object arg0) {
             return null;
         }
 
@@ -152,7 +143,8 @@ public class FeatureCatalogTreeViewer extends Composite
          * @param arg0 the parent object
          * @return boolean
          */
-        public boolean hasChildren( Object arg0 ) {
+        @Override
+        public boolean hasChildren(Object arg0) {
 
             return false;
         }
@@ -163,15 +155,16 @@ public class FeatureCatalogTreeViewer extends Composite
          * @param arg0 the input data
          * @return Object[]
          */
-        public Object[] getElements( Object arg0 ) {
+        @Override
+        public Object[] getElements(Object arg0) {
             // add the service to the catalog
             ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
             ArrayList<IResolve> neededCatalogMembers = null;
             try {
-                List< ? extends IResolve> allCatalogMembers = catalog.members(null);
+                List<? extends IResolve> allCatalogMembers = catalog.members(null);
                 // for jgrass locations add the service
-                neededCatalogMembers = new ArrayList<IResolve>();
-                for( IResolve catalogMember : allCatalogMembers ) {
+                neededCatalogMembers = new ArrayList<>();
+                for (IResolve catalogMember : allCatalogMembers) {
                     if (catalogMember.canResolve(DataStore.class)) {
                         neededCatalogMembers.add(catalogMember);
                         itemsMap.put(new File(catalogMember.getIdentifier().getPath()).getName(),
@@ -188,9 +181,11 @@ public class FeatureCatalogTreeViewer extends Composite
                 return null;
             }
         }
+
         /**
          * Disposes any created resources
          */
+        @Override
         public void dispose() {
             // Nothing to dispose
         }
@@ -202,7 +197,8 @@ public class FeatureCatalogTreeViewer extends Composite
          * @param arg1 the old input
          * @param arg2 the new input
          */
-        public void inputChanged( Viewer arg0, Object arg1, Object arg2 ) {
+        @Override
+        public void inputChanged(Viewer arg0, Object arg1, Object arg2) {
             // Nothing to change
         }
     }
@@ -223,11 +219,11 @@ public class FeatureCatalogTreeViewer extends Composite
          */
         public LabelProvider() {
             // Create the list to hold the listeners
-            listeners = new ArrayList<ILabelProviderListener>();
+            listeners = new ArrayList<>();
 
             // Create the images
-            vectorMaps = CatalogUIPlugin.getDefault().getImageDescriptor(
-                    ISharedImages.FEATURE_OBJ).createImage();
+            vectorMaps = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.FEATURE_OBJ)
+                    .createImage();
         }
 
         /**
@@ -236,7 +232,8 @@ public class FeatureCatalogTreeViewer extends Composite
          * @param arg0 the node
          * @return Image
          */
-        public Image getImage( Object arg0 ) {
+        @Override
+        public Image getImage(Object arg0) {
             if (arg0 instanceof IResolve) {
                 return vectorMaps;
             } else {
@@ -250,7 +247,8 @@ public class FeatureCatalogTreeViewer extends Composite
          * @param arg0 the node
          * @return String
          */
-        public String getText( Object arg0 ) {
+        @Override
+        public String getText(Object arg0) {
 
             String text = null;
             if (arg0 instanceof IResolve) {
@@ -265,13 +263,15 @@ public class FeatureCatalogTreeViewer extends Composite
          *
          * @param arg0 the listener
          */
-        public void addListener( ILabelProviderListener arg0 ) {
+        @Override
+        public void addListener(ILabelProviderListener arg0) {
             listeners.add(arg0);
         }
 
         /**
          * Called when this LabelProvider is being disposed
          */
+        @Override
         public void dispose() {
             // Dispose the images
             if (vectorMaps != null)
@@ -286,7 +286,8 @@ public class FeatureCatalogTreeViewer extends Composite
          * @param arg1 the property
          * @return boolean
          */
-        public boolean isLabelProperty( Object arg0, String arg1 ) {
+        @Override
+        public boolean isLabelProperty(Object arg0, String arg1) {
             return false;
         }
 
@@ -295,11 +296,13 @@ public class FeatureCatalogTreeViewer extends Composite
          *
          * @param arg0 the listener to remove
          */
-        public void removeListener( ILabelProviderListener arg0 ) {
+        @Override
+        public void removeListener(ILabelProviderListener arg0) {
             listeners.remove(arg0);
         }
     }
 
+    @Override
     public List<DataStore> getSelectedLayers() {
         return itemLayers;
     }

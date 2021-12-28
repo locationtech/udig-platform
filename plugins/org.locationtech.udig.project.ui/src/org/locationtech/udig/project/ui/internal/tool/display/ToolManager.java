@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -120,23 +121,23 @@ import org.opengis.filter.Filter;
 /**
  * Manages Edit tools activation and registration.
  * <p>
- * The tool manager is used by the MapEditor to populate the
- * menu and action bars. It is responsible for processing the tools
- * extension point and making action contributions as needed.
+ * The tool manager is a used by the MapEditor to populate the menu and action bars. It is
+ * responsible for processing the tools extension point and making action contributions as needed.
+ * </p>
  * <p>
  * New for uDig 1.1:
  * <ul>
- * <li>We will check for an ActionSet with the same name as the tool category,
- * this will allow you to turn off actions that don't make sense for your current
- * workflow (ie perspective change).
+ * <li>We will check for an ActionSet with the same name as the tool category, this will allow you
+ * to turn off actions that don't make sense for your current workflow (ie perspective change).</li>
  * </ul>
+ * </p>
  *
  * @author Jesse Eichar (Refractions Research Inc)
  * @since 0.6.0
  */
 public class ToolManager implements IToolManager {
 
-    private static final boolean FT_ACTION_TOOL_PREF_LINKS = true;
+    private static final boolean FT_ACTION_TOOL_PREF_LINKS = false;
 
     /**
      * This is a list of all tool actions(buttons) that are not part of the editor toolbar. For
@@ -144,9 +145,9 @@ public class ToolManager implements IToolManager {
      * tool on the editor view.
      */
     Set<IAction> registeredToolActions = new HashSet<>();
+
     /**
-     * List of categorieIds; these may or may not be
-     * associated with an ActionSet.
+     * List of categorieIds; these may or may not be associated with an ActionSet.
      */
     protected List<String> categoryIds = new ArrayList<>();
 
@@ -154,6 +155,7 @@ public class ToolManager implements IToolManager {
      * These represent modal tools that complete take over the map.
      */
     List<ModalToolCategory> modalCategories = new LinkedList<>();
+
     /**
      * These represent fire and forget actions like zoomIn and zoomOut.
      */
@@ -163,17 +165,16 @@ public class ToolManager implements IToolManager {
      * These represent additions made to the menu.
      */
     List<MenuToolCategory> menuCategories = new LinkedList<>();
+
     /**
-     *
-     * I think these are the tools that lurk in the background updating state
-     * like the status bar.
+     * I think these are the tools that lurk in the background updating state like the status bar.
      */
     List<ToolProxy> backgroundTools = new LinkedList<>();
+
     /**
-     * Shared images associated with these tools; used for everything from
-     * cursors to button icons.
+     * Shared images associated with these tools; used for everything from cursors to button icons.
      */
-    ISharedImages sharedImages;
+    ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
 
     /**
      * Cache of all configured cursors.
@@ -183,10 +184,10 @@ public class ToolManager implements IToolManager {
     /**
      * Proxy for the active tool (ie state of the editor).
      * <p>
-     * The category of this tool will behave a little like a perspective; since
-     * the nature of the editor changes complety with the current tool. As such
-     * the Edit menu may change what actions are available based on what subject
-     * matter this tool is working on.
+     * The category of this tool will behave a little like a perspective; since the nature of the
+     * editor changes completely with the current tool. As such the Edit menu may change what
+     * actions are available based on what subject matter this tool is working on.
+     * </p>
      */
     private ToolProxy activeModalToolProxy;
 
@@ -194,35 +195,53 @@ public class ToolManager implements IToolManager {
      * Current active tool; this represents the state of the editor.
      * <p>
      * This is considered an internal detail of ToolManager.
+     * </p>
      */
     private ModalTool activeTool;
 
     /**
-     * Default modal tool. This tool is set during initialisation of
-     * tools by ToolProxy.DEFAULT_ID.
+     * Default modal tool. This tool is set during initialization of tools by ToolProxy.DEFAULT_ID.
      */
     ToolProxy defaultModalToolProxy;
 
-    Lock redoLock=new ReentrantLock();
-    Lock undoLock=new ReentrantLock();
-    Lock forwardLock=new ReentrantLock();
-    Lock backwardLock=new ReentrantLock();
-    Lock deleteLock=new ReentrantLock();
-    Lock enterLock=new ReentrantLock();
-    Lock pasteLock=new ReentrantLock();
-    Lock propertiesLock=new ReentrantLock();
-    Lock copyLock=new ReentrantLock();
-    Lock cutLock=new ReentrantLock();
+    Lock redoLock = new ReentrantLock();
+
+    Lock undoLock = new ReentrantLock();
+
+    Lock forwardLock = new ReentrantLock();
+
+    Lock backwardLock = new ReentrantLock();
+
+    Lock deleteLock = new ReentrantLock();
+
+    Lock enterLock = new ReentrantLock();
+
+    Lock pasteLock = new ReentrantLock();
+
+    Lock propertiesLock = new ReentrantLock();
+
+    Lock copyLock = new ReentrantLock();
+
+    Lock cutLock = new ReentrantLock();
 
     private volatile IAction redoAction;
+
     private volatile IAction undoAction;
+
     private volatile IAction forwardAction;
+
     private volatile IAction backwardAction;
+
     private volatile IAction deleteAction;
+
     private volatile IAction enterAction;
+
     private volatile IAction zoomToSelectionAction;
+
     private volatile IAction pasteAction;
+
     private volatile IAction copyAction;
+
     private volatile IAction cutAction;
 
     private AdapterImpl commandListener;
@@ -241,22 +260,12 @@ public class ToolManager implements IToolManager {
     }
 
     /**
-     * Retrieves shared images lazily from workbench.
-     */
-    private ISharedImages getSharedImages() {
-        if (sharedImages == null) {
-            sharedImages = PlatformUI.getWorkbench().getSharedImages();
-        }
-        return sharedImages;
-    }
-
-    /**
      * Populates the categories with their associated tools
      */
     private void processTools() {
         List<IConfigurationElement> extensionList = ExtensionPointList
                 .getExtensionPointList(Tool.EXTENSION_ID);
-        for( IConfigurationElement element : extensionList ) {
+        for (IConfigurationElement element : extensionList) {
             IExtension extension = element.getDeclaringExtension();
             String type = element.getName();
 
@@ -265,106 +274,106 @@ public class ToolManager implements IToolManager {
                 ToolProxy proxy = new ToolProxy(extension, element, this);
                 backgroundTools.add(proxy);
             } else if (type.equals("modalTool")) { //$NON-NLS-1$
-                String categoryId = getCategoryIdAttribute(element); //$NON-NLS-1$
+                String categoryId = getCategoryIdAttribute(element); // $NON-NLS-1$
                 ToolProxy proxy = new ToolProxy(extension, element, this);
 
                 addToModalCategory(categoryId, proxy);
             } else if (type.equals("actionTool")) { //$NON-NLS-1$
-                String categoryId = getCategoryIdAttribute(element); //$NON-NLS-1$
+                String categoryId = getCategoryIdAttribute(element); // $NON-NLS-1$
                 ToolProxy proxy = new ToolProxy(extension, element, this);
 
                 addToActionCategory(categoryId, proxy);
                 addToMenuCategory(categoryId, proxy);
-            }else if(type.equals("toolCursor")){ //$NON-NLS-1$
-        		CursorProxy cursorProxy = new CursorProxy(element);
-        		cursorsCache.put(cursorProxy.getID(), cursorProxy);
+            } else if (type.equals("toolCursor")) { //$NON-NLS-1$
+                CursorProxy cursorProxy = new CursorProxy(element);
+                cursorsCache.put(cursorProxy.getID(), cursorProxy);
             }
         }
 
-        if( activeModalToolProxy  == null ){
-        	activeModalToolProxy = defaultModalToolProxy;
+        if (activeModalToolProxy == null) {
+            activeModalToolProxy = defaultModalToolProxy;
         }
     }
 
-	private String getCategoryIdAttribute(IConfigurationElement element) {
-		String id  = element.getAttribute("categoryId");
-		return id == null? "" : id;
-	}
-
+    private String getCategoryIdAttribute(IConfigurationElement element) {
+        String id = element.getAttribute("categoryId"); //$NON-NLS-1$
+        return id == null ? "" : id; //$NON-NLS-1$
+    }
 
     /**
      * Finds cursor proxy by ID in cache.
      */
     @Override
-    public Cursor findToolCursor(String cursorID){
+    public Cursor findToolCursor(String cursorID) {
 
-    	CursorProxy cursorProxy = cursorsCache.get(cursorID);
-    	if(cursorProxy != null)
-    		return cursorProxy.getCursor();
+        CursorProxy cursorProxy = cursorsCache.get(cursorID);
+        if (cursorProxy != null)
+            return cursorProxy.getCursor();
 
-    	Cursor systemCursor = CursorProxy.getSystemCursor(cursorID);
-    	if(systemCursor != null)
-    		return systemCursor;
+        Cursor systemCursor = CursorProxy.getSystemCursor(cursorID);
+        if (systemCursor != null)
+            return systemCursor;
 
-
-    	return null;
+        return null;
 
     }
-
 
     /**
      * Find a tool with the provided ID.
      * <p>
      * In the current implementation finds only among modal tools.
+     * </p>
      * TODO Extend findTool to search for non modal tools
+     *
      * @param toolID toolId to search for
      * @return Modal tool if found, or null
      */
-	@Override
+    @Override
     public Tool findTool(String toolID) {
-		for(ModalToolCategory category : modalCategories){
-			for (ModalItem item : category) {
-				if(toolID.equals(item.getId())){
-					return ((ToolProxy)item).getTool();
-				}
-			}
-		}
-		return null;
-	}
-
+        for (ModalToolCategory category : modalCategories) {
+            for (ModalItem item : category) {
+                if (toolID.equals(item.getId())) {
+                    return ((ToolProxy) item).getTool();
+                }
+            }
+        }
+        return null;
+    }
 
     /**
      * Find a tool proxy with the provided ID.
-     * <p>This searches modal tools, background tools, and
-     * action tools</p>
+     * <p>
+     * This searches modal tools, background tools, and action tools
+     * </p>
+     *
      * @param toolID toolId to search for
      * @return ToolProxy of tool if found or null
      */
-	public ToolProxy findToolProxy(String toolID) {
-		for(ModalToolCategory category : modalCategories){
-			for (ModalItem item : category) {
-				if(toolID.equals(item.getId())){
-					return (ToolProxy)item;
-				}
-			}
-		}
-		for(ActionToolCategory category : actionCategories){
-			for (ModalItem item : category) {
-				if(toolID.equals(item.getId())){
-					return (ToolProxy)item;
-				}
-			}
-		}
-		for(ToolProxy item : backgroundTools){
-			if(toolID.equals(item.getId())){
-				return item;
-			}
-		}
-		return null;
-	}
+    public ToolProxy findToolProxy(String toolID) {
+        for (ModalToolCategory category : modalCategories) {
+            for (ModalItem item : category) {
+                if (toolID.equals(item.getId())) {
+                    return (ToolProxy) item;
+                }
+            }
+        }
+        for (ActionToolCategory category : actionCategories) {
+            for (ModalItem item : category) {
+                if (toolID.equals(item.getId())) {
+                    return (ToolProxy) item;
+                }
+            }
+        }
+        for (ToolProxy item : backgroundTools) {
+            if (toolID.equals(item.getId())) {
+                return item;
+            }
+        }
+        return null;
+    }
 
-    private void addToModalCategory( String categoryId, ToolProxy proxy ) {
-        if( filterTool(categoryId, proxy, ModalToolCategory.class) ){
+    private void addToModalCategory(String categoryId, ToolProxy proxy) {
+        if (filterTool(categoryId, proxy, ModalToolCategory.class)) {
             return;
         }
         ModalToolCategory modalCategory = findModalCategory(categoryId);
@@ -381,23 +390,25 @@ public class ToolManager implements IToolManager {
     }
 
     /**
-     * This method is called each time an action is about to be added to a category.
-     * If the message returns true the tool <b>will not</b> be added.
-     * The default implementation always returns false.
+     * This method is called each time an action is about to be added to a category. If the message
+     * returns true the tool <b>will not</b> be added. The default implementation always returns
+     * false.
      *
-     * @param categoryId the id of the category that the tool will be added to, this will never be null
+     * @param categoryId the id of the category that the tool will be added to, this will never be
+     *        null
      * @param proxy the proxy for the tool.
      * @param categoryType the type of category
      *
      * @return true if the tool will NOT be added to the category
      */
-    protected boolean filterTool( String categoryId, ToolProxy proxy, Class<? extends ToolCategory> categoryType ) {
+    protected boolean filterTool(String categoryId, ToolProxy proxy,
+            Class<? extends ToolCategory> categoryType) {
         return false;
     }
 
-    private void addToMenuCategory( String categoryId, ToolProxy proxy ) {
+    private void addToMenuCategory(String categoryId, ToolProxy proxy) {
 
-        if( filterTool(categoryId, proxy, MenuToolCategory.class) ){
+        if (filterTool(categoryId, proxy, MenuToolCategory.class)) {
             return;
         }
         MenuToolCategory category = findMenuCategory(categoryId);
@@ -414,8 +425,8 @@ public class ToolManager implements IToolManager {
         category.add(proxy);
     }
 
-    private void addToActionCategory( String categoryId, ToolProxy proxy ) {
-        if( filterTool(categoryId, proxy, ActionToolCategory.class) ){
+    private void addToActionCategory(String categoryId, ToolProxy proxy) {
+        if (filterTool(categoryId, proxy, ActionToolCategory.class)) {
             return;
         }
 
@@ -440,7 +451,7 @@ public class ToolManager implements IToolManager {
         List<IConfigurationElement> extension = ExtensionPointList
                 .getExtensionPointList(Tool.EXTENSION_ID);
 
-        for( IConfigurationElement element : extension ) {
+        for (IConfigurationElement element : extension) {
             if (!element.getName().equals("category")) //$NON-NLS-1$
                 continue;
             ModalToolCategory modalCategory;
@@ -468,19 +479,22 @@ public class ToolManager implements IToolManager {
 
     private void removeEmptyCategories() {
         List<ToolCategory> toRemove = new ArrayList<>();
-        for( ActionToolCategory category : actionCategories ) {
-            if (category.items.size() == 0)
+        for (ActionToolCategory category : actionCategories) {
+            if (category.items.isEmpty()) {
                 toRemove.add(category);
+            }
         }
         actionCategories.removeAll(toRemove);
-        for( ModalToolCategory category : modalCategories ) {
-            if (category.items.size() == 0)
+        for (ModalToolCategory category : modalCategories) {
+            if (category.items.isEmpty()) {
                 toRemove.add(category);
+            }
         }
         modalCategories.removeAll(toRemove);
-        for( MenuToolCategory category : menuCategories ) {
-            if (category.items.size() == 0)
+        for (MenuToolCategory category : menuCategories) {
+            if (category.items.isEmpty()) {
                 toRemove.add(category);
+            }
         }
         menuCategories.removeAll(toRemove);
     }
@@ -491,21 +505,21 @@ public class ToolManager implements IToolManager {
     private void setCommandHandlers() {
         Set<String> ids = new HashSet<>();
         ICommandService service = PlatformUI.getWorkbench().getAdapter(ICommandService.class);
-        for( ModalToolCategory category : modalCategories ) {
+        for (ModalToolCategory category : modalCategories) {
             if (!ids.contains(category.getId())) {
                 ids.add(category.getId());
                 category.setCommandHandlers(service);
             }
             registerCommands(ids, service, category);
         }
-        for( ActionToolCategory category : actionCategories ) {
+        for (ActionToolCategory category : actionCategories) {
             if (!ids.contains(category.getId())) {
                 ids.add(category.getId());
                 category.setCommandHandlers(service);
             }
             registerCommands(ids, service, category);
         }
-        for( MenuToolCategory category : menuCategories ) {
+        for (MenuToolCategory category : menuCategories) {
             if (!ids.contains(category.getId())) {
                 ids.add(category.getId());
                 category.setCommandHandlers(service);
@@ -517,20 +531,20 @@ public class ToolManager implements IToolManager {
     /**
      * Register commands; so they can be picked up by command handlers.
      * <p>
-     * These command/handler system is used to hook our tools up to the keyboard
-     * short cut system.
-     * <p>
+     * These command/handler system is used to hook our tools up to the keyboard short cut system.
+     * </p>
+     *
      * @param ids
      * @param service
      * @param category
      */
-    private void registerCommands( Set<String> ids, ICommandService service, ToolCategory category ) {
-        for( ModalItem tool : category ) {
+    private void registerCommands(Set<String> ids, ICommandService service, ToolCategory category) {
+        for (ModalItem tool : category) {
             if (!ids.contains(tool.getId())) {
                 ids.add(category.getId());
 
-                for( String currentId : tool.getCommandIds() ) {
-                    currentId=currentId.trim();
+                for (String currentId : tool.getCommandIds()) {
+                    currentId = currentId.trim();
                     Command command = service.getCommand(currentId);
                     if (command != null)
                         command.setHandler(tool.getHandler(currentId));
@@ -542,13 +556,12 @@ public class ToolManager implements IToolManager {
     MapPart currentEditor;
 
     /**
-     * This method is called to perform tools initialisation when
-     * the map editor is selected.
+     * This method is called to perform tools initialization when the map editor is selected.
      */
     @Override
-    public void setCurrentEditor( MapPart editor ) {
+    public void setCurrentEditor(MapPart editor) {
 
-        if( editor==currentEditor ){
+        if (editor == currentEditor) {
             return;
         }
         currentEditor = editor;
@@ -570,12 +583,12 @@ public class ToolManager implements IToolManager {
      *
      * @param categories
      */
-    private void disable( List<? extends ToolCategory> categories ) {
-        for( ToolCategory category : categories ) {
-            for( ModalItem item : category ) {
+    private void disable(List<? extends ToolCategory> categories) {
+        for (ToolCategory category : categories) {
+            for (ModalItem item : category) {
                 OpFilter enablesFor = item.getEnablesFor();
-                if( enablesFor instanceof LazyOpFilter)
-                    ((LazyOpFilter)enablesFor).disable();
+                if (enablesFor instanceof LazyOpFilter)
+                    ((LazyOpFilter) enablesFor).disable();
             }
         }
     }
@@ -590,14 +603,14 @@ public class ToolManager implements IToolManager {
      * @author Vitalus
      *
      */
-    class EditManagerListener implements IEditManagerListener{
+    class EditManagerListener implements IEditManagerListener {
 
-    	public void setCurrentMap(IMap map){
+        public void setCurrentMap(IMap map) {
 
-    	}
+        }
 
         @Override
-        public void changed( EditManagerEvent event ) {
+        public void changed(EditManagerEvent event) {
 
             if (selectedLayerListener != this) {
                 event.getSource().removeListener(this);
@@ -614,62 +627,61 @@ public class ToolManager implements IToolManager {
     /**
      * Heads through the categories giving each tool a chance to enable/disable itself.
      * <p>
-     * Specifically we grab the OpFilter and give it a chance to determine if
-     * the tool is enabled; currently OpFilter is focused on the selectedLayer
-     * but I hope to break this out to process more general "core expressions"
-     * in the future (but we have to wait for someone to ask first).
+     * Specifically we grab the OpFilter and give it a chance to determine if the tool is enabled;
+     * currently OpFilter is focused on the selectedLayer but I hope to break this out to process
+     * more general "core expressions" in the future (but we have to wait for someone to ask first).
+     * </p>
      *
      * @param map
      * @param categories
      */
-    private void setEnabled( final IMap map, final Collection<? extends ToolCategory> categories) {
+    private void setEnabled(final IMap map, final Collection<? extends ToolCategory> categories) {
 
-        if(selectedLayerListener == null)
-        	selectedLayerListener = new EditManagerListener();
+        if (selectedLayerListener == null)
+            selectedLayerListener = new EditManagerListener();
 
         selectedLayerListener.setCurrentMap(map);
 
-        //One listener is enough. Say NO to listeners hell:)
-        if(!map.getEditManager().containsListener(selectedLayerListener))
-        	map.getEditManager().addListener(selectedLayerListener);
+        // One listener is enough. Say NO to listeners hell:)
+        if (!map.getEditManager().containsListener(selectedLayerListener))
+            map.getEditManager().addListener(selectedLayerListener);
 
-        PlatformGIS.syncInDisplayThread(new Runnable(){
+        PlatformGIS.syncInDisplayThread(new Runnable() {
 
-			@Override
-			public void run() {
-				ILayer selectedLayer = map.getEditManager().getSelectedLayer();
+            @Override
+            public void run() {
+                ILayer selectedLayer = map.getEditManager().getSelectedLayer();
 
-				for( ToolCategory cat : categories ) {
-		            for( ModalItem item : cat ) {
-		                OpFilter enablesFor = item.getEnablesFor();
+                for (ToolCategory cat : categories) {
+                    for (ModalItem item : cat) {
+                        OpFilter enablesFor = item.getEnablesFor();
+                        if (!(enablesFor instanceof LazyOpFilter)) {
+                            enablesFor = new LazyOpFilter(item, enablesFor);
+                        }
 
-		                // JG: I don't trust asserts in production code!
-		                // assert enablesFor instanceof LazyOpFilter;
-		                if( !(enablesFor instanceof LazyOpFilter) ){
-		                    enablesFor = new LazyOpFilter(item, enablesFor);
-		                }
-
-		                boolean accept = enablesFor.accept(selectedLayer);
-		                item.setEnabled(accept);
-		            }
-		        }
-			}});
+                        boolean accept = enablesFor.accept(selectedLayer);
+                        item.setEnabled(accept);
+                    }
+                }
+            }
+        });
 
     }
 
     /**
      * Sets the context of the currently active tool and ensures that all tools are enabled.
      * <p>
-     * This is called by the "support views" associated with the MapEditor,
-     * it is used so the tools can be active even when the MapEditor does not have the focus.
-     * Without this modification you would need to constantly select the MapEditor, change the tool
-     * and then get to work.
+     * This is called by the "support views" associated with the MapEditor, it is used so the tools
+     * can be active even when the MapEditor does not have the focus. Without this modification you
+     * would need to constantly select the MapEditor, change the tool and then get to work.
+     * </p>
      * <p>
      * Aside: it would be good if selecting a tool made the MapEditor grab focus.
-     * <p>
+     * </p>
+     *
      * @param editor MapEditor associated with the support view (such as the Layers view)
      */
-    void setActiveTool( MapPart editor ) {
+    void setActiveTool(MapPart editor) {
         // ensure we are listening to this MapPart's Map
         Map map = editor.getMap();
         Adapter listener = getCommandListener(editor);
@@ -682,8 +694,8 @@ public class ToolManager implements IToolManager {
         toolContext.setMapInternal(map);
 
         // Provide each tool with the new tool context
-        //
-        setContext(modalCategories, toolContext); // if active a modal tool is supposed to register listeners
+        setContext(modalCategories, toolContext); // if active a modal tool is supposed to register
+                                                  // listeners
         setContext(actionCategories, toolContext);
         setContext(menuCategories, toolContext);
         for (ToolProxy tool : backgroundTools) {
@@ -696,10 +708,10 @@ public class ToolManager implements IToolManager {
         setCommandActions(map);
 
         // wire in the current activeModalTool
-        if( activeModalToolProxy != null ){
-            if( !activeModalToolProxy.isActive() ){
+        if (activeModalToolProxy != null) {
+            if (!activeModalToolProxy.isActive()) {
                 // work around to allow the 1st modal tool to be active
-                if( activeTool == null ){
+                if (activeTool == null) {
                     activeTool = activeModalToolProxy.getModalTool();
                     // add tool options to the status area
                     if (FT_ACTION_TOOL_PREF_LINKS) {
@@ -711,11 +723,11 @@ public class ToolManager implements IToolManager {
             }
             activeModalToolProxy.setChecked(true);
             editor.setSelectionProvider(activeModalToolProxy.getSelectionProvider());
-            if( editor instanceof MapEditorWithPalette){
+            if (editor instanceof MapEditorWithPalette) {
                 // temporary cast while we sort out if MapPart can own an MapEditDomain
                 MapEditorWithPalette editor2 = (MapEditorWithPalette) editor;
                 MapEditDomain editDomain = editor2.getEditDomain();
-                editDomain.setActiveTool( activeModalToolProxy.getId() );
+                editDomain.setActiveTool(activeModalToolProxy.getId());
             }
 
         }
@@ -723,12 +735,13 @@ public class ToolManager implements IToolManager {
 
     /**
      * Go through List of ToolCategory and update each Tool with the new tool context.
+     *
      * @param categories
      * @param tools
      */
-    private void setContext( List<? extends ToolCategory> categories, ToolContext tools ) {
-        for(  ToolCategory category : categories ) {
-            for(ModalItem item : category.items ) {
+    private void setContext(List<? extends ToolCategory> categories, ToolContext tools) {
+        for (ToolCategory category : categories) {
+            for (ModalItem item : category.items) {
                 ToolProxy tool = (ToolProxy) item;
                 tool.setContext(tools);
             }
@@ -741,7 +754,7 @@ public class ToolManager implements IToolManager {
      * @param action
      */
     @Override
-    public void addToolAction( IAction action ) {
+    public void addToolAction(IAction action) {
         registeredToolActions.add(action);
         action.setEnabled(ApplicationGIS.getActiveMap() != ApplicationGIS.NO_MAP);
     }
@@ -757,21 +770,21 @@ public class ToolManager implements IToolManager {
      * @return a proxy action that can be put in other toolbars
      */
     @Override
-    public IAction createToolAction( final String toolID, final String categoryID ) {
-        final IAction toolAction = new Action(){
+    public IAction createToolAction(final String toolID, final String categoryID) {
+        final IAction toolAction = new Action() {
             @Override
-            public void runWithEvent( Event event ) {
+            public void runWithEvent(Event event) {
                 IAction action = getTool(toolID, categoryID);
                 if (action != null && action.isEnabled()) {
-                    action.runWithEvent(event );
+                    action.runWithEvent(event);
                 }
             }
         };
-        toolAction.addPropertyChangeListener(new IPropertyChangeListener(){
+        toolAction.addPropertyChangeListener(new IPropertyChangeListener() {
 
             @Override
-            public void propertyChange( PropertyChangeEvent event ) {
-                if( event.getProperty().equals(IAction.ENABLED)){
+            public void propertyChange(PropertyChangeEvent event) {
+                if (event.getProperty().equals(IAction.ENABLED)) {
                     toolAction.setEnabled((Boolean) event.getNewValue());
                 }
             }
@@ -783,8 +796,8 @@ public class ToolManager implements IToolManager {
     }
 
     @Override
-    public final ActionToolCategory findActionCategory( String id ) {
-        for( ActionToolCategory category : actionCategories ) {
+    public final ActionToolCategory findActionCategory(String id) {
+        for (ActionToolCategory category : actionCategories) {
             if (category.getId().equals(id))
                 return category;
         }
@@ -792,8 +805,8 @@ public class ToolManager implements IToolManager {
     }
 
     @Override
-    public final MenuToolCategory findMenuCategory( String id ) {
-        for( MenuToolCategory category : menuCategories ) {
+    public final MenuToolCategory findMenuCategory(String id) {
+        for (MenuToolCategory category : menuCategories) {
             if (category.getId().equals(id))
                 return category;
         }
@@ -801,8 +814,8 @@ public class ToolManager implements IToolManager {
     }
 
     @Override
-    public final ModalToolCategory findModalCategory( String id ) {
-        for( ModalToolCategory category : modalCategories ) {
+    public final ModalToolCategory findModalCategory(String id) {
+        for (ModalToolCategory category : modalCategories) {
             String id2 = category.getId();
             if (id2.equals(id))
                 return category;
@@ -818,26 +831,27 @@ public class ToolManager implements IToolManager {
      * <li>navigate: forward and backward buttons
      * <li>map: an entry for each tool category
      * </ul>
+     * </p>
      */
     @Override
-    public void contributeToMenu( IMenuManager manager ) {
+    public void contributeToMenu(IMenuManager manager) {
         IMenuManager navigateMenu = manager.findMenuUsingPath(IWorkbenchActionConstants.M_NAVIGATE);
 
         if (navigateMenu == null) {
             // I would like to arrange for the Navigate menu to already
             // be in place before the ToolManager is kicked into action
             // (this is part of the missions to have uDig plugins walk
-            //  softly when being hosted in other RCP applications)
+            // softly when being hosted in other RCP applications)
             // See UDIGActionBarAdvisor for hosting requirements.
-        	navigateMenu = new MenuManager(
-        			Messages.ToolManager_menu_manager_title, IWorkbenchActionConstants.M_NAVIGATE);
+            navigateMenu = new MenuManager(Messages.ToolManager_menu_manager_title,
+                    IWorkbenchActionConstants.M_NAVIGATE);
 
-        	IContributionItem additions = manager.find(IWorkbenchActionConstants.MB_ADDITIONS);
-			if( additions==null || !(additions instanceof GroupMarker) ){
-				manager.add(navigateMenu);
-        	}else{
-        		manager.appendToGroup(IWorkbenchActionConstants.MB_ADDITIONS, navigateMenu);
-        	}
+            IContributionItem additions = manager.find(IWorkbenchActionConstants.MB_ADDITIONS);
+            if (additions == null || !(additions instanceof GroupMarker)) {
+                manager.add(navigateMenu);
+            } else {
+                manager.appendToGroup(IWorkbenchActionConstants.MB_ADDITIONS, navigateMenu);
+            }
             navigateMenu.add(new GroupMarker(IWorkbenchActionConstants.NAV_START));
             navigateMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
             navigateMenu.add(new GroupMarker(IWorkbenchActionConstants.NAV_END));
@@ -847,54 +861,47 @@ public class ToolManager implements IToolManager {
         // we are using the global BACK and FORWARD actions here
         // and will register "handlers" for these commands
         navigateMenu.appendToGroup(IWorkbenchActionConstants.NAV_END,
-        		ActionFactory.BACK.create(window));
+                ActionFactory.BACK.create(window));
         navigateMenu.appendToGroup(IWorkbenchActionConstants.NAV_END,
-        		ActionFactory.FORWARD.create(window));
+                ActionFactory.FORWARD.create(window));
 
-        if (!manager.isVisible()){
+        if (!manager.isVisible()) {
             // since this is the top level menu bar why would it not be visible?
             manager.setVisible(true);
         }
-        IMenuManager mapMenu = manager.findMenuUsingPath("map");
-        if( mapMenu == null ){
+        IMenuManager mapMenu = manager.findMenuUsingPath("map"); //$NON-NLS-1$
+        if (mapMenu == null) {
             // Once again the hosting RCP application should of provided
             // us with a Map menu; but let's be careful and make our own here
             // if needed.
             // See UDIGActionBarAdvisor for hosting requirements.
-            mapMenu = new MenuManager(Messages.ToolManager_menu_manager_title, "map");
+            mapMenu = new MenuManager(Messages.ToolManager_menu_manager_title, "map"); //$NON-NLS-1$
             manager.add(mapMenu);
-            mapMenu.add(new GroupMarker("mapStart"));
+            mapMenu.add(new GroupMarker("mapStart")); //$NON-NLS-1$
             mapMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-            mapMenu.add(new GroupMarker("mapEnd"));
+            mapMenu.add(new GroupMarker("mapEnd")); //$NON-NLS-1$
         }
         // churn through each category and add stuff as needed
         // note we check with the cmdService to see what we if the actionSet
-        // associated with this cateogry is turned on by the
+        // associated with this category is turned on by the
         // current perspective.
-        for( MenuToolCategory category : menuCategories ) {
+        for (MenuToolCategory category : menuCategories) {
             category.contribute(manager);
         }
     }
 
-
-
-
-    /** (non-Javadoc)
-     *
-     * @see org.locationtech.udig.project.ui.tool.IToolManager#contributeActiveModalTool(org.eclipse.jface.action.IMenuManager)
-     */
     @Override
-    public void contributeActiveModalTool( IMenuManager manager ) {
+    public void contributeActiveModalTool(IMenuManager manager) {
 
         Tool activeTool = getActiveTool();
-        if(activeTool instanceof IContextMenuContributionTool){
-            IContextMenuContributionTool contributionTool = (IContextMenuContributionTool)activeTool;
+        if (activeTool instanceof IContextMenuContributionTool) {
+            IContextMenuContributionTool contributionTool = (IContextMenuContributionTool) activeTool;
             ArrayList<IContributionItem> contributions = new ArrayList<>();
             contributionTool.contributeContextMenu(contributions);
 
-            if(!contributions.isEmpty()){
+            if (!contributions.isEmpty()) {
                 manager.add(new Separator());
-                for( IContributionItem item : contributions ) {
+                for (IContributionItem item : contributions) {
                     manager.add(item);
                 }
             }
@@ -903,18 +910,15 @@ public class ToolManager implements IToolManager {
 
     /**
      * Retrieves the redo action that is used by much of the map components such as the MapEditor
-     * and the LayersView. redoes the last undone command sent to the currently active map.
+     * and the LayersView. Redoes the last undone command sent to the currently active map.
      */
     @Override
     public IAction getREDOAction() {
         Map activeMap = ApplicationGISInternal.getActiveMap();
         redoLock.lock();
-        try{
+        try {
             if (redoAction == null) {
-                redoAction = new Action(){
-                    /**
-                     * @see org.eclipse.jface.action.Action#run()
-                     */
+                redoAction = new Action() {
                     @Override
                     public void run() {
                         Map activeMap = ApplicationGISInternal.getActiveMap();
@@ -923,25 +927,22 @@ public class ToolManager implements IToolManager {
                     }
                 };
                 redoAction.setImageDescriptor(
-                        getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
+                        sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
                 redoAction.setText(Messages.ToolManager_redoAction);
                 redoAction.setActionDefinitionId("org.eclipse.ui.edit.redo"); //$NON-NLS-1$
             }
             setActionEnabledState(activeMap, redoAction, true);
             return redoAction;
-        }finally{
+        } finally {
             redoLock.unlock();
         }
     }
 
-    /**
-     *
-     */
     @Override
-    public void setREDOAction( IAction action, IWorkbenchPart part ) {
-        if( action == null )
+    public void setREDOAction(IAction action, IWorkbenchPart part) {
+        if (action == null)
             throw new NullPointerException("action must not be null"); //$NON-NLS-1$
-        if( part == null )
+        if (part == null)
             throw new NullPointerException("part must not be null"); //$NON-NLS-1$
         redoLock.lock();
         try {
@@ -964,12 +965,9 @@ public class ToolManager implements IToolManager {
     public IAction getUNDOAction() {
         Map activeMap = ApplicationGISInternal.getActiveMap();
         undoLock.lock();
-        try{
+        try {
             if (undoAction == null) {
-                undoAction = new Action(){
-                    /**
-                     * @see org.eclipse.jface.action.Action#run()
-                     */
+                undoAction = new Action() {
                     @Override
                     public void run() {
                         Map activeMap = ApplicationGISInternal.getActiveMap();
@@ -978,33 +976,30 @@ public class ToolManager implements IToolManager {
                     }
                 };
                 undoAction.setImageDescriptor(
-                        getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
+                        sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
                 undoAction.setText(Messages.ToolManager_undoAction);
                 undoAction.setActionDefinitionId("org.eclipse.ui.edit.undo"); //$NON-NLS-1$
             }
             setActionEnabledState(activeMap, undoAction, false);
             return undoAction;
-        }finally{
+        } finally {
             undoLock.unlock();
         }
     }
 
-    /**
-     *
-     */
     @Override
-    public void setUNDOAction( IAction action, IWorkbenchPart part ) {
-        if( action == null )
+    public void setUNDOAction(IAction action, IWorkbenchPart part) {
+        if (action == null)
             throw new NullPointerException("action must not be null"); //$NON-NLS-1$
-        if( part == null )
+        if (part == null)
             throw new NullPointerException("part must not be null"); //$NON-NLS-1$
         undoLock.lock();
-        try{
+        try {
             undoAction = action;
             undoAction.setActionDefinitionId("org.eclipse.ui.edit.undo"); //$NON-NLS-1$
             IKeyBindingService service = part.getSite().getKeyBindingService();
             service.registerAction(undoAction);
-        }finally{
+        } finally {
             undoLock.unlock();
         }
     }
@@ -1017,12 +1012,9 @@ public class ToolManager implements IToolManager {
     public IAction getFORWARD_HISTORYAction() {
         Map activeMap = ApplicationGISInternal.getActiveMap();
         forwardLock.lock();
-        try{
+        try {
             if (forwardAction == null) {
-                forwardAction = new Action(){
-                    /**
-                     * @see org.eclipse.jface.action.Action#run()
-                     */
+                forwardAction = new Action() {
                     @Override
                     public void run() {
                         Map activeMap = ApplicationGISInternal.getActiveMap();
@@ -1031,22 +1023,22 @@ public class ToolManager implements IToolManager {
                     }
                 };
                 forwardAction.setImageDescriptor(
-                        getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_FORWARD));
+                        sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_FORWARD));
                 forwardAction.setText(Messages.ToolManager_forward);
                 forwardAction.setToolTipText(Messages.ToolManager_forward_tooltip);
                 forwardAction.setActionDefinitionId("org.eclipse.ui.navigate.forward"); //$NON-NLS-1$
             }
             setNavActionEnabledState(activeMap, forwardAction, true);
             return forwardAction;
-        }finally{
+        } finally {
             forwardLock.unlock();
         }
 
     }
 
-    private void setActionEnabledState(Map activeMap, IAction action, boolean isRedoAction) {
+    private void setActionEnabledState(Map activeMap, IAction action, boolean isForwardAction) {
         if (activeMap != null && activeMap != ApplicationGIS.NO_MAP) {
-            action.setEnabled(isRedoAction ? activeMap.getCommandStack().canRedo()
+            action.setEnabled(isForwardAction ? activeMap.getCommandStack().canRedo()
                     : activeMap.getCommandStack().canUndo());
         } else {
             action.setEnabled(false);
@@ -1062,28 +1054,25 @@ public class ToolManager implements IToolManager {
         }
     }
 
-    /**
-     *
-     */
     @Override
-    public void setFORWARDAction( IAction action, IWorkbenchPart part ) {
-        if( action == null )
+    public void setFORWARDAction(IAction action, IWorkbenchPart part) {
+        if (action == null)
             throw new NullPointerException("action must not be null"); //$NON-NLS-1$
-        if( part == null )
+        if (part == null)
             throw new NullPointerException("part must not be null"); //$NON-NLS-1$
         forwardLock.lock();
-        try{
+        try {
             forwardAction = action;
             forwardAction.setActionDefinitionId("org.eclipse.ui.navigate.forward"); //$NON-NLS-1$
             IKeyBindingService service = part.getSite().getKeyBindingService();
             service.registerAction(forwardAction);
-        }finally{
+        } finally {
             forwardLock.unlock();
         }
     }
 
     @Override
-    public void registerActionsWithPart( IWorkbenchPart part ) {
+    public void registerActionsWithPart(IWorkbenchPart part) {
 
         IKeyBindingService service = part.getSite().getKeyBindingService();
         service.registerAction(getBACKWARD_HISTORYAction());
@@ -1099,7 +1088,7 @@ public class ToolManager implements IToolManager {
     }
 
     @Override
-    public void unregisterActions( IWorkbenchPart  part ){
+    public void unregisterActions(IWorkbenchPart part) {
 
         IKeyBindingService service = part.getSite().getKeyBindingService();
 
@@ -1125,12 +1114,9 @@ public class ToolManager implements IToolManager {
     public IAction getBACKWARD_HISTORYAction() {
         Map activeMap = ApplicationGISInternal.getActiveMap();
         backwardLock.lock();
-        try{
+        try {
             if (backwardAction == null) {
-                backwardAction = new Action(){
-                    /**
-                     * @see org.eclipse.jface.action.Action#run()
-                     */
+                backwardAction = new Action() {
                     @Override
                     public void run() {
                         Map activeMap = ApplicationGISInternal.getActiveMap();
@@ -1140,79 +1126,73 @@ public class ToolManager implements IToolManager {
 
                 };
                 backwardAction.setImageDescriptor(
-                        getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_BACK));
+                        sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_BACK));
                 backwardAction.setText(Messages.ToolManager_back);
                 backwardAction.setToolTipText(Messages.ToolManager_back_tooltip);
                 backwardAction.setActionDefinitionId("org.eclipse.ui.navigate.back"); //$NON-NLS-1$
             }
             setNavActionEnabledState(activeMap, backwardAction, false);
             return backwardAction;
-        }finally{
+        } finally {
             backwardLock.unlock();
         }
     }
 
-    /**
-     *
-     */
     @Override
-    public void setBACKAction( IAction action, IWorkbenchPart part ) {
-        if( action == null )
+    public void setBACKAction(IAction action, IWorkbenchPart part) {
+        if (action == null)
             throw new NullPointerException("action must not be null"); //$NON-NLS-1$
-        if( part == null )
+        if (part == null)
             throw new NullPointerException("part must not be null"); //$NON-NLS-1$
         backwardLock.lock();
-        try{
+        try {
             backwardAction = action;
             backwardAction.setActionDefinitionId("org.eclipse.ui.navigate.back"); //$NON-NLS-1$
             IKeyBindingService service = part.getSite().getKeyBindingService();
             service.registerAction(backwardAction);
-        }finally{
+        } finally {
             backwardLock.unlock();
         }
 
     }
 
-    /**
-     *
-     */
     @Override
-    public IAction getCUTAction( IWorkbenchPart part ) {
+    public IAction getCUTAction(IWorkbenchPart part) {
         cutLock.lock();
-        try{
-            if( cutAction==null ){
-                cutAction=new Action(){
+        try {
+            if (cutAction == null) {
+                cutAction = new Action() {
 
                 };
             }
             // JONES
             return cutAction;
-        }finally{
+        } finally {
             cutLock.unlock();
         }
     }
 
     @Override
-    public void setCUTAction( IAction action, IWorkbenchPart part ) {
-        if( action == null )
+    public void setCUTAction(IAction action, IWorkbenchPart part) {
+        if (action == null)
             throw new NullPointerException("action must not be null"); //$NON-NLS-1$
-        if( part == null )
+        if (part == null)
             throw new NullPointerException("part must not be null"); //$NON-NLS-1$
         cutLock.lock();
-        try{
+        try {
             cutAction = action;
             cutAction.setActionDefinitionId("org.eclipse.ui.edit.cut"); //$NON-NLS-1$
             IKeyBindingService service = part.getSite().getKeyBindingService();
             service.registerAction(cutAction);
-        }finally{
+        } finally {
             cutLock.unlock();
         }
     }
 
     @Override
-    public IAction getCOPYAction( final IWorkbenchPart part ) {
+    public IAction getCOPYAction(final IWorkbenchPart part) {
         copyLock.lock();
-        try{
+        try {
             if (copyAction == null) {
                 copyAction = new CopyAction();
                 IAction template = ActionFactory.COPY.create(part.getSite().getWorkbenchWindow());
@@ -1228,35 +1208,35 @@ public class ToolManager implements IToolManager {
             IKeyBindingService service = part.getSite().getKeyBindingService();
             service.registerAction(copyAction);
             return copyAction;
-        }finally{
+        } finally {
             copyLock.unlock();
         }
     }
 
     @Override
-    public void setCOPYAction( IAction action, IWorkbenchPart part ) {
-        if( action == null )
+    public void setCOPYAction(IAction action, IWorkbenchPart part) {
+        if (action == null)
             throw new NullPointerException("action must not be null"); //$NON-NLS-1$
-        if( part == null )
+        if (part == null)
             throw new NullPointerException("part must not be null"); //$NON-NLS-1$
         copyLock.lock();
-        try{
+        try {
             copyAction = action;
             copyAction.setActionDefinitionId("org.eclipse.ui.edit.copy"); //$NON-NLS-1$
             IKeyBindingService service = part.getSite().getKeyBindingService();
             service.registerAction(copyAction);
-        }finally{
+        } finally {
             copyLock.unlock();
         }
     }
 
-    //
-    public IAction getPropertiesAction( IWorkbenchPart part, ISelectionProvider selectionProvider ) {
+    public IAction getPropertiesAction(IWorkbenchPart part, ISelectionProvider selectionProvider) {
         propertiesLock.lock();
-        try{
-            if (propertiesAction == null ||
-                    propertiesAction.getSelectionProvider() != selectionProvider ){
-                propertiesAction  = new PropertyDialogAction( part.getSite().getWorkbenchWindow(), selectionProvider );
+        try {
+            if (propertiesAction == null
+                    || propertiesAction.getSelectionProvider() != selectionProvider) {
+                propertiesAction = new PropertyDialogAction(part.getSite().getWorkbenchWindow(),
+                        selectionProvider);
             }
             IKeyBindingService service = part.getSite().getKeyBindingService();
             service.registerAction(propertiesAction);
@@ -1267,9 +1247,9 @@ public class ToolManager implements IToolManager {
     }
 
     @Override
-    public IAction getPASTEAction( IWorkbenchPart part ) {
+    public IAction getPASTEAction(IWorkbenchPart part) {
         pasteLock.lock();
-        try{
+        try {
             if (pasteAction == null) {
                 pasteAction = new PasteAction();
                 IAction template = ActionFactory.PASTE.create(part.getSite().getWorkbenchWindow());
@@ -1286,24 +1266,24 @@ public class ToolManager implements IToolManager {
             IKeyBindingService service = part.getSite().getKeyBindingService();
             service.registerAction(pasteAction);
             return pasteAction;
-        }finally{
+        } finally {
             pasteLock.unlock();
         }
     }
 
     @Override
-    public void setPASTEAction( IAction action, IWorkbenchPart part ) {
-        if( action == null )
+    public void setPASTEAction(IAction action, IWorkbenchPart part) {
+        if (action == null)
             throw new NullPointerException("action must not be null"); //$NON-NLS-1$
-        if( part == null )
+        if (part == null)
             throw new NullPointerException("part must not be null"); //$NON-NLS-1$
         pasteLock.lock();
-        try{
+        try {
             pasteAction = action;
             pasteAction.setActionDefinitionId("org.eclipse.ui.edit.paste"); //$NON-NLS-1$
             IKeyBindingService service = part.getSite().getKeyBindingService();
             service.registerAction(pasteAction);
-        }finally{
+        } finally {
             pasteLock.unlock();
         }
     }
@@ -1311,49 +1291,52 @@ public class ToolManager implements IToolManager {
     @Override
     public synchronized IAction getDELETEAction() {
         deleteLock.lock();
-        try{
+        try {
             if (deleteAction == null) {
-                 deleteAction = new Action(){
+                deleteAction = new Action() {
                     @Override
                     public void run() {
-                        IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+                        IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench()
+                                .getActiveWorkbenchWindow();
                         ISelectionService selectionService = workbenchWindow.getSelectionService();
                         ISelection selection = selectionService.getSelection();
 
-                        Delete delete=new Delete( false );
+                        Delete delete = new Delete(false);
                         delete.selectionChanged(this, selection);
                         delete.run(this);
                     }
                 };
                 deleteAction.setActionDefinitionId("org.eclipse.ui.edit.delete"); //$NON-NLS-1$
 
-                IWorkbenchAction actionTemplate = ActionFactory.DELETE.create(PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+                IWorkbenchAction actionTemplate = ActionFactory.DELETE
+                        .create(PlatformUI.getWorkbench().getActiveWorkbenchWindow());
                 deleteAction.setText(actionTemplate.getText());
                 deleteAction.setToolTipText(actionTemplate.getToolTipText());
                 deleteAction.setImageDescriptor(actionTemplate.getImageDescriptor());
                 deleteAction.setDescription(actionTemplate.getDescription());
-                deleteAction.setDisabledImageDescriptor(actionTemplate.getDisabledImageDescriptor());
+                deleteAction
+                        .setDisabledImageDescriptor(actionTemplate.getDisabledImageDescriptor());
             }
 
             return deleteAction;
-        }finally{
+        } finally {
             deleteLock.unlock();
         }
     }
 
     @Override
-    public synchronized void setDELETEAction( IAction action, IWorkbenchPart part ) {
-        if( action == null )
+    public synchronized void setDELETEAction(IAction action, IWorkbenchPart part) {
+        if (action == null)
             throw new NullPointerException("action must not be null"); //$NON-NLS-1$
-        if( part == null )
+        if (part == null)
             throw new NullPointerException("part must not be null"); //$NON-NLS-1$
         deleteLock.lock();
-        try{
+        try {
             deleteAction = action;
             deleteAction.setActionDefinitionId("org.eclipse.ui.edit.delete"); //$NON-NLS-1$
             IKeyBindingService service = part.getSite().getKeyBindingService();
             service.registerAction(deleteAction);
-        }finally{
+        } finally {
             deleteLock.unlock();
         }
     }
@@ -1361,9 +1344,9 @@ public class ToolManager implements IToolManager {
     @Override
     public synchronized IAction getENTERAction() {
         enterLock.lock();
-        try{
+        try {
             if (enterAction == null) {
-                enterAction = new Action(){
+                enterAction = new Action() {
                     @Override
                     public void run() {
                         try {
@@ -1381,7 +1364,7 @@ public class ToolManager implements IToolManager {
             }
 
             return enterAction;
-        }finally{
+        } finally {
             enterLock.unlock();
         }
     }
@@ -1389,21 +1372,23 @@ public class ToolManager implements IToolManager {
     @Override
     public synchronized IAction getZOOMTOSELECTEDAction() {
         enterLock.lock();
-        try{
+        try {
             if (zoomToSelectionAction == null) {
-                zoomToSelectionAction = getToolAction("org.locationtech.udig.tool.default.show.selection", "org.locationtech.udig.tool.category.zoom");
+                zoomToSelectionAction = getToolAction(
+                        "org.locationtech.udig.tool.default.show.selection", //$NON-NLS-1$
+                        "org.locationtech.udig.tool.category.zoom"); //$NON-NLS-1$
             }
 
             return zoomToSelectionAction;
-        }finally{
+        } finally {
             enterLock.unlock();
         }
     }
 
-    private void createModalToolToolbar( SubCoolBarManager cbmanager ) {
+    private void createModalToolToolbar(SubCoolBarManager cbmanager) {
         ToolBarManager manager = new ToolBarManager(SWT.FLAT);
 
-        for( String id : categoryIds ) {
+        for (String id : categoryIds) {
             ModalToolCategory modalCategory = findModalCategory(id);
             if (modalCategory != null) {
                 modalCategory.contribute(manager);
@@ -1413,12 +1398,12 @@ public class ToolManager implements IToolManager {
             cbmanager.add(manager);
     }
 
-    private void createActionToolToolbar( SubCoolBarManager cbmanager ) {
+    private void createActionToolToolbar(SubCoolBarManager cbmanager) {
         ToolBarManager manager = new ToolBarManager(SWT.FLAT);
 
         manager.add(getBACKWARD_HISTORYAction());
         manager.add(getFORWARD_HISTORYAction());
-        for( String id : categoryIds ) {
+        for (String id : categoryIds) {
             ActionToolCategory category = findActionCategory(id);
             if (category != null)
                 category.contribute(manager);
@@ -1432,16 +1417,14 @@ public class ToolManager implements IToolManager {
      *
      * @deprecated
      *
-     * @see contributeActionTools(IToolBarManager toolBarManager, IActionBars bars )
-     * @see contributeModalTools(IToolBarManager toolBarManager, IActionBars bars )
-     *
      * @param cbmanager
      * @param bars
      * @see org.locationtech.udig.project.ui.tool.ModalTool
      * @see org.locationtech.udig.project.ui.tool.ActionTool
      */
+    @Deprecated
     @Override
-    public void contributeToCoolBar( SubCoolBarManager cbmanager, IActionBars bars ) {
+    public void contributeToCoolBar(SubCoolBarManager cbmanager, IActionBars bars) {
         cbmanager.setVisible(true);
         createActionToolToolbar(cbmanager);
         createModalToolToolbar(cbmanager);
@@ -1462,26 +1445,20 @@ public class ToolManager implements IToolManager {
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.locationtech.udig.project.ui.tool.IToolManager#contributeActionTools(org.eclipse.jface.action.IToolBarManager, org.eclipse.ui.IActionBars)
-     */
     @Override
-    public void contributeActionTools(IToolBarManager toolBarManager, IActionBars bars ) {
+    public void contributeActionTools(IToolBarManager toolBarManager, IActionBars bars) {
         toolBarManager.add(getBACKWARD_HISTORYAction());
         toolBarManager.add(getFORWARD_HISTORYAction());
-        for( String id : categoryIds ) {
+        for (String id : categoryIds) {
             ActionToolCategory category = findActionCategory(id);
             if (category != null)
                 category.contribute(toolBarManager);
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.locationtech.udig.project.ui.tool.IToolManager#contributeModalTools(org.eclipse.jface.action.IToolBarManager, org.eclipse.ui.IActionBars)
-     */
     @Override
-    public void contributeModalTools(IToolBarManager toolBarManager, IActionBars bars ) {
-        for( String id : categoryIds ) {
+    public void contributeModalTools(IToolBarManager toolBarManager, IActionBars bars) {
+        for (String id : categoryIds) {
             ModalToolCategory modalCategory = findModalCategory(id);
             if (modalCategory != null) {
                 modalCategory.contribute(toolBarManager);
@@ -1490,17 +1467,21 @@ public class ToolManager implements IToolManager {
     }
 
     private IAction actionCLOSE;
+
     private IAction actionSAVE;
+
     private IAction actionCLOSE_ALL;
+
     private PreferencesShortcutToolOptionsContributionItem preferencesShortcutToolOptions;
 
     /**
      * Contributes the common global actions.
+     *
      * @param part WorkbenchPart such as a view or editor
-     * @param bars Actionbar used to register global actions
+     * @param bars ActionBar used to register global actions
      */
     @Override
-    public void contributeGlobalActions( IWorkbenchPart part, IActionBars bars ) {
+    public void contributeGlobalActions(IWorkbenchPart part, IActionBars bars) {
         IKeyBindingService service = part.getSite().getKeyBindingService();
         bars.setGlobalActionHandler(ActionFactory.BACK.getId(), getBACKWARD_HISTORYAction());
         bars.setGlobalActionHandler(ActionFactory.FORWARD.getId(), getFORWARD_HISTORYAction());
@@ -1512,41 +1493,38 @@ public class ToolManager implements IToolManager {
         bars.setGlobalActionHandler(ActionFactory.DELETE.getId(), getDELETEAction());
 
         ISelectionProvider selection = part.getSite().getSelectionProvider();
-        if( selection != null ){
-            bars.setGlobalActionHandler(ActionFactory.PROPERTIES.getId(), getPropertiesAction(part,selection));
+        if (selection != null) {
+            bars.setGlobalActionHandler(ActionFactory.PROPERTIES.getId(),
+                    getPropertiesAction(part, selection));
         }
 
-        if(actionCLOSE == null)
-        	actionCLOSE = ActionFactory.CLOSE.create(part.getSite().getWorkbenchWindow());
+        if (actionCLOSE == null)
+            actionCLOSE = ActionFactory.CLOSE.create(part.getSite().getWorkbenchWindow());
         service.registerAction(actionCLOSE);
         bars.setGlobalActionHandler(ActionFactory.CLOSE.getId(), actionCLOSE);
 
-        if(actionSAVE == null)
-        	actionSAVE = ActionFactory.SAVE.create(part.getSite().getWorkbenchWindow());
+        if (actionSAVE == null)
+            actionSAVE = ActionFactory.SAVE.create(part.getSite().getWorkbenchWindow());
         service.registerAction(actionSAVE);
         bars.setGlobalActionHandler(ActionFactory.SAVE.getId(), actionSAVE);
 
-        if(actionCLOSE_ALL == null)
-        	actionCLOSE_ALL = ActionFactory.CLOSE_ALL.create(part.getSite().getWorkbenchWindow());
+        if (actionCLOSE_ALL == null)
+            actionCLOSE_ALL = ActionFactory.CLOSE_ALL.create(part.getSite().getWorkbenchWindow());
         bars.setGlobalActionHandler(ActionFactory.CLOSE_ALL.getId(), actionCLOSE_ALL);
 
     }
 
-    Adapter getCommandListener( final MapPart editor ) {
+    Adapter getCommandListener(final MapPart editor) {
         if (commandListener == null) {
-            commandListener = new AdapterImpl(){
-                /**
-                 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
-                 */
+            commandListener = new AdapterImpl() {
                 @Override
-                public void notifyChanged( Notification msg ) {
-                    // Map map = (Map) getTarget();
-                    /*
-                     * While this adapter is a singlton and added to all opened maps, each time
+                public void notifyChanged(Notification msg) {
+                    /**
+                     * While this adapter is a singleton and added to all opened maps, each time
                      * target variable is reset.
                      */
                     Map map = null;
-                    switch( msg.getFeatureID(msg.getNotifier().getClass()) ) {
+                    switch (msg.getFeatureID(msg.getNotifier().getClass())) {
                     case ProjectPackage.MAP__COMMAND_STACK:
                         map = (Map) msg.getNotifier();
                         setCommandActions(map);
@@ -1578,22 +1556,22 @@ public class ToolManager implements IToolManager {
     }
 
     @Override
-    public IAction getTool( String toolID, String categoryID ) {
+    public IAction getTool(String toolID, String categoryID) {
         return getToolAction(toolID, categoryID);
     }
 
     @Override
-    public IAction getToolAction( String toolID, String categoryID ) {
+    public IAction getToolAction(String toolID, String categoryID) {
         final IAction tool = getToolInteral(toolID, categoryID);
 
-        if( tool == null )
+        if (tool == null)
             return null;
 
-        return new IAction(){
-            IAction wrapped=tool;
+        return new IAction() {
+            IAction wrapped = tool;
 
             @Override
-            public void addPropertyChangeListener( IPropertyChangeListener listener ) {
+            public void addPropertyChangeListener(IPropertyChangeListener listener) {
                 wrapped.addPropertyChangeListener(listener);
             }
 
@@ -1673,12 +1651,12 @@ public class ToolManager implements IToolManager {
             }
 
             @Override
-            public void removePropertyChangeListener( IPropertyChangeListener listener ) {
+            public void removePropertyChangeListener(IPropertyChangeListener listener) {
                 wrapped.removePropertyChangeListener(listener);
             }
 
             @Override
-            public void runWithEvent( Event event ) {
+            public void runWithEvent(Event event) {
                 wrapped.runWithEvent(event);
             }
 
@@ -1688,94 +1666,94 @@ public class ToolManager implements IToolManager {
             }
 
             @Override
-            public void setAccelerator( int keycode ) {
+            public void setAccelerator(int keycode) {
                 throw new UnsupportedOperationException("This is an unmodifiable action"); //$NON-NLS-1$
             }
 
             @Override
-            public void setActionDefinitionId( String id ) {
+            public void setActionDefinitionId(String id) {
                 throw new UnsupportedOperationException("This is an unmodifiable action"); //$NON-NLS-1$
             }
 
             @Override
-            public void setChecked( boolean checked ) {
+            public void setChecked(boolean checked) {
                 throw new UnsupportedOperationException("This is an unmodifiable action"); //$NON-NLS-1$
             }
 
             @Override
-            public void setDescription( String text ) {
+            public void setDescription(String text) {
                 throw new UnsupportedOperationException("This is an unmodifiable action"); //$NON-NLS-1$
             }
 
             @Override
-            public void setDisabledImageDescriptor( ImageDescriptor newImage ) {
+            public void setDisabledImageDescriptor(ImageDescriptor newImage) {
                 throw new UnsupportedOperationException("This is an unmodifiable action"); //$NON-NLS-1$
             }
 
             @Override
-            public void setEnabled( boolean enabled ) {
+            public void setEnabled(boolean enabled) {
                 throw new UnsupportedOperationException("This is an unmodifiable action"); //$NON-NLS-1$
             }
 
             @Override
-            public void setHelpListener( HelpListener listener ) {
+            public void setHelpListener(HelpListener listener) {
                 throw new UnsupportedOperationException("This is an unmodifiable action"); //$NON-NLS-1$
             }
 
             @Override
-            public void setHoverImageDescriptor( ImageDescriptor newImage ) {
+            public void setHoverImageDescriptor(ImageDescriptor newImage) {
                 throw new UnsupportedOperationException("This is an unmodifiable action"); //$NON-NLS-1$
             }
 
             @Override
-            public void setId( String id ) {
+            public void setId(String id) {
                 throw new UnsupportedOperationException("This is an unmodifiable action"); //$NON-NLS-1$
             }
 
             @Override
-            public void setImageDescriptor( ImageDescriptor newImage ) {
+            public void setImageDescriptor(ImageDescriptor newImage) {
                 throw new UnsupportedOperationException("This is an unmodifiable action"); //$NON-NLS-1$
             }
 
             @Override
-            public void setMenuCreator( IMenuCreator creator ) {
+            public void setMenuCreator(IMenuCreator creator) {
                 throw new UnsupportedOperationException("This is an unmodifiable action"); //$NON-NLS-1$
             }
 
             @Override
-            public void setText( String text ) {
+            public void setText(String text) {
                 throw new UnsupportedOperationException("This is an unmodifiable action"); //$NON-NLS-1$
             }
 
             @Override
-            public void setToolTipText( String text ) {
+            public void setToolTipText(String text) {
                 throw new UnsupportedOperationException("This is an unmodifiable action"); //$NON-NLS-1$
             }
         };
     }
 
     /**
-     * returns the actual tool action.
+     * Returns the actual tool action.
      */
-    private IAction getToolInteral( String toolID, String categoryID ) {
+    private IAction getToolInteral(String toolID, String categoryID) {
         ToolCategory category = findModalCategory(categoryID);
         if (category != null) {
             IAction tool = searchCategoryForTool(toolID, category);
-            if( tool!=null )
+            if (tool != null)
                 return tool;
         }
 
         category = findActionCategory(categoryID);
         if (category != null) {
             IAction tool = searchCategoryForTool(toolID, category);
-            if( tool!=null )
+            if (tool != null)
                 return tool;
         }
 
         category = findMenuCategory(categoryID);
         if (category != null) {
             IAction tool = searchCategoryForTool(toolID, category);
-            if( tool!=null )
+            if (tool != null)
                 return tool;
         }
         return null;
@@ -1787,8 +1765,8 @@ public class ToolManager implements IToolManager {
      * @param category
      * @return
      */
-    private IAction searchCategoryForTool( String toolID, ToolCategory category ) {
-        for( Iterator iter2 = category.iterator(); iter2.hasNext(); ) {
+    private IAction searchCategoryForTool(String toolID, ToolCategory category) {
+        for (Iterator iter2 = category.iterator(); iter2.hasNext();) {
             ToolProxy tool = (ToolProxy) iter2.next();
             String id = tool.getId();
             if (id.equals(toolID))
@@ -1807,11 +1785,6 @@ public class ToolManager implements IToolManager {
         return modalCategories;
     }
 
-//
-//    public Tool getActiveModalTool(){
-//
-//    }
-
     /**
      * Returns the tool category that is currently active.
      *
@@ -1826,28 +1799,28 @@ public class ToolManager implements IToolManager {
 
         /** long serialVersionUID field */
         private static final long serialVersionUID = 1L;
+
         private static final java.util.Map<String, String> values = new HashMap<>();
         static {
-            values.put(ToolConstants.RENDER_CA, "0100");
-            values.put(ToolConstants.ZOOM_CA, "0200");
-            values.put(ToolConstants.PAN_CA, "0300");
-            values.put(ToolConstants.SELECTION_CA, "0400");
-            values.put(ToolConstants.INFO_CA, "0500");
-            values.put(ToolConstants.EDIT_CA, "0600");
-            values.put(ToolConstants.TOOL_EDIT_CA, "0700");
-            values.put(ToolConstants.TOOL_CREATE_CA, "0800");
-            values.put(ToolConstants.TOOL_FEATURE_CA, "0900");
+            values.put(ToolConstants.RENDER_CA, "0100"); //$NON-NLS-1$
+            values.put(ToolConstants.ZOOM_CA, "0200"); //$NON-NLS-1$
+            values.put(ToolConstants.PAN_CA, "0300"); //$NON-NLS-1$
+            values.put(ToolConstants.SELECTION_CA, "0400"); //$NON-NLS-1$
+            values.put(ToolConstants.INFO_CA, "0500"); //$NON-NLS-1$
+            values.put(ToolConstants.EDIT_CA, "0600"); //$NON-NLS-1$
+            values.put(ToolConstants.TOOL_EDIT_CA, "0700"); //$NON-NLS-1$
+            values.put(ToolConstants.TOOL_CREATE_CA, "0800"); //$NON-NLS-1$
+            values.put(ToolConstants.TOOL_FEATURE_CA, "0900"); //$NON-NLS-1$
         }
 
         private static final int MAX = -1;
+
         private static final int MIN = 1;
-        /**
-         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-         */
+
         @Override
         public int compare(String arg0, String arg1) {
-            arg0 = getOrDefault(values, arg0, "") + arg0;
-            arg1 = getOrDefault(values, arg1, "") + arg1;
+            arg0 = getOrDefault(values, arg0, "") + arg0; //$NON-NLS-1$
+            arg1 = getOrDefault(values, arg1, "") + arg1; //$NON-NLS-1$
             if (arg0.equals(arg1))
                 return 0;
             if (arg1.isEmpty() || arg1.equals(Messages.ToolCategory_other))
@@ -1874,7 +1847,7 @@ public class ToolManager implements IToolManager {
      *
      * @param site
      */
-    public void addToolScope( IWorkbenchPartSite site ) {
+    public void addToolScope(IWorkbenchPartSite site) {
         String[] scopes = site.getKeyBindingService().getScopes();
         String[] newScopes = new String[scopes.length + 1];
         System.arraycopy(scopes, 0, newScopes, 1, scopes.length);
@@ -1882,7 +1855,7 @@ public class ToolManager implements IToolManager {
         site.getKeyBindingService().setScopes(newScopes);
     }
 
-    /*
+    /**
      * This allows for customized operation menus that are based on the currently selected tool.
      */
     @Override
@@ -1890,11 +1863,12 @@ public class ToolManager implements IToolManager {
         try {
             MenuManager contextManager = getOperationMenuFactory().createMenuManager();
 
-            List<OperationCategory> primaryCategories = activeModalToolProxy.getOperationCategories();
+            List<OperationCategory> primaryCategories = activeModalToolProxy
+                    .getOperationCategories();
             Collection<OperationCategory> secondaryCategories = getOperationMenuFactory()
                     .getCategories().values();
 
-            for( int i = 0; i < primaryCategories.size(); i++ ) {
+            for (int i = 0; i < primaryCategories.size(); i++) {
                 OperationCategory category = primaryCategories.get(i);
 
                 // Limit the size of the context menu to 20, but don't ever display a portion of
@@ -1905,14 +1879,13 @@ public class ToolManager implements IToolManager {
 
                 MenuManager menu = category.createContextMenu();
 
-                if ((i != 0 && menu.getItems().length != 0)
-                        && (secondaryCategories.size() != 0 || getOperationMenuFactory()
-                                .getActions().size() != 0)) {
+                if ((i != 0 && menu.getItems().length != 0) && (secondaryCategories.size() != 0
+                        || getOperationMenuFactory().getActions().size() != 0)) {
 
                     contextManager.add(new Separator());
                 }
 
-                for( IContributionItem item : menu.getItems() ) {
+                for (IContributionItem item : menu.getItems()) {
                     contextManager.add(item);
                 }
             }
@@ -1926,11 +1899,11 @@ public class ToolManager implements IToolManager {
                 contextManager.add(action);
             } else {
                 Iterator iter = secondaryCategories.iterator();
-                while( iter.hasNext() ) {
+                while (iter.hasNext()) {
                     OperationCategory category = (OperationCategory) iter.next();
 
-                    for( OpAction action : category.getActions() ) {
-                        if( selection instanceof IStructuredSelection )
+                    for (OpAction action : category.getActions()) {
+                        if (selection instanceof IStructuredSelection)
                             action.updateEnablement((IStructuredSelection) selection, true);
                         if (action.isEnabled())
                             contextManager.add(action);
@@ -1942,8 +1915,8 @@ public class ToolManager implements IToolManager {
                 if (getOperationMenuFactory().getActions().size() != 0) {
                     contextManager.add(new Separator());
                 }
-                for( OpAction action : getOperationMenuFactory().getActions() ) {
-                    if( selection instanceof IStructuredSelection )
+                for (OpAction action : getOperationMenuFactory().getActions()) {
+                    if (selection instanceof IStructuredSelection)
                         action.updateEnablement((IStructuredSelection) selection, true);
                     if (action.isEnabled()) {
                         contextManager.add(action);
@@ -1962,13 +1935,9 @@ public class ToolManager implements IToolManager {
         return UiPlugin.getDefault().getOperationMenuFactory();
     }
 
-    /**
-     *  (non-Javadoc)
-     * @see org.locationtech.udig.project.ui.tool.IToolManager#getActiveTool()
-     */
     @Override
     public Tool getActiveTool() {
-    	return activeModalToolProxy.getTool();
+        return activeModalToolProxy.getTool();
     }
 
     /**
@@ -1977,14 +1946,13 @@ public class ToolManager implements IToolManager {
      * @return
      */
     @Override
-    public ToolProxy getActiveToolProxy(){
-    	return activeModalToolProxy;
+    public ToolProxy getActiveToolProxy() {
+        return activeModalToolProxy;
     }
 
     /**
-     * Sets the current active modal tool; please note that the provided
-     * tool must be visible / enabled and available in the user interface
-     * for this operation to work.
+     * Sets the current active modal tool; please note that the provided tool must be visible /
+     * enabled and available in the user interface for this operation to work.
      *
      * @param activeModalToolProxy
      */
@@ -2017,50 +1985,53 @@ public class ToolManager implements IToolManager {
         }
     }
 
-	/**
-	 * This method goes through the steps of deactivating the current tool option contribution and
-	 * activating the new tool option contribution.
-	 *
-	 * @param statusLine
-	 * @param modalToolProxy
-	 */
-	private void initToolOptionsContribution(IStatusLineManager statusLine, ToolProxy modalToolProxy){
-	    if(statusLine != null ){
+    /**
+     * This method goes through the steps of deactivating the current tool option contribution and
+     * activating the new tool option contribution.
+     *
+     * @param statusLine
+     * @param modalToolProxy
+     */
+    private void initToolOptionsContribution(IStatusLineManager statusLine,
+            ToolProxy modalToolProxy) {
+        if (statusLine != null) {
 
-            if(preferencesShortcutToolOptions == null || preferencesShortcutToolOptions.isDisposed()){
+            if (preferencesShortcutToolOptions == null
+                    || preferencesShortcutToolOptions.isDisposed()) {
                 preferencesShortcutToolOptions = new PreferencesShortcutToolOptionsContributionItem();
-                statusLine.appendToGroup(StatusLineManager.BEGIN_GROUP, preferencesShortcutToolOptions);
+                statusLine.appendToGroup(StatusLineManager.BEGIN_GROUP,
+                        preferencesShortcutToolOptions);
                 preferencesShortcutToolOptions.setVisible(true);
             }
             preferencesShortcutToolOptions.update(modalToolProxy);
 
-            //TODO, cache contributions instead of destroying them and recreating them
+            // TODO, cache contributions instead of destroying them and recreating them
 
-            //remove old tool contribution
-            for(ContributionItem contribution : optionsContribution){
+            // remove old tool contribution
+            for (ContributionItem contribution : optionsContribution) {
                 statusLine.remove(contribution.getId());
             }
 
-            //get the new contributions
+            // get the new contributions
             optionsContribution = modalToolProxy.getOptionsContribution();
 
-            //set all new contributions
-            for(ContributionItem contribution : optionsContribution){
+            // set all new contributions
+            for (ContributionItem contribution : optionsContribution) {
                 statusLine.appendToGroup(StatusLineManager.BEGIN_GROUP, contribution);
                 contribution.setVisible(true);
             }
 
             statusLine.update(true);
         }
-	}
+    }
 
-	/**
-	 * This method goes through the steps of deactivating the current tool
-	 * and activating the new one.
-	 *
-	 * @param modalTool
-	 */
-    private void setActiveModalTool( ModalTool modalTool ) {
+    /**
+     * This method goes through the steps of deactivating the current tool and activating the new
+     * one.
+     *
+     * @param modalTool
+     */
+    private void setActiveModalTool(ModalTool modalTool) {
         if (modalTool == null) {
             // we cannot run without a tool; so we will use the default tool!
             modalTool = defaultModalToolProxy.getModalTool();
@@ -2079,7 +2050,7 @@ public class ToolManager implements IToolManager {
         activeTool.setActive(false);
         activeTool = null;
 
-        if( modalTool.getContext() == null ){
+        if (modalTool.getContext() == null) {
             // the tool cannot be activated as it has not been connected to the map yet
             // Could we perform activeTool.setContext( toolContext )?
             return;
@@ -2095,160 +2066,86 @@ public class ToolManager implements IToolManager {
             Cursor toolCursor = findToolCursor(currentCursorID);
 
             activeTool.getContext().getViewportPane().setCursor(toolCursor);
-        }
-        catch (Throwable eek){
-            System.err.println("Trouble activating "+modalTool+":"+eek);
+        } catch (Throwable eek) {
+            System.err.println("Trouble activating " + modalTool + ":" + eek); //$NON-NLS-1$ //$NON-NLS-2$
             try {
                 activeTool.setActive(false); // hope it does a better at cleaning up
-            }
-            catch (Throwable t){
+            } catch (Throwable t) {
                 // no it did not do a better job cleaning up
             }
             activeTool = defaultModalToolProxy.getModalTool();
             activeTool.setActive(true);
         }
     }
-//
-//    static class CopyAction extends Action {
-//        final Set<Transfer> transfers = UDIGDragDropUtilities.getTransfers();
-//        IWorkbenchPart part;
-//        public IWorkbenchPart getPart() {
-//            return part;
-//        }
-//        public void setPart( IWorkbenchPart part ) {
-//            this.part = part;
-//        }
-//        @Override
-//        public void runWithEvent( Event event ) {
-//            Clipboard clipBoard = new Clipboard(event.display);
-//            try {
-//                IStructuredSelection selection = (IStructuredSelection) part.getSite()
-//                        .getSelectionProvider().getSelection();
-//                if (selection.isEmpty())
-//                    return;
-//                List<Object> data = new ArrayList<Object>();
-//                List<Transfer> dataTransfers = new ArrayList<Transfer>();
-//                Object[] testData = new Object[1];
-//                Transfer[] testTransfer = new Transfer[1];
-//                for( Iterator iter = selection.iterator(); iter.hasNext(); ) {
-//                    Object element = iter.next();
-//                    for( Transfer transfer : transfers ) {
-//                        try {
-//                            testData[0] = element;
-//                            testTransfer[0] = transfer;
-//                            clipBoard.setContents(testData, testTransfer);
-//                        } catch (Exception e) {
-//                            continue;
-//                        }
-//                        data.add(element);
-//                        dataTransfers.add(transfer);
-//                    }
-//                }
-//                clipBoard.setContents(data.toArray(), dataTransfers
-//                        .toArray(new Transfer[dataTransfers.size()]));
-//            } finally {
-//                clipBoard.dispose();
-//            }
-//
-//        }
-//    }
 
     static class CopyAction extends Action {
         final Set<Transfer> transfers = UDIGDragDropUtilities.getTransfers();
+
         IWorkbenchPart part;
+
         public IWorkbenchPart getPart() {
             return part;
         }
-        public void setPart( IWorkbenchPart part ) {
+
+        public void setPart(IWorkbenchPart part) {
             this.part = part;
         }
+
         @Override
-        public void runWithEvent( Event event ) {
+        public void runWithEvent(Event event) {
             Clipboard clipBoard = new Clipboard(event.display);
             try {
                 IMap map = ApplicationGIS.getActiveMap();
-                if( map == ApplicationGIS.NO_MAP )
+                if (map == ApplicationGIS.NO_MAP)
                     return;
                 ILayer selectedLayer = map.getEditManager().getSelectedLayer();
-                if( selectedLayer == null )
+                if (selectedLayer == null)
                     return;
 
                 Filter layerFilter = selectedLayer.getFilter();
                 // TODO REVIEW comparison "layerFilter == org.geotools.filter.Filter.ALL"
-                if ( layerFilter==Filter.INCLUDE ) {
+                if (layerFilter == Filter.INCLUDE) {
                     return;
                 }
                 AdaptingFilter filter = null;
 
-                if( layerFilter instanceof AdaptingFilter){
+                if (layerFilter instanceof AdaptingFilter) {
                     AdaptingFilter adapting = (AdaptingFilter) layerFilter;
-                    if( adapting.getAdapter(ILayer.class)!=null ){
+                    if (adapting.getAdapter(ILayer.class) != null) {
                         filter = adapting;
                     }
                 }
 
-                if( filter == null ){
+                if (filter == null) {
                     filter = AdaptingFilterFactory.createAdaptingFilter(layerFilter, selectedLayer);
                 }
 
-                clipBoard.setContents(new Object[]{filter},
-                        new Transfer[]{UDigByteAndLocalTransfer.getInstance()});
-            }finally {
+                clipBoard.setContents(new Object[] { filter },
+                        new Transfer[] { UDigByteAndLocalTransfer.getInstance() });
+            } finally {
                 clipBoard.dispose();
             }
 
         }
     }
 
-//    static class PasteAction extends Action {
-//        IWorkbenchPart part;
-//        public IWorkbenchPart getPart() {
-//            return part;
-//        }
-//        public void setPart( IWorkbenchPart part ) {
-//            this.part = part;
-//        }
-//        @Override
-//        public void run() {
-//            MapEditor activeEditor = ApplicationGISInternal.getActiveEditor();
-//            Object targetObject = activeEditor;
-//            IStructuredSelection selection = (IStructuredSelection) part.getSite()
-//                    .getSelectionProvider().getSelection();
-//            if (!selection.isEmpty()) {
-//                targetObject = selection.iterator().next();
-//
-//            }
-//            Clipboard clipboard = new Clipboard(activeEditor.getSite().getShell().getDisplay());
-//            Set<Transfer> transfers = UDIGDNDProcessor.getTransfers();
-//            Object contents = null;
-//            for( Transfer transfer : transfers ) {
-//                contents = clipboard.getContents(transfer);
-//                if (contents != null)
-//                    break;
-//            }
-//            if (contents != null) {
-//                UDIGDropHandler dropHandler = activeEditor.getDropHandler();
-//                dropHandler.setTarget(targetObject);
-//                dropHandler.setViewerLocation(ViewerDropLocation.NONE);
-//                dropHandler.performDrop(contents, null);
-//            }
-//        }
-//    }
-
     static class PasteAction extends Action {
         IWorkbenchPart part;
+
         public IWorkbenchPart getPart() {
             return part;
         }
-        public void setPart( IWorkbenchPart part ) {
+
+        public void setPart(IWorkbenchPart part) {
             this.part = part;
         }
+
         @Override
         public void run() {
             Clipboard clipboard = new Clipboard(part.getSite().getShell().getDisplay());
             Set<Transfer> transfers = UDIGDNDProcessor.getTransfers();
             Object contents = null;
-            for( Transfer transfer : transfers ) {
+            for (Transfer transfer : transfers) {
                 contents = clipboard.getContents(transfer);
                 if (contents != null)
                     break;
@@ -2257,19 +2154,20 @@ public class ToolManager implements IToolManager {
             Object selection = firstSelectedElement();
 
             if (contents != null) {
-                MapPart activeEditor = ApplicationGISInternal.getActiveMapPart();
+                MapPart activeEditor = ApplicationGISInternal.getActiveEditor();
                 final Map finalMap;
                 final UDIGDropHandler finalDropHandler;
-                if( selection instanceof Map){
-                    finalMap = (Map)selection;
+                if (selection instanceof Map) {
+                    finalMap = (Map) selection;
                     finalDropHandler = new UDIGDropHandler();
-                    activeEditor=null;
-                } else if( activeEditor==null ){
-                    CreateMapCommand command = new CreateMapCommand(null,Collections.<IGeoResource>emptyList(), null);
+                    activeEditor = null;
+                } else if (activeEditor == null) {
+                    CreateMapCommand command = new CreateMapCommand(null,
+                            Collections.<IGeoResource> emptyList(), null);
                     try {
                         command.run(new NullProgressMonitor());
                     } catch (Exception e) {
-                        throw (RuntimeException) new RuntimeException( ).initCause( e );
+                        throw (RuntimeException) new RuntimeException().initCause(e);
                     }
                     finalMap = (Map) command.getCreatedMap();
                     finalDropHandler = new UDIGDropHandler();
@@ -2287,17 +2185,17 @@ public class ToolManager implements IToolManager {
 
                 final MapPart finalActiveEditor = activeEditor;
                 ILayer selectedLayer = finalMap.getEditManager().getSelectedLayer();
-                if( selectedLayer==null ){
+                if (selectedLayer == null) {
                     finalDropHandler.setTarget(finalMap);
-                }else{
+                } else {
                     finalDropHandler.setTarget(selectedLayer);
                 }
-                finalDropHandler.addListener(new IDropHandlerListener(){
+                finalDropHandler.addListener(new IDropHandlerListener() {
 
                     @Override
-                    public void done( IDropAction action, Throwable error ) {
+                    public void done(IDropAction action, Throwable error) {
 
-                        if( finalActiveEditor==null && finalMap.getMapLayers().size()==0 ){
+                        if (finalActiveEditor == null && finalMap.getMapLayers().isEmpty()) {
                             finalMap.getProjectInternal().getElementsInternal().remove(finalMap);
                         }
 
@@ -2305,15 +2203,15 @@ public class ToolManager implements IToolManager {
                     }
 
                     @Override
-                    public void noAction( Object data ) {
-                        if( finalActiveEditor==null && finalMap.getMapLayers().size()==0 ){
+                    public void noAction(Object data) {
+                        if (finalActiveEditor == null && finalMap.getMapLayers().isEmpty()) {
                             finalMap.getProjectInternal().getElementsInternal().remove(finalMap);
                         }
                         finalDropHandler.removeListener(this);
                     }
 
                     @Override
-                    public void starting( IDropAction action ) {
+                    public void starting(IDropAction action) {
                     }
 
                 });
@@ -2321,12 +2219,13 @@ public class ToolManager implements IToolManager {
                 finalDropHandler.performDrop(contents, null);
             }
         }
+
         private Object firstSelectedElement() {
             ISelection selection = part.getSite().getSelectionProvider().getSelection();
-            if( selection.isEmpty() || !(selection instanceof IStructuredSelection)){
+            if (selection.isEmpty() || !(selection instanceof IStructuredSelection)) {
                 return null;
-            }else{
-                return ((IStructuredSelection)selection).getFirstElement();
+            } else {
+                return ((IStructuredSelection) selection).getFirstElement();
             }
         }
     }

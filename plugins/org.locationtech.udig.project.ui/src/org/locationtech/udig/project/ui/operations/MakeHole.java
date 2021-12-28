@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,7 +12,7 @@
 package org.locationtech.udig.project.ui.operations;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.swt.widgets.Display;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
@@ -37,75 +37,81 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory2;
 
-
 public class MakeHole implements IOp {
 
     /**
-     * Calls a command which makes a spatial filter and puts it on the 
-     * styleBlackboard
+     * Calls a command which makes a spatial filter and puts it on the styleBlackboard
      */
-    public void op( Display display, Object target, IProgressMonitor monitor ) throws Exception {
+    @Override
+    public void op(Display display, Object target, IProgressMonitor monitor) throws Exception {
         final ILayer layer = (ILayer) target;
         final IMap map = layer.getMap();
 
-        //get all selected features
+        // get all selected features
         Query query = new Query(layer.getSchema().getTypeName(), layer.getFilter());
-        
-        FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = layer.getResource(FeatureSource.class, new SubProgressMonitor(monitor, 1)); 
-        FeatureCollection<SimpleFeatureType, SimpleFeature>  features = featureSource.getFeatures(query);
-        
-        //combine them into one large polygon
+
+        FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = layer
+                .getResource(FeatureSource.class, SubMonitor.convert(monitor, 1));
+        FeatureCollection<SimpleFeatureType, SimpleFeature> features = featureSource
+                .getFeatures(query);
+
+        // combine them into one large polygon
         final Geometry union[] = new Geometry[1];
-        features.accepts( new FeatureVisitor(){
-            public void visit( Feature feature ) {
+        features.accepts(new FeatureVisitor() {
+            @Override
+            public void visit(Feature feature) {
                 SimpleFeature simple = (SimpleFeature) feature;
-                Geometry geometry = (Geometry ) simple.getDefaultGeometry();
-                if( union[0] == null ){
+                Geometry geometry = (Geometry) simple.getDefaultGeometry();
+                if (union[0] == null) {
                     union[0] = geometry;
+                } else {
+                    union[0] = union[0].union(geometry);
                 }
-                else {
-                    union[0] = union[0].union( geometry );
-                }
-            }                    
-        }, GeoToolsAdapters.progress(monitor) );
-        
+            }
+        }, GeoToolsAdapters.progress(monitor));
+
         final Geometry hole = union[0];
-        
-        MapCommand drillHoleCommand = new AbstractCommand(){
-            
-            public void run( IProgressMonitor monitor ) throws Exception {
-                for( Layer targetLayer : getMap().getLayersInternal() ){
-                    //make hole filter for target layer
-                    if( targetLayer == layer ){
+
+        MapCommand drillHoleCommand = new AbstractCommand() {
+
+            @Override
+            public void run(IProgressMonitor monitor) throws Exception {
+                for (Layer targetLayer : getMap().getLayersInternal()) {
+                    // make hole filter for target layer
+                    if (targetLayer == layer) {
                         continue; // skip the source layer (because that would be silly)
                     }
                     SimpleFeatureType targetType = targetLayer.getSchema();
-                    if( targetType == null ){
+                    if (targetType == null) {
                         // must be a grid coverage or something
                         continue;
                     }
                     String targetGeomName = targetType.getGeometryDescriptor().getLocalName();
-    
-                    FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2( GeoTools.getDefaultHints() );
-                    Filter cut= ff.not( ff.within( ff.property( targetGeomName ), ff.literal(hole) ) );
-                    
-                    //put it on style blackboard
-                    //Key:  ProjectBlackboardConstants    String LAYER__DATA_QUERY = "org.locationtech.udig.project.view"; //$NON-NLS-1$
+
+                    FilterFactory2 ff = CommonFactoryFinder
+                            .getFilterFactory2(GeoTools.getDefaultHints());
+                    Filter cut = ff.not(ff.within(ff.property(targetGeomName), ff.literal(hole)));
+
+                    // put it on style blackboard
+                    // Key: ProjectBlackboardConstants String LAYER__DATA_QUERY =
+                    // "org.locationtech.udig.project.view"; //$NON-NLS-1$
                     IStyleBlackboard styleBlackboard = layer.getStyleBlackboard();
                     styleBlackboard.put(ProjectBlackboardConstants.LAYER__DATA_QUERY, cut);
                 }
             }
 
+            @Override
             public Command copy() {
                 return this;
             }
 
+            @Override
             public String getName() {
-                return "Create Hole Command"; //$NON-NLS-1$
+                return "Create Hole Command";
             }
-            
+
         };
-        map.sendCommandSync( drillHoleCommand );
+        map.sendCommandSync(drillHoleCommand);
     }
 
 }

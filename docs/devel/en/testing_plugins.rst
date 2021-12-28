@@ -9,7 +9,7 @@ plugin, simply creating test cases the usual junit way by extended org.junit.Tes
 
 .. note::
 
-   The junit library is bundled as the **org.junit** plugin. Your test plugin 
+   The junit library is bundled as the **org.junit** plugin. Your test plugin
    must depend on it.
 
 Optional: Unless it is necessary, we recommend placing junit tests for a particular plugin, in a
@@ -38,7 +38,7 @@ In **org.locationtech.udig.project.tests**:
 
 In **org.locationtech.udig.project.ui.tests**:
 
--  **AbstractProjectUITest** - Extends **AbstractProjectTest** and tries to close mapeditors in
+-  **AbstractProjectUITest** - Extends **AbstractProjectTest** and tries to close MapEditors in
    addition to what **AbstractProjectTest** does..
 
 Naming Conventions
@@ -74,8 +74,8 @@ Running Tests in the IDE
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 After creating a test case in your new test plugin, right click on the class while in the **Java**
-perspective, and the context menu should contain a menu item entitled 
-:menuselection:`Run As --> JUnit Plug-in Test`. This will start an eclipse runtime environment and 
+perspective, and the context menu should contain a menu item entitled
+:menuselection:`Run As --> JUnit Plug-in Test`. This will start an eclipse runtime environment and
 run your test class.
 
 .. image:: /images/testing_plugins/runide.png
@@ -112,11 +112,11 @@ test classes.
             addTest(new TestSuite(BasicDataPipelineTest.class));
             addTest(new TestSuite(BasicDataPipelineDialogTest.class));
         }
-        
+
     }
 
 .. warning::
-   **The test suite must provide an implementation of a method with the following 
+   **The test suite must provide an implementation of a method with the following
    signature, which returns an instnace of the suite**
 
    .. code-block:: java
@@ -135,7 +135,7 @@ include:
 #. **plugin-name** - This is name of your **test** plugin. For simplicity, keep it the same as the
    id of your plugin.
 #. **testClass** - This is the fully qualified class name of your test suite.
-#. **testTarget** - This is the name of ant target which will be used to run your tests. 
+#. **testTarget** - This is the name of ant target which will be used to run your tests.
 
 .. warning::
    It must be unique among all other test plugins.
@@ -162,7 +162,7 @@ The easiest way to add a plugin to a particular feature is using the eclipse fea
 Adding the Plugin to the Automated Test Set
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. todo:: 
+.. todo::
    Where are the test geotools scripts ? couldn't find at github (https://github.com/geotools/geotools)
 
 To add the plugin to the automated test set, you must check out
@@ -229,7 +229,7 @@ The following is an example of a target:
         <antcall target="runtests">
           <param name="testPlugin" value="${org.locationtech.udig.catalog.tests.ui}"/>
           <param name="report" value="org.locationtech.udig.catalog.tests.ui"/>
-        </antcall>   
+        </antcall>
      </target>
 
 The target can be added anywhere in the file.

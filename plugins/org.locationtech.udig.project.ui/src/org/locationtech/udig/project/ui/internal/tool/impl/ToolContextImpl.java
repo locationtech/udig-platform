@@ -15,23 +15,17 @@ import java.awt.Rectangle;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.ICoolBarManager;
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IActionBars2;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.services.IServiceLocator;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.EditCommand;
@@ -47,6 +41,7 @@ import org.locationtech.udig.project.internal.render.impl.ScaleUtils.CalculateZo
 import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
 import org.locationtech.udig.project.ui.commands.IDrawCommand;
 import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.MapSite;
 import org.locationtech.udig.project.ui.internal.tool.ToolContext;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
@@ -85,59 +80,6 @@ import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
  *
  */
 public class ToolContextImpl extends AbstractContextImpl implements ToolContext {
-
-    private final class IActionBars2Adapter implements IActionBars2 {
-        IActionBars bars;
-
-        private IActionBars2Adapter(IViewPart view) {
-            bars = view.getViewSite().getActionBars();
-        }
-
-        @Override
-        public void clearGlobalActionHandlers() {
-            bars.clearGlobalActionHandlers();
-        }
-
-        @Override
-        public IAction getGlobalActionHandler(String actionId) {
-            return bars.getGlobalActionHandler(actionId);
-        }
-
-        @Override
-        public IMenuManager getMenuManager() {
-            return bars.getMenuManager();
-        }
-
-        @Override
-        public IServiceLocator getServiceLocator() {
-            return bars.getServiceLocator();
-        }
-
-        @Override
-        public IStatusLineManager getStatusLineManager() {
-            return bars.getStatusLineManager();
-        }
-
-        @Override
-        public IToolBarManager getToolBarManager() {
-            return bars.getToolBarManager();
-        }
-
-        @Override
-        public void setGlobalActionHandler(String actionId, IAction handler) {
-            bars.setGlobalActionHandler(actionId, handler);
-        }
-
-        @Override
-        public void updateActionBars() {
-            bars.updateActionBars();
-        }
-
-        @Override
-        public ICoolBarManager getCoolBarManager() {
-            return null;
-        }
-    }
 
     /**
      * The cached value of the '{@link #getDrawFactory() <em>Draw Factory</em>}' attribute.
@@ -257,15 +199,16 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
     }
 
     @Override
-    public IStatusLineManager getStatusBar() {
-        IActionBars2 bars = getActionBars();
-        if (bars == null)
-            return null;
-        return bars.getStatusLineManager();
+    public IActionBars getActionBars() {
+        MapSite workbenchPartSite = getSite();
+        if (workbenchPartSite != null) {
+            return workbenchPartSite.getActionBars();
+        }
+
+        return null;
     }
 
-    @Override
-    public IActionBars2 getActionBars() {
+    private MapSite getSite() {
         IWorkbenchWindow window = getWindow();
         if (window == null)
             return null;
@@ -276,11 +219,8 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
 
         for (IEditorReference ref : editors) {
             IEditorPart editor = ref.getEditor(false);
-            if (editor instanceof MapPart) {
-                MapPart mapPart = (MapPart) editor;
-                if (getMap() == mapPart.getMap()) {
-                    return (IActionBars2) editor.getEditorSite().getActionBars();
-                }
+            if (isMapPart(editor)) {
+                return ((MapPart) editor).getMapSite();
             }
         }
 
@@ -288,15 +228,16 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
 
         for (IViewReference ref : views) {
             final IViewPart view = ref.getView(false);
-            if (view instanceof MapPart) {
-                MapPart mapPart = (MapPart) view;
-                if (getMap() == mapPart.getMap()) {
-                    return new IActionBars2Adapter(view);
-                }
+            if (isMapPart(view)) {
+                return ((MapPart) view).getMapSite();
             }
         }
 
         return null;
+    }
+
+    private boolean isMapPart(IWorkbenchPart workbenchPart) {
+        return (workbenchPart instanceof MapPart);
     }
 
     private IWorkbenchWindow getWindow() {

@@ -50,25 +50,32 @@ public interface MapPart extends IWorkbenchPart {
 
     /**
      * Used to set the font for the map display
+     *
      * @param textArea
      */
     public void setFont(Control textArea);
 
     /**
-     * This is used by tools to advertise their "selection". For example the feature seleciton
-     * tool will often provide a Filter or FeatureCollection.
+     * This is used by tools to advertise their "selection". For example the feature selection tool
+     * will often provide a Filter or FeatureCollection.
      *
      * @param selectionProvider
      */
     public void setSelectionProvider(IMapEditorSelectionProvider selectionProvider);
 
-    //public void setDefaultEditDomain(IMapEditorPart editorPart)
-
     /**
      * Access to status line manager; used to display messages and provide tool feedback.
+     *
      * @return
      */
     IStatusLineManager getStatusLineManager();
+
+    /**
+     * Returns the MapSite of this MapPart.
+     *
+     * @return Returns the MapSite of this MapPart.
+     */
+    MapSite getMapSite();
 
     /**
      * Returns the DropHandler from this editor.
@@ -76,4 +83,25 @@ public interface MapPart extends IWorkbenchPart {
      * @return Returns the DropHandler from this editor.
      */
     public UDIGDropHandler getDropHandler();
+
+    /**
+     * Returns true if drag and drop is enabled for the MapPart.
+     *
+     * @return Returns true if drag and drop is enabled for the MapPart.
+     */
+    boolean isDragging();
+
+    /**
+     * Enables or disables dragging (drag and drop) from the map editor.
+     *
+     * @param isDragging True if drag and drop should be enabled, false otherwise.
+     */
+    void setDragging(boolean isDragging);
+
+    /**
+     * Sets MapPart to dirty mode.
+     *
+     * @param isDirty True if MapPart is dirty, false otherwise.
+     */
+    void setDirty(boolean isDirty);
 }

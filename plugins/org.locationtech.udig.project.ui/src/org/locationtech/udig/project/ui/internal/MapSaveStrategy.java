@@ -34,12 +34,12 @@ import org.locationtech.udig.project.internal.StyleBlackboard;
 public final class MapSaveStrategy extends CatalogExport {
     private final ExportResourceSelectionState state;
 
-    private MapEditorPart editor;
+    private MapPart mapPart;
 
-    public MapSaveStrategy(ExportResourceSelectionState state, MapEditorPart editor) {
+    public MapSaveStrategy(ExportResourceSelectionState state, MapPart mapPart) {
         super(false);
         this.state = state;
-        this.editor = editor;
+        this.mapPart = mapPart;
 
         initWorkflow();
     }
@@ -61,8 +61,8 @@ public final class MapSaveStrategy extends CatalogExport {
                 boolean result = super.performFinish(monitor);
                 replaceExportedLayers(state);
                 try {
-                    editor.getMap().getEditManagerInternal().commitTransaction();
-                    editor.setDirty(false);
+                    mapPart.getMap().getEditManagerInternal().commitTransaction();
+                    mapPart.setDirty(false);
                 } catch (IOException e) {
                     ProjectUIPlugin.log("failed committing transaction", e); //$NON-NLS-1$
                     MessageDialog.openError(null, Messages.MapSaveStrategy_error_title,
@@ -80,7 +80,7 @@ public final class MapSaveStrategy extends CatalogExport {
             }
 
             private void replaceLayer(IGeoResource resource, Collection<IGeoResource> exported) {
-                List<Layer> layers = MapSaveStrategy.this.editor.getMap().getLayersInternal();
+                List<Layer> layers = MapSaveStrategy.this.mapPart.getMap().getLayersInternal();
                 Layer found;
                 do {
                     found = null;
@@ -100,7 +100,7 @@ public final class MapSaveStrategy extends CatalogExport {
             }
 
             private Collection<Layer> toLayers(Layer found, Collection<IGeoResource> exported) {
-                LayerFactory layerFactory = MapSaveStrategy.this.editor.getMap().getLayerFactory();
+                LayerFactory layerFactory = MapSaveStrategy.this.mapPart.getMap().getLayerFactory();
                 Collection<Layer> newLayers = new ArrayList<>();
 
                 for (IGeoResource exportedResource : exported) {

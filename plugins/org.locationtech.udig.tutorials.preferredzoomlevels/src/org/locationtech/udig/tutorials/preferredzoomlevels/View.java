@@ -47,7 +47,7 @@ public class View extends DefaultMapViewPart {
 
     @Override
     protected void initMap(Map createdMap) {
-        TreeSet<Double> scales = new TreeSet<Double>();
+        TreeSet<Double> scales = new TreeSet<>();
         scales.add(1000.0);
         scales.add(10000.0);
         scales.add(100000.0);
@@ -67,6 +67,21 @@ public class View extends DefaultMapViewPart {
     @Override
     public IStatusLineManager getStatusLineManager() {
         return getViewSite().getActionBars().getStatusLineManager();
+    }
+
+    @Override
+    public boolean isDragging() {
+        return false;
+    }
+
+    @Override
+    public void setDragging(boolean isDragging) {
+        // ignore drag source
+    }
+
+    @Override
+    public void setDirty(boolean isDirty) {
+        // ignore dirty flag
     }
 
 }

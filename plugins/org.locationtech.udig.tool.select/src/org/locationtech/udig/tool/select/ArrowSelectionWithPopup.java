@@ -66,7 +66,7 @@ public class ArrowSelectionWithPopup extends AbstractModalTool implements ModalT
     @Override
     public void mousePressed(MapMouseEvent e) {
         if (e.button == MapMouseEvent.BUTTON3)
-            ((ViewportPane) e.source).getMapEditor().openContextMenu();
+            ((ViewportPane) e.source).getMapPart().openContextMenu();
         else {
             x = e.x;
             y = e.y;

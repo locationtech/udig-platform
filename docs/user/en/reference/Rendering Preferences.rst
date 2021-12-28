@@ -45,7 +45,45 @@ Available Preferences
    As stated this is an advanced option so do not modify it unless you understand the image formats
    and the ramifications of using one image type over another.
 
- 
+Other Preferences
+`````````````````
+
+.. _project_preferences-hide-renderer-job:
+
+Hide render jobs in Progress View
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The option **HIDE_RENDER_JOB** allows to control, whether executed jobs are shown in Progress View.
+If this option is available and set to **true**, the jobs are not shown. Otherwise, which is the
+default, jobs are shown in Progress View.
+
+This option is not intended to be set or changed at runtime.
+Use *.options* file in installation folder and include this file for instance with the Eclipse
+command line option -pluginCustomization to configure application behavior:
+
+.. code-block::
+   :caption: .options file
+
+    org.locationtech.udig.project/HIDE_RENDER_JOB=true
+
+.. _project_preferences-advanced-projection-support:
+
+Advanced projection support
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The option **ADVANCED_PROJECTION_SUPPORT** allows to control, whether advanced projection support and
+continuous map wrapping are enabled for feature renderings such as shape files.
+If this option is available and set to **true**, then features such as shape files are wrapped
+continuously to the left and the right. Otherwise, which is the default, those features are
+rendered only once.
+
+This option is not intended to be set or changed at runtime.
+Use *.options* file in installation folder and include this file for instance with the Eclipse
+command line option -pluginCustomization to configure application behavior:
+
+.. code-block::
+   :caption: .options file
+
+    org.locationtech.udig.project/ADVANCED_PROJECTION_SUPPORT=true
+
 **Related reference**
 
 :doc:`Catalog Preferences`

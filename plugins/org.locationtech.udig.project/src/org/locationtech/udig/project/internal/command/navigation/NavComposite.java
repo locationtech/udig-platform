@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -12,6 +13,8 @@ package org.locationtech.udig.project.internal.command.navigation;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.command.NavCommand;
 import org.locationtech.udig.project.command.PostDeterminedEffectCommand;
@@ -19,113 +22,108 @@ import org.locationtech.udig.project.command.UndoableCommand;
 import org.locationtech.udig.project.command.UndoableComposite;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
-
 /**
  * TODO Purpose of org.locationtech.udig.project.internal.command.navigation
  * <p>
  * </p>
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
 public class NavComposite extends UndoableComposite implements NavCommand {
 
-	ViewportModel model;
+    ViewportModel model;
 
-	/**
-	 * Creates a new instance of NavComposite
-	 * 
-	 * @param navCommands
-	 *            an ordered list of Nav commands
-	 */
-	public NavComposite(List navCommands) {
-		super(navCommands);
-	}
+    /**
+     * Creates a new instance of NavComposite
+     *
+     * @param navCommands an ordered list of NavCommands
+     */
+    public NavComposite(List navCommands) {
+        super(navCommands);
+    }
 
-	/**
-	 * @see org.locationtech.udig.project.internal.command.navigation.NavCommand#setViewportModel(org.locationtech.udig.project.ViewportModelControl)
-	 */
-	public void setViewportModel(ViewportModel model) {
-		this.model = model;
-		for (Iterator iter = commands.iterator(); iter.hasNext();) {
-			NavCommand command = (NavCommand) iter.next();
-			command.setViewportModel(model);
-		}
-	}
+    /**
+     * @see org.locationtech.udig.project.internal.command.navigation.NavCommand#setViewportModel(org.locationtech.udig.project.ViewportModelControl)
+     */
+    @Override
+    public void setViewportModel(ViewportModel model) {
+        this.model = model;
+        for (Iterator iter = commands.iterator(); iter.hasNext();) {
+            NavCommand command = (NavCommand) iter.next();
+            command.setViewportModel(model);
+        }
+    }
 
-	public void run(IProgressMonitor monitor) throws Exception {
-		execute(monitor);
-	}
+    @Override
+    public void run(IProgressMonitor monitor) throws Exception {
+        execute(monitor);
+    }
 
-	public boolean execute(IProgressMonitor monitor) throws Exception {
-		monitor.beginTask(getName(), 12 * commands.size());
-		monitor.worked(2);
-		final boolean previousDeliver = model.eDeliver();
-		model.eSetDeliver(false);
-		boolean changedState = false;
-		try {
-			for (Iterator<? extends MapCommand> iter = commands.iterator(); iter
-					.hasNext();) {
-				NavCommand command = (NavCommand) iter.next();
+    @Override
+    public boolean execute(IProgressMonitor monitor) throws Exception {
+        monitor.beginTask(getName(), 12 * commands.size());
+        monitor.worked(2);
+        final boolean previousDeliver = model.eDeliver();
+        model.eSetDeliver(false);
+        boolean changedState = false;
+        try {
+            for (Iterator<? extends MapCommand> iter = commands.iterator(); iter.hasNext();) {
+                NavCommand command = (NavCommand) iter.next();
 
-				// reset the eSetDeliverState so that the last change will trigger a re-render
-				if (!iter.hasNext())
-					model.eSetDeliver(previousDeliver);
-				
+                // reset the eSetDeliverState so that the last change will trigger a re-render
+                if (!iter.hasNext())
+                    model.eSetDeliver(previousDeliver);
+
                 // initialize command
                 command.setMap(getMap());
                 command.setViewportModel(model);
-               
+
                 changedState |= runCommand(command, monitor);
-			}
-			monitor.done();
-		} finally {
-			model.eSetDeliver(previousDeliver);
-		}
+            }
+            monitor.done();
+        } finally {
+            model.eSetDeliver(previousDeliver);
+        }
 
-		return changedState;
-	}
+        return changedState;
+    }
 
-	
-	private boolean runCommand( NavCommand command, IProgressMonitor monitor ) throws Exception {
+    private boolean runCommand(NavCommand command, IProgressMonitor monitor) throws Exception {
 
-        SubProgressMonitor subProgressMonitor = new SubProgressMonitor(
-                monitor, 10);
+        SubMonitor subMonitor = SubMonitor.convert(monitor, 10);
         boolean changed;
         if (command instanceof PostDeterminedEffectCommand) {
-            changed = ((PostDeterminedEffectCommand) command)
-                    .execute(subProgressMonitor);
+            changed = ((PostDeterminedEffectCommand) command).execute(subMonitor);
         } else {
-            command.run(subProgressMonitor);
+            command.run(subMonitor);
             changed = true;
         }
-        subProgressMonitor.done();
+        subMonitor.done();
         return changed;
     }
 
     @Override
-	public void rollback( IProgressMonitor monitor ) throws Exception {
+    public void rollback(IProgressMonitor monitor) throws Exception {
         final boolean previousDeliver = model.eDeliver();
         model.eSetDeliver(false);
-        try{
-        for (int i = finalizerCommands.size() - 1; i > -1; i--) {
-            UndoableCommand command = (UndoableCommand) finalizerCommands.get(i);
-            command.rollback(monitor);
-        }
-
-        for (int i = commands.size() - 1; i > -1; i--) {
-            // reset the eSetDeliverState so that the last change will trigger a re-render
-            if( i==0 ){
-                model.eSetDeliver(previousDeliver);
+        try {
+            for (int i = finalizerCommands.size() - 1; i > -1; i--) {
+                UndoableCommand command = (UndoableCommand) finalizerCommands.get(i);
+                command.rollback(monitor);
             }
-            UndoableCommand command = (UndoableCommand) commands.get(i);
-            command.rollback(monitor);
-        }	
-        
-        }finally{
+
+            for (int i = commands.size() - 1; i > -1; i--) {
+                // reset the eSetDeliverState so that the last change will trigger a re-render
+                if (i == 0) {
+                    model.eSetDeliver(previousDeliver);
+                }
+                UndoableCommand command = (UndoableCommand) commands.get(i);
+                command.rollback(monitor);
+            }
+
+        } finally {
             model.eSetDeliver(previousDeliver);
         }
-	}
+    }
 }

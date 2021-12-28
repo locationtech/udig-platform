@@ -398,7 +398,7 @@ public interface ILayer extends ILegendItem, Comparable<ILayer> {
      * </p>
      *
      * @return Blackboard used for lightweight collaboration.
-     * @deprecated
+     * @deprecated Use {@link ILayer#getBlackboard} instead
      */
     @Deprecated
     IBlackboard getProperties();

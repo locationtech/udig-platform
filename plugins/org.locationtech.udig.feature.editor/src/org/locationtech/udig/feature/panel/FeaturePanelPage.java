@@ -94,7 +94,7 @@ public class FeaturePanelPage extends Page
     private IFeatureSite site;
 
     /**
-     * Normal tabbed propert composite will display fine
+     * Normal tabbed property composite will display fine
      */
     private FeaturePanelComposite tabbedPropertyComposite;
 
@@ -190,9 +190,6 @@ public class FeaturePanelPage extends Page
             this.schema = schema;
         }
 
-        /**
-         * @see org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor#getContributorId()
-         */
         @Override
         public SimpleFeatureType getSchema() {
             return schema;
@@ -254,9 +251,6 @@ public class FeaturePanelPage extends Page
                     }
                     tabToComposite.put(tab, tabComposite);
                 }
-                // force widgets to be resized
-                // tab.setInput(tabbedPropertyViewer.getWorkbenchPart(),(ISelection)
-                // tabbedPropertyViewer.getInput());
 
                 // store tab selection
                 storeCurrentTabSelection(descriptor.getLabel());
@@ -372,9 +366,6 @@ public class FeaturePanelPage extends Page
         activePropertySheet = true;
     }
 
-    /**
-     * @see org.eclipse.ui.part.IPage#createControl(org.eclipse.swt.widgets.Composite)
-     */
     @Override
     public void createControl(Composite parent) {
         widgetFactory = new FeaturePanelWidgetFactory();
@@ -491,9 +482,6 @@ public class FeaturePanelPage extends Page
         }
     }
 
-    /**
-     * @see org.eclipse.ui.part.IPage#dispose()
-     */
     @Override
     public void dispose() {
 
@@ -519,17 +507,11 @@ public class FeaturePanelPage extends Page
         currentSelection = null;
     }
 
-    /**
-     * @see org.eclipse.ui.part.IPage#getControl()
-     */
     @Override
     public Control getControl() {
         return tabbedPropertyComposite;
     }
 
-    /**
-     * @see org.eclipse.ui.part.IPage#setActionBars(org.eclipse.ui.IActionBars)
-     */
     @Override
     public void setActionBars(IActionBars actionBars) {
         // Override the undo and redo global action handlers
@@ -555,18 +537,11 @@ public class FeaturePanelPage extends Page
         }
     }
 
-    /**
-     * @see org.eclipse.ui.part.IPage#setFocus()
-     */
     @Override
     public void setFocus() {
         getControl().setFocus();
     }
 
-    /**
-     * @see org.eclipse.ui.ISelectionListener#selectionChanged(org.eclipse.ui.IWorkbenchPart,
-     *      org.eclipse.jface.viewers.ISelection)
-     */
     @Override
     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
         setInput(part, selection);
@@ -788,8 +763,8 @@ public class FeaturePanelPage extends Page
      */
     private void handleTabSelection(FeaturePanelTabDescriptor tabDescriptor) {
         if (selectionQueueLocked) {
-            /*
-             * don't send tab selection events for non user changes.
+            /**
+             * Don't send tab selection events for non user changes.
              */
             return;
         }
@@ -859,9 +834,6 @@ public class FeaturePanelPage extends Page
         }
     }
 
-    /**
-     * @see org.eclipse.jface.viewers.ILabelProviderListener#labelProviderChanged(org.eclipse.jface.viewers.LabelProviderChangedEvent)
-     */
     @Override
     public void labelProviderChanged(LabelProviderChangedEvent event) {
         refreshTitleBar();
@@ -899,7 +871,7 @@ public class FeaturePanelPage extends Page
      * is used to load a registry with the extension point This id matches the registry.
      * <p>
      * It is possible for elements in a selection to implement ITabbedFeaturePanelPageContributor to
-     * provide a different contributor id and thus a differenent registry.
+     * provide a different contributor id and thus a different registry.
      *
      * @param selection the current selection in the active workbench part.
      */
@@ -913,7 +885,7 @@ public class FeaturePanelPage extends Page
         }
 
         IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-        if (structuredSelection.size() == 0) {
+        if (structuredSelection.isEmpty()) {
             return;
         }
 

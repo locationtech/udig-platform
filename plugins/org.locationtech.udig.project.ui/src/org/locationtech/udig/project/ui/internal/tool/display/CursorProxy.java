@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,48 +20,51 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.locationtech.udig.project.ui.tool.ModalTool;
 
 /**
- * The cursor proxy allows for tool cursor images  to be loaded lazily. It acts as a proxy
- * for cursor image of the tool until the image is really needed to be displayed.
- * 
+ * The cursor proxy allows for tool cursor images to be loaded lazily. It acts as a proxy for cursor
+ * image of the tool until the image is really needed to be displayed.
+ *
  * @author Vitalus
  * @since UDIG 1.1
  *
  */
 public class CursorProxy {
-	
-    private volatile Cursor cursor;
-    private String imagePath;
-    private String hotspotX;
-    private String hotspotY;
-    private String cursorID;
-    private String pluginID;
 
+    private volatile Cursor cursor;
+
+    private String imagePath;
+
+    private String hotspotX;
+
+    private String hotspotY;
+
+    private String cursorID;
+
+    private String pluginID;
 
     /**
      * The constructor to create custom cursor proxy from extention.
-     * 
+     *
      * @param configuration
      */
-    public CursorProxy( IConfigurationElement configuration ) {
+    public CursorProxy(IConfigurationElement configuration) {
         if (configuration != null) {
             imagePath = configuration.getAttribute("image"); //$NON-NLS-1$
             hotspotX = configuration.getAttribute("hotspotX"); //$NON-NLS-1$
             hotspotY = configuration.getAttribute("hotspotY"); //$NON-NLS-1$
             cursorID = configuration.getAttribute("id"); //$NON-NLS-1$
-            pluginID = configuration.getNamespace();
+            pluginID = configuration.getNamespaceIdentifier();
         } else {
             cursorID = ModalTool.DEFAULT_CURSOR;
         }
     }
-    
+
     /**
-     * Returns cursor ID declared in extention point. 
-     * ID is unique in extention registry.
-     * 
+     * Returns cursor ID declared in extention point. ID is unique in extention registry.
+     *
      * @return
      */
-    public String getID(){
-    	return cursorID;
+    public String getID() {
+        return cursorID;
     }
 
     /**
@@ -88,11 +91,11 @@ public class CursorProxy {
                         } catch (Exception e) {
                             y = 0;
                         }
-                        if (imageDescriptor == null || imageDescriptor.getImageData() == null)
+                        if (imageDescriptor == null || imageDescriptor.getImageData(100) == null)
                             cursor = getSystemCursor(cursorID);
                         else
-                            cursor = new Cursor(Display.getDefault(), imageDescriptor
-                                    .getImageData(), x, y);
+                            cursor = new Cursor(Display.getDefault(),
+                                    imageDescriptor.getImageData(100), x, y);
                     }
                 }
             }
@@ -102,17 +105,17 @@ public class CursorProxy {
     }
 
     /**
-     * Returns system cursor object based on constants from <code>ModalTool</code>
-     * interface. These constants are mapped to SWT cursor constants.
-     * 
+     * Returns system cursor object based on constants from <code>ModalTool</code> interface. These
+     * constants are mapped to SWT cursor constants.
+     *
      * @param systemCursorID
      * @return
      */
-    static Cursor getSystemCursor( String systemCursorID ) {
-    	Display display = PlatformUI.getWorkbench().getDisplay();
+    static Cursor getSystemCursor(String systemCursorID) {
+        Display display = PlatformUI.getWorkbench().getDisplay();
         if (systemCursorID == null)
             return display.getSystemCursor(SWT.CURSOR_ARROW);
-        
+
         if (systemCursorID.equals(ModalTool.CROSSHAIR_CURSOR))
             return display.getSystemCursor(SWT.CURSOR_CROSS);
         if (systemCursorID.equals(ModalTool.E_RESIZE_CURSOR))
@@ -139,10 +142,10 @@ public class CursorProxy {
             return display.getSystemCursor(SWT.CURSOR_SIZESW);
         if (systemCursorID.equals(ModalTool.WAIT_CURSOR))
             return display.getSystemCursor(SWT.CURSOR_WAIT);
-        
-        if(systemCursorID.equals(ModalTool.NO_CURSOR))
-        	return display.getSystemCursor(SWT.CURSOR_NO);
-        
+
+        if (systemCursorID.equals(ModalTool.NO_CURSOR))
+            return display.getSystemCursor(SWT.CURSOR_NO);
+
         return display.getSystemCursor(SWT.CURSOR_ARROW);
     }
 

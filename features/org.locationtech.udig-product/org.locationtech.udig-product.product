@@ -14,8 +14,13 @@
    </configIni>
 
    <launcherArgs>
-      <vmArgs>-Xmx386M -Dosgi.parentClassloader=ext -Dorg.eclipse.emf.ecore.plugin.EcorePlugin.doNotLoadResourcesPlugin=true</vmArgs>
-      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true</vmArgsMac>
+      <programArgs>-pluginCustomization
+.options
+      </programArgs>
+      <vmArgs>-Xmx386M -Dosgi.parentClassloader=ext -Dorg.eclipse.emf.ecore.plugin.EcorePlugin.doNotLoadResourcesPlugin=true
+      </vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -Djava.awt.headless=true
+      </vmArgsMac>
    </launcherArgs>
 
    <windowImages i16="./icons/icon16.gif" i32="./icons/icon32.gif" i48="./icons/icon48.gif" i64="./icons/icon64.gif" i128="./icons/icon128.gif"/>
@@ -77,9 +82,9 @@ Content and such source code may be obtained at http://github.com/udig .
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="5" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+      <property name="osgi.instance.area.default" value="$LOCALAPPDATA$/uDig/workspace" os="win32" />
       <property name="osgi.configuration.area.default" value="$LOCALAPPDATA$/uDig/configuration" os="win32" />
       <property name="org.eclipse.update.reconcile" value="false" />
-      <property name="osgi.instance.area.default" value="$LOCALAPPDATA$/uDig/workspace" os="win32" />
    </configurations>
 
 </product>

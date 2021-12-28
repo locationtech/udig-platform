@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -12,38 +13,36 @@ package org.locationtech.udig.ui.operations;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-
 import org.locationtech.udig.internal.ui.UiPlugin;
 
 /**
- * Abstract class that can be used as a superclass for PropertyValue implementations. 
- * 
+ * Abstract class that can be used as a superclass for PropertyValue implementations.
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public abstract class AbstractPropertyValue<T> implements PropertyValue<T> {
-    protected Set<IOpFilterListener> listeners=new CopyOnWriteArraySet<IOpFilterListener>();
-    
-    public void addListener( IOpFilterListener listener ) {
+    protected Set<IOpFilterListener> listeners = new CopyOnWriteArraySet<>();
+
+    @Override
+    public void addListener(IOpFilterListener listener) {
         listeners.add(listener);
     }
 
-
-    public void removeListener( IOpFilterListener listener ) {
+    @Override
+    public void removeListener(IOpFilterListener listener) {
         listeners.add(listener);
     }
-    
+
     /**
      * Notifies listener that the value of the filter has changed.
      */
     public void notifyListeners(Object changed) {
-        for( IOpFilterListener listener : listeners ) {
+        for (IOpFilterListener listener : listeners) {
             try {
                 listener.notifyChange(changed);
             } catch (Exception e) {
-                UiPlugin.trace(UiPlugin.ID, listener.getClass(), e.getMessage(), e );
+                UiPlugin.trace(UiPlugin.ID, listener.getClass(), e.getMessage(), e);
             }
         }
     }

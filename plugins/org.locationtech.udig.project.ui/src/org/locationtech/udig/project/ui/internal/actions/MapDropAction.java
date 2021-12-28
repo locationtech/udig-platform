@@ -183,7 +183,7 @@ public class MapDropAction extends CatalogImportDropAction {
         }
         if (map == null)
             map = ApplicationGIS.getActiveMap();
-        if (map == ApplicationGIS.NO_MAP) {
+        if (map == ApplicationGIS.NO_MAP || map == null) {
             ProjectUIPlugin.trace(Trace.DND, getClass(),
                     "Creating new Map with from resources: " + resources, null); //$NON-NLS-1$
             ApplicationGIS.addLayersToMap((IMap) null, resources, layerpos);
@@ -223,9 +223,9 @@ public class MapDropAction extends CatalogImportDropAction {
             }
 
             /**
-             * Moving something AFTER a layer is the same as moving something BEFORE a layer.
-             * So we will use BEFORE as much as possible to prevent duplication here.
-             * This code will retrieve the layer before. Or the first one, if we are at the beginning of the list.
+             * Moving something AFTER a layer is the same as moving something BEFORE a layer. So we
+             * will use BEFORE as much as possible to prevent duplication here. This code will
+             * retrieve the layer before. Or the first one, if we are at the beginning of the list.
              */
             if (location == ViewerDropLocation.BEFORE) {
                 layerpos++;

@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,30 +17,31 @@ import org.locationtech.udig.style.advanced.common.styleattributeclasses.Feature
 import org.locationtech.udig.style.advanced.common.styleattributeclasses.RuleWrapper;
 
 /**
- * A tree view content provider for {@link FeatureTypeStyleWrapper}s with {@link RuleWrapper} childs.
- * 
+ * A tree view content provider for {@link FeatureTypeStyleWrapper}s with {@link RuleWrapper}
+ * children.
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class GroupRulesTreeContentProvider implements ITreeContentProvider {
 
-    
-    public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
+    @Override
+    public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
     }
 
-    
+    @Override
     public void dispose() {
     }
 
-    
-    public boolean hasChildren( Object element ) {
+    @Override
+    public boolean hasChildren(Object element) {
         if (element instanceof FeatureTypeStyleWrapper) {
             return true;
         }
         return false;
     }
 
-    
-    public Object getParent( Object element ) {
+    @Override
+    public Object getParent(Object element) {
         if (element instanceof RuleWrapper) {
             RuleWrapper ruleWrapper = (RuleWrapper) element;
             return ruleWrapper.getParent();
@@ -48,21 +49,21 @@ public class GroupRulesTreeContentProvider implements ITreeContentProvider {
         return null;
     }
 
-    
-    public Object[] getElements( Object inputElement ) {
-        if (inputElement instanceof List< ? >) {
-            List< ? > list = (List< ? >) inputElement;
-            if (list.size() == 0) {
+    @Override
+    public Object[] getElements(Object inputElement) {
+        if (inputElement instanceof List<?>) {
+            List<?> list = (List<?>) inputElement;
+            if (list.isEmpty()) {
                 return null;
             }
             Object object = list.get(0);
             if (object instanceof FeatureTypeStyleWrapper) {
-                FeatureTypeStyleWrapper[] array = (FeatureTypeStyleWrapper[]) list.toArray(new FeatureTypeStyleWrapper[list
-                        .size()]);
+                FeatureTypeStyleWrapper[] array = list
+                        .toArray(new FeatureTypeStyleWrapper[list.size()]);
                 return array;
             }
             if (object instanceof RuleWrapper) {
-                RuleWrapper[] array = (RuleWrapper[]) list.toArray(new RuleWrapper[list.size()]);
+                RuleWrapper[] array = list.toArray(new RuleWrapper[list.size()]);
                 return array;
             }
         }
@@ -70,12 +71,13 @@ public class GroupRulesTreeContentProvider implements ITreeContentProvider {
         return null;
     }
 
-    
-    public Object[] getChildren( Object parentElement ) {
+    @Override
+    public Object[] getChildren(Object parentElement) {
         if (parentElement instanceof FeatureTypeStyleWrapper) {
             FeatureTypeStyleWrapper ftsW = (FeatureTypeStyleWrapper) parentElement;
             List<RuleWrapper> rulesWrapperList = ftsW.getRulesWrapperList();
-            RuleWrapper[] array = (RuleWrapper[]) rulesWrapperList.toArray(new RuleWrapper[rulesWrapperList.size()]);
+            RuleWrapper[] array = rulesWrapperList
+                    .toArray(new RuleWrapper[rulesWrapperList.size()]);
             return array;
         }
         return null;

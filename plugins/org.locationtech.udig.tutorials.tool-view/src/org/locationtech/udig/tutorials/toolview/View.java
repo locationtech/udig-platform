@@ -27,42 +27,48 @@ import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
 import org.locationtech.udig.project.ui.internal.DefaultMapViewPart;
 
 /**
- * The main view port.  Adds a shapefile to the View and configures the view with the tools and context menu
- * (when selection tool is active)
+ * The main view port. Adds a shapefile to the View and configures the view with the tools and
+ * context menu (when selection tool is active)
+ *
  * @version 1.3.0
  */
 public class View extends DefaultMapViewPart {
-    public static final String ID = "X.view";
+    public static final String ID = "X.view"; //$NON-NLS-1$
 
     @Override
-    protected void createResources(List<IGeoResource> resources, IProgressMonitor monitor) throws IOException {
+    protected void createResources(List<IGeoResource> resources, IProgressMonitor monitor)
+            throws IOException {
         addAlertsMapgraphic(monitor, resources);
 
-        FileDialog dialog = new FileDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
-        dialog.setFilterExtensions(new String[]{"*.shp"});
+        FileDialog dialog = new FileDialog(
+                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
+        dialog.setFilterExtensions(new String[] { "*.shp" }); //$NON-NLS-1$
         String path = dialog.open();
-        File file = new File( path );
+        File file = new File(path);
         URL url = URLs.fileToUrl(file);
 
-        addShpService(url,resources,monitor);
+        addShpService(url, resources, monitor);
     }
 
-    private void addAlertsMapgraphic(IProgressMonitor monitor,
-            List<IGeoResource> resources) throws IOException {
-        IService service = CatalogPlugin.getDefault().getLocalCatalog().acquire(MapGraphicService.SERVICE_URL,monitor);
-        String desiredIdString = MapGraphicService.SERVICE_URL+"#"+ShowAlertsMapGraphic.EXTENSION_ID;
+    private void addAlertsMapgraphic(IProgressMonitor monitor, List<IGeoResource> resources)
+            throws IOException {
+        IService service = CatalogPlugin.getDefault().getLocalCatalog()
+                .acquire(MapGraphicService.SERVICE_URL, monitor);
+        String desiredIdString = MapGraphicService.SERVICE_URL + "#" //$NON-NLS-1$
+                + ShowAlertsMapGraphic.EXTENSION_ID;
         for (IGeoResource resource : service.resources(null)) {
             String idString = resource.getID().toString();
-            if(idString.equals(desiredIdString)) {
+            if (idString.equals(desiredIdString)) {
                 resources.add(resource);
                 return;
             }
         }
-        throw new IllegalStateException("Unable to find " + desiredIdString + " mapgraphic");
+        throw new IllegalStateException("Unable to find " + desiredIdString + " mapgraphic"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private void addShpService(URL url,List<IGeoResource> resources, IProgressMonitor monitor) throws IOException {
-        IService service = CatalogPlugin.getDefault().getLocalCatalog().acquire(url,monitor);
+    private void addShpService(URL url, List<IGeoResource> resources, IProgressMonitor monitor)
+            throws IOException {
+        IService service = CatalogPlugin.getDefault().getLocalCatalog().acquire(url, monitor);
 
         resources.addAll(service.resources(monitor));
     }
@@ -75,5 +81,20 @@ public class View extends DefaultMapViewPart {
     @Override
     public IStatusLineManager getStatusLineManager() {
         return getViewSite().getActionBars().getStatusLineManager();
+    }
+
+    @Override
+    public boolean isDragging() {
+        return false;
+    }
+
+    @Override
+    public void setDragging(boolean isDragging) {
+        // ignore drag source
+    }
+
+    @Override
+    public void setDirty(boolean isDirty) {
+        // ignore dirty flag
     }
 }

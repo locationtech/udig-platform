@@ -11,8 +11,7 @@
  */
 package org.locationtech.udig.project.ui.tool;
 
-import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.ui.IActionBars2;
+import org.eclipse.ui.IActionBars;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.udig.project.IAbstractContext;
 import org.locationtech.udig.project.command.Command;
@@ -100,24 +99,13 @@ public interface IToolContext extends IAbstractContext {
     public void sendSyncCommand(Command command);
 
     /**
-     * Gets an instance of the status bar from the current editor or null if there is no editor
-     * open.
-     *
-     * @return an instance of the status bar from the current editor or null if there is no editor
-     *         open.
-     * @deprecated use getActionBars().getStatusLineManager()
-     */
-    @Deprecated
-    IStatusLineManager getStatusBar();
-
-    /**
      * Gets an instance of the ActionsBars from the current editor or null if there is no editor
      * open.
      *
      * @return an instance of the ActionsBars from the current editor or null if there is no editor
      *         open.
      */
-    IActionBars2 getActionBars();
+    IActionBars getActionBars();
 
     /**
      * Run a code block in the UI thread. This method should always be used when modifying the ui.

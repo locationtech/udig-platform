@@ -11,6 +11,7 @@
 package org.locationtech.udig.project.ui.tool;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.awt.Dimension;
 import java.io.IOException;
@@ -35,6 +36,7 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
+import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.ui.WaitCondition;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 import org.opengis.feature.simple.SimpleFeature;
@@ -71,10 +73,10 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
         Layer layer = map.getLayerFactory().createLayer(resource);
         map.getLayersInternal().add(layer);
 
-        IAction copyAction = ApplicationGIS.getToolManager()
-                .getCOPYAction(ApplicationGISInternal.getActiveMapPart());
-        IAction pasteAction = ApplicationGIS.getToolManager()
-                .getPASTEAction(ApplicationGISInternal.getActiveMapPart());
+        MapPart mapPart = ApplicationGISInternal.getActiveMapPart();
+        assertNotNull(mapPart);
+        IAction copyAction = ApplicationGIS.getToolManager().getCOPYAction(mapPart);
+        IAction pasteAction = ApplicationGIS.getToolManager().getPASTEAction(mapPart);
 
         map.getEditManagerInternal().setSelectedLayer(firstLayer);
 
@@ -84,14 +86,12 @@ public class ToolManagerTest extends AbstractProjectUITestCase {
                 firstLayer);
         StructuredSelection structuredSelection = new StructuredSelection(filter);
 
-        ApplicationGISInternal.getActiveMapPart().getSite().getSelectionProvider()
-                .setSelection(structuredSelection);
+        mapPart.getMapSite().getSelectionProvider().setSelection(structuredSelection);
 
         Event event = new Event();
         event.display = Display.getCurrent();
         copyAction.runWithEvent(event);
-        ApplicationGISInternal.getActiveMapPart().getSite().getSelectionProvider()
-                .setSelection(new StructuredSelection(layer));
+        mapPart.getMapSite().getSelectionProvider().setSelection(new StructuredSelection(layer));
 
         pasteAction.runWithEvent(event);
 

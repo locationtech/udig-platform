@@ -32,14 +32,6 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="org.locationtech.udig.project.ui.internal.MapEditor"
-            contributorClass="org.locationtech.udig.project.ui.internal.MapEditorActionBarContributor"
-            default="false"
-            icon="icons/obj16/map_obj.gif"
-            id="org.locationtech.udig.project.ui.mapEditorOld"
-            name="%mapEditor.name">
-      </editor>
-      <editor
             class="org.locationtech.udig.project.ui.internal.MapEditorWithPalette"
             contributorClass="org.locationtech.udig.project.ui.internal.MapEditorActionBarContributor"
             default="true"
