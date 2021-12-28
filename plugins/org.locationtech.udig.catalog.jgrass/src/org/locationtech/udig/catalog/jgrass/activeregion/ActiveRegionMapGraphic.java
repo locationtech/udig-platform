@@ -1,6 +1,6 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,33 +19,30 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
-import org.locationtech.udig.mapgraphic.MapGraphic;
-import org.locationtech.udig.mapgraphic.MapGraphicContext;
-import org.locationtech.udig.project.IBlackboard;
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.ui.graphics.AWTGraphics;
-import org.locationtech.udig.ui.graphics.ViewportGraphics;
-
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.gce.grassraster.JGrassRegion;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.opengis.referencing.operation.MathTransform;
-
 import org.locationtech.jts.geom.Coordinate;
-
 import org.locationtech.udig.catalog.jgrass.activeregion.dialogs.CatalogJGrassMapsetTreeViewerDialog;
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
+import org.locationtech.udig.mapgraphic.MapGraphic;
+import org.locationtech.udig.mapgraphic.MapGraphicContext;
+import org.locationtech.udig.project.IBlackboard;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.ui.graphics.AWTGraphics;
+import org.locationtech.udig.ui.graphics.ViewportGraphics;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.MathTransform;
 
 /**
  * <p>
  * Class representing the rendered Active Region of JGrass, i.e. the region inside which processing
  * occurs
  * </p>
- * 
+ *
  * @author Andrea Antonello - www.hydrologis.com
  * @since 1.1.0
  */
@@ -54,7 +51,8 @@ public class ActiveRegionMapGraphic implements MapGraphic {
     public ActiveRegionMapGraphic() {
     }
 
-    public void draw( MapGraphicContext context ) {
+    @Override
+    public void draw(MapGraphicContext context) {
         context.getLayer().setStatus(ILayer.WORKING);
 
         // initialize the graphics handle
@@ -64,7 +62,8 @@ public class ActiveRegionMapGraphic implements MapGraphic {
             Graphics2D g2D = awtG.g;
             // setting rendering hints
             RenderingHints hints = new RenderingHints(Collections.EMPTY_MAP);
-            hints.add(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
+            hints.add(new RenderingHints(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON));
             g2D.addRenderingHints(hints);
         }
 
@@ -76,8 +75,6 @@ public class ActiveRegionMapGraphic implements MapGraphic {
         if (style == null) {
             style = ActiveregionStyleContent.createDefault();
             blackboard.put(ActiveregionStyleContent.ID, style);
-            // ((IBlackboard) styleBlackboard)
-            // .setSelected(new String[]{ActiveregionStyleContent.ID});
         }
 
         if (style.windPath == null) {
@@ -108,7 +105,8 @@ public class ActiveRegionMapGraphic implements MapGraphic {
             Point llPoint = context.worldToPixel(newLL);
             Point lrPoint = context.worldToPixel(newLR);
 
-            Point xyRes = new Point((urPoint.x - ulPoint.x) / style.cols, (llPoint.y - ulPoint.y) / style.rows);
+            Point xyRes = new Point((urPoint.x - ulPoint.x) / style.cols,
+                    (llPoint.y - ulPoint.y) / style.rows);
 
             int screenWidth = screen.width;
             int screenHeight = screen.height;
@@ -127,10 +125,10 @@ public class ActiveRegionMapGraphic implements MapGraphic {
 
             g.fill(path);
             if (style.doGrid && xyRes.x > 1 && xyRes.y > 1) {
-                for( int x = ulPoint.x + xyRes.x; x < urPoint.x; x = x + xyRes.x ) {
+                for (int x = ulPoint.x + xyRes.x; x < urPoint.x; x = x + xyRes.x) {
                     g.drawLine(x, ulPoint.y, x, llPoint.y);
                 }
-                for( int y = ulPoint.y + xyRes.y; y < llPoint.y; y = y + xyRes.y ) {
+                for (int y = ulPoint.y + xyRes.y; y < llPoint.y; y = y + xyRes.y) {
                     g.drawLine(urPoint.x, y, ulPoint.x, y);
                 }
             }
@@ -148,8 +146,8 @@ public class ActiveRegionMapGraphic implements MapGraphic {
                     sb.append(mapsetFile.getParentFile().getName());
                     sb.append("/");
                     sb.append(mapsetFile.getName());
-                    g.drawString(sb.toString(), 10, 10,
-                            ViewportGraphics.ALIGN_LEFT, ViewportGraphics.ALIGN_MIDDLE);
+                    g.drawString(sb.toString(), 10, 10, ViewportGraphics.ALIGN_LEFT,
+                            ViewportGraphics.ALIGN_MIDDLE);
                 }
             }
 
@@ -163,26 +161,30 @@ public class ActiveRegionMapGraphic implements MapGraphic {
         context.getLayer().setStatusMessage("Layer rendered");
 
     }
+
     /**
-     * @param styleBlackboard 
+     * @param styleBlackboard
      * @param style
      */
-    private void getMapset( final IBlackboard styleBlackboard ) {
+    private void getMapset(final IBlackboard styleBlackboard) {
 
-        Display.getDefault().syncExec(new Runnable(){
+        Display.getDefault().syncExec(new Runnable() {
 
+            @Override
             public void run() {
                 try {
                     CatalogJGrassMapsetTreeViewerDialog mapsetDialog = new CatalogJGrassMapsetTreeViewerDialog();
                     Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
                     mapsetDialog.open(shell);
                     List<JGrassMapsetGeoResource> selectedLayers = mapsetDialog.getSelectedLayers();
-                    if (selectedLayers==null || selectedLayers.size() == 0) {
+                    if (selectedLayers == null || selectedLayers.isEmpty()) {
                         return;
                     }
                     JGrassMapsetGeoResource jGrassMapsetGeoResource = selectedLayers.get(0);
-                    JGrassRegion activeRegionWindow = jGrassMapsetGeoResource.getActiveRegionWindow();
-                    ActiveRegionStyle style = (ActiveRegionStyle) styleBlackboard.get(ActiveregionStyleContent.ID);
+                    JGrassRegion activeRegionWindow = jGrassMapsetGeoResource
+                            .getActiveRegionWindow();
+                    ActiveRegionStyle style = (ActiveRegionStyle) styleBlackboard
+                            .get(ActiveregionStyleContent.ID);
                     style.windPath = jGrassMapsetGeoResource.getActiveRegionWindowPath();
                     style.north = (float) activeRegionWindow.getNorth();
                     style.south = (float) activeRegionWindow.getSouth();
@@ -195,16 +197,14 @@ public class ActiveRegionMapGraphic implements MapGraphic {
                     String code = null;
                     try {
                         Integer epsg = CRS.lookupEpsgCode(jGrassCrs, true);
-                        code = "EPSG:" + epsg;
+                        code = "EPSG:" + epsg; //$NON-NLS-1$
                     } catch (Exception e) {
-                        // try non epsg
+                        // try non EPSG
                         code = CRS.lookupIdentifier(jGrassCrs, true);
                     }
                     style.crsString = code;
 
                     styleBlackboard.put(ActiveregionStyleContent.ID, style);
-                    // ((StyleBlackboard) styleBlackboard).setSelected(new
-                    // String[]{ActiveregionStyleContent.ID});
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

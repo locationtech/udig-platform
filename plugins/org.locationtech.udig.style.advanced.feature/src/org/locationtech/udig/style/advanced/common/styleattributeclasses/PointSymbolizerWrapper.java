@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -34,30 +34,40 @@ import org.opengis.filter.expression.Expression;
 
 /**
  * A wrapper for a {@link PointSymbolizer} to ease interaction with gui.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class PointSymbolizerWrapper extends SymbolizerWrapper {
 
     private String size;
+
     private String rotation;
 
     private String markName;
+
     private String fillColor;
+
     private String fillOpacity;
+
     private String strokeColor;
+
     private String strokeOpacity;
+
     private String strokeWidth;
 
     private boolean hasFill;
+
     private boolean hasStroke;
+
     private Mark mark;
+
     private Fill fill;
+
     private Stroke stroke;
 
     private Graphic graphic;
 
-    public PointSymbolizerWrapper( Symbolizer symbolizer, RuleWrapper parent ) {
+    public PointSymbolizerWrapper(Symbolizer symbolizer, RuleWrapper parent) {
         super(symbolizer, parent);
 
         PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer;
@@ -90,13 +100,13 @@ public class PointSymbolizerWrapper extends SymbolizerWrapper {
             yOffset = DEFAULT_OFFSET;
         }
 
-        if (externalGraphicsList.size() == 0) {
+        if (externalGraphicsList.isEmpty()) {
             mark = SLDs.mark(pointSymbolizer);
             if (mark == null) {
                 return;
             }
             markName = mark.getWellKnownName().evaluate(null, String.class);
-            if (markName == null|| markName.equals("")) { //$NON-NLS-1$
+            if (markName == null || markName.equals("")) { //$NON-NLS-1$
                 markName = "circle"; //$NON-NLS-1$
                 mark.setWellKnownName(ff.literal(markName));
             }
@@ -150,8 +160,7 @@ public class PointSymbolizerWrapper extends SymbolizerWrapper {
         return graphic;
     }
 
-    // ///// GETTERS/SETTERS
-    public void setSize( String size, boolean isProperty ) {
+    public void setSize(String size, boolean isProperty) {
         this.size = size;
         if (isProperty) {
             graphic.setSize(ff.property(size));
@@ -160,7 +169,7 @@ public class PointSymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    public void setRotation( String rotation, boolean isProperty ) {
+    public void setRotation(String rotation, boolean isProperty) {
         this.rotation = rotation;
         if (isProperty) {
             graphic.setRotation(ff.property(rotation));
@@ -169,7 +178,7 @@ public class PointSymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    public void setMarkName( String markName ) {
+    public void setMarkName(String markName) {
         if (markName == null || markName.equals("")) { //$NON-NLS-1$
             return;
         }
@@ -178,12 +187,12 @@ public class PointSymbolizerWrapper extends SymbolizerWrapper {
             mark = sf.createMark();
         }
         mark.setWellKnownName(ff.literal(markName));
-        
+
         graphic.graphicalSymbols().clear();
         graphic.graphicalSymbols().add(mark);
     }
 
-    public void setFillColor( String fillColor ) {
+    public void setFillColor(String fillColor) {
         if (fillColor == null) {
             hasFill = false;
         } else {
@@ -194,7 +203,7 @@ public class PointSymbolizerWrapper extends SymbolizerWrapper {
         fill.setColor(ff.literal(fillColor));
     }
 
-    public void setFillOpacity( String fillOpacity, boolean isProperty ) {
+    public void setFillOpacity(String fillOpacity, boolean isProperty) {
         this.fillOpacity = fillOpacity;
         checkFillExists();
         if (isProperty) {
@@ -204,21 +213,21 @@ public class PointSymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    public void setHasStroke( boolean hasStroke ) {
+    public void setHasStroke(boolean hasStroke) {
         this.hasStroke = hasStroke;
         if (hasStroke) {
             checkStrokeExists();
-        }else{
+        } else {
             stroke = null;
             mark.setStroke(null);
         }
     }
-    
-    public void setHasFill( boolean hasFill ) {
+
+    public void setHasFill(boolean hasFill) {
         this.hasFill = hasFill;
         if (hasFill) {
             checkFillExists();
-        }else{
+        } else {
             fill = null;
             mark.setFill(null);
         }
@@ -238,6 +247,7 @@ public class PointSymbolizerWrapper extends SymbolizerWrapper {
             }
         }
     }
+
     private void checkFillExists() {
         if (fill == null) {
             if (fillColor == null) {
@@ -250,7 +260,7 @@ public class PointSymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    public void setStrokeWidth( String strokeWidth, boolean isProperty ) {
+    public void setStrokeWidth(String strokeWidth, boolean isProperty) {
         this.strokeWidth = strokeWidth;
         checkStrokeExists();
         if (isProperty) {
@@ -260,7 +270,7 @@ public class PointSymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    public void setStrokeColor( String strokeColor ) {
+    public void setStrokeColor(String strokeColor) {
         this.strokeColor = strokeColor;
         checkStrokeExists();
         if (strokeColor == null) {
@@ -271,7 +281,7 @@ public class PointSymbolizerWrapper extends SymbolizerWrapper {
         stroke.setColor(ff.literal(strokeColor));
     }
 
-    public void setStrokeOpacity( String strokeOpacity, boolean isProperty ) {
+    public void setStrokeOpacity(String strokeOpacity, boolean isProperty) {
         this.strokeOpacity = strokeOpacity;
         checkStrokeExists();
         if (isProperty) {
@@ -281,7 +291,6 @@ public class PointSymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    // getters
     public String getSize() {
         return size;
     }

@@ -38,7 +38,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-extension-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-epsg-hsql-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-feature-pregeneralized-22.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-geobuf-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-geojson-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-geojsondatastore-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-geometry-22.1.jar"/>
@@ -183,7 +182,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/oro-2.0.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/picocontainer-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/postgresql-42.2.5.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/protobuf-java-3.4.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/si-quantity-0.7.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/si-units-java8-0.7.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.6.4.jar"/>

@@ -156,7 +156,7 @@ public class BasicGridCoverageTestViewportPane implements ViewportPane {
     }
 
     @Override
-    public MapPart getMapEditor() {
+    public MapPart getMapPart() {
         return null;
     }
 

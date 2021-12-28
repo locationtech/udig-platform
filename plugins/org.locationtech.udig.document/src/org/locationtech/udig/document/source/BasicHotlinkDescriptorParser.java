@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  *
@@ -32,14 +33,17 @@ public class BasicHotlinkDescriptorParser {
      * string. See {@link HotlinkDescriptor} for encoding.
      */
     private static final String HOTLINK = "hotlink"; //$NON-NLS-1$
+
     /**
      * {@link IGeoResource#getPersistentProperties()} key used to record hotlink enabled status.
      */
     private static final String HOTLINK_ENABLED = "hotlink_enabled"; //$NON-NLS-1$
+
     /**
      * Delimiter used to separate hotlink descriptors.
      */
     private static final String HOTLINK_DELIMITER = "|=|"; //$NON-NLS-1$
+
     /**
      * Regex equivalent of the hotlink delimiter.
      */
@@ -100,7 +104,7 @@ public class BasicHotlinkDescriptorParser {
     public List<HotlinkDescriptor> getDescriptors() {
         final Map<String, Serializable> props = resource.getPersistentProperties();
         final String definitions = (String) props.get(HOTLINK);
-        final List<HotlinkDescriptor> descriptors = new ArrayList<HotlinkDescriptor>();
+        final List<HotlinkDescriptor> descriptors = new ArrayList<>();
         if (definitions != null && !definitions.isEmpty()) {
             final String definitionArray[] = definitions.split(HOTLINK_DELIMITER_REGEX);
             for (String definition : definitionArray) {
@@ -120,7 +124,7 @@ public class BasicHotlinkDescriptorParser {
      */
     public void setDescriptors(List<HotlinkDescriptor> descriptors) {
         final Map<String, Serializable> props = resource.getPersistentProperties();
-        if (descriptors == null || descriptors.size() == 0) {
+        if (descriptors == null || descriptors.isEmpty()) {
             props.remove(HOTLINK);
         } else {
             final StringBuilder sb = new StringBuilder();

@@ -12,7 +12,8 @@ Improvements and Fixes
 ----------------------
 * `#398 <https://github.com/locationtech/udig-platform/issues/398>`_ : valid state for layer in Layers View as checked if visible
 * `#415 <https://github.com/locationtech/udig-platform/issues/415>`_ : fixed NullPointerExecption if tool category extension has name attribut not set
-* `#420 <https://github.com/locationtech/udig-platform/issues/420>`_ : allows to hide composite renderer jobs with preferences `org.locationtech.udig.project/HIDE_RENDER_JOB=true`
+* `#420 <https://github.com/locationtech/udig-platform/issues/420>`_ : allows to hide composite renderer jobs shown in Progress View, see :ref:`pref_project_HIDE_RENDER_JOB`
+* `#421 <https://github.com/locationtech/udig-platform/issues/421>`_ : Option to disable CRS Chooser in Map Editor, see :ref:`pref_project_DISABLE_CRS_SELECTION`
 * `#432 <https://github.com/locationtech/udig-platform/issues/432>`_ : allows translate Progress View label and nl-specific icon
 * `#439 <https://github.com/locationtech/udig-platform/issues/439>`_ : uses Mockito as Test-Mockup framework rather than EasyMock
 * `#443 <https://github.com/locationtech/udig-platform/issues/443>`_ : moved jfreechart libaries into seperate bundle, to allow to choose other/newer version for sdk-users
@@ -21,6 +22,7 @@ Improvements and Fixes
 * `#433 <https://github.com/locationtech/udig-platform/issues/433>`_ : removed deprecated classes org.locationtech.udig.project.ui.PlatformGIS.java (use ApplicationGIS instead)
 * `#451 <https://github.com/locationtech/udig-platform/issues/451>`_ : migrated from travis build to github workflow to get feedback for any change
 * `#435 <https://github.com/locationtech/udig-platform/issues/435>`_ : fixed print issue on Windows OS
+* `#640 <https://github.com/locationtech/udig-platform/issues/640>`_ : allows to enable advanced projection support and continuous map wrapping with preference `org.locationtech.udig.project/ADVANCED_PROJECTION_SUPPORT=true`, see :ref:`Advanced projection support <project_preferences-advanced-projection-support>`
 * fixed Exceptions
   (
   `#415 <https://github.com/locationtech/udig-platform/issues/415>`_,

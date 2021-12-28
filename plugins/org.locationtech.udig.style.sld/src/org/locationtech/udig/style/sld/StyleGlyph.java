@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,37 +24,40 @@ import org.eclipse.ui.PlatformUI;
 public class StyleGlyph {
 
     static final int DEFAULT_WIDTH = 16;
+
     static final int DEFAULT_HEIGHT = 16;
+
     static final int DEFAULT_DEPTH = 24;
 
-    private static Image image( Display display, RGB[] rgb ) {
+    private static Image image(Display display, RGB[] rgb) {
         PaletteData palette = new PaletteData(0xFF0000, 0xFF00, 0xFF);
         ImageData imageData = new ImageData(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_DEPTH, palette);
-        imageData.transparentPixel = palette.getPixel(display.getSystemColor(
-                SWT.COLOR_WIDGET_BACKGROUND).getRGB());
+        imageData.transparentPixel = palette
+                .getPixel(display.getSystemColor(SWT.COLOR_WIDGET_BACKGROUND).getRGB());
 
         return new Image(display, imageData);
     }
 
-    private static ImageDescriptor descriptor( ImageData imageData, Image image, GC gc ) {
+    private static ImageDescriptor descriptor(ImageData imageData, Image image, GC gc) {
         final ImageData finalImageData = (ImageData) image.getImageData().clone();
 
         image.dispose();
         gc.dispose();
 
-        return new ImageDescriptor(){
+        return new ImageDescriptor() {
+            @Override
             public ImageData getImageData() {
                 return finalImageData;
             }
         };
     }
 
-    public static ImageDescriptor point( int color, int width ) {
+    public static ImageDescriptor point(int color, int width) {
         Display display = PlatformUI.getWorkbench().getDisplay();
         Color fill = display.getSystemColor(color);
         Color back = display.getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
 
-        Image image = image(display, new RGB[]{fill.getRGB(), back.getRGB()});
+        Image image = image(display, new RGB[] { fill.getRGB(), back.getRGB() });
         GC gc = new GC(image);
 
         ImageData imageData = image.getImageData();
@@ -70,12 +73,12 @@ public class StyleGlyph {
         return descriptor(imageData, image, gc);
     }
 
-    public static ImageDescriptor text( int color, int width ) {
+    public static ImageDescriptor text(int color, int width) {
         Display display = PlatformUI.getWorkbench().getDisplay();
         Color line = display.getSystemColor(color);
         Color back = display.getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
 
-        Image image = image(display, new RGB[]{line.getRGB(), back.getRGB()});
+        Image image = image(display, new RGB[] { line.getRGB(), back.getRGB() });
         GC gc = new GC(image);
 
         ImageData imageData = image.getImageData();
@@ -97,22 +100,21 @@ public class StyleGlyph {
         return descriptor(imageData, image, gc);
     }
 
-    public static void disable( ImageDescriptor descriptor ) {
-        ImageData imageData = descriptor.getImageData();
-        //PaletteData paletteData = imageData.palette;
-        
-        for( int i = 2; i < DEFAULT_WIDTH - 2; i++ ) {
+    public static void disable(ImageDescriptor descriptor) {
+        ImageData imageData = descriptor.getImageData(100);
+
+        for (int i = 2; i < DEFAULT_WIDTH - 2; i++) {
             imageData.setPixel(i, i, 0);
         }
     }
 
-    public static ImageDescriptor line( int color, int width ) {
+    public static ImageDescriptor line(int color, int width) {
 
         Display display = PlatformUI.getWorkbench().getDisplay();
         Color line = display.getSystemColor(color);
         Color back = display.getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
 
-        Image image = image(display, new RGB[]{line.getRGB(), back.getRGB()});
+        Image image = image(display, new RGB[] { line.getRGB(), back.getRGB() });
         GC gc = new GC(image);
 
         ImageData imageData = image.getImageData();
@@ -130,13 +132,13 @@ public class StyleGlyph {
         return descriptor(imageData, image, gc);
     }
 
-    public static ImageDescriptor polygon( int lineColor, int fillColor, int width ) {
+    public static ImageDescriptor polygon(int lineColor, int fillColor, int width) {
         Display display = PlatformUI.getWorkbench().getDisplay();
         Color line = display.getSystemColor(lineColor);
         Color fill = display.getSystemColor(fillColor);
         Color back = display.getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
 
-        Image image = image(display, new RGB[]{line.getRGB(), fill.getRGB(), back.getRGB()});
+        Image image = image(display, new RGB[] { line.getRGB(), fill.getRGB(), back.getRGB() });
         GC gc = new GC(image);
 
         ImageData imageData = image.getImageData();
@@ -155,14 +157,14 @@ public class StyleGlyph {
 
         return descriptor(imageData, image, gc);
     }
-    
-    public static ImageDescriptor raster( int lineColor, int fillColor, int width ) {
+
+    public static ImageDescriptor raster(int lineColor, int fillColor, int width) {
         Display display = PlatformUI.getWorkbench().getDisplay();
         Color line = display.getSystemColor(lineColor);
         Color fill = display.getSystemColor(fillColor);
         Color back = display.getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
 
-        Image image = image(display, new RGB[]{line.getRGB(), fill.getRGB(), back.getRGB()});
+        Image image = image(display, new RGB[] { line.getRGB(), fill.getRGB(), back.getRGB() });
         GC gc = new GC(image);
 
         ImageData imageData = image.getImageData();

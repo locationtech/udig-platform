@@ -42,11 +42,12 @@ import org.locationtech.udig.project.internal.ProjectFactory;
 import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
 import org.locationtech.udig.project.internal.commands.AddLayersCommand;
 import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.MapSite;
 import org.locationtech.udig.project.ui.internal.wizard.MapImport;
 import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 import org.locationtech.udig.project.ui.tool.ModalTool;
 import org.locationtech.udig.project.ui.viewers.MapViewer;
-import org.locationtech.udig.tools.internal.FixedScalePan;
+import org.locationtech.udig.tools.internal.PanTool;
 import org.locationtech.udig.tools.internal.Zoom;
 import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
 
@@ -59,13 +60,11 @@ import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
  */
 public class MapView extends ViewPart implements MapPart {
 
-    public static String ID = "org.locationtech.udig.tutorials.rcp.mapView";
-
-    // private GISWidget widget;
+    public static String ID = "org.locationtech.udig.tutorials.rcp.mapView"; //$NON-NLS-1$
 
     private MapViewer mapviewer;
 
-    // private RenderManager renderManager;
+    private MapSite mapSite;
 
     private Map map;
 
@@ -76,16 +75,17 @@ public class MapView extends ViewPart implements MapPart {
     }
 
     @Override
-    public void createPartControl( Composite parent ) {
+    public void createPartControl(Composite parent) {
         FillLayout fillLayout = new FillLayout();
         fillLayout.type = SWT.VERTICAL;
         parent.setLayout(fillLayout);
-        // mapviewer = new MapViewer(parent, SWT.NO_BACKGROUND | SWT.DOUBLE_BUFFERED | SWT.MULTI);
+
         mapviewer = new MapViewer(parent, this, SWT.SINGLE | SWT.DOUBLE_BUFFERED);
 
+        mapSite = new MapSite(getViewSite(), this);
         // create a new empty map
         // if you are going to add layers do so now
-        // prior to adding to the mapviewer
+        // prior to adding to the MapViewer
         //
         map = ProjectFactory.eINSTANCE.createMap();
         mapviewer.setMap(map);
@@ -101,65 +101,18 @@ public class MapView extends ViewPart implements MapPart {
         toolbar.add(new SetPrintMapLayersToolAction());
         toolbar.add(new SetRefreshToolAction());
         toolbar.add(new SetZoomToMapToolAction());
-        // toolbar.add(new SetPrintTilesRMToolAction());
-        // toolbar.add(new SetPrintTilesVPToolAction());
     }
-
-    // class SetPrintTilesRMToolAction extends Action {
-    // public SetPrintTilesRMToolAction() {
-    //    	      super("Print RM Tiles"); //$NON-NLS-1$
-    // }
-    // public void run() {
-    // if (map != null) {
-    // // make this field public for testing
-    // Collection<Tile> values =
-    // ((TiledRenderManagerDynamic)mapviewer.getRenderManager()).tiles.values();
-    // System.out.println("=============== RM tiles: ");
-    // List<String> list = new ArrayList();
-    // for (Tile tile : values ) {
-    // list.add(tile.toString());
-    // }
-    // Collections.sort(list);
-    // for (String s : list ) {
-    // System.out.println( s );
-    // }
-    // System.out.println("=============== /end RM tiles: ");
-    // }
-    // }
-    // }
-    //
-    // class SetPrintTilesVPToolAction extends Action {
-    // public SetPrintTilesVPToolAction() {
-    //  	      super("Print VP Tiles"); //$NON-NLS-1$
-    // }
-    // public void run() {
-    // if (map != null) {
-    // // make this field public for testing
-    // Collection<Tile> values =
-    // ((ViewportPaneTiledSWT)mapviewer.getViewport()).readyTiles.values();
-    // System.out.println("=============== VP tiles: ");
-    // List<String> list = new ArrayList();
-    // for (Tile tile : values ) {
-    // list.add(tile.toString());
-    // }
-    // Collections.sort(list);
-    // for (String s : list ) {
-    // System.out.println( s );
-    // }
-    // System.out.println("=============== /end VP tiles: ");
-    // }
-    // }
-    // }
 
     class SetPrintMapLayersToolAction extends Action {
         public SetPrintMapLayersToolAction() {
             super("Print Map Layers"); //$NON-NLS-1$
         }
+
         @Override
         public void run() {
             if (map != null) {
-                for( Layer layer : map.getLayersInternal() ) {
-                    System.out.println(layer + ", isvisible: " + layer.isVisible());
+                for (Layer layer : map.getLayersInternal()) {
+                    System.out.println(layer + ", isvisible: " + layer.isVisible()); //$NON-NLS-1$
                 }
             }
         }
@@ -170,7 +123,8 @@ public class MapView extends ViewPart implements MapPart {
             super("Pan"); //$NON-NLS-1$
         }
 
-        private FixedScalePan tool = new FixedScalePan();
+        private PanTool tool = new PanTool();
+
         @Override
         public void run() {
             setActive(tool);
@@ -179,9 +133,11 @@ public class MapView extends ViewPart implements MapPart {
 
     class SetZoomExtentToolAction extends Action {
         Zoom tool = new Zoom();
+
         public SetZoomExtentToolAction() {
             super("Zoom"); //$NON-NLS-1$
         }
+
         @Override
         public void run() {
             setActive(tool);
@@ -192,6 +148,7 @@ public class MapView extends ViewPart implements MapPart {
         public SetZoomToMapToolAction() {
             super("Zoom to Map"); //$NON-NLS-1$
         }
+
         @Override
         public void run() {
             ReferencedEnvelope bounds = map.getBounds(new NullProgressMonitor());
@@ -203,6 +160,7 @@ public class MapView extends ViewPart implements MapPart {
         public SetRefreshToolAction() {
             super("Refresh Map"); //$NON-NLS-1$
         }
+
         @Override
         public void run() {
             mapviewer.getRenderManager().refresh(null);
@@ -213,20 +171,21 @@ public class MapView extends ViewPart implements MapPart {
         public SetBackgroundFileAction() {
             super("Add Background layer from file..."); //$NON-NLS-1$
         }
+
         @Override
         @SuppressWarnings("unchecked")
         public void run() {
             Display display = Display.getCurrent();
             final ArrayList<File> files = new ArrayList<>();
-            display.syncExec(new Runnable(){
+            display.syncExec(new Runnable() {
                 @Override
                 public void run() {
-                    FileDialog openDialog = new FileDialog(getSite().getShell(), SWT.OPEN
-                            | SWT.MULTI);
+                    FileDialog openDialog = new FileDialog(getSite().getShell(),
+                            SWT.OPEN | SWT.MULTI);
                     String file = openDialog.open();
                     if (file == null)
                         return;
-                    for( String name : openDialog.getFileNames() ) {
+                    for (String name : openDialog.getFileNames()) {
                         files.add(new File(openDialog.getFilterPath(), name));
                     }
                 }
@@ -236,7 +195,7 @@ public class MapView extends ViewPart implements MapPart {
             List<IGeoResource> dataHandles = new ArrayList<>();
             ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
 
-            for( File file : files ) {
+            for (File file : files) {
                 try {
                     URL url = file.toURI().toURL();
                     IService handle = catalog.acquire(url, null);
@@ -247,10 +206,8 @@ public class MapView extends ViewPart implements MapPart {
                         dataHandles.addAll(resources);
                     }
                 } catch (IOException eek) {
-                    String message = "Could not add " + file;
+                    String message = "Could not add " + file; //$NON-NLS-1$
                     IStatus status = new Status(IStatus.WARNING, Activator.PLUGIN_ID, message, eek);
-                    // ExceptionDetailsDialog.openError(null, message, IStatus.ERROR,
-                    // Activator.PLUGIN_ID, eek );
                     Activator.getDefault().getLog().log(status);
                 }
             }
@@ -265,6 +222,7 @@ public class MapView extends ViewPart implements MapPart {
         public SetGlassSeagullsAction() {
             super("Add Glass Seagulls layer"); //$NON-NLS-1$
         }
+
         @Override
         public void run() {
             Display display = Display.getCurrent();
@@ -285,11 +243,11 @@ public class MapView extends ViewPart implements MapPart {
         public SetBackgroundWMSCAction() {
             super("Add Background layer..."); //$NON-NLS-1$
         }
+
         @Override
         public void run() {
             Display display = Display.getCurrent();
-            // final ArrayList<File> files = new ArrayList<File>();
-            display.syncExec(new Runnable(){
+            display.syncExec(new Runnable() {
                 @Override
                 public void run() {
                     MapImport mapImport = new MapImport();
@@ -304,9 +262,10 @@ public class MapView extends ViewPart implements MapPart {
         mapviewer.getViewport().getControl().setFocus();
     }
 
-    public void setModalTool( ModalTool tool ) {
+    public void setModalTool(ModalTool tool) {
         tool.setActive(true);
     }
+
     @Override
     public Map getMap() {
         return mapviewer.getMap();
@@ -325,12 +284,12 @@ public class MapView extends ViewPart implements MapPart {
     }
 
     @Override
-    public void setFont( Control control ) {
+    public void setFont(Control control) {
         mapviewer.setFont(control);
     }
 
     @Override
-    public void setSelectionProvider( IMapEditorSelectionProvider selectionProvider ) {
+    public void setSelectionProvider(IMapEditorSelectionProvider selectionProvider) {
         mapviewer.setSelectionProvider(selectionProvider);
     }
 
@@ -340,11 +299,12 @@ public class MapView extends ViewPart implements MapPart {
     }
 
     ModalTool activeTool = null;
-    public void setActive( ModalTool tool ){
-        if( activeTool == tool ){
+
+    public void setActive(ModalTool tool) {
+        if (activeTool == tool) {
             return; // no change
         }
-        if( activeTool != null ){
+        if (activeTool != null) {
             activeTool.setActive(false);
             activeTool = null;
         }
@@ -353,8 +313,28 @@ public class MapView extends ViewPart implements MapPart {
     }
 
     @Override
+    public MapSite getMapSite() {
+        return mapSite;
+    }
+
+    @Override
     public UDIGDropHandler getDropHandler() {
         // view has no drop support
         return null;
+    }
+
+    @Override
+    public boolean isDragging() {
+        return false;
+    }
+
+    @Override
+    public void setDragging(boolean isDragging) {
+        // ignore drag source
+    }
+
+    @Override
+    public void setDirty(boolean isDirty) {
+        // ignore dirty state
     }
 }

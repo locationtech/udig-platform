@@ -91,11 +91,11 @@ public class CursorProxy {
                         } catch (Exception e) {
                             y = 0;
                         }
-                        if (imageDescriptor == null || imageDescriptor.getImageData() == null)
+                        if (imageDescriptor == null || imageDescriptor.getImageData(100) == null)
                             cursor = getSystemCursor(cursorID);
                         else
                             cursor = new Cursor(Display.getDefault(),
-                                    imageDescriptor.getImageData(), x, y);
+                                    imageDescriptor.getImageData(100), x, y);
                     }
                 }
             }

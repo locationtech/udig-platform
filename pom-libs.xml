@@ -38,6 +38,7 @@
        <module>plugins/org.locationtech.udig.help/pom-libs.xml</module>
        <module>plugins/org.locationtech.udig.libs/pom-libs.xml</module>
        <module>plugins/org.locationtech.udig.libs.db2/pom-libs.xml</module>
+       <module>plugins/org.locationtech.udig.libs.geobuf/pom-libs.xml</module>
        <module>plugins/org.locationtech.udig.libs.jfreechart/pom-libs.xml</module>
        <module>plugins/org.locationtech.udig.libs.netcdf/pom-libs.xml</module>
        <module>plugins/org.locationtech.udig.libs.oracle/pom-libs.xml</module>

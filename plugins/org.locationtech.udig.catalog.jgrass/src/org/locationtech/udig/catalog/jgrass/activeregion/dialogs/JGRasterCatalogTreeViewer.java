@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,13 +19,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.ICatalog;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IResolve;
-import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
-import org.locationtech.udig.catalog.ui.ISharedImages;
-
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -42,26 +35,34 @@ import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.geotools.gce.grassraster.JGrassConstants;
-
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.ICatalog;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
 import org.locationtech.udig.catalog.jgrass.core.JGrassService;
 import org.locationtech.udig.catalog.jgrass.messages.Messages;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.ISharedImages;
 
 /**
  * <p>
  * This class supplies a tree viewer containing the JGrass raster maps that are in the catalog.
  * </p>
- * 
+ *
  * @author Andrea Antonello - www.hydrologis.com
  */
-public class JGRasterCatalogTreeViewer extends Composite implements ISelectionChangedListener, IResourcesSelector {
+public class JGRasterCatalogTreeViewer extends Composite
+        implements ISelectionChangedListener, IResourcesSelector {
 
-    private final HashMap<String, JGrassMapGeoResource> itemsMap = new HashMap<String, JGrassMapGeoResource>();
+    private final HashMap<String, JGrassMapGeoResource> itemsMap = new HashMap<>();
+
     private LabelProvider labelProvider = null;
 
     private List<IGeoResource> itemLayers;
+
     private String mapset;
 
     /**
@@ -70,7 +71,8 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
      * @param selectionStyle the tree selection style (single or multiple)
      * @param mapset mapset path on which to limit the view
      */
-    public JGRasterCatalogTreeViewer( Composite parent, int style, int selectionStyle, String mapset ) {
+    public JGRasterCatalogTreeViewer(Composite parent, int style, int selectionStyle,
+            String mapset) {
         super(parent, style);
         if (mapset != null)
             this.mapset = mapset;
@@ -84,7 +86,7 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         // Create the tree viewer to display the file tree
         PatternFilter patternFilter = new PatternFilter();
-        final FilteredTree filter = new FilteredTree(this, selectionStyle, patternFilter);
+        final FilteredTree filter = new FilteredTree(this, selectionStyle, patternFilter, false);
         final TreeViewer tv = filter.getViewer();
         tv.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
         tv.setContentProvider(new ContentProvider());
@@ -94,21 +96,22 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
         tv.addSelectionChangedListener(this);
     }
 
-    public void selectionChanged( SelectionChangedEvent event ) {
+    @Override
+    public void selectionChanged(SelectionChangedEvent event) {
         // if the selection is empty clear the label
         if (event.getSelection().isEmpty()) {
             return;
         }
         if (event.getSelection() instanceof IStructuredSelection) {
             IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-            Vector<String> itemNames = new Vector<String>();
-            for( Iterator< ? > iterator = selection.iterator(); iterator.hasNext(); ) {
+            Vector<String> itemNames = new Vector<>();
+            for (Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
                 Object domain = iterator.next();
                 String value = labelProvider.getText(domain);
                 itemNames.add(value);
             }
-            itemLayers = new ArrayList<IGeoResource>();
-            for( String name : itemNames ) {
+            itemLayers = new ArrayList<>();
+            for (String name : itemNames) {
                 JGrassMapGeoResource tmpLayer = itemsMap.get(name);
                 if (tmpLayer != null) {
                     itemLayers.add(tmpLayer);
@@ -124,11 +127,12 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
     private class ContentProvider implements ITreeContentProvider {
         /**
          * Gets the children of the specified object
-         * 
+         *
          * @param arg0 the parent object
          * @return Object[]
          */
-        public Object[] getChildren( Object arg0 ) {
+        @Override
+        public Object[] getChildren(Object arg0) {
 
             if (arg0 instanceof JGrassMapsetGeoResource) {
                 JGrassMapsetGeoResource map = (JGrassMapsetGeoResource) arg0;
@@ -143,22 +147,26 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
             return null;
         }
 
-        private Object[] filteredLayers( List<IResolve> layers ) {
+        private Object[] filteredLayers(List<IResolve> layers) {
             try {
-                Vector<JGrassMapGeoResource> filteredLayers = new Vector<JGrassMapGeoResource>();
-                for( IResolve layer : layers ) {
-                    if (layer instanceof JGrassMapGeoResource
-                            &&
+                Vector<JGrassMapGeoResource> filteredLayers = new Vector<>();
+                for (IResolve layer : layers) {
+                    if (layer instanceof JGrassMapGeoResource &&
 
-                            (((JGrassMapGeoResource) layer).getType().equals(JGrassConstants.GRASSBINARYRASTERMAP)
-                                    || ((JGrassMapGeoResource) layer).getType().equals(JGrassConstants.GRASSASCIIRASTERMAP)
-                                    || ((JGrassMapGeoResource) layer).getType().equals(JGrassConstants.ESRIRASTERMAP) || ((JGrassMapGeoResource) layer)
-                                    .getType().equals(JGrassConstants.FTRASTERMAP))
+                            (((JGrassMapGeoResource) layer).getType()
+                                    .equals(JGrassConstants.GRASSBINARYRASTERMAP)
+                                    || ((JGrassMapGeoResource) layer).getType()
+                                            .equals(JGrassConstants.GRASSASCIIRASTERMAP)
+                                    || ((JGrassMapGeoResource) layer).getType()
+                                            .equals(JGrassConstants.ESRIRASTERMAP)
+                                    || ((JGrassMapGeoResource) layer).getType()
+                                            .equals(JGrassConstants.FTRASTERMAP))
 
                     ) {
 
                         filteredLayers.add((JGrassMapGeoResource) layer);
-                        itemsMap.put(((JGrassMapGeoResource) layer).getInfo(null).getTitle(), (JGrassMapGeoResource) layer);
+                        itemsMap.put(((JGrassMapGeoResource) layer).getInfo(null).getTitle(),
+                                (JGrassMapGeoResource) layer);
                     }
 
                 }
@@ -166,13 +174,13 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
                 /*
                  * now let's sort them for nice visualization
                  */
-                HashMap<String, JGrassMapGeoResource> tmp = new HashMap<String, JGrassMapGeoResource>();
-                for( JGrassMapGeoResource resource : filteredLayers ) {
+                HashMap<String, JGrassMapGeoResource> tmp = new HashMap<>();
+                for (JGrassMapGeoResource resource : filteredLayers) {
                     tmp.put(resource.getInfo(null).getTitle(), resource);
                 }
-                Map<String, JGrassMapGeoResource> sortedMap = new TreeMap<String, JGrassMapGeoResource>(tmp);
+                Map<String, JGrassMapGeoResource> sortedMap = new TreeMap<>(tmp);
                 filteredLayers.removeAllElements();
-                for( JGrassMapGeoResource map : sortedMap.values() ) {
+                for (JGrassMapGeoResource map : sortedMap.values()) {
                     filteredLayers.add(map);
                 }
 
@@ -185,11 +193,12 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         /**
          * Gets the parent of the specified object
-         * 
+         *
          * @param arg0 the object
          * @return Object
          */
-        public Object getParent( Object arg0 ) {
+        @Override
+        public Object getParent(Object arg0) {
             if (arg0 instanceof JGrassMapsetGeoResource) {
                 return null;
             } else if (arg0 instanceof JGrassMapGeoResource) {
@@ -204,11 +213,12 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         /**
          * Returns whether the passed object has children
-         * 
+         *
          * @param arg0 the parent object
          * @return boolean
          */
-        public boolean hasChildren( Object arg0 ) {
+        @Override
+        public boolean hasChildren(Object arg0) {
             if (arg0 instanceof JGrassMapsetGeoResource) {
                 return true;
             } else if (arg0 instanceof JGrassMapGeoResource) {
@@ -219,30 +229,32 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         /**
          * Gets the root element(s) of the tree
-         * 
+         *
          * @param arg0 the input data
          * @return Object[]
          */
-        public Object[] getElements( Object arg0 ) {
+        @Override
+        public Object[] getElements(Object arg0) {
             // add the service to the catalog
             ICatalog catalog = CatalogPlugin.getDefault().getLocalCatalog();
             ArrayList<IResolve> neededCatalogMembers = null;
             try {
-                List< ? extends IResolve> allCatalogMembers = catalog.members(null);
+                List<? extends IResolve> allCatalogMembers = catalog.members(null);
                 // for jgrass locations we extract the mapset out of the
                 // locations = from
                 // JGrassService
-                neededCatalogMembers = new ArrayList<IResolve>();
-                for( IResolve catalogMember : allCatalogMembers ) {
+                neededCatalogMembers = new ArrayList<>();
+                for (IResolve catalogMember : allCatalogMembers) {
                     if (catalogMember instanceof JGrassService) {
                         List<IResolve> layers = ((JGrassService) catalogMember).members(null);
-                        for( IResolve resource : layers ) {
+                        for (IResolve resource : layers) {
                             if (mapset != null && resource instanceof JGrassMapsetGeoResource) {
                                 JGrassMapsetGeoResource map = (JGrassMapsetGeoResource) resource;
                                 File refFile = map.getFile();
                                 File mapsetFile = new File(mapset);
 
-                                if (refFile.getAbsolutePath().equals(mapsetFile.getAbsolutePath())) {
+                                if (refFile.getAbsolutePath()
+                                        .equals(mapsetFile.getAbsolutePath())) {
                                     neededCatalogMembers.add(resource);
                                 }
                             } else {
@@ -265,18 +277,20 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
         /**
          * Disposes any created resources
          */
+        @Override
         public void dispose() {
             // Nothing to dispose
         }
 
         /**
          * Called when the input changes
-         * 
+         *
          * @param arg0 the viewer
          * @param arg1 the old input
          * @param arg2 the new input
          */
-        public void inputChanged( Viewer arg0, Object arg1, Object arg2 ) {
+        @Override
+        public void inputChanged(Viewer arg0, Object arg1, Object arg2) {
             // Nothing to change
         }
     }
@@ -291,10 +305,15 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         // Images for tree nodes
         private final Image rasterMaps;
+
         private final Image mainRasterMaps;
+
         private final Image grassasciiRasterMaps;
+
         private final Image esriasciiRasterMaps;
+
         private final Image fluidturtleRasterMaps;
+
         private final Image problemRasterMaps;
 
         /**
@@ -302,41 +321,52 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
          */
         public LabelProvider() {
             // Create the list to hold the listeners
-            listeners = new ArrayList<ILabelProviderListener>();
+            listeners = new ArrayList<>();
 
             // Create the images
-            rasterMaps = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.GRID_OBJ).createImage();
+            rasterMaps = CatalogUIPlugin.getDefault().getImageDescriptor(ISharedImages.GRID_OBJ)
+                    .createImage();
             mainRasterMaps = AbstractUIPlugin
-                    .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/jgrass_obj.gif").createImage(); //$NON-NLS-1$
-            grassasciiRasterMaps = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID,
-                    "icons/obj16/grassascii.gif").createImage(); //$NON-NLS-1$
+                    .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/jgrass_obj.gif") //$NON-NLS-1$
+                    .createImage();
+            grassasciiRasterMaps = AbstractUIPlugin
+                    .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/grassascii.gif") //$NON-NLS-1$
+                    .createImage();
             esriasciiRasterMaps = AbstractUIPlugin
-                    .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/esrigrid.gif").createImage(); //$NON-NLS-1$
+                    .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/esrigrid.gif") //$NON-NLS-1$
+                    .createImage();
             fluidturtleRasterMaps = AbstractUIPlugin
-                    .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/ftraster.gif").createImage(); //$NON-NLS-1$
+                    .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/ftraster.gif") //$NON-NLS-1$
+                    .createImage();
             problemRasterMaps = AbstractUIPlugin
-                    .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/problem.gif").createImage(); //$NON-NLS-1$
+                    .imageDescriptorFromPlugin(JGrassPlugin.PLUGIN_ID, "icons/obj16/problem.gif") //$NON-NLS-1$
+                    .createImage();
         }
 
         /**
          * Gets the image to display for a node in the tree
-         * 
+         *
          * @param arg0 the node
          * @return Image
          */
-        public Image getImage( Object arg0 ) {
+        @Override
+        public Image getImage(Object arg0) {
             if (arg0 instanceof JGrassMapsetGeoResource) {
                 return mainRasterMaps;
             } else if (arg0 instanceof JGrassMapGeoResource) {
                 // support all raster types known
-                if (((JGrassMapGeoResource) arg0).getType().equals(JGrassConstants.GRASSBINARYRASTERMAP)) {
+                if (((JGrassMapGeoResource) arg0).getType()
+                        .equals(JGrassConstants.GRASSBINARYRASTERMAP)) {
 
                     return rasterMaps;
-                } else if (((JGrassMapGeoResource) arg0).getType().equals(JGrassConstants.GRASSASCIIRASTERMAP)) {
+                } else if (((JGrassMapGeoResource) arg0).getType()
+                        .equals(JGrassConstants.GRASSASCIIRASTERMAP)) {
                     return grassasciiRasterMaps;
-                } else if (((JGrassMapGeoResource) arg0).getType().equals(JGrassConstants.ESRIRASTERMAP)) {
+                } else if (((JGrassMapGeoResource) arg0).getType()
+                        .equals(JGrassConstants.ESRIRASTERMAP)) {
                     return esriasciiRasterMaps;
-                } else if (((JGrassMapGeoResource) arg0).getType().equals(JGrassConstants.FTRASTERMAP)) {
+                } else if (((JGrassMapGeoResource) arg0).getType()
+                        .equals(JGrassConstants.FTRASTERMAP)) {
                     return fluidturtleRasterMaps;
                 } else {
                     return problemRasterMaps;
@@ -349,21 +379,25 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         /**
          * Gets the text to display for a node in the tree
-         * 
+         *
          * @param arg0 the node
          * @return String
          */
-        public String getText( Object arg0 ) {
+        @Override
+        public String getText(Object arg0) {
 
             String text = null;
             try {
                 if (arg0 instanceof JGrassMapsetGeoResource) {
-                    String locationName = ((JGrassService) ((JGrassMapsetGeoResource) arg0).parent(null)).getInfo(null)
-                            .getTitle();
+                    String locationName = ((JGrassService) ((JGrassMapsetGeoResource) arg0)
+                            .parent(null)).getInfo(null).getTitle();
                     String mapsetName;
                     mapsetName = ((JGrassMapsetGeoResource) arg0).getTitle();
 
-                    text = locationName + Messages.getString("JGRasterCatalogTreeViewer.loc-mapset-name-delimiter") + mapsetName; //$NON-NLS-1$
+                    text = locationName
+                            + Messages.getString(
+                                    "JGRasterCatalogTreeViewer.loc-mapset-name-delimiter") //$NON-NLS-1$
+                            + mapsetName;
                 } else if (arg0 instanceof JGrassMapGeoResource) {
                     text = ((JGrassMapGeoResource) arg0).getInfo(null).getTitle();
                 }
@@ -376,16 +410,18 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
 
         /**
          * Adds a listener to this label provider
-         * 
+         *
          * @param arg0 the listener
          */
-        public void addListener( ILabelProviderListener arg0 ) {
+        @Override
+        public void addListener(ILabelProviderListener arg0) {
             listeners.add(arg0);
         }
 
         /**
          * Called when this LabelProvider is being disposed
          */
+        @Override
         public void dispose() {
             // Dispose the images
             if (rasterMaps != null)
@@ -395,29 +431,33 @@ public class JGRasterCatalogTreeViewer extends Composite implements ISelectionCh
         /**
          * Returns whether changes to the specified property on the specified element would affect
          * the label for the element
-         * 
+         *
          * @param arg0 the element
          * @param arg1 the property
          * @return boolean
          */
-        public boolean isLabelProperty( Object arg0, String arg1 ) {
+        @Override
+        public boolean isLabelProperty(Object arg0, String arg1) {
             return false;
         }
 
         /**
          * Removes the listener
-         * 
+         *
          * @param arg0 the listener to remove
          */
-        public void removeListener( ILabelProviderListener arg0 ) {
+        @Override
+        public void removeListener(ILabelProviderListener arg0) {
             listeners.remove(arg0);
         }
     }
 
     /*
      * (non-Javadoc)
+     *
      * @see eu.hydrologis.jgrass.ui.utilities.ResourcesSelector#getSelectedLayers()
      */
+    @Override
     public List<IGeoResource> getSelectedLayers() {
         return itemLayers;
     }

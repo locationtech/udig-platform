@@ -225,22 +225,21 @@ targetEditor).
 
     public class CommitAction implements IEditorActionDelegate {
 
-        private MapEditor editor;
+        public void run(IAction action) {
 
-        public void setActiveEditor( IAction action, IEditorPart targetEditor ) {
-            editor=(MapEditor) targetEditor;
-        }
+            MapPart mapPart = ApplicationGISInternal.getActiveMapPart();
 
-        public void run( IAction action ) {
             try {
-                editor.getMap().getEditManagerInternal().commitTransaction();
+                mapPart.getMap().getEditManagerInternal().commitTransaction();
             } catch (IOException e) {
                 // Shouldn't happen but...
                 ProjectUIPlugin.getDefault().getLog().log(new Status(IStatus.ERROR,
                         "org.locationtech.udig.project",0,"Error commiting transaction",e)); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
-        public void selectionChanged( IAction action, ISelection selection ) {
+
+        public void selectionChanged(IAction action, ISelection selection) {
+
         }
     }
 

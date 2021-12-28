@@ -41,6 +41,7 @@ import org.locationtech.udig.project.internal.render.impl.ScaleUtils.CalculateZo
 import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
 import org.locationtech.udig.project.ui.commands.IDrawCommand;
 import org.locationtech.udig.project.ui.internal.MapPart;
+import org.locationtech.udig.project.ui.internal.MapSite;
 import org.locationtech.udig.project.ui.internal.tool.ToolContext;
 import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 
@@ -199,6 +200,15 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
 
     @Override
     public IActionBars getActionBars() {
+        MapSite workbenchPartSite = getSite();
+        if (workbenchPartSite != null) {
+            return workbenchPartSite.getActionBars();
+        }
+
+        return null;
+    }
+
+    private MapSite getSite() {
         IWorkbenchWindow window = getWindow();
         if (window == null)
             return null;
@@ -210,7 +220,7 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
         for (IEditorReference ref : editors) {
             IEditorPart editor = ref.getEditor(false);
             if (isMapPart(editor)) {
-                return editor.getEditorSite().getActionBars();
+                return ((MapPart) editor).getMapSite();
             }
         }
 
@@ -219,7 +229,7 @@ public class ToolContextImpl extends AbstractContextImpl implements ToolContext 
         for (IViewReference ref : views) {
             final IViewPart view = ref.getView(false);
             if (isMapPart(view)) {
-                return view.getViewSite().getActionBars();
+                return ((MapPart) view).getMapSite();
             }
         }
 

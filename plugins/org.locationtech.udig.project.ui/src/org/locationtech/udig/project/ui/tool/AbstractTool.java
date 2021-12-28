@@ -20,7 +20,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.swt.widgets.Display;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
-import org.locationtech.udig.project.ui.internal.MapEditorPart;
+import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseListener;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseMotionListener;
@@ -77,14 +77,14 @@ public abstract class AbstractTool implements Tool, MapMouseListener, MapMouseMo
 
     private int targets;
 
-    private Map<String, Object> properties = new HashMap<String, Object>();
+    private Map<String, Object> properties = new HashMap<>();
 
     private IMapEditorSelectionProvider selectionProvider;
 
     /**
      * Tool's lifecycle listeners.
      */
-    private Set<ToolLifecycleListener> listeners = new HashSet<ToolLifecycleListener>();
+    private Set<ToolLifecycleListener> listeners = new HashSet<>();
 
     /**
      * Enablement of the tool.
@@ -157,7 +157,7 @@ public abstract class AbstractTool implements Tool, MapMouseListener, MapMouseMo
             display.asyncExec(new Runnable() {
                 @Override
                 public void run() {
-                    MapEditorPart editor = ApplicationGISInternal.findMapEditor(context.getMap());
+                    MapPart editor = ApplicationGISInternal.findMapPart(context.getMap());
                     if (editor != null && !editor.isDragging()) {
                         editor.setDragging(true);
                     }
@@ -194,7 +194,7 @@ public abstract class AbstractTool implements Tool, MapMouseListener, MapMouseMo
             display.asyncExec(new Runnable() {
                 @Override
                 public void run() {
-                    MapEditorPart editor = ApplicationGISInternal.findMapEditor(context.getMap());
+                    MapPart editor = ApplicationGISInternal.findMapPart(context.getMap());
                     if (editor != null && editor.isDragging()) {
                         editor.setDragging(false);
                     }
@@ -250,22 +250,10 @@ public abstract class AbstractTool implements Tool, MapMouseListener, MapMouseMo
         properties.put(key, value);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.locationtech.udig.project.ui.tool.Tool#getSelectionProvider()
-     */
     public IMapEditorSelectionProvider getSelectionProvider() {
         return selectionProvider;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * org.locationtech.udig.project.ui.tool.Tool#setSelectionProvider(org.locationtech.udig.project
-     * .ui.tool.IMapEditorSelectionProvider)
-     */
     public void setSelectionProvider(IMapEditorSelectionProvider selectionProvider) {
         this.selectionProvider = selectionProvider;
     }

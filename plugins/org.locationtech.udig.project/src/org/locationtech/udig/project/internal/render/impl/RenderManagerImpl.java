@@ -416,13 +416,6 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * @throws IOException
-     * @see org.locationtech.udig.project.internal.render.RenderManager#getInfo(java.awt.Point)
-     *      public List getInfo(Point screenLocation) throws IOException { return
-     *      getRenderExecutor().getInfo(screenLocation); }
-     */
-
-    /**
-     * @throws IOException
      * @see org.locationtech.udig.project.internal.render.RenderManager#createInfo(java.awt.Point)
      *      public List getInfo(Point screenLocation) throws IOException { return
      *      getRenderExecutor().getInfo(screenLocation); }
@@ -455,7 +448,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
 
     /**
      * If subclasses override this method make sure that super.dispose() is called <b>AT THE END<b>
-     * of the overridding method.
+     * of the overriding method.
      *
      * @generated NOT
      */
@@ -631,52 +624,33 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
         return result.toString();
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.RenderManager#refresh(org.locationtech.udig.project.Layer,
-     *      org.locationtech.jts.geom.Envelope)
-     */
     @Override
     public void refresh(ILayer layer, Envelope bounds) {
         throw new UnsupportedOperationException();
 
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.RenderManager#refresh(org.locationtech.jts.geom.Envelope)
-     */
     @Override
     public void refresh(Envelope bounds) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.RenderManager#refreshImage()
-     */
     @Override
     public void refreshImage() {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.RenderManager#refreshSelection(org.locationtech.jts.geom.Envelope)
-     */
     @Override
     public void refreshSelection(ILayer layer, Envelope bounds) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.IRenderManager#getMap()
-     */
     @Override
     public IMap getMap() {
         checkState();
         return getMapInternal();
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.IRenderManager#getRenderers()
-     */
     @Override
     public List<IRenderer> getRenderers() {
         checkState();
@@ -760,7 +734,7 @@ public class RenderManagerImpl extends EObjectImpl implements RenderManager {
      *
      * Returns true if these two layers are related in any way. Two layers are related if:
      * <ul>
-     * <li>They are the same (layer = contained)
+     * <li>They are the same (layer = contained)</li>
      * <li>Layer is a part of a composite context and contained is also part of that context.</li>
      * </ul>
      *
