@@ -82,6 +82,36 @@ You can change the location of your workspace using a command line option:
 
     udig -data <workspace location>
 
+Preferences
+-----------
+
+The uDig application has lots of :doc:`../reference/Preferences` with a sensible default. In case the application should have
+a different setup, its possible to pre-configure application using an ``.options`` file placed in installation folder to overwrite
+defaults.
+
+This requires to start application with arguments (see ``.ini`` file in root installation directory of uDig)
+
+::
+
+    -pluginCustomization
+    .options
+
+.. note::
+   Its required to add it **before** ``-vmargs`` otherwise preferences values are not applied correctly.
+
+where the content of the ``.options`` file looks like this, one line per preferences option:
+
+::
+
+    <plugin-id>/<preferences constant>=<value
+
+Related articles:
+
+-  https://www.eclipse.org/articles/preferences/preferences.htm
+-  https://gnu-mcu-eclipse.github.io/developer/eclipse/runtime-preferences/
+
+
+
 Configuration
 -------------
 

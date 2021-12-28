@@ -280,7 +280,7 @@ public class StyleThemePage extends StyleEditorPage {
     /**
      * Classifier is produced by running a classification function over a FeatureCollection.
      * <p>
-     * The Classifer contains "Summary" or "Histogram" information about the FeatureCollection and
+     * The classifier contains "Summary" or "Histogram" information about the FeatureCollection and
      * is used as a basis for style generation.
      */
     // ExplicitClassifier customBreak = null;
@@ -402,7 +402,7 @@ public class StyleThemePage extends StyleEditorPage {
             for (BrewerPalette brewerPalette : palettesList) {
                 brewer.registerPalette(brewerPalette);
             }
-            // add a dynamic one that support everythings
+            // add a dynamic one that support everything
             TABLE[] dynamicPalettes = CustomDynamicPalette.TABLE.values();
             for (TABLE colorTable : dynamicPalettes) {
                 CustomDynamicPalette customDynamicPalette = new CustomDynamicPalette(colorTable);
@@ -1499,16 +1499,12 @@ public class StyleThemePage extends StyleEditorPage {
                         numClasses = Integer.valueOf(getCombo(COMBO_CLASSES).getText()).intValue();
 
                         if (getCombo(COMBO_ELSE).getSelectionIndex() == 0) {
-                            // function.setNumberOfClasses(numClasses);
                             function.setClasses(numClasses);
                         } else {
-                            // function.setNumberOfClasses(numClasses-1);
                             function.setClasses(numClasses - 1);
                         }
-                        // function.setCollection(collection);
                         function.getParameters().set(0, expr); // set the expression last, since it
                                                                // causes the calculation
-                        // function.setExpression(expr);
                         classifier = function.evaluate(collection, Classifier.class);
                     }
                 }
@@ -1557,8 +1553,7 @@ public class StyleThemePage extends StyleEditorPage {
 
                 FeatureTypeStyle newFTS = null;
                 try {
-                    newFTS = StyleGenerator.createFeatureTypeStyle(classifier,
-                            expr, colors,
+                    newFTS = StyleGenerator.createFeatureTypeStyle(classifier, expr, colors,
                             semanticTypeIdentifier,
                             getSelectedLayer().getSchema().getGeometryDescriptor(), elsemode, opac,
                             null);
@@ -1805,7 +1800,7 @@ public class StyleThemePage extends StyleEditorPage {
         // delete any FTSs with zero rules
         List<FeatureTypeStyle> items = new ArrayList<>();
         for (int i = 0; i < style.featureTypeStyles().size(); i++) {
-            if (style.featureTypeStyles().get(i).rules().size() == 0) {
+            if (style.featureTypeStyles().get(i).rules().isEmpty()) {
                 Object[] temp = removeElement(style.featureTypeStyles(), i);
                 for (int j = 0; j < temp.length; j++) {
                     items.add((FeatureTypeStyle) temp[j]);

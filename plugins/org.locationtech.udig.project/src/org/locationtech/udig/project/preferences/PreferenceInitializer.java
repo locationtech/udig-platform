@@ -54,6 +54,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         store.setDefault(PreferenceConstants.P_IGNORE_LABELS_OVERLAPPING, false);
         store.setDefault(PreferenceConstants.P_CHECK_DUPLICATE_LAYERS, false);
         store.setDefault(PreferenceConstants.P_HIDE_RENDER_JOB, false);
+        store.setDefault(PreferenceConstants.P_ADVANCED_PROJECTION_SUPPORT, false);
+        store.setDefault(PreferenceConstants.P_DISABLE_CRS_SELECTION, false);
     }
 
 }
