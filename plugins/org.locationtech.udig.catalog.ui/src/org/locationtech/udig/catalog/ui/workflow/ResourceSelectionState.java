@@ -138,7 +138,7 @@ public class ResourceSelectionState extends State {
         if (services != null) {
             for (IService service : services) {
                 List<? extends IGeoResource> members = service.resources(monitor);
-                if (members != null && members.size() < 1) {
+                if (members != null && members.isEmpty()) {
                     toRemove.add(service);
                     continue;
                 }
