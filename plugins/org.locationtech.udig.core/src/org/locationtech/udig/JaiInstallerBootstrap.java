@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -9,24 +10,37 @@
  */
 package org.locationtech.udig;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.ui.IStartup;
 
 public class JaiInstallerBootstrap implements IStartup {
 
+    /**
+     * This looks for a InstallJaiStartup class contributed by a fragment. If it finds it is
+     * executes it. If it doesn't find it then it doesn't worry about it.
+     */
+    @Override
     public void earlyStartup() {
-        // This looks for a InstallJaiStartup class contributed by a fragment.  If it finds it is executes it.
-        // If it doesn't find it then it doesn't worry about it.
-        try{
-            Class< ? > installerClass = Class.forName("org.locationtech.udig.InstallJaiStartup", true, getClass().getClassLoader()); //$NON-NLS-1$
-            Runnable installer = (Runnable) installerClass.newInstance();
+        try {
+            Class<?> installerClass = Class.forName("org.locationtech.udig.InstallJaiStartup", true, //$NON-NLS-1$
+                    getClass().getClassLoader());
+            Runnable installer = (Runnable) installerClass.getDeclaredConstructor().newInstance();
             installer.run();
-        }catch (ClassNotFoundException e) {
-            // Its ok
-//            CorePlugin.log("JAI Installer class not found", e); //$NON-NLS-1$
+        } catch (ClassNotFoundException e) {
+            // Its OK
         } catch (InstantiationException e) {
-            throw (RuntimeException) new RuntimeException( ).initCause( e );
+            throw (RuntimeException) new RuntimeException().initCause(e);
         } catch (IllegalAccessException e) {
-            throw (RuntimeException) new RuntimeException( ).initCause( e );
+            throw (RuntimeException) new RuntimeException().initCause(e);
+        } catch (IllegalArgumentException e) {
+            throw (RuntimeException) new RuntimeException().initCause(e);
+        } catch (InvocationTargetException e) {
+            throw (RuntimeException) new RuntimeException().initCause(e);
+        } catch (NoSuchMethodException e) {
+            throw (RuntimeException) new RuntimeException().initCause(e);
+        } catch (SecurityException e) {
+            throw (RuntimeException) new RuntimeException().initCause(e);
         }
     }
 }
