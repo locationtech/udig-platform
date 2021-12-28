@@ -47,7 +47,7 @@ import org.locationtech.udig.project.ui.internal.wizard.MapImport;
 import org.locationtech.udig.project.ui.tool.IMapEditorSelectionProvider;
 import org.locationtech.udig.project.ui.tool.ModalTool;
 import org.locationtech.udig.project.ui.viewers.MapViewer;
-import org.locationtech.udig.tools.internal.FixedScalePan;
+import org.locationtech.udig.tools.internal.PanTool;
 import org.locationtech.udig.tools.internal.Zoom;
 import org.locationtech.udig.tutorials.tracking.glasspane.SeagullGlassPaneOp;
 
@@ -66,9 +66,6 @@ public class MapView extends ViewPart implements MapPart {
 
     private MapSite mapSite;
 
-    @SuppressWarnings("unused")
-    private boolean isDirty = false;
-
     private Map map;
 
     private SeagullGlassPaneOp seagullOp;
@@ -82,6 +79,7 @@ public class MapView extends ViewPart implements MapPart {
         FillLayout fillLayout = new FillLayout();
         fillLayout.type = SWT.VERTICAL;
         parent.setLayout(fillLayout);
+
         mapviewer = new MapViewer(parent, this, SWT.SINGLE | SWT.DOUBLE_BUFFERED);
 
         mapSite = new MapSite(getViewSite(), this);
@@ -125,7 +123,7 @@ public class MapView extends ViewPart implements MapPart {
             super("Pan"); //$NON-NLS-1$
         }
 
-        private FixedScalePan tool = new FixedScalePan();
+        private PanTool tool = new PanTool();
 
         @Override
         public void run() {
@@ -337,6 +335,6 @@ public class MapView extends ViewPart implements MapPart {
 
     @Override
     public void setDirty(boolean isDirty) {
-        this.isDirty = isDirty;
+        // ignore dirty state
     }
 }

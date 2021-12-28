@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,18 +12,6 @@ package org.locationtech.udig.catalog.internal.ui;
 
 import java.io.IOException;
 import java.util.Iterator;
-
-import org.locationtech.udig.catalog.CatalogPlugin;
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.ui.CatalogTreeViewer;
-import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
-import org.locationtech.udig.catalog.ui.StatusLineMessageBoardAdapter;
-import org.locationtech.udig.catalog.ui.internal.Messages;
-import org.locationtech.udig.internal.ui.IDropTargetProvider;
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.ui.ProgressManager;
-import org.locationtech.udig.ui.UDIGDragDropUtilities;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
@@ -47,20 +35,30 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
+import org.locationtech.udig.catalog.CatalogPlugin;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ui.CatalogTreeViewer;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.StatusLineMessageBoardAdapter;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.internal.ui.IDropTargetProvider;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.ProgressManager;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * Catalog view for visualization and management if resources.
  * <p>
  * This class will be rather heavy on documentation, because it central (literally) to the uDig
- * applicaiton, and because it is one of the first views we are creating.
+ * application, and because it is one of the first views we are creating.
  * </p>
  * <p>
  * Of Note:
  * <ul>
  * <li>The catalog is strange in that there is only *one*, represent a global registry of all the
- * data sources in use by any uDig plugins.
- * <li>
+ * data sources in use by any uDig plugins.</li>
  * </ul>
  * </p>
  * From the requirements document (where CatalogView is known as LocalCatalog): <i>The Local Catalog
@@ -83,8 +81,8 @@ import org.osgi.service.prefs.BackingStoreException;
  * context.
  * <li><b>Persist Settings </b>, permit exporting and sharing DataStore connection information.
  * <li><b>DataStores Management </b>, lookup actualized DataStores that are in use.
- * <li><b>Missing Data </b>, entries referred to by imported projects should be maintained,
- * allowing the user one location to correct data connection information.
+ * <li><b>Missing Data </b>, entries referred to by imported projects should be maintained, allowing
+ * the user one location to correct data connection information.
  * </ul>
  * </p>
  * <p>
@@ -102,6 +100,7 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
     Action removeAction; // addAction
 
     private Action saveAction;
+
     private Action loadAction;
 
     private Action propertiesAction;
@@ -116,20 +115,21 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
      * <ol>
      * <li>Create one or more controls within the parent.</li>
      * <li>Set the parent layout as needed.</li>
-     * <li>Register any global actions with the <code>IActionService</code>. </li>
-     * <li>Register any popup menus with the <code>IActionService</code>. </li>
+     * <li>Register any global actions with the <code>IActionService</code>.</li>
+     * <li>Register any pop-up menus with the <code>IActionService</code>.</li>
      * <li>Register a selection provider with the <code>ISelectionService</code> (optional).</li>
      * </ol>
      * </p>
-     * 
+     *
      * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
      * @param parent
      */
-    public void createPartControl( Composite parent ) {
+    @Override
+    public void createPartControl(Composite parent) {
         // create viewer
-//        treeviewer = new CatalogTreeViewer(parent, false);
         treeviewer = new CatalogTreeViewer(parent, true);
-        treeviewer.setMessageBoard(new StatusLineMessageBoardAdapter(getViewSite().getActionBars().getStatusLineManager()));
+        treeviewer.setMessageBoard(new StatusLineMessageBoardAdapter(
+                getViewSite().getActionBars().getStatusLineManager()));
 
         UDIGDragDropUtilities.addDragDropSupport(treeviewer, this);
 
@@ -150,19 +150,19 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
      * <ul>
      * <li>
      */
-    protected void hookGlobalActions(){
-        getViewSite().getActionBars().setGlobalActionHandler(
-                IWorkbenchActionConstants.PROPERTIES,
-                propertiesAction );
+    protected void hookGlobalActions() {
+        getViewSite().getActionBars().setGlobalActionHandler(IWorkbenchActionConstants.PROPERTIES,
+                propertiesAction);
     }
-    
+
     private void createContextMenu() {
         final MenuManager contextMenu = new MenuManager();
 
         contextMenu.setRemoveAllWhenShown(true);
-        contextMenu.addMenuListener(new IMenuListener(){
+        contextMenu.addMenuListener(new IMenuListener() {
 
-            public void menuAboutToShow( IMenuManager mgr ) {
+            @Override
+            public void menuAboutToShow(IMenuManager mgr) {
                 contextMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
                 contextMenu.add(new Separator());
                 contextMenu.add(removeAction);
@@ -170,7 +170,8 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
                 IAction action = ActionFactory.IMPORT.create(window);
                 contextMenu.add(action);
                 contextMenu.add(new Separator());
-                contextMenu.add(UiPlugin.getDefault().getOperationMenuFactory().getContextMenu(treeviewer.getSelection()));
+                contextMenu.add(UiPlugin.getDefault().getOperationMenuFactory()
+                        .getContextMenu(treeviewer.getSelection()));
                 contextMenu.add(new Separator());
                 contextMenu.add(ActionFactory.EXPORT.create(getSite().getWorkbenchWindow()));
             }
@@ -189,35 +190,38 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
     /**
      * Create a few actions such as add, remove, properties and so on.
      * <p>
-     * These properties will be registered in our view menu, as global handlers
-     * and so forth.
+     * These properties will be registered in our view menu, as global handlers and so forth.
      * </p>
      */
     private void createActions() {
-        propertiesAction  =
-            new PropertyDialogAction( getViewSite().getWorkbenchWindow(), treeviewer );
-                   
-        getViewSite().getActionBars().setGlobalActionHandler(ActionFactory.PROPERTIES.getId(), propertiesAction);        
+        propertiesAction = new PropertyDialogAction(getViewSite().getWorkbenchWindow(), treeviewer);
+
+        getViewSite().getActionBars().setGlobalActionHandler(ActionFactory.PROPERTIES.getId(),
+                propertiesAction);
         getSite().getKeyBindingService().registerAction(propertiesAction);
-        
-        removeAction = new Action(){
+
+        removeAction = new Action() {
+            @Override
             public void run() {
                 IStructuredSelection selected = (IStructuredSelection) treeviewer.getSelection();
-                removeSelected( selected );
+                removeSelected(selected);
             }
         };
-        
+
         Messages.initAction(removeAction, "action_remove"); //$NON-NLS-1$
         removeAction.setEnabled(false);
-        removeAction.setImageDescriptor(CatalogUIPlugin.getDefault().getImageDescriptor(ImageConstants.REMOVE_CO));
+        removeAction.setImageDescriptor(
+                CatalogUIPlugin.getDefault().getImageDescriptor(ImageConstants.REMOVE_CO));
         removeAction.setActionDefinitionId("org.eclipse.ui.edit.delete"); //$NON-NLS-1$
-        getViewSite().getActionBars().setGlobalActionHandler(ActionFactory.DELETE.getId(), removeAction);
+        getViewSite().getActionBars().setGlobalActionHandler(ActionFactory.DELETE.getId(),
+                removeAction);
         getSite().getKeyBindingService().registerAction(removeAction);
-        
+
         PlatformUI.getWorkbench().getHelpSystem().setHelp(removeAction,
                 IHelpContextIds.REMOVE_SERVICE_ACTION);
 
-        saveAction = new Action(Messages.CatalogView_save_label){ 
+        saveAction = new Action(Messages.CatalogView_save_label) {
+            @Override
             public void run() {
                 try {
                     CatalogPlugin.getDefault().storeToPreferences(ProgressManager.instance().get());
@@ -229,7 +233,8 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
             }
         };
 
-        loadAction = new Action(Messages.CatalogView_load_label){ 
+        loadAction = new Action(Messages.CatalogView_load_label) {
+            @Override
             public void run() {
                 try {
                     CatalogPlugin.getDefault().restoreFromPreferences();
@@ -240,8 +245,9 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
         };
 
         // Add selection listener.
-        treeviewer.addSelectionChangedListener(new ISelectionChangedListener(){
-            public void selectionChanged( SelectionChangedEvent event ) {
+        treeviewer.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
                 updateActionEnablement();
             }
         });
@@ -251,12 +257,13 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
         // Call to wizard here...
     }
 
-    protected void showProperties( IStructuredSelection selected ){
-        if( selected.isEmpty() ) return; // action should of been disabled!        
+    protected void showProperties(IStructuredSelection selected) {
+        if (selected.isEmpty())
+            return; // action should of been disabled!
         Object content = selected.getFirstElement();
-        
-        for( Iterator iter = selected.iterator(); iter.hasNext(); ) {
-            @SuppressWarnings("all")//$NON-NLS-1$
+
+        for (Iterator iter = selected.iterator(); iter.hasNext();) {
+            @SuppressWarnings("all")
             Object o = iter.next();
             if (o instanceof IService)
                 remove((IService) o);
@@ -264,25 +271,25 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
                 remove((IGeoResource) o);
         }
     }
-    
+
     /**
      * Remove selected stuff from the catalog.
      * <p>
-     * Please note that this just smacks the Catalog; any Maps or Pages holding
-     * references to this Service will just be confused. The even is sent out
-     * but chances are they may just recreate this Service from scratch next
-     * time they are opened.
+     * Please note that this just smacks the Catalog; any Maps or Pages holding references to this
+     * Service will just be confused. The even is sent out but chances are they may just recreate
+     * this Service from scratch next time they are opened.
      * </p>
      * So if this Service was in use chances are it will just pop back in again.
+     *
      * @see remove( IService )
      * @see remove( IGeoResource )
      */
-    protected void removeSelected( IStructuredSelection selected ) {
+    protected void removeSelected(IStructuredSelection selected) {
         // Free selected data source - but only if it is not
         // in use...
-        
-        for( Iterator iter = selected.iterator(); iter.hasNext(); ) {
-            @SuppressWarnings("all")//$NON-NLS-1$
+
+        for (Iterator iter = selected.iterator(); iter.hasNext();) {
+            @SuppressWarnings("all")
             Object o = iter.next();
             if (o instanceof IService)
                 remove((IService) o);
@@ -293,20 +300,21 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
 
     /**
      * Straight call of CatalogPlugin.getDefault().getLocalCatalog().remove( service )
+     *
      * @param service
      */
-    private void remove( IService service ) {
+    private void remove(IService service) {
         CatalogPlugin.getDefault().getLocalCatalog().remove(service);
     }
 
     /**
      * Will remove the service of the selected resource.
      * <p>
-     * We may try doing something more smart here on a service by service
-     * basis.
+     * We may try doing something more smart here on a service by service basis.
+     *
      * @param georesource
      */
-    private void remove( IGeoResource georesource ) {
+    private void remove(IGeoResource georesource) {
         try {
             remove(georesource.service(null));
         } catch (IOException e) {
@@ -316,11 +324,10 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
 
     void updateActionEnablement() {
         IStructuredSelection sel = (IStructuredSelection) treeviewer.getSelection();
-        if( sel.size() == 0 ){
+        if (sel.isEmpty()) {
             removeAction.setEnabled(false);
             propertiesAction.setEnabled(false);
-        }
-        else {
+        } else {
             removeAction.setEnabled(true);
             propertiesAction.setEnabled(true);
         }
@@ -340,7 +347,6 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
      */
     private void createToolbar() {
         IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
-        // mgr.add(addAction);
 
         IWorkbenchWindow window = getSite().getWorkbenchWindow();
         IAction action = ActionFactory.IMPORT.create(window);
@@ -365,25 +371,24 @@ public class CatalogView extends ViewPart implements ISetSelectionTarget, IDropT
      * a broken datastore) based on context.
      * </p>
      */
+    @Override
     public void setFocus() {
         treeviewer.getControl().setFocus();
     }
+
     /**
-     * @return Returns the treeviewer.
+     * @return Returns the TreeViewer.
      */
     public CatalogTreeViewer getTreeviewer() {
         return treeviewer;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.part.ISetSelectionTarget#selectReveal(org.eclipse.jface.viewers.ISelection)
-     */
-    public void selectReveal( ISelection selection ) {
+    @Override
+    public void selectReveal(ISelection selection) {
         treeviewer.setSelection(selection, true);
     }
 
+    @Override
     public Object getTarget(DropTargetEvent event) {
         return this;
     }

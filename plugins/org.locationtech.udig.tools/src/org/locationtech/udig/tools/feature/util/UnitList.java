@@ -120,7 +120,7 @@ public final class UnitList {
                 // add the last part of the line
                 crsList.add(line);
             }
-            if (crsList.size() == 0) {
+            if (crsList.isEmpty()) {
                 fillcommonLengthUnits(crsFile);
             } else {
                 // check if the total of read CRSs are the same.
