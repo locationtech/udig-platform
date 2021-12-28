@@ -101,6 +101,8 @@ import org.opengis.referencing.operation.TransformException;
  */
 public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRenderer {
 
+    private static final String DEFAULT_REQUEST_IMAGE_FORMAT = "image/png"; //$NON-NLS-1$
+
     private static final String REFRESH_JOB = Messages.BasicWMSRenderer2_refreshJob_title;
 
     private static final String EPSG_4326 = "EPSG:4326"; //$NON-NLS-1$
@@ -161,7 +163,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
         render(graphics, getRenderBounds(), monitor);
     }
 
-    public synchronized void render(Graphics2D destination, ReferencedEnvelope bounds,
+    private synchronized void render(Graphics2D destination, ReferencedEnvelope bounds,
             IProgressMonitor monitor) throws RenderException {
 
         int endLayerStatus = ILayer.DONE;
@@ -237,6 +239,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             List<Layer> wmsLayers = getWMSLayers();
             if (wmsLayers == null || wmsLayers.isEmpty()) {
                 endLayerStatus = ILayer.WARNING;
+                WMSPlugin.log("WMS skip rendering : No WMS Layers available");
                 return;
             }
 
@@ -283,6 +286,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
                     maxDimensions, bounds, backprojectedBBox);
             if (imageDimensions.height < 1 || imageDimensions.width < 1) {
                 endLayerStatus = ILayer.WARNING;
+                WMSPlugin.log("WMS skip rendering : Resulting image size is too small.");
                 return;
             }
             request.setDimensions(imageDimensions.width + "", imageDimensions.height + ""); //$NON-NLS-1$ //$NON-NLS-2$
@@ -430,6 +434,7 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
 
     private void setImageFormat(WebMapServer wms, GetMapRequest request) {
         List formats = wms.getCapabilities().getRequest().getGetMap().getFormats();
+        boolean formatSet = false;
         String str;
         if (getPreferencesStore().getBoolean(PreferenceConstants.P_USE_DEFAULT_ORDER)) {
             str = getPreferencesStore().getDefaultString(PreferenceConstants.P_IMAGE_TYPE_ORDER);
@@ -445,8 +450,14 @@ public class BasicWMSRenderer2 extends RendererImpl implements IMultiLayerRender
             if (formats.contains(format)) {
                 request.setProperty(GetMapRequest.FORMAT, format);
                 request.setTransparent(formatSupportsTransparency(format));
+                formatSet = true;
                 break;
             }
+        }
+
+        if (!formatSet) {
+            request.setProperty(GetMapRequest.FORMAT, DEFAULT_REQUEST_IMAGE_FORMAT);
+            request.setTransparent(formatSupportsTransparency(DEFAULT_REQUEST_IMAGE_FORMAT));
         }
     }
 

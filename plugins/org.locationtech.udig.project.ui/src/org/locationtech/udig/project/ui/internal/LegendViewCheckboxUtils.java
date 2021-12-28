@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  *
@@ -22,7 +23,7 @@ import org.locationtech.udig.ui.PlatformGIS;
 
 /**
  * Contains utility methods to manage the checkboxes of the LegendView tree viewer.
- * 
+ *
  * @author Naz Chan (LISAsoft)
  * @since 1.3.1
  */
@@ -31,34 +32,35 @@ public final class LegendViewCheckboxUtils {
     enum FolderState {
         UNCHECKED, CHECKED, BLOCKED;
     }
-    
+
     public static void updateCheckboxesAsync(final LegendView view) {
         PlatformGIS.asyncInDisplayThread(new Runnable() {
+            @Override
             public void run() {
                 updateCheckboxes(view);
             }
         }, true);
     }
-    
+
     public static void updateCheckboxes(final LegendView view) {
         if (!PlatformUI.getWorkbench().isClosing()) {
 
             final CheckboxTreeViewer viewer = view.getViewer();
             final List<ILegendItem> items = view.getCurrentMap().getLegend();
-            
+
             for (ILegendItem item : items) {
                 updateCheckbox(viewer, item);
             }
 
         }
     }
-    
+
     private static void updateCheckbox(final CheckboxTreeViewer viewer, final ILegendItem item) {
         if (item instanceof Folder) {
             final Folder folder = (Folder) item;
             updateCheckbox(viewer, folder);
         } else if (item instanceof LayerLegendItem) {
-            final LayerLegendItem layerItem = (LayerLegendItem) item; 
+            final LayerLegendItem layerItem = (LayerLegendItem) item;
             updateCheckbox(viewer, layerItem);
         }
     }
@@ -71,14 +73,14 @@ public final class LegendViewCheckboxUtils {
         setFolderExpansion(viewer, folder);
     }
 
-    private static void updateCheckbox(final CheckboxTreeViewer viewer, final LayerLegendItem layerItem) {
+    private static void updateCheckbox(final CheckboxTreeViewer viewer,
+            final LayerLegendItem layerItem) {
         setLayerCheckbox(viewer, layerItem);
     }
 
-    
     /**
      * Sets the checkbox static of the layer item on the viewer.
-     * 
+     *
      * @param viewer
      * @param layerItem
      */
@@ -87,22 +89,22 @@ public final class LegendViewCheckboxUtils {
         final Layer layer = layerItem.getLayer();
         viewer.setChecked(layerItem, layer.isVisible());
     }
-    
+
     /**
      * Sets the expanded state of the folder on the view.
-     * 
+     *
      * @param viewer
      * @param folder
      */
     private static void setFolderExpansion(final CheckboxTreeViewer viewer, final Folder folder) {
-        final boolean isEmpty = (folder.getItems().size() == 0);
+        final boolean isEmpty = (folder.getItems().isEmpty());
         viewer.setExpandedState(folder, !isEmpty);
     }
-    
+
     /**
      * Sets the checkbox status of the folder on the viewer. This method checks the child layers of
      * the folder to determine the status.
-     * 
+     *
      * @param viewer
      * @param folder
      */
@@ -128,17 +130,17 @@ public final class LegendViewCheckboxUtils {
 
     /**
      * Returns what the status of the folder's checkbox should be with respect to its child layers.
-     * 
+     *
      * @param viewer
      * @param folder
      * @return CHECKED - the folder should be checked, BLOCKED - folder should be blocked, UNCHECKED
      *         - folder should be unchecked
      */
     private static FolderState getFolderCheckboxDisplay(CheckboxTreeViewer viewer, Folder folder) {
-        
+
         final List<ILegendItem> items = folder.getItems();
-        if (items.size() == 0) {
-            
+        if (items.isEmpty()) {
+
             final boolean isGrayed = viewer.getGrayed(folder);
             if (isGrayed) {
                 return FolderState.BLOCKED;
@@ -147,14 +149,14 @@ public final class LegendViewCheckboxUtils {
             if (isChecked) {
                 return FolderState.CHECKED;
             }
-            
+
         } else {
 
             int checkedCnt = 0;
             int grayedCnt = 0;
             final List<Object> grayedElements = Arrays.asList(viewer.getGrayedElements());
             final List<Object> checkedElements = Arrays.asList(viewer.getCheckedElements());
-            
+
             for (ILegendItem item : items) {
                 if (grayedElements.contains(item)) {
                     grayedCnt++;
@@ -172,11 +174,11 @@ public final class LegendViewCheckboxUtils {
             if (grayedCnt > 0) {
                 return FolderState.BLOCKED;
             }
-            
+
         }
-        
-        return FolderState.UNCHECKED; 
-        
+
+        return FolderState.UNCHECKED;
+
     }
-    
+
 }

@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, 2015 Refractions Research Inc. and others
  *
@@ -12,34 +13,36 @@ package org.locationtech.udig.project.internal.impl;
 import java.util.Collection;
 import java.util.concurrent.locks.Lock;
 
-import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
 /**
- * Synchronizes reads and writes. When iterating its recommend to use {@link #syncedIteration(IEListVisitor)} otherwise 
- * ConcurrentModificationExceptions are potential possible
- * 
+ * Synchronizes reads and writes. When iterating its recommend to use
+ * {@link #syncedIteration(IEListVisitor)} otherwise ConcurrentModificationExceptions are potential
+ * possible
+ *
  * @author Jesse
  * @author Frank Gasdorf
  * @author Erdal Karaca
- * 
+ *
  * @since 1.1.0
  */
-public class SynchronizedEObjectWithInverseResolvingEList<E> extends EObjectWithInverseResolvingEList<E> implements ISynchronizedEListIteration<E> {
+public class SynchronizedEObjectWithInverseResolvingEList<E>
+        extends EObjectWithInverseResolvingEList<E> implements ISynchronizedEListIteration<E> {
 
     /** long serialVersionUID field */
     private static final long serialVersionUID = -7051345525714825128L;
 
-    private transient final Lock              lock             = new UDIGDisplaySafeLock();
+    private transient final Lock lock = new UDIGDisplaySafeLock();
 
-    public SynchronizedEObjectWithInverseResolvingEList( Class<E> dataClass, InternalEObject owner,
-            int featureID, int inverseFeatureID ) {
+    public SynchronizedEObjectWithInverseResolvingEList(Class<E> dataClass, InternalEObject owner,
+            int featureID, int inverseFeatureID) {
         super(dataClass, owner, featureID, inverseFeatureID);
     }
 
     @Override
-    protected E assign( int index, E object ) {
+    protected E assign(int index, E object) {
         lock.lock();
         try {
             return super.assign(index, object);
@@ -49,7 +52,7 @@ public class SynchronizedEObjectWithInverseResolvingEList<E> extends EObjectWith
     }
 
     @Override
-    protected E doRemove( int index ) {
+    protected E doRemove(int index) {
         lock.lock();
         try {
             return super.doRemove(index);
@@ -69,7 +72,7 @@ public class SynchronizedEObjectWithInverseResolvingEList<E> extends EObjectWith
     }
 
     @Override
-    public E get( int index ) {
+    public E get(int index) {
         lock.lock();
         try {
             return super.get(index);
@@ -79,7 +82,7 @@ public class SynchronizedEObjectWithInverseResolvingEList<E> extends EObjectWith
     }
 
     @Override
-    public boolean contains( Object object ) {
+    public boolean contains(Object object) {
         lock.lock();
         try {
             return super.contains(object);
@@ -89,7 +92,7 @@ public class SynchronizedEObjectWithInverseResolvingEList<E> extends EObjectWith
     }
 
     @Override
-    public boolean containsAll( Collection<?> collection ) {
+    public boolean containsAll(Collection<?> collection) {
         lock.lock();
         try {
             return super.containsAll(collection);
@@ -99,7 +102,7 @@ public class SynchronizedEObjectWithInverseResolvingEList<E> extends EObjectWith
     }
 
     @Override
-    public boolean equals( Object object ) {
+    public boolean equals(Object object) {
         lock.lock();
         try {
             return super.equals(object);
@@ -119,10 +122,30 @@ public class SynchronizedEObjectWithInverseResolvingEList<E> extends EObjectWith
     }
 
     @Override
+    public Object[] toArray() {
+        lock.lock();
+        try {
+            return super.toArray();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public <T> T[] toArray(T[] array) {
+        lock.lock();
+        try {
+            return super.toArray(array);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
     public void syncedIteration(IEListVisitor<E> visitor) {
         lock.lock();
         try {
-            for( final E object : this ) {
+            for (final E object : this) {
                 visitor.visit(object);
             }
         } finally {
