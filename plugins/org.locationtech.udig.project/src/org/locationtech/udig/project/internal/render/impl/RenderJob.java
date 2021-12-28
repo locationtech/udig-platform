@@ -27,6 +27,7 @@ import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultEngineeringCRS;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Messages;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.internal.render.RenderExecutor;
@@ -92,6 +93,11 @@ public class RenderJob extends Job {
     }
 
     protected void startRendering(Envelope bounds2, IProgressMonitor monitor) throws Throwable {
+
+        if (executor == null) {
+            return;
+        }
+
         Envelope bounds = bounds2;
         // validate bounds
         IRenderContext context2 = getExecutor().getContext();
@@ -112,6 +118,16 @@ public class RenderJob extends Job {
             initializeLabelPainter(context2);
         }
 
+        // Analyze scales
+        Layer layer = (Layer) context2.getLayer();
+        if (layer != null) {
+            double maxScaleDenominator = layer.getMaxScaleDenominator();
+            double scaleDenominator = context2.getViewportModel().getScaleDenominator();
+            if (maxScaleDenominator != -1 && scaleDenominator > maxScaleDenominator) {
+                return; // No rendering is needed.
+            }
+        }
+
         executor.getRenderer().render(SubMonitor.convert(monitor, 0));
     }
 
@@ -126,6 +142,24 @@ public class RenderJob extends Job {
             context2.getLabelPainter().clear(layerId);
             context2.getLabelPainter().startLayer(layerId);
         }
+    }
+
+    /**
+     * Checks state of rendering of the map. Returns <code>true</code> if everything is fine and job
+     * can do the rendering. Returns <code>false</code> if job must immediately stop execution and
+     * exit.
+     *
+     * @return
+     */
+    private boolean isRenderingEnabled() {
+        if (executor != null) {
+            IRenderContext renderContext = executor.getContext();
+            RenderManager renderManager = (RenderManager) renderContext.getRenderManager();
+            if (renderManager != null && renderManager.isRenderingEnabled())
+                return true;
+
+        }
+        return false;
     }
 
     private String getLayerId(IRenderContext context2) {
@@ -197,13 +231,10 @@ public class RenderJob extends Job {
         executor.getRenderer().setState(IRenderer.DONE);
     }
 
-    /**
-     * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
-     */
     @Override
     protected IStatus run(IProgressMonitor monitor) {
 
-        if (!((RenderManager) getExecutor().getContext().getRenderManager()).isRenderingEnabled()) {
+        if (!isRenderingEnabled()) {
             return Status.OK_STATUS;
         }
 
@@ -232,8 +263,9 @@ public class RenderJob extends Job {
     private synchronized ReferencedEnvelope combineRequests()
             throws TransformException, FactoryException {
         CoordinateReferenceSystem targetCRS = getExecutor().getContext().getCRS();
-        ReferencedEnvelope bounds = new ReferencedEnvelope(targetCRS);
+        ReferencedEnvelope bounds;
         try {
+            bounds = new ReferencedEnvelope(targetCRS); // This may fail
             for (ReferencedEnvelope env : requests) {
                 CoordinateReferenceSystem envCRS = env.getCoordinateReferenceSystem();
                 if (env.isNull() || env.isEmpty() || envCRS == null) {
@@ -328,12 +360,17 @@ public class RenderJob extends Job {
                 return true;
             else if (getRenderer() instanceof CompositeRendererImpl)
                 return false;
-            else
-                return other.getRenderer().getClass().equals(getRenderer().getClass())
-                        && !isCanceled() && !other.isCanceled()
-                        && isUsingLocalResources(getRenderer())
-                        && isUsingLocalResources(other.getRenderer());
 
+            if (other.getRenderer().getClass().equals(getRenderer().getClass()) && !isCanceled()
+                    && !other.isCanceled()) {
+
+                if (isUsingLocalResources(getRenderer())
+                        && isUsingLocalResources(other.getRenderer())) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private boolean isUsingLocalResources(Renderer renderer) {

@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2010, Refractions Research Inc.
  * (C) 2001, 2008 IBM Corporation and others
@@ -21,6 +22,18 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.internal.views.properties.tabbed.TabbedPropertyViewStatusCodes;
+import org.eclipse.ui.views.properties.tabbed.ISectionDescriptorProvider;
+import org.eclipse.ui.views.properties.tabbed.ITypeMapper;
 import org.locationtech.udig.feature.editor.FeatureEditorPlugin;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
@@ -29,21 +42,6 @@ import org.locationtech.udig.project.ui.feature.FeaturePanelEntry;
 import org.locationtech.udig.project.ui.feature.FeaturePanelProcessor;
 import org.locationtech.udig.project.ui.feature.FeatureSiteImpl;
 import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.viewers.BaseLabelProvider;
-import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.internal.views.properties.tabbed.TabbedPropertyViewStatusCodes;
-import org.eclipse.ui.views.properties.tabbed.ISectionDescriptorProvider;
-import org.eclipse.ui.views.properties.tabbed.ITypeMapper;
 import org.opengis.feature.type.FeatureType;
 
 /**
@@ -95,8 +93,6 @@ public class FeaturePanelRegistry {
 
     protected FeatureType schema;
 
-    // protected IConfigurationElement contributorConfigurationElement;
-
     protected ILabelProvider labelProvider;
 
     protected ActionProvider actionProvider;
@@ -113,17 +109,15 @@ public class FeaturePanelRegistry {
     /**
      * There is one details registry for each contributor type.
      */
-    protected FeaturePanelRegistry( FeatureType schema ) {
-        // this.contributor = contributor;
-        // this.schema = contributor.getSchema();
+    protected FeaturePanelRegistry(FeatureType schema) {
         this.schema = schema;
 
         FeaturePanelProcessor featurePanelProcessor = ProjectUIPlugin.getDefault()
                 .getFeaturePanelProcessor();
-        labelProvider = null; // new TabLabelProvider();
+        labelProvider = null;
 
         List<FeaturePanelEntry> list = featurePanelProcessor.search(schema);
-        for( FeaturePanelEntry entry : list ) {
+        for (FeaturePanelEntry entry : list) {
             ILabelProvider titleProivder = entry.getLabelProvider();
             if (titleProivder != null) {
                 labelProvider = new TabLabelProvider(titleProivder);
@@ -146,7 +140,7 @@ public class FeaturePanelRegistry {
      * @param message log message
      * @param exception an optional CoreException
      */
-    private void handleConfigurationError( String message, Throwable t ) {
+    private void handleConfigurationError(String message, Throwable t) {
         IStatus status = new Status(t == null ? IStatus.WARNING : IStatus.ERROR,
                 FeatureEditorPlugin.getDefault().getBundle().getSymbolicName(), IStatus.ERROR,
                 message, t);
@@ -156,8 +150,8 @@ public class FeaturePanelRegistry {
     /**
      * Returns the index of the given element in the array.
      */
-    private int getIndex( Object[] array, Object target ) {
-        for( int i = 0; i < array.length; i++ ) {
+    private int getIndex(Object[] array, Object target) {
+        for (int i = 0; i < array.length; i++) {
             if (array[i].equals(target)) {
                 return i;
             }
@@ -170,13 +164,14 @@ public class FeaturePanelRegistry {
      * <p>
      * This is an interesting one; the workbench part may be something have a list of Maps; with the
      * ISelection being a selected Map.
+     * </p>
      *
      * @param part the workbench part containing the selection
      * @param selection the current selection.
      * @return all section descriptors.
      */
-    public List<FeaturePanelTabDescriptor> getTabDescriptors( IWorkbenchPart part,
-            ISelection selection ) {
+    public List<FeaturePanelTabDescriptor> getTabDescriptors(IWorkbenchPart part,
+            ISelection selection) {
 
         if (selection == null || selection.isEmpty()) {
             return EMPTY_DESCRIPTOR_ARRAY;
@@ -192,17 +187,18 @@ public class FeaturePanelRegistry {
      * Filters out the tab descriptors that do not have any sections for the given input.
      */
     protected List<FeaturePanelTabDescriptor> filterTabDescriptors(
-            List<FeaturePanelTabDescriptor> descriptors, IWorkbenchPart part, ISelection selection ) {
+            List<FeaturePanelTabDescriptor> descriptors, IWorkbenchPart part,
+            ISelection selection) {
         IFeatureSite site = toFeatureSite(selection);
         if (site == null && part.getAdapter(IMap.class) != null) {
-            IMap map = (IMap) part.getAdapter(IMap.class);
+            IMap map = part.getAdapter(IMap.class);
             site = new FeatureSiteImpl(map);
         } else {
             site = new FeatureSiteImpl(); // represents whatever is current?
         }
 
-        List<FeaturePanelTabDescriptor> result = new ArrayList<FeaturePanelTabDescriptor>();
-        for( FeaturePanelTabDescriptor descriptor : descriptors ) {
+        List<FeaturePanelTabDescriptor> result = new ArrayList<>();
+        for (FeaturePanelTabDescriptor descriptor : descriptors) {
             FeaturePanelEntry entry = descriptor.getEntry();
             if (entry == null) {
                 continue; // that is wrong!
@@ -213,16 +209,16 @@ public class FeaturePanelRegistry {
                 result.add(descriptor);
             }
         }
-        if (result.size() == 0) {
+        if (result.isEmpty()) {
             return EMPTY_DESCRIPTOR_ARRAY;
         }
         return result;
     }
 
-    private IFeatureSite toFeatureSite( ISelection selection ) {
+    private IFeatureSite toFeatureSite(ISelection selection) {
         if (!selection.isEmpty() && selection instanceof IStructuredSelection) {
             IStructuredSelection selected = (IStructuredSelection) selection;
-            for( Iterator< ? > iter = selected.iterator(); iter.hasNext(); ) {
+            for (Iterator<?> iter = selected.iterator(); iter.hasNext();) {
                 Object item = iter.next();
                 if (item instanceof ILayer) {
                     return new FeatureSiteImpl((ILayer) item);
@@ -230,11 +226,11 @@ public class FeaturePanelRegistry {
                     return new FeatureSiteImpl((IMap) item);
                 } else if (item instanceof IAdaptable) {
                     IAdaptable adaptable = (IAdaptable) item;
-                    ILayer layer = (ILayer) adaptable.getAdapter(ILayer.class);
+                    ILayer layer = adaptable.getAdapter(ILayer.class);
                     if (layer != null) {
                         return new FeatureSiteImpl(layer);
                     }
-                    IMap map = (IMap) adaptable.getAdapter(IMap.class);
+                    IMap map = adaptable.getAdapter(IMap.class);
                     if (map != null) {
                         return new FeatureSiteImpl(map);
                     }
@@ -262,7 +258,7 @@ public class FeaturePanelRegistry {
      * list if none is found.
      */
     protected List<FeaturePanelTabDescriptor> readTabDescriptors() {
-        List<FeaturePanelTabDescriptor> result = new ArrayList<FeaturePanelTabDescriptor>();
+        List<FeaturePanelTabDescriptor> result = new ArrayList<>();
         FeaturePanelProcessor featurePanelProcessor = ProjectUIPlugin.getDefault()
                 .getFeaturePanelProcessor();
 
@@ -270,7 +266,7 @@ public class FeaturePanelRegistry {
         if (list.isEmpty()) {
             return result; // empty!
         }
-        for( FeaturePanelEntry entry : list ) {
+        for (FeaturePanelEntry entry : list) {
             FeaturePanelTabDescriptor descriptor = new FeaturePanelTabDescriptor(entry);
             result.add(descriptor);
         }
@@ -281,14 +277,15 @@ public class FeaturePanelRegistry {
      * Sorts the tab descriptors in the given list according to afterTab.
      */
     protected List<FeaturePanelTabDescriptor> sortTabDescriptorsByAfterTab(
-            List<FeaturePanelTabDescriptor> tabs ) {
-        if (tabs.size() == 0) {
+            List<FeaturePanelTabDescriptor> tabs) {
+        if (tabs.isEmpty()) {
             return tabs;
         }
-        List<FeaturePanelTabDescriptor> sorted = new ArrayList<FeaturePanelTabDescriptor>();
+        List<FeaturePanelTabDescriptor> sorted = new ArrayList<>();
         sorted.addAll(tabs);
-        Collections.sort(sorted, new Comparator<FeaturePanelTabDescriptor>(){
-            public int compare( FeaturePanelTabDescriptor one, FeaturePanelTabDescriptor two ) {
+        Collections.sort(sorted, new Comparator<FeaturePanelTabDescriptor>() {
+            @Override
+            public int compare(FeaturePanelTabDescriptor one, FeaturePanelTabDescriptor two) {
                 if (two.getAfterTab().equals(one.getId())) {
                     return -1;
                 } else if (one.getAfterTab().equals(two.getId())) {
@@ -302,9 +299,9 @@ public class FeaturePanelRegistry {
     }
 
     /**
-     * Gets the type mapper for the contributor.
+     * Gets the TypeMapper for the contributor.
      *
-     * @return the type mapper for the contributor.
+     * @return the TypeMapper for the contributor.
      */
     public ITypeMapper getTypeMapper() {
         return typeMapper;
@@ -342,10 +339,10 @@ public class FeaturePanelRegistry {
      *
      * @param configurationElement the configuration element
      */
-    private void handleTabError( IConfigurationElement configurationElement, String category ) {
+    private void handleTabError(IConfigurationElement configurationElement, String category) {
         String pluginId = configurationElement.getDeclaringExtension().getNamespaceIdentifier();
-        String message = java.text.MessageFormat
-                .format(TAB_ERROR, new Object[]{pluginId, category});
+        String message = java.text.MessageFormat.format(TAB_ERROR,
+                new Object[] { pluginId, category });
         IStatus status = new Status(IStatus.ERROR, pluginId,
                 TabbedPropertyViewStatusCodes.TAB_ERROR, message, null);
         FeatureEditorPlugin.getDefault().getLog().log(status);

@@ -410,7 +410,7 @@ public class ValidationDialog extends TitleAreaDialog {
             if (processor.getTestSuiteDTOs().size() == 1) {
                 // a single testSuite exists, grab its name
                 defaultTestSuite = (String) processor.getTestSuiteDTOs().keySet().toArray()[0];
-            } else if (processor.getTestSuiteDTOs().size() == 0) {
+            } else if (processor.getTestSuiteDTOs().isEmpty()) {
                 // there is no... testSuite, create one
                 processor = createProcessor(null, null);
                 defaultTestSuite = "testSuite1"; //$NON-NLS-1$
@@ -1305,12 +1305,12 @@ public class ValidationDialog extends TitleAreaDialog {
             // get the existing testSuites
             Map<String, TestSuiteDTO> suites = processor.getTestSuiteDTOs();
             // ensure there is at least one test in the new testSuite
-            if (newDTO.getTests().size() == 0) {
+            if (newDTO.getTests().isEmpty()) {
                 // nothing to see here, move along
                 return;
             }
             // if no testSuites exist, just copy the new one directly in
-            if (suites.size() == 0) {
+            if (suites.isEmpty()) {
                 suites.put(newDTO.getName(), newDTO);
                 defaultTestSuite = newDTO.getName();
                 // does the testSuite exist? if so, add the new tests to the existing one
@@ -1373,7 +1373,7 @@ public class ValidationDialog extends TitleAreaDialog {
             // grab the testSuite we want to save
             TestSuiteDTO testSuite = processor.getTestSuiteDTOs().get(defaultTestSuite);
             // testSuite is empty?
-            if (testSuite.getTests().size() == 0) {
+            if (testSuite.getTests().isEmpty()) {
                 MessageBox mb = new MessageBox(display.getActiveShell(), SWT.ICON_ERROR | SWT.OK);
                 mb.setMessage(Messages.ValidationDialog_noSuitePre + defaultTestSuite
                         + Messages.ValidationDialog_noSuiteSuf);

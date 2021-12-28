@@ -133,7 +133,6 @@ public class CategoryEditor extends Composite implements SelectionListener {
         loadFromMapButton.setLayoutData(gridData21);
         loadFromMapButton.addSelectionListener(this);
         createRulesComposite();
-        // setSize(new Point(395, 331));
     }
 
     /**
@@ -179,7 +178,7 @@ public class CategoryEditor extends Composite implements SelectionListener {
     public void widgetSelected(SelectionEvent e) {
         Button selectedButton = (Button) e.getSource();
         if (selectedButton.equals(addRuleButton)) {
-            // add an empty rule to te composite
+            // add an empty rule to the composite
             CategoryRule r = new CategoryRule();
             listOfRules.add(r);
             redoLayout();
@@ -188,9 +187,6 @@ public class CategoryEditor extends Composite implements SelectionListener {
                 CategoryRule r = listOfRules.get(i);
                 if (r.isActive()) {
                     listOfRules.remove(r);
-                    // if (i > 0) {
-                    // i--;
-                    // }
                 }
             }
             redoLayout();
@@ -336,7 +332,7 @@ public class CategoryEditor extends Composite implements SelectionListener {
             try {
                 bw = new BufferedWriter(new FileWriter(catsFile));
 
-                if (listOfRules.size() == 0) {
+                if (listOfRules.isEmpty()) {
                     return;
                 }
 
