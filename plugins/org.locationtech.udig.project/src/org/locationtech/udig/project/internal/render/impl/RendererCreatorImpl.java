@@ -26,6 +26,8 @@ import org.locationtech.udig.project.internal.ContextModel;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.ProjectPackage;
 import org.locationtech.udig.project.internal.ProjectPlugin;
+import org.locationtech.udig.project.internal.impl.IEListVisitor;
+import org.locationtech.udig.project.internal.impl.SynchronizedEObjectWithInverseResolvingEList;
 import org.locationtech.udig.project.internal.render.CompositeRenderContext;
 import org.locationtech.udig.project.internal.render.RenderContext;
 import org.locationtech.udig.project.internal.render.RenderManager;
@@ -109,8 +111,7 @@ public class RendererCreatorImpl implements RendererCreator {
         List<InternalRenderMetrics> availableRenderers = layerToMetricsFactoryMap.get(layer);
 
         for (InternalRenderMetrics irm : availableRenderers) {
-            renderers.put(
-                    irm.getName(), irm.getDescription() );
+            renderers.put(irm.getName(), irm.getDescription());
         }
 
         return renderers;
@@ -135,7 +136,6 @@ public class RendererCreatorImpl implements RendererCreator {
         return idsList;
     }
 
-
     @Override
     public Collection<AbstractRenderMetrics> getAvailableRendererMetrics(Layer layer) {
         List<AbstractRenderMetrics> metrics = new ArrayList<>();
@@ -153,7 +153,7 @@ public class RendererCreatorImpl implements RendererCreator {
             IRenderContext renderContext = internalRenderMetrics.getRenderContext();
             IRenderMetricsFactory renderMetricsFactory = internalRenderMetrics.getRenderMetricsFactory();
             AbstractRenderMetrics createMetrics = renderMetricsFactory.createMetrics(renderContext);
-            //set the id since initially it is set only in InternalRenderMetrics
+            // set the id since initially it is set only in InternalRenderMetrics
             createMetrics.setId(internalRenderMetrics.getId());
             metrics.add(createMetrics);
         }
@@ -170,16 +170,16 @@ public class RendererCreatorImpl implements RendererCreator {
 
         // Part 1 of decision goes here
         Object o = layerToMetricsFactoryMap.get(context.getLayer());
-        if (o == null){
+        if (o == null) {
             createConfiguration(); // carefully creates the configuration entry for the layer
         }
         List<InternalRenderMetrics> list = layerToMetricsFactoryMap.get(context.getLayerInternal());
-        if (list.isEmpty()){
+        if (list.isEmpty()) {
             return getPlaceHolder(context); // layer won't be rendered
         }
         InternalRenderMetrics internalRenderMetrics = null;
-        for (Iterator<InternalRenderMetrics> iter = list.iterator();
-                    iter.hasNext() && internalRenderMetrics == null;) {
+        for (Iterator<InternalRenderMetrics> iter = list.iterator(); iter.hasNext()
+                && internalRenderMetrics == null;) {
             internalRenderMetrics = iter.next();
             boolean canRender;
             try {
@@ -247,7 +247,13 @@ public class RendererCreatorImpl implements RendererCreator {
                 }
 
                 List<InternalRenderMetrics> layerfactories = layerToMetricsFactoryMap.get(layer);
-                Collections.sort(layerfactories, new RenderMetricsSorter(currentLayers));
+                /*
+                 * This causes concurrent modification exception. In the end most probably render
+                 * metrics sorted once will serve forever in the same order. Move this sorting to
+                 * creation.
+                 *
+                 */
+                // Collections.sort(layerfactories, new RenderMetricsSorter(currentLayers));
 
                 if (layerfactories.isEmpty()) {
                     // nobody loves this layer
@@ -260,8 +266,7 @@ public class RendererCreatorImpl implements RendererCreator {
                         RenderContext renderContext = (RenderContext) metrics.getRenderContext();
                         if (renderContext instanceof CompositeRenderContext) {
                             constructCompositeContext(configured, currentLayers, configuration, i,
-                                    metrics,
-                                    (CompositeRenderContext) renderContext);
+                                    metrics, (CompositeRenderContext) renderContext);
                         }
                         configuration.put(layer, renderContext);
                     }
@@ -278,7 +283,7 @@ public class RendererCreatorImpl implements RendererCreator {
                         break;
                     }
                 }
-                if (!failed){
+                if (!failed) {
                     this.configuration = Collections.synchronizedMap(configuration);
                     configurationPassed = true;
                 }
@@ -286,14 +291,15 @@ public class RendererCreatorImpl implements RendererCreator {
         }
     }
 
-    private void constructCompositeContext(Set<Layer> configured, List<Layer> layers, Map<Layer, RenderContext> configuration,
-            int i, AbstractRenderMetrics metrics, CompositeRenderContext renderContext) {
+    private void constructCompositeContext(Set<Layer> configured, List<Layer> layers,
+            Map<Layer, RenderContext> configuration, int i, AbstractRenderMetrics metrics,
+            CompositeRenderContext renderContext) {
 
         renderContext.addContexts(Collections.singleton(renderContext));
         configured.add(renderContext.getLayerInternal());
         configuration.put(renderContext.getLayerInternal(), renderContext);
 
-        CONTEXT: for(int j = i+1; j < layers.size(); j++) {
+        CONTEXT: for (int j = i + 1; j < layers.size(); j++) {
             try {
                 Layer layer = layers.get(j);
                 if (!configured.contains(layer) && metrics.canAddLayer(layer)) {
@@ -307,8 +313,9 @@ public class RendererCreatorImpl implements RendererCreator {
         }
     }
 
-    private void addChildContextToComposite(Set<Layer> configured, Map<Layer, RenderContext> configuration,
-            CompositeRenderContext renderContext, Layer layer) {
+    private void addChildContextToComposite(Set<Layer> configured,
+            Map<Layer, RenderContext> configuration, CompositeRenderContext renderContext,
+            Layer layer) {
         List<InternalRenderMetrics> layerfactories2 = layerToMetricsFactoryMap.get(layer);
         AbstractRenderMetrics metrics2 = layerfactories2.get(0);
         Set<RenderContext> child = Collections.singleton((RenderContext) metrics2.getRenderContext());
@@ -323,7 +330,7 @@ public class RendererCreatorImpl implements RendererCreator {
      * Initialize all known render metrics for a given layer
      */
     private void initRenderMetrics() {
-        synchronized (this.layers){
+        synchronized (this.layers) {
             for (Layer layer : getLayers()) {
                 if (!layerToMetricsFactoryMap.containsKey(layer))
                     initFactories(layer);
@@ -345,147 +352,163 @@ public class RendererCreatorImpl implements RendererCreator {
 
     @Override
     public void changed(Notification event) {
-            if (((event.getNotifier() instanceof ContextModel || event.getNotifier() instanceof RenderManager) && event
-                    .getFeatureID(ContextModel.class) == ProjectPackage.CONTEXT_MODEL__LAYERS)) {
-                handleMapCompositionEvent(event);
-            }
+        if (((event.getNotifier() instanceof ContextModel
+                || event.getNotifier() instanceof RenderManager)
+                && event.getFeatureID(
+                        ContextModel.class) == ProjectPackage.CONTEXT_MODEL__LAYERS)) {
+            handleMapCompositionEvent(event);
+        }
     }
 
     @SuppressWarnings("unchecked")
     private void handleMapCompositionEvent(Notification event) {
         switch (event.getEventType()) {
-            case Notification.ADD: {
-                Layer layer = (Layer) event.getNewValue();
-                List<Layer> currentLayers = new ArrayList<>();
-                currentLayers.add(layer);
-                if (layer.hasResource(FeatureSource.class))
-                    currentLayers.add(new SelectionLayer(layer));
-                synchronized (this.layers){
-                    this.layers.addAll(currentLayers);
-                }
-                break;
+        case Notification.ADD: {
+            Layer layer = (Layer) event.getNewValue();
+            List<Layer> currentLayers = new ArrayList<>();
+            currentLayers.add(layer);
+            if (layer.hasResource(FeatureSource.class))
+                currentLayers.add(new SelectionLayer(layer));
+            synchronized (this.layers) {
+                this.layers.addAll(currentLayers);
             }
-            case Notification.ADD_MANY: {
-                List<Layer> currentLayers = new ArrayList<>();
-                for (Layer layer : (Collection< ? extends Layer>) event.getNewValue()) {
+            break;
+        }
+        case Notification.ADD_MANY: {
+            List<Layer> currentLayers = new ArrayList<>();
+            Collection<? extends Layer> layerList = (Collection<? extends Layer>) event
+                    .getNewValue();
+            if (layerList instanceof SynchronizedEObjectWithInverseResolvingEList) {
+                ((SynchronizedEObjectWithInverseResolvingEList<Layer>) layerList)
+                        .syncedIteration(new IEListVisitor<Layer>() {
+                            @Override
+                            public void visit(Layer layer) {
+                                currentLayers.add(layer);
+                                if (layer.hasResource(FeatureSource.class)
+                                        && findSelectionLayer(layer) == null) {
+                                    currentLayers.add(new SelectionLayer(layer));
+                                }
+                            }
+                        });
+            } else {
+                for (Layer layer : layerList) {
                     currentLayers.add(layer);
-                    if (layer.hasResource(FeatureSource.class)
-                            && findSelectionLayer(layer) == null)
+                    if (layer.hasResource(FeatureSource.class) && findSelectionLayer(layer) == null)
                         currentLayers.add(new SelectionLayer(layer));
                 }
-                synchronized (this.layers){
-                    this.layers.addAll(currentLayers);
-                }
-                break;
             }
-
-            /*
-            * The collection <code>layers</code> is a sorted TreeMap of <? extends Layer> objects:
-            * Layer.compareTo() is used to sort and identify items for equality. Comparing is performed
-            * by z-order. But this collection (<code>layers</code>) contains also
-            * additional SelectionLayer objects and their z-order is artificial. This leads to
-            * errors during removing by TreeMap.remove(..) methods.
-            * The <code>layers</code> collection is re-created safely to fix deleting
-            * layers from map with synchronization of this cache list of layers and selection layers with
-            * map's list.
-            */
-
-            case Notification.REMOVE: {
-
-                synchronized (layers) {
-
-                    Layer removedLayer = (Layer) event.getOldValue();
-
-                    for (Iterator<Layer> iter = layers.iterator(); iter.hasNext();) {
-                        Layer l = iter.next();
-                        if(removedLayer == l)
-                            iter.remove();
-                        else if (l instanceof SelectionLayer) {
-                            SelectionLayer sl = (SelectionLayer) l;
-                            if (removedLayer == sl.getWrappedLayer())
-                                iter.remove();
-                        }
-                    }
-
-                }
-                break;
+            synchronized (this.layers) {
+                this.layers.addAll(currentLayers);
             }
-            case Notification.REMOVE_MANY: {
+            break;
+        }
 
-                synchronized (layers) {
-                    Collection<Layer> removedLayers = (Collection<Layer>) event.getOldValue();
+        /*
+         * The collection <code>layers</code> is a sorted TreeMap of <? extends Layer> objects:
+         * Layer.compareTo() is used to sort and identify items for equality. Comparing is performed
+         * by z-order. But this collection (<code>layers</code>) contains also additional
+         * SelectionLayer objects and their z-order is artificial. This leads to errors during
+         * removing by TreeMap.remove(..) methods. The <code>layers</code> collection is re-created
+         * safely to fix deleting layers from map with synchronization of this cache list of layers
+         * and selection layers with map's list.
+         */
+        case Notification.REMOVE: {
 
-                    for (Iterator<Layer> iter = layers.iterator(); iter.hasNext();) {
-                        Layer l = iter.next();
-                        if (removedLayers.contains(l))
+            synchronized (layers) {
+
+                Layer removedLayer = (Layer) event.getOldValue();
+
+                for (Iterator<Layer> iter = layers.iterator(); iter.hasNext();) {
+                    Layer l = iter.next();
+                    if (removedLayer == l)
+                        iter.remove();
+                    else if (l instanceof SelectionLayer) {
+                        SelectionLayer sl = (SelectionLayer) l;
+                        if (removedLayer == sl.getWrappedLayer())
                             iter.remove();
-                        else if (l instanceof SelectionLayer) {
-                            SelectionLayer sl = (SelectionLayer) l;
-                            if (removedLayers.contains(sl.getWrappedLayer()))
-                                iter.remove();
-                        }
                     }
                 }
-                break;
+
             }
-            case Notification.MOVE: {
-                // this should be a layer accordint to the reverse engineered rules...
-                // I like type safety better. or at least documentation :(
-                Layer newV = (Layer) event.getNewValue();
+            break;
+        }
+        case Notification.REMOVE_MANY: {
 
-                // remove then add the layers to fix ordering of layers.
-                synchronized (layers) {
-                    SelectionLayer selectionLayer = null;
-                    for (Iterator<Layer> iter = layers.iterator(); iter.hasNext();) {
-                        Layer l = iter.next();
-                        if(newV == l)
+            synchronized (layers) {
+                Collection<Layer> removedLayers = (Collection<Layer>) event.getOldValue();
+
+                for (Iterator<Layer> iter = layers.iterator(); iter.hasNext();) {
+                    Layer l = iter.next();
+                    if (removedLayers.contains(l))
+                        iter.remove();
+                    else if (l instanceof SelectionLayer) {
+                        SelectionLayer sl = (SelectionLayer) l;
+                        if (removedLayers.contains(sl.getWrappedLayer()))
                             iter.remove();
-                        else if (l instanceof SelectionLayer) {
-                            SelectionLayer sl = (SelectionLayer) l;
-                            if (newV == sl.getWrappedLayer()) {
-                                iter.remove();
-                                selectionLayer = sl;
-                            }
-                        }
-                    }
-                    layers.add(newV);
-                    if (selectionLayer != null) {
-                        layers.add(selectionLayer);
                     }
                 }
+            }
+            break;
+        }
+        case Notification.MOVE: {
+            // this should be a layer accordint to the reverse engineered rules...
+            // I like type safety better. or at least documentation :(
+            Layer newV = (Layer) event.getNewValue();
 
-                break;
-            }case Notification.SET:{
-                Layer oldV = (Layer) event.getOldValue();
-
-                Layer newV = (Layer) event.getNewValue();
+            // remove then add the layers to fix ordering of layers.
+            synchronized (layers) {
                 SelectionLayer selectionLayer = null;
-                if (newV.hasResource(FeatureSource.class))
-                    selectionLayer = new SelectionLayer(newV);
-
-                // remove then add the layers to fix ordering of layers.
-                synchronized (layers) {
-                    for (Iterator<Layer> iter = layers.iterator(); iter.hasNext();) {
-                        Layer l = iter.next();
-                        if (oldV == l)
+                for (Iterator<Layer> iter = layers.iterator(); iter.hasNext();) {
+                    Layer l = iter.next();
+                    if (newV == l)
+                        iter.remove();
+                    else if (l instanceof SelectionLayer) {
+                        SelectionLayer sl = (SelectionLayer) l;
+                        if (newV == sl.getWrappedLayer()) {
                             iter.remove();
-                        else if (l instanceof SelectionLayer) {
-                            SelectionLayer sl = (SelectionLayer) l;
-                            if (oldV == sl.getWrappedLayer()) {
-                                iter.remove();
-                            }
+                            selectionLayer = sl;
                         }
                     }
-                    layers.add(newV);
-                    if (selectionLayer != null) {
-                        layers.add(selectionLayer);
+                }
+                layers.add(newV);
+                if (selectionLayer != null) {
+                    layers.add(selectionLayer);
+                }
+            }
+
+            break;
+        }
+        case Notification.SET: {
+            Layer oldV = (Layer) event.getOldValue();
+
+            Layer newV = (Layer) event.getNewValue();
+            SelectionLayer selectionLayer = null;
+            if (newV.hasResource(FeatureSource.class))
+                selectionLayer = new SelectionLayer(newV);
+
+            // remove then add the layers to fix ordering of layers.
+            synchronized (layers) {
+                for (Iterator<Layer> iter = layers.iterator(); iter.hasNext();) {
+                    Layer l = iter.next();
+                    if (oldV == l)
+                        iter.remove();
+                    else if (l instanceof SelectionLayer) {
+                        SelectionLayer sl = (SelectionLayer) l;
+                        if (oldV == sl.getWrappedLayer()) {
+                            iter.remove();
+                        }
                     }
                 }
-
-                break;
+                layers.add(newV);
+                if (selectionLayer != null) {
+                    layers.add(selectionLayer);
+                }
             }
-            default:
-                break;
+
+            break;
+        }
+        default:
+            break;
         }
         configuration = null;
     }
@@ -502,6 +525,8 @@ public class RendererCreatorImpl implements RendererCreator {
                 return null;
         } catch (IOException e) {
             return null;
+        } catch (Exception e) {
+            return null;
         }
         for (Layer layer : getLayers())
             if (layer instanceof SelectionLayer
@@ -513,33 +538,39 @@ public class RendererCreatorImpl implements RendererCreator {
     }
 
     private void initFactories(Layer layer) {
-        RendererExtensionProcessor p = new RendererExtensionProcessor(layer,
-                getContext().getMapInternal(),
-                getContext().getRenderManagerInternal());
+        if (!layerToMetricsFactoryMap.containsKey(layer)) {
+            RendererExtensionProcessor p = new RendererExtensionProcessor(layer,
+                    getContext().getMapInternal(), getContext().getRenderManagerInternal());
 
-        ExtensionPointUtil.process(ProjectPlugin.getPlugin(), IRenderer.RENDER_EXT, p);
-        layerToMetricsFactoryMap.put(layer, new CopyOnWriteArrayList<>(p.rFactories));
+            ExtensionPointUtil.process(ProjectPlugin.getPlugin(), IRenderer.RENDER_EXT, p);
+
+            List<Layer> layers = new ArrayList<Layer>();
+            synchronized (this.layers) {
+                layers.addAll(this.layers);
+            }
+            Collections.sort(p.rFactories, new RenderMetricsSorter(layers));
+            layerToMetricsFactoryMap.put(layer, new CopyOnWriteArrayList<>(p.rFactories));
+
+        }
     }
 
     Collection<RenderContext> contexts = Collections.synchronizedSet(new TreeSet<RenderContext>());
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.RendererCreator#getConfiguration()
-     */
     @Override
     public Collection<RenderContext> getConfiguration() {
 
-        if (configuration == null)
-            createConfiguration();
-
+        synchronized (this) {
+            if (configuration == null)
+                createConfiguration();
+        }
         Collection<RenderContext> uniqueValues = new LinkedList<>();
 
         synchronized (configuration) {
             Collection<RenderContext> values = configuration.values();
             for (RenderContext renderCtx : values) {
                 boolean found = false;
-                for (RenderContext ctx : uniqueValues){
-                    if(renderCtx == ctx) { // reference check
+                for (RenderContext ctx : uniqueValues) {
+                    if (renderCtx == ctx) { // reference check
                         found = true;
                         break;
                     }
@@ -553,8 +584,8 @@ public class RendererCreatorImpl implements RendererCreator {
             for (RenderContext context : uniqueValues) {
                 contexts.add(context);
             }
+            return new ArrayList<>(contexts);
         }
-        return new ArrayList<>(contexts);
     }
 
     @Override

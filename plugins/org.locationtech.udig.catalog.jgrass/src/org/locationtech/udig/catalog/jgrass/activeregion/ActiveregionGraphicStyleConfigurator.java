@@ -162,7 +162,7 @@ public class ActiveregionGraphicStyleConfigurator extends IStyleConfigurator
                 CatalogJGrassMapsetTreeViewerDialog cDialog = new CatalogJGrassMapsetTreeViewerDialog();
                 cDialog.open(mapsetButton.getShell());
                 List<JGrassMapsetGeoResource> selectedLayers = cDialog.getSelectedLayers();
-                if (selectedLayers == null || selectedLayers.size() == 0) {
+                if (selectedLayers == null || selectedLayers.isEmpty()) {
                     return;
                 }
                 jGrassMapsetGeoResource = selectedLayers.get(0);

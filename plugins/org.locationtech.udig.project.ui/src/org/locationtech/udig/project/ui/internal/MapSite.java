@@ -11,7 +11,6 @@
 package org.locationtech.udig.project.ui.internal;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -19,7 +18,6 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IActionBars2;
 import org.eclipse.ui.IEditorActionBarContributor;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IKeyBindingService;
@@ -61,12 +59,11 @@ public class MapSite implements IEditorSite, IViewSite {
     @Override
     public IActionBars getActionBars() {
         if (originalMapSite instanceof IEditorSite) {
-            return new MapEditorActionBars((IActionBars2) ((IEditorSite) originalMapSite).getActionBars(),
+            return new MapEditorActionBars(((IEditorSite) originalMapSite).getActionBars(),
                     mapPart);
         }
         if (originalMapSite instanceof IViewSite) {
-            return new MapEditorActionBars((IActionBars2) ((IViewSite) originalMapSite).getActionBars(),
-                    mapPart);
+            return new MapEditorActionBars(((IViewSite) originalMapSite).getActionBars(), mapPart);
         }
         throw new IllegalStateException(ERROR_DELEGATE_IS_NOT_AN_EDITOR_SITE);
     }
@@ -86,8 +83,8 @@ public class MapSite implements IEditorSite, IViewSite {
     public void registerContextMenu(String menuId, MenuManager menuManager,
             ISelectionProvider selectionProvider, boolean includeEditorInput) {
         if (originalMapSite instanceof IEditorSite) {
-            ((IEditorSite) originalMapSite).registerContextMenu(menuId, menuManager, selectionProvider,
-                    includeEditorInput);
+            ((IEditorSite) originalMapSite).registerContextMenu(menuId, menuManager,
+                    selectionProvider, includeEditorInput);
             return;
         }
         throw new IllegalStateException(ERROR_DELEGATE_IS_NOT_AN_EDITOR_SITE);
@@ -167,12 +164,12 @@ public class MapSite implements IEditorSite, IViewSite {
         throw new IllegalStateException("delegate is not a IViewSite!!!!"); //$NON-NLS-1$
     }
 
-    private static class MapEditorActionBars implements IActionBars2 {
+    private static class MapEditorActionBars implements IActionBars {
         private MapPart mapPart;
 
-        private IActionBars2 actionBars;
+        private IActionBars actionBars;
 
-        public MapEditorActionBars(IActionBars2 actionBars, MapPart mapPart) {
+        public MapEditorActionBars(IActionBars actionBars, MapPart mapPart) {
             this.actionBars = actionBars;
             this.mapPart = mapPart;
         }
@@ -215,11 +212,6 @@ public class MapSite implements IEditorSite, IViewSite {
         @Override
         public void updateActionBars() {
             actionBars.updateActionBars();
-        }
-
-        @Override
-        public ICoolBarManager getCoolBarManager() {
-            return actionBars.getCoolBarManager();
         }
     }
 
