@@ -131,6 +131,8 @@ public class FeatureTextTransfer extends AbstractTextStrategizedTransfer impleme
                 // parse XML
 
                 SAXParserFactory factory = SAXParserFactory.newInstance();
+                factory.setNamespaceAware(true);
+
                 SAXParser parser = factory.newSAXParser();
                 XMLReader reader = parser.getXMLReader();
 

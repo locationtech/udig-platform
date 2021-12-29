@@ -702,6 +702,8 @@ public class EditBlackboardTest {
             // parse XML
 
             SAXParserFactory factory = SAXParserFactory.newInstance();
+            factory.setNamespaceAware(true);
+
             SAXParser parser = factory.newSAXParser();
             XMLReader reader = parser.getXMLReader();
 
@@ -711,6 +713,8 @@ public class EditBlackboardTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        assertTrue(collection.features().hasNext());
 
         SimpleFeature feature = collection.features().next();
         ReferencedEnvelope bounds = new ReferencedEnvelope(feature.getBounds());

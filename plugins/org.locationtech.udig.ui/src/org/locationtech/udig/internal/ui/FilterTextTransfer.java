@@ -143,6 +143,8 @@ public class FilterTextTransfer extends AbstractTextStrategizedTransfer implemen
                 // parse XML
 
                 SAXParserFactory factory = SAXParserFactory.newInstance();
+                factory.setNamespaceAware(true);
+
                 SAXParser parser = factory.newSAXParser();
                 XMLReader reader = parser.getXMLReader();
 
