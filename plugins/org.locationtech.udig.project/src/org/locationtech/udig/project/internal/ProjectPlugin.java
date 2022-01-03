@@ -143,10 +143,18 @@ public final class ProjectPlugin extends EMFPlugin {
          */
         private boolean undoableCommandWarning = true;
 
+        /**
+         * Sets the control flag if warnings of non-undoable commands are shown
+         */
         public void setUndoableCommandWarning(boolean value) {
             undoableCommandWarning = value;
         }
 
+        /**
+         * Returns a boolean value if warnings of non-undoable commands are shown
+         *
+         * @return Boolean value if warnings of non-undoable commands are shown
+         */
         public boolean getUndoableCommandWarning() {
             return undoableCommandWarning;
         }
