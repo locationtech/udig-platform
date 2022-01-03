@@ -41,7 +41,10 @@ import org.opengis.feature.simple.SimpleFeatureType;
  *
  */
 public class OperationUtils {
-    public static enum MSGTYPE {
+
+    private static final String OPERATION_UTILS_WARNING = "OperationUtils_warning"; //$NON-NLS-1$
+
+    public enum MSGTYPE {
         INFO, ERROR, WARNING;
     };
 
@@ -86,7 +89,7 @@ public class OperationUtils {
 
         int toPosition = currentPosition + delta;
         if (toPosition < 0 || toPosition > mapLayers.size() - 1) {
-            showMessage(display, Messages.getString("OperationUtils_warning"), //$NON-NLS-1$
+            showMessage(display, Messages.getString(OPERATION_UTILS_WARNING),
                     Messages.getString("OperationUtils_nolayer"), MSGTYPE.WARNING); //$NON-NLS-1$
             return;
         }
@@ -97,20 +100,20 @@ public class OperationUtils {
         int compare = DataUtilities.compare(toSchema, selectedSchema);
         boolean needsReOrder = false;
         if (compare == -1) {
-            showMessage(display, Messages.getString("OperationUtils_warning"), //$NON-NLS-1$
+            showMessage(display, Messages.getString(OPERATION_UTILS_WARNING),
                     Messages.getString("OperationUtils_sametypeproblem"), //$NON-NLS-1$
                     MSGTYPE.WARNING);
             return;
         } else if (compare == 1) {
-            showMessage(display, Messages.getString("OperationUtils_warning"), //$NON-NLS-1$
+            showMessage(display, Messages.getString(OPERATION_UTILS_WARNING),
                     "featureType match but needs reordering", MSGTYPE.INFO); //$NON-NLS-1$
             needsReOrder = true;
         }
 
         SimpleFeatureCollection featureCollection = featureSource
                 .getFeatures(selectedLayer.getQuery(true));
-        if (featureCollection.size() < 1) {
-            showMessage(display, Messages.getString("OperationUtils_warning"), //$NON-NLS-1$
+        if (featureCollection.isEmpty()) {
+            showMessage(display, Messages.getString(OPERATION_UTILS_WARNING),
                     Messages.getString("OperationUtils_nofeaturesproblem"), MSGTYPE.WARNING); //$NON-NLS-1$
             return;
         }
