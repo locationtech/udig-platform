@@ -7,9 +7,8 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.project.internal.command.navigation;
+package org.locationtech.udig.project.command.navigation;
 
-import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.internal.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -23,15 +22,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class ZoomExtentCommand extends AbstractNavCommand {
 
     /**
-     * @see org.locationtech.udig.project.internal.command.MapCommand#copy()
+     * @see org.locationtech.udig.project.command.navigation.AbstractNavCommand#runImpl()
      */
-    public MapCommand copy() {
-        return new ZoomExtentCommand();
-    }
-
-    /**
-     * @see org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand#runImpl()
-     */
+    @Override
     protected void runImpl( IProgressMonitor monitor ) {
         model.zoomToExtent();
     }
@@ -39,6 +32,7 @@ public class ZoomExtentCommand extends AbstractNavCommand {
     /**
      * @see org.locationtech.udig.project.command.MapCommand#getName()
      */
+    @Override
     public String getName() {
         return Messages.ZoomExtentCommand_name; 
     }

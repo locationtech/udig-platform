@@ -7,13 +7,14 @@
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
-package org.locationtech.udig.project.internal.commands;
+package org.locationtech.udig.project.command.navigation;
+
+import java.text.MessageFormat;
+import java.text.NumberFormat;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.UndoableCommand;
 import org.locationtech.udig.project.internal.Messages;
-import org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 
 /**
@@ -47,7 +48,8 @@ public class SetScaleCommand extends AbstractNavCommand implements UndoableComma
 
     @Override
     public String getName() {
-        return Messages.SetScaleCommand_name;
+        NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+        return MessageFormat.format(Messages.SetScaleCommand_name, numberFormat.format(newScale));
     }
 
     @Override
@@ -63,12 +65,8 @@ public class SetScaleCommand extends AbstractNavCommand implements UndoableComma
     }
 
     @Override
-    public Command copy() {
-        return new SetScaleCommand(newScale);
-    }
-
-    @Override
     protected void runImpl(IProgressMonitor monitor) throws Exception {
         run(monitor);
     }
+
 }

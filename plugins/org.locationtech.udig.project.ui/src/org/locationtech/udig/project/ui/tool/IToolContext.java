@@ -16,7 +16,6 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.udig.project.IAbstractContext;
 import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.MapCommand;
-import org.locationtech.udig.project.command.factory.BasicCommandFactory;
 import org.locationtech.udig.project.command.factory.EditCommandFactory;
 import org.locationtech.udig.project.command.factory.SelectionCommandFactory;
 import org.locationtech.udig.project.ui.commands.DrawCommandFactory;
@@ -74,12 +73,6 @@ public interface IToolContext extends IAbstractContext {
      */
     public SelectionCommandFactory getSelectionFactory();
 
-    /**
-     * Returns a BasicCommandFactory.
-     *
-     * @return a BasicCommandFactory
-     */
-    public BasicCommandFactory getBasicCommandFactory();
 
     /**
      * Dispatches a command. If the command is a IDrawCommand the command will be added to the

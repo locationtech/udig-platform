@@ -14,6 +14,7 @@ import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.Interaction;
 import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.internal.EditManager;
+import org.locationtech.udig.project.internal.commands.SetApplicabilityCommand;
 import org.locationtech.udig.project.ui.render.displayAdapter.MapMouseEvent;
 import org.locationtech.udig.tool.edit.internal.Messages;
 import org.locationtech.udig.tools.edit.EditPlugin;
@@ -85,8 +86,7 @@ public class ValidToolDetectionActivator implements EnablementBehaviour {
                 		Messages.ValidToolDetectionActivator_questionTitle, string);
 
                 if (decision) {
-                    UndoableMapCommand command = handler.getContext().getBasicCommandFactory()
-                            .createSetApplicabilityCommand(layer, Interaction.EDIT, true);
+                    UndoableMapCommand command = new SetApplicabilityCommand(layer, Interaction.EDIT, true);
                     handler.getContext().sendASyncCommand(command);
                 } else {
                     warning[0]=Messages.ValidToolDetectionActivator_warning2;

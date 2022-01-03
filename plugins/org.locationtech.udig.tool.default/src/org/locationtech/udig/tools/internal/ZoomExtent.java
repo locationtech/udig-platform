@@ -11,7 +11,7 @@
  */
 package org.locationtech.udig.tools.internal;
 
-import org.locationtech.udig.project.internal.command.navigation.ZoomExtentCommand;
+import org.locationtech.udig.project.command.navigation.ZoomExtentCommand;
 import org.locationtech.udig.project.ui.tool.AbstractActionTool;
 import org.locationtech.udig.project.ui.tool.AbstractTool;
 

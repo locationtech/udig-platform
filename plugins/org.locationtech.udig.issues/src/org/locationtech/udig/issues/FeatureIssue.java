@@ -34,7 +34,6 @@ import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.IProject;
 import org.locationtech.udig.project.command.NavCommand;
 import org.locationtech.udig.project.command.UndoableComposite;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.FeatureEditorLoader;

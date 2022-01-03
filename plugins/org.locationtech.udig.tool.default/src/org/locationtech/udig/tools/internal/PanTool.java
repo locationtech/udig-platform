@@ -25,12 +25,9 @@ import org.eclipse.swt.widgets.Display;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.NavCommand;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand;
-import org.locationtech.udig.project.internal.command.navigation.PanCommand;
+import org.locationtech.udig.project.command.navigation.PanCommand;
+import org.locationtech.udig.project.command.navigation.SetBoundsCommand;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
 import org.locationtech.udig.project.ui.internal.commands.draw.TranslateCommand;
@@ -39,7 +36,7 @@ import org.locationtech.udig.project.ui.render.displayAdapter.ViewportPane;
 import org.locationtech.udig.project.ui.tool.AbstractModalTool;
 import org.locationtech.udig.project.ui.tool.ModalTool;
 import org.locationtech.udig.project.ui.tool.options.ToolOptionContributionItem;
-
+import org.locationtech.udig.tools.internal.commands.PanAndInvalidate;
 /**
  * Provides Pan functionality for MapViewport; the technique used for panning is controlled via
  * preferences.
@@ -63,7 +60,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
 
             return ToolsPlugin.getDefault().getPreferenceStore();
         }
-    };
+    }
 
     /**
      * Delegate used to control how the PanTool functions; configured using Preference.
@@ -87,7 +84,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         public void dispose() {
 
         }
-    };
+    }
 
     private ScrollStrategy strategy;
 
@@ -140,20 +137,24 @@ public class PanTool extends AbstractModalTool implements ModalTool {
     }
 
     @Override
+    @Override
     public void mouseDragged(MapMouseEvent e) {
         strategy.mouseDragged(e);
     }
 
+    @Override
     @Override
     public void mousePressed(MapMouseEvent e) {
         strategy.mousePressed(e);
     }
 
     @Override
+    @Override
     public void mouseReleased(MapMouseEvent e) {
         strategy.mouseReleased(e);
     }
 
+    @Override
     @Override
     public void dispose() {
         if (strategy != null) {
@@ -163,60 +164,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
         super.dispose();
     }
 
-    /**
-     * Executes the specified pan command, and only after it is executed, expires the last translate
-     * command
-     */
-    private class PanAndInvalidate implements Command, NavCommand {
-        private NavCommand command;
 
-        private TranslateCommand expire;
-
-        PanAndInvalidate(NavCommand command, TranslateCommand expire) {
-            this.command = command;
-            this.expire = expire;
-        }
-
-        @Override
-        public Command copy() {
-            return new PanAndInvalidate(command, expire);
-        }
-
-        @Override
-        public String getName() {
-            return "PanAndDiscard";
-        }
-
-        @Override
-        public void run(IProgressMonitor monitor) throws Exception {
-            // we need to expire the translate command first otherwise
-            // the image gets drawn in the wrong spot the first time
-            // and we see weird affects
-            expire.setValid(false);
-
-            command.run(monitor);
-        }
-
-        @Override
-        public void setViewportModel(ViewportModel model) {
-            command.setViewportModel(model);
-        }
-
-        @Override
-        public Map getMap() {
-            return command.getMap();
-        }
-
-        @Override
-        public void setMap(IMap map) {
-            command.setMap(map);
-        }
-
-        @Override
-        public void rollback(IProgressMonitor monitor) throws Exception {
-            command.rollback(monitor);
-        }
-    }
 
     /** Basic Pan Functionality for MapViewport */
     public class Pan extends ScrollStrategy {
@@ -245,6 +193,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
             }
         }
 
+        @Override
         @Override
         public void mouseReleased(MapMouseEvent e) {
             if (dragging) {
@@ -286,6 +235,7 @@ public class PanTool extends AbstractModalTool implements ModalTool {
 
         private org.eclipse.swt.graphics.Point start = null;
 
+        @Override
         @Override
         public void mouseDragged(MapMouseEvent e) {
             if (dragging) {
@@ -438,32 +388,16 @@ public class PanTool extends AbstractModalTool implements ModalTool {
                 final Envelope newbounds = new Envelope(newc.x - dw, newc.x + dw, newc.y - dh,
                         newc.y + dh);
 
-                // compute new BBox for
-                NavCommand setFinal = new AbstractNavCommand() {
-
-                    @Override
-                    protected void runImpl(IProgressMonitor monitor) throws Exception {
-                        model.setBounds(newbounds);
-                    }
-
-                    @Override
-                    public Command copy() {
-                        return null;
-                    }
-
-                    @Override
-                    public String getName() {
-                        return "Fixed Scale Pan"; //$NON-NLS-1$
-                    }
-                };
 
                 ((ViewportPane) getContext().getMapDisplay()).update();
-                context.sendASyncCommand(new PanAndInvalidate(setFinal, command));
+                context.sendASyncCommand(
+                        new PanAndInvalidate(new SetBoundsCommand(newbounds), command));
 
                 dragging = false;
             }
         }
 
+        @Override
         @Override
         public void dispose() {
             super.dispose();

@@ -18,9 +18,8 @@ import org.geotools.referencing.CRS;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.bookmarks.Bookmark;
 import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.command.Command;
+import org.locationtech.udig.project.command.navigation.AbstractNavCommand;
 import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand;
 import org.locationtech.udig.project.render.IViewportModel;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -73,13 +72,9 @@ public class GotoBookmarkCommand extends AbstractNavCommand {
     }
 
     @Override
-    public Command copy() {
-        return null;
-    }
-
     @Override
     public String getName() {
-        return null;
+        return null; // TODO NLS
     }
 
 }

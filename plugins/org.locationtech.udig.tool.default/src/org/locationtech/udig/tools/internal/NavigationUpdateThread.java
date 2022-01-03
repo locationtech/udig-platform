@@ -12,14 +12,13 @@ package org.locationtech.udig.tools.internal;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.udig.project.command.NavCommand;
-import org.locationtech.udig.project.internal.command.navigation.NavComposite;
-import org.locationtech.udig.project.internal.command.navigation.PanCommand;
-import org.locationtech.udig.project.internal.command.navigation.ZoomCommand;
+import org.locationtech.udig.project.command.navigation.NavComposite;
+import org.locationtech.udig.project.command.navigation.PanCommand;
+import org.locationtech.udig.project.command.navigation.ZoomCommand;
 import org.locationtech.udig.project.ui.commands.TransformDrawCommand;
 import org.locationtech.udig.project.ui.tool.IToolContext;
-
-import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Waits 1 second after the most recent request before running operation.
@@ -181,7 +180,7 @@ public class NavigationUpdateThread implements Runnable {
         requestStart();
     }
 
-	protected synchronized void performChange() {
+    protected synchronized void performChange() {
         double zoom = Math.abs(Math.pow(FACTOR, previousZoom));
         ArrayList<NavCommand> commands=new ArrayList<NavCommand>();
         if( horizontal!=0 || vertical!=0 ){
@@ -189,6 +188,7 @@ public class NavigationUpdateThread implements Runnable {
                     new PanCommand((horizontal*-PAN_AMOUNT), (vertical*-PAN_AMOUNT)));
         }
         if( zoom>0.00000001 ){
+            // TODO targetZoom is never used ..
         	double targetZoom = context.calculateZoomLevel(1,previousZoom, fixedPoint, false, zoomAmount != 0);
             ZoomCommand zoomCommand = new ZoomCommand(previousZoom);
             zoomCommand.setFixedPoint(fixedPoint);

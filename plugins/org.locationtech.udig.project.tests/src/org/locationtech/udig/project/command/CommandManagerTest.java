@@ -47,11 +47,6 @@ public class CommandManagerTest extends AbstractProjectTestCase {
             }
 
             @Override
-            public Command copy() {
-                return null;
-            }
-
-            @Override
             public String getName() {
                 return null;
             }
@@ -78,11 +73,6 @@ public class CommandManagerTest extends AbstractProjectTestCase {
             @Override
             public void run(IProgressMonitor monitor) throws Exception {
                 result.ran = true;
-            }
-
-            @Override
-            public Command copy() {
-                return null;
             }
 
             @Override
@@ -116,22 +106,12 @@ public class CommandManagerTest extends AbstractProjectTestCase {
                     }
 
                     @Override
-                    public Command copy() {
-                        return null;
-                    }
-
-                    @Override
                     public String getName() {
                         return null;
                     }
 
                 });
                 result.ran = true;
-            }
-
-            @Override
-            public Command copy() {
-                return null;
             }
 
             @Override
@@ -174,11 +154,6 @@ public class CommandManagerTest extends AbstractProjectTestCase {
                             }
 
                             @Override
-                            public Command copy() {
-                                return null;
-                            }
-
-                            @Override
                             public String getName() {
                                 return null;
                             }
@@ -188,11 +163,6 @@ public class CommandManagerTest extends AbstractProjectTestCase {
                     }
                 });
                 result.ran = true;
-            }
-
-            @Override
-            public Command copy() {
-                return null;
             }
 
             @Override
@@ -221,11 +191,6 @@ public class CommandManagerTest extends AbstractProjectTestCase {
             }
 
             @Override
-            public Command copy() {
-                return null;
-            }
-
-            @Override
             public String getName() {
                 return null;
             }
@@ -248,11 +213,6 @@ public class CommandManagerTest extends AbstractProjectTestCase {
             public void run(IProgressMonitor monitor) throws Exception {
                 Thread.sleep(1000);
                 result.ran = true;
-            }
-
-            @Override
-            public Command copy() {
-                return null;
             }
 
             @Override
@@ -282,11 +242,6 @@ public class CommandManagerTest extends AbstractProjectTestCase {
             @Override
             public void run(IProgressMonitor monitor) throws Exception {
                 fail();
-            }
-
-            @Override
-            public Command copy() {
-                return null;
             }
 
             @Override
@@ -339,11 +294,6 @@ public class CommandManagerTest extends AbstractProjectTestCase {
             @Override
             public void run(IProgressMonitor monitor) throws Exception {
                 fail();
-            }
-
-            @Override
-            public Command copy() {
-                return null;
             }
 
             @Override

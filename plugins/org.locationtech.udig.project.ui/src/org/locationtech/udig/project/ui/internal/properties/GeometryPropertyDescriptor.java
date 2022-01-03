@@ -30,7 +30,7 @@ import org.geotools.geometry.jts.JTS;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.command.navigation.SetViewportBBoxCommand;
+import org.locationtech.udig.project.command.navigation.SetViewportBBoxCommand;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.Messages;
 import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
@@ -90,12 +90,13 @@ public class GeometryPropertyDescriptor extends PropertyDescriptor {
                         }
                         Envelope env = geometry.getEnvelopeInternal();
                         try {
-                            env = JTS.transform(env, map.getEditManager().getEditLayer()
-                                    .layerToMapTransform());
+                            env = JTS.transform(env,
+                                    map.getEditManager().getEditLayer().layerToMapTransform());
                         } catch (Exception e1) {
                             ProjectUIPlugin.log(null, e1);
                         }
-                        map.sendCommandASync(new SetViewportBBoxCommand(env, map.getViewportModel().getCRS()));
+                        map.sendCommandASync(
+                                new SetViewportBBoxCommand(env, map.getViewportModel().getCRS()));
                     }
 
                 });

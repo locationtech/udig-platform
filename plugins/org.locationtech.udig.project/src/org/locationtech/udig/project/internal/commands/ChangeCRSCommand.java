@@ -11,55 +11,41 @@
  */
 package org.locationtech.udig.project.internal.commands;
 
-import org.locationtech.udig.project.command.Command;
 import org.locationtech.udig.project.command.UndoableMapCommand;
-import org.locationtech.udig.project.internal.Map;
+import org.locationtech.udig.project.command.navigation.AbstractNavCommand;
 import org.locationtech.udig.project.internal.Messages;
-import org.locationtech.udig.project.internal.command.navigation.AbstractNavCommand;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * Change the CRS of a map.
- * 
+ *
  * @author Jesse
  * @since 1.0.0
  */
-public class ChangeCRSCommand extends AbstractNavCommand implements
-		UndoableMapCommand {
-	private static final String NAME = Messages.ChangeCRSCommand_name;
-	private CoordinateReferenceSystem crs;
+public class ChangeCRSCommand extends AbstractNavCommand implements UndoableMapCommand {
+    private static final String NAME = Messages.ChangeCRSCommand_name;
 
-	/**
-	 * @deprecated
-	 */
-	public ChangeCRSCommand(Map map, CoordinateReferenceSystem crs) {
-		this.crs = crs;
-	}
+    private CoordinateReferenceSystem crs;
 
-	public ChangeCRSCommand( CoordinateReferenceSystem crs) {
-		this.crs = crs;
-	}
+    public ChangeCRSCommand(CoordinateReferenceSystem crs) {
+        this.crs = crs;
+    }
 
-	/**
-	 * Each command has a name that is displayed with the undo/redo buttons.
-	 * 
-	 * @see org.locationtech.udig.project.command.MapCommand#getName()
-	 */
-	public String getName() {
-		return NAME;
-	}
+    /**
+     * Each command has a name that is displayed with the undo/redo buttons.
+     *
+     * @see org.locationtech.udig.project.command.MapCommand#getName()
+     */
+    @Override
+    public String getName() {
+        return NAME;
+    }
 
-	@Override
-	protected void runImpl(IProgressMonitor monitor) throws Exception {
-		monitor.beginTask(NAME, 1);
-		model.setCRS(crs);
-		monitor.done();
-	}
-
-	public Command copy() {
-		return new ChangeCRSCommand(null,crs);
-	}
-
+    @Override
+    protected void runImpl(IProgressMonitor monitor) throws Exception {
+        monitor.beginTask(NAME, 1);
+        model.setCRS(crs);
+        monitor.done();
+    }
 }
