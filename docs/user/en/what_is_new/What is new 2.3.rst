@@ -40,5 +40,5 @@ Improvements and Fixes
   `#428 <https://github.com/locationtech/udig-platform/issues/428>`_
   )
 * Removal of deprecated classes (
-  `#649 org.locationtech.udig.project.command.BasicCommandFactory.java`_ : Please us the class instead org.locationtech.udig.project.command.factory.BasicCommandFactory.java
+  `#649 <https://github.com/locationtech/udig-platform/issues/649>`_ : Solve deprecation of ChangeCRSCommand. Please us the class "org.locationtech.udig.project.command.factory.BasicCommandFactory.java" instead!
   )
