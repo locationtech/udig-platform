@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,9 +11,23 @@
 package org.locationtech.udig.feature.editor;
 
 import java.util.Iterator;
-import java.util.List;
 
-import org.locationtech.udig.feature.editor.AbstractPageBookView.PageRec;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.part.IPage;
+import org.eclipse.ui.part.IPageBookViewPage;
+import org.eclipse.ui.part.MessagePage;
+import org.eclipse.ui.part.PageBook;
+import org.eclipse.ui.part.PageBookView;
 import org.locationtech.udig.feature.panel.FeaturePanelPage;
 import org.locationtech.udig.feature.panel.FeaturePanelPageContributor;
 import org.locationtech.udig.internal.ui.UiPlugin;
@@ -22,57 +36,25 @@ import org.locationtech.udig.project.IEditManager;
 import org.locationtech.udig.project.IEditManagerListener;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.IMapListener;
-import org.locationtech.udig.project.MapEvent;
-import org.locationtech.udig.project.MapEvent.MapEventType;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.IFeatureSite;
-import org.locationtech.udig.project.ui.IUDIGView;
-import org.locationtech.udig.project.ui.feature.FeaturePanelProcessor;
-import org.locationtech.udig.project.ui.feature.FeatureSiteImpl;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
-
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.IViewSite;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartSite;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.part.IPage;
-import org.eclipse.ui.part.IPageBookViewPage;
-import org.eclipse.ui.part.MessagePage;
-import org.eclipse.ui.part.PageBook;
-import org.eclipse.ui.part.PageBookView;
-import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.FeatureType;
 
 /**
  * View allowing direct editing of the currently selected feature.
  * <p>
- * The currently selected feature is handled by the EditManager; and is
- * communicated with the a page via a FeatureSite. We also have a special
- * EditFeature implementation where each setAttribute call is backed by a
- * command.
+ * The currently selected feature is handled by the EditManager; and is communicated with the a page
+ * via a FeatureSite. We also have a special EditFeature implementation where each setAttribute call
+ * is backed by a command.
  * <p>
- * This is the "most normal" implementation directly extending PageBookView
- * resulting in one "feature panel page" per workbench part. This should provide
- * exellent isolation between maps allowing the user to quickly switch between
- * them.
- * 
+ * This is the "most normal" implementation directly extending PageBookView resulting in one
+ * "feature panel page" per workbench part. This should provide excellent isolation between maps
+ * allowing the user to quickly switch between them.
+ *
  * @author Jody
  * @since 1.2.0
  */
 public class FeatureView extends PageBookView implements FeaturePanelPageContributor {
 
-    public static final String ID = "org.locationtech.udig.feature.editor.featureView";
+    public static final String ID = "org.locationtech.udig.feature.editor.featureView"; //$NON-NLS-1$
 
     /**
      * The current part for which this property sheets is active
@@ -85,10 +67,11 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     private IMap currentMap;
 
     /**
-     * We are listening to the workbench selection to see if our currentPart has
-     * anything to say to us.
+     * We are listening to the workbench selection to see if our currentPart has anything to say to
+     * us.
      */
     private ISelectionListener workbenchListener = new ISelectionListener() {
+        @Override
         public void selectionChanged(IWorkbenchPart part, ISelection sel) {
             if (sel == null || !isImportant(part)) {
                 return;
@@ -103,10 +86,11 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     /**
      * We are listing to our map to see if the current layer changes.
      * <p>
-     * If the current layer changes we pass it on the the currentPage; with
-     * ourselves (ie the FeaturePanelPageContributor) as the provider.
+     * If the current layer changes we pass it on the the currentPage; with ourselves (ie the
+     * FeaturePanelPageContributor) as the provider.
      */
     private IEditManagerListener editListener = new IEditManagerListener() {
+        @Override
         public void changed(EditManagerEvent event) {
             if (event.getType() == EditManagerEvent.SELECTED_LAYER) {
                 StructuredSelection sel = new StructuredSelection(event.getNewValue());
@@ -168,13 +152,14 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
         super.init(site);
     }
 
+    @Override
     public void dispose() {
         super.dispose(); // run super
 
         // remove ourselves as a selection listener
         getSite().getPage().removeSelectionListener(workbenchListener);
         if (currentPart != null) {
-            IMap map = (IMap) currentPart.getAdapter(IMap.class);
+            IMap map = currentPart.getAdapter(IMap.class);
             if (map != null) {
                 map.getEditManager().removeListener(editListener);
             }
@@ -186,6 +171,7 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
         }
     }
 
+    @Override
     public SimpleFeatureType getSchema() {
         if (getCurrentContributingPart() != null) {
             setContributor(getCurrentContributingPart());
@@ -194,7 +180,7 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     }
 
     private SimpleFeatureType getSchema(IWorkbenchPart part) {
-        IMap map = (IMap) part.getAdapter(IMap.class);
+        IMap map = part.getAdapter(IMap.class);
         if (map == null) {
             return null;
         }
@@ -214,7 +200,7 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
         MessagePage page = new MessagePage();
         page.setMessage("Default Page");
 
-        initPage((IPageBookViewPage) page);
+        initPage(page);
         page.createControl(getPageBook());
 
         return page;
@@ -222,7 +208,7 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
 
     @Override
     protected PageRec doCreatePage(IWorkbenchPart part) {
-        IMap map = (IMap) part.getAdapter(IMap.class);
+        IMap map = part.getAdapter(IMap.class);
         if (map == null) {
             MessagePage page = new MessagePage();
             page.setMessage("Please select a Map");
@@ -233,7 +219,7 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
             return rec;
         }
         setContributor(part);
-        IPage page = (IPage) new FeaturePanelPage(this);
+        IPage page = new FeaturePanelPage(this);
         initPage((IPageBookViewPage) page);
         page.createControl(getPageBook());
         return new PageRec(part, page);
@@ -257,7 +243,7 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
         if (editor == null)
             return null;
 
-        IMap map = (IMap) editor.getAdapter(IMap.class);
+        IMap map = editor.getAdapter(IMap.class);
         if (map == null)
             return null;
 
@@ -265,8 +251,8 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     }
 
     /**
-     * IWorkbenchPart considered important if the part can adapt to an IMap
-     * (which allows us to track any changes to the edit feature).
+     * IWorkbenchPart considered important if the part can adapt to an IMap (which allows us to
+     * track any changes to the edit feature).
      */
     @Override
     public boolean isImportant(IWorkbenchPart part) {
@@ -274,11 +260,11 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     }
 
     public static IMap toMap(IWorkbenchPart part) {
-        IMap map = (IMap) part.getAdapter(IMap.class);
+        IMap map = part.getAdapter(IMap.class);
         if (map != null)
             return map;
 
-        ILayer layer = (ILayer) part.getAdapter(ILayer.class);
+        ILayer layer = part.getAdapter(ILayer.class);
         if (layer != null)
             return layer.getMap();
 
@@ -288,9 +274,10 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     /**
      * Determine an ILayer from a workbench part.
      * <p>
-     * If the part provides a layer it is used; if it only provides a Map the
-     * selected layer is used.
-     * 
+     * If the part provides a layer it is used; if it only provides a Map the selected layer is
+     * used.
+     * </p>
+     *
      * @param part
      * @param selection
      * @return layer, or null if not available
@@ -298,12 +285,12 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     public static ILayer toLayer(IWorkbenchPart part) {
         // see if the part can turn into a layer
         //
-        ILayer layer = (ILayer) part.getAdapter(ILayer.class);
+        ILayer layer = part.getAdapter(ILayer.class);
         if (layer != null) {
             return layer;
         }
 
-        IMap map = (IMap) part.getAdapter(IMap.class);
+        IMap map = part.getAdapter(IMap.class);
         if (map != null) {
             return map.getEditManager().getSelectedLayer();
         }
@@ -311,11 +298,11 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     }
 
     public static ILayer toEditLayer(IWorkbenchPart part) {
-        IMap map = (IMap) part.getAdapter(IMap.class);
+        IMap map = part.getAdapter(IMap.class);
         if (map != null) {
             return map.getEditManager().getEditLayer();
         }
-        ILayer layer = (ILayer) part.getAdapter(ILayer.class);
+        ILayer layer = part.getAdapter(ILayer.class);
         if (layer != null) {
             if (layer == layer.getMap().getEditManager().getEditLayer()) {
                 return layer;
@@ -325,17 +312,17 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
     }
 
     /**
-     * ISelection considered important if we can determine a Layer from it; more
-     * importantly the layer needs to have a non null getSchema() so we can
-     * configure a FeaturePanelPage with it.
-     * 
+     * ISelection considered important if we can determine a Layer from it; more importantly the
+     * layer needs to have a non null getSchema() so we can configure a FeaturePanelPage with it.
+     *
      * @param part
      * @param selection
      * @return layer, or null if not available
      */
     public static ILayer toLayer(ISelection selection) {
         // try the selection first
-        if (selection != null && !selection.isEmpty() && selection instanceof IStructuredSelection) {
+        if (selection != null && !selection.isEmpty()
+                && selection instanceof IStructuredSelection) {
             IStructuredSelection sel = (IStructuredSelection) selection;
             for (Iterator<?> iter = sel.iterator(); iter.hasNext();) {
                 Object item = iter.next();
@@ -343,7 +330,7 @@ public class FeatureView extends PageBookView implements FeaturePanelPageContrib
                     return (ILayer) item;
                 }
                 if (item instanceof IAdaptable) {
-                    ILayer layer = (ILayer) ((IAdaptable) item).getAdapter(ILayer.class);
+                    ILayer layer = ((IAdaptable) item).getAdapter(ILayer.class);
                     if (layer != null) {
                         return layer;
                     }
