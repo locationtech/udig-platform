@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,13 +12,15 @@
 package org.locationtech.udig.catalog.ui;
 
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.Map;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.catalog.IGeoResourceInfo;
 import org.locationtech.udig.catalog.IProcess;
 import org.locationtech.udig.catalog.IResolve;
 import org.locationtech.udig.catalog.IResolveChangeEvent;
@@ -26,20 +28,13 @@ import org.locationtech.udig.catalog.IResolveChangeListener;
 import org.locationtech.udig.catalog.IResolveFolder;
 import org.locationtech.udig.catalog.ISearch;
 import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.IServiceInfo;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.LabelProviderChangedEvent;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 
 /**
  * Label generation for IResolve (must be non-blocking and quick).
  * <p>
  * Compare and contrast with ResovleLabelDecorator which is allowed to block.
  * </p>
- * 
+ *
  * @author jgarnett
  * @since 0.7.0
  */
@@ -48,12 +43,9 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
     public ResolveLabelProviderSimple() {
         CatalogPlugin.addListener(this);
     }
-    /*
-     * @see
-     * org.locationtech.udig.catalog.IResolveChangeListener#changed(org.locationtech.udig.catalog.
-     * IResolveChangeEvent)
-     */
-    public void changed( final IResolveChangeEvent event ) {
+
+    @Override
+    public void changed(final IResolveChangeEvent event) {
         if (event.getType() != IResolveChangeEvent.Type.POST_CHANGE)
             return;
 
@@ -61,10 +53,11 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
         if (resolve == null)
             return;
 
-        Display.getDefault().asyncExec(new Runnable(){
+        Display.getDefault().asyncExec(new Runnable() {
+            @Override
             public void run() {
-                fireLabelProviderChanged(new LabelProviderChangedEvent(
-                        ResolveLabelProviderSimple.this, resolve));
+                fireLabelProviderChanged(
+                        new LabelProviderChangedEvent(ResolveLabelProviderSimple.this, resolve));
             }
         });
     }
@@ -75,27 +68,21 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
      * Note this name is only used as a first try, the ResolveLabelDecorator is expected to provide
      * a label based on Name or Title information.
      * </p>
-     * 
+     *
      * @param element
      * @return label based on IResolve.getIdentifier
      */
-    public String getText( Object element ) {
+    @Override
+    public String getText(Object element) {
         if (element instanceof IResolve) {
             IResolve resolve = (IResolve) element;
             try {
                 if (resolve instanceof IGeoResource) {
                     IGeoResource resource = (IGeoResource) resolve;
                     String title = resource.getTitle();
-// This provider should be non-blocking                    
-//                    if (title == null) {
-//                        IGeoResourceInfo info = resource.getInfo(new NullProgressMonitor());
-//                        if(info != null) {
-//                        	title = info.getTitle();
-//                        }
-//                    }
                     ID id = resource.getID();
-                    if(title == null) {
-                    	title = id.labelResource();
+                    if (title == null) {
+                        title = id.labelResource();
                     }
                     return title;
 
@@ -104,12 +91,6 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
                     ID id = service.getID();
 
                     String title = service.getTitle();
-//                    if (title == null) {
-//                        IServiceInfo info = service.getInfo(new NullProgressMonitor());
-//                        if (info != null) {
-//                            title = info.getTitle();
-//                        }
-//                    }
                     if (title == null) {
                         // we are going to fake something here
                         String name = id.toString();
@@ -147,13 +128,14 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
      * To accomplish this quickly we simply make use of constants from CatalogUIPlugin. We need a
      * second pass that makes use of the real icon from the real resource.
      * </p>
-     * 
+     *
      * @param element is expected to be IResolve
      * @return the image used to label the element, or <code>null</code> if there is no image for
      *         the given object
      * @see org.eclipse.jface.viewers.LabelProvider#getImage(java.lang.Object)
      */
-    public Image getImage( Object element ) {
+    @Override
+    public Image getImage(Object element) {
         if (element instanceof IResolve) {
             return CatalogUIPlugin.image((IResolve) element);
         }

@@ -1,4 +1,4 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/** uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2011, Refractions Research Inc.
  *
@@ -26,36 +26,39 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 
-import org.locationtech.udig.catalog.IResolve;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
+import org.geotools.jdbc.JDBCDataStore;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.service.database.TableDescriptor;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubMonitor;
-import org.geotools.jdbc.JDBCDataStore;
-
 /**
- * A teradata service that represents the database. Its children are "folders" that each resolve to a TeradataDatastore.
- * Each folder has georesources
- * 
+ * A teradata service that represents the database. Its children are "folders" that each resolve to
+ * a TeradataDatastore. Each folder has GeoResources
+ *
  * @author jesse
  * @since 1.1.0
  */
 public class TeradataService extends IService {
 
     private final URL id;
+
     private Map<String, Serializable> params;
+
     private Status status;
-    private final List<TeradataGeoResource> members = new ArrayList<TeradataGeoResource>();
+
+    private final List<TeradataGeoResource> members = new ArrayList<>();
+
     private Lock lock = new UDIGDisplaySafeLock();
+
     private Throwable message;
+
     private JDBCDataStore datastore;
 
     public TeradataService(URL finalID, Map<String, Serializable> map) {
         this.id = finalID;
-        this.params = new HashMap<String, Serializable>(map);
+        this.params = new HashMap<>(map);
         status = Status.NOTCONNECTED;
     }
 
@@ -69,6 +72,7 @@ public class TeradataService extends IService {
         return (TeradataServiceInfo) super.getInfo(monitor);
     }
 
+    @Override
     protected TeradataServiceInfo createInfo(IProgressMonitor monitor) throws IOException {
         // make sure members are loaded cause they're needed for info
         members(monitor);
@@ -80,7 +84,8 @@ public class TeradataService extends IService {
         lock.lock();
         try {
             if (status != Status.CONNECTED) {
-                Set<TableDescriptor> tables = lookupTablesInDB(SubMonitor.convert(monitor, "looking up schemas", 1));
+                Set<TableDescriptor> tables = lookupTablesInDB(
+                        SubMonitor.convert(monitor, "looking up schemas", 1));
                 message = null;
                 status = Status.CONNECTED;
                 if (tables == null) {
@@ -101,7 +106,8 @@ public class TeradataService extends IService {
         String user = (String) params.get(USER.key);
         String pass = (String) params.get(PASSWD.key);
 
-        TeradataLookUpSchemaRunnable runnable = new TeradataLookUpSchemaRunnable(host, port, user, pass, database);
+        TeradataLookUpSchemaRunnable runnable = new TeradataLookUpSchemaRunnable(host, port, user,
+                pass, database);
         runnable.run(monitor);
 
         if (runnable.getError() != null) {
@@ -124,11 +130,9 @@ public class TeradataService extends IService {
             try {
                 members.add(new TeradataGeoResource(this, desc));
             } catch (Throwable e) {
-                Activator
-                        .log("Error occurred while Georesource "
-                                + trimmedName
-                                + " it is most likely simply a table that we cannot access or that is not spatially enabled.  Error message is: "
-                                + e.getMessage(), null);
+                Activator.log("Error occurred while Georesource " + trimmedName
+                        + " it is most likely simply a table that we cannot access or that is not spatially enabled.  Error message is: "
+                        + e.getMessage(), null);
             }
         }
     }
@@ -136,17 +140,20 @@ public class TeradataService extends IService {
     @Override
     public String getTitle() {
         URL id = getIdentifier();
-        return ("Teradata " + id.getHost() + "/" + id.getPath()).replaceAll("//", "/"); //$NON-NLS-1$
+        return ("Teradata " + id.getHost() + "/" + id.getPath()).replaceAll("//", "/"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
 
+    @Override
     public URL getIdentifier() {
         return id;
     }
 
+    @Override
     public Throwable getMessage() {
         return message;
     }
 
+    @Override
     public Status getStatus() {
         return status;
     }
@@ -154,10 +161,10 @@ public class TeradataService extends IService {
     @Override
     public void dispose(IProgressMonitor monitor) {
         super.dispose(monitor);
-        if( !members.isEmpty() ){
+        if (!members.isEmpty()) {
             members.clear();
         }
-        if( datastore != null ){
+        if (datastore != null) {
             datastore.dispose();
             datastore = null;
         }

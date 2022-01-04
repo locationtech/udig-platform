@@ -1,7 +1,8 @@
-/* uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * (C) HydroloGIS - www.hydrologis.com
  * (C) 2009 IBM Corporation and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the HydroloGIS BSD
@@ -14,17 +15,11 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.URLUtils;
-import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
-import org.locationtech.udig.core.RecentHistory;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -45,9 +40,12 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
-
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.URLUtils;
 import org.locationtech.udig.catalog.jgrass.JGrassPlugin;
 import org.locationtech.udig.catalog.jgrass.messages.Messages;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.core.RecentHistory;
 
 /**
  * <p>
@@ -56,7 +54,7 @@ import org.locationtech.udig.catalog.jgrass.messages.Messages;
  * <p>
  * <i>Note: based on the WMS plugin</i>
  * </p>
- * 
+ *
  * @author Andrea Antonello - www.hydrologis.com
  * @since 1.1.0
  */
@@ -78,7 +76,7 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
 
     /**
      * Construct <code>JGrassWizardPage</code>.
-     * 
+     *
      * @param pageName
      */
     public JGrassWizardPage() {
@@ -94,18 +92,22 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
         return "eu.hydrologis.udig.catalog.internal.jgrass.ui.JGrass"; //$NON-NLS-1$
     }
 
-    /** Can be called during createControl */
+    /**
+     * Can be called during createControl
+     */
     protected Map<String, Serializable> defaultParams() {
         IStructuredSelection selection = (IStructuredSelection) PlatformUI.getWorkbench()
                 .getActiveWorkbenchWindow().getSelectionService().getSelection();
         return toParams(selection);
     }
 
-    /** Retrieve "best" JGrass guess of parameters based on provided context */
-    @SuppressWarnings("unchecked")//$NON-NLS-1$
-    protected Map<String, Serializable> toParams( IStructuredSelection context ) {
+    /**
+     * Retrieve "best" JGrass guess of parameters based on provided context
+     */
+    @SuppressWarnings("unchecked")
+    protected Map<String, Serializable> toParams(IStructuredSelection context) {
         if (context != null) {
-            for( Iterator itr = context.iterator(); itr.hasNext(); ) {
+            for (Iterator itr = context.iterator(); itr.hasNext();) {
                 Map<String, Serializable> params = new JGrassConnectionFactory()
                         .createConnectionParameters(itr.next());
                 if (!params.isEmpty())
@@ -115,7 +117,8 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
         return Collections.EMPTY_MAP;
     }
 
-    public void createControl( Composite parent ) {
+    @Override
+    public void createControl(Composite parent) {
         String[] recentJGrass = settings.getArray(JGRASS_RECENT);
         if (recentJGrass == null) {
             recentJGrass = new String[0];
@@ -138,7 +141,7 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
         new Label(composite, SWT.NONE);
 
         // For Drag 'n Drop as well as for general selections
-        // look for a url as part of the selction
+        // look for a URL as part of the selection
         Map<String, Serializable> params = defaultParams(); // based on
 
         // combo selection
@@ -174,10 +177,11 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
         // browse button
         Button browseButton = new Button(composite, SWT.PUSH);
         browseButton.setText(Messages.getString("jgrasswizard.browse")); //$NON-NLS-1$
-        browseButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
-                DirectoryDialog directoryDialog = new DirectoryDialog(Display.getDefault()
-                        .getActiveShell());
+        browseButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                DirectoryDialog directoryDialog = new DirectoryDialog(
+                        Display.getDefault().getActiveShell());
                 directoryDialog.setText(Messages.getString("jgrasswizard.choosefolder")); //$NON-NLS-1$
                 String selectedDirectory = directoryDialog.open();
                 urlCombo.setText(selectedDirectory);
@@ -198,7 +202,7 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
         setControl(composite);
     }
 
-    public URL getURL( Map<String, Serializable> params ) {
+    public URL getURL(Map<String, Serializable> params) {
         Object value = params.get(JGrassServiceExtension.KEY);
         if (value == null)
             return null;
@@ -216,11 +220,11 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
 
     /**
      * Double click in list, or return from url control.
-     * 
+     *
      * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
      * @param e
      */
-    public void widgetDefaultSelected( SelectionEvent e ) {
+    public void widgetDefaultSelected(SelectionEvent e) {
         e.getClass();// kill warning
         if (getWizard().canFinish()) {
             getWizard().performFinish();
@@ -230,7 +234,7 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
     /**
      * This should be called using the Wizard .. job when next/finish is pressed.
      */
-    public List<IService> getResources( IProgressMonitor monitor ) throws Exception {
+    public List<IService> getResources(IProgressMonitor monitor) throws Exception {
         URL location = new File(url).toURI().toURL();
 
         JGrassServiceExtension creator = new JGrassServiceExtension();
@@ -239,10 +243,10 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
         IService service = creator.createService(location, params);
         service.getInfo(monitor); // load it
 
-        jgrassServices = new ArrayList<IService>();
+        jgrassServices = new ArrayList<>();
         jgrassServices.add(service);
 
-        /*
+        /**
          * Success! Store the URL in history.
          */
         saveWidgetValues();
@@ -250,7 +254,8 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
         return jgrassServices;
     }
 
-    public void modifyText( ModifyEvent e ) {
+    @Override
+    public void modifyText(ModifyEvent e) {
         url = ((Combo) e.getSource()).getText();
         try {
             getResources(new NullProgressMonitor());
@@ -263,7 +268,6 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
         }
 
         getWizard().getContainer().updateButtons();
-        // getWizard().getContainer().updateButtons();
     }
 
     /**
@@ -271,13 +275,14 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
      */
     private void saveWidgetValues() {
         if (settings != null) {
-            RecentHistory<String> recent =
-                    new RecentHistory<String>( settings.getArray(JGRASS_RECENT) );
-            recent.add( url);
+            RecentHistory<String> recent = new RecentHistory<>(
+                    settings.getArray(JGRASS_RECENT));
+            recent.add(url);
             settings.put(JGRASS_RECENT, recent.toArray(new String[recent.size()]));
         }
     }
 
+    @Override
     public Map<String, Serializable> getParams() {
         try {
             if (url == null)
@@ -292,9 +297,10 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
         }
     }
 
+    @Override
     public Collection<URL> getResourceIDs() {
         try {
-            ArrayList<URL> l = new ArrayList<URL>();
+            ArrayList<URL> l = new ArrayList<>();
             l.add(new File(url).toURI().toURL());
 
             return l;
@@ -303,6 +309,7 @@ public class JGrassWizardPage extends WizardPage implements ModifyListener, UDIG
         }
     }
 
+    @Override
     public Collection<IService> getServices() {
         return jgrassServices;
     }
