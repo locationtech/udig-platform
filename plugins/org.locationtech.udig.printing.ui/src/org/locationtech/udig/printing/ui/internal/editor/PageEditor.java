@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -14,6 +15,36 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.EventObject;
 
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.gef.ContextMenuProvider;
+import org.eclipse.gef.DefaultEditDomain;
+import org.eclipse.gef.GraphicalViewer;
+import org.eclipse.gef.dnd.TemplateTransferDragSourceListener;
+import org.eclipse.gef.editparts.ScalableFreeformRootEditPart;
+import org.eclipse.gef.editparts.ZoomManager;
+import org.eclipse.gef.palette.PaletteRoot;
+import org.eclipse.gef.ui.actions.ActionRegistry;
+import org.eclipse.gef.ui.palette.FlyoutPaletteComposite.FlyoutPreferences;
+import org.eclipse.gef.ui.palette.PaletteViewer;
+import org.eclipse.gef.ui.palette.PaletteViewerProvider;
+import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
+import org.eclipse.gef.ui.parts.SelectionSynchronizer;
+import org.eclipse.gef.ui.parts.TreeViewer;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.locationtech.udig.printing.model.Box;
 import org.locationtech.udig.printing.model.Page;
 import org.locationtech.udig.printing.ui.internal.PrintAction;
@@ -25,45 +56,6 @@ import org.locationtech.udig.project.internal.ProjectPackage;
 import org.locationtech.udig.project.internal.ProjectPlugin;
 import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.draw2d.FigureCanvas;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.gef.ContextMenuProvider;
-import org.eclipse.gef.DefaultEditDomain;
-import org.eclipse.gef.GraphicalEditPart;
-import org.eclipse.gef.GraphicalViewer;
-import org.eclipse.gef.MouseWheelHelper;
-import org.eclipse.gef.dnd.TemplateTransferDragSourceListener;
-import org.eclipse.gef.editparts.ScalableFreeformRootEditPart;
-import org.eclipse.gef.editparts.ViewportMouseWheelHelper;
-import org.eclipse.gef.editparts.ZoomManager;
-import org.eclipse.gef.palette.PaletteRoot;
-import org.eclipse.gef.ui.actions.ActionRegistry;
-import org.eclipse.gef.ui.actions.GEFActionConstants;
-import org.eclipse.gef.ui.palette.PaletteViewer;
-import org.eclipse.gef.ui.palette.PaletteViewerProvider;
-import org.eclipse.gef.ui.palette.FlyoutPaletteComposite.FlyoutPreferences;
-import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
-import org.eclipse.gef.ui.parts.SelectionSynchronizer;
-import org.eclipse.gef.ui.parts.TreeViewer;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
-
 /**
  * An editor for print pages. Uses GEF to edit the layout of the pages.
  *
@@ -73,18 +65,24 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAdaptable {
 
     public static final String EDIT_MAP = "edit map"; //$NON-NLS-1$
+
     public static final String ID = "org.locationtech.udig.printing.ui.internal.editor.pageEditor"; //$NON-NLS-1$
 
     private boolean savePreviouslyNeeded;
+
     private Page page;
+
     private PaletteRoot paletteRoot;
+
     private PageEditorOutlinePage outlinePage;
+
     private ZoomManager zoomManager;
 
     public PageEditor() {
         setEditDomain(new DefaultEditDomain(this));
     }
 
+    @Override
     protected void configureGraphicalViewer() {
         super.configureGraphicalViewer();
 
@@ -103,7 +101,8 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
 
     }
 
-    public void commandStackChanged( EventObject event ) {
+    @Override
+    public void commandStackChanged(EventObject event) {
         if (isDirty()) {
             if (!this.savePreviouslyNeeded) {
                 this.savePreviouslyNeeded = true;
@@ -116,7 +115,8 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
         super.commandStackChanged(event);
     }
 
-    protected void setInput( IEditorInput input ) {
+    @Override
+    protected void setInput(IEditorInput input) {
         super.setInput(input);
 
         page = (Page) ((PageEditorInput) input).getProjectElement();
@@ -124,12 +124,13 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
         setPartName(page.getName());
     }
 
+    @Override
     protected void initializeGraphicalViewer() {
         getGraphicalViewer().setContents(this.page);
     }
 
     @Override
-    protected void createGraphicalViewer( Composite parent ) {
+    protected void createGraphicalViewer(Composite parent) {
         GraphicalViewer viewer = new PrintingScrollingGraphicalViewer(this);
         viewer.createControl(parent);
         setGraphicalViewer(viewer);
@@ -139,7 +140,8 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
 
     }
 
-    public void doSave( IProgressMonitor monitor ) {
+    @Override
+    public void doSave(IProgressMonitor monitor) {
         // TODO fix this at some point, currently doesn't work
         // Platform.run(new SafeRunnable(){
         //
@@ -151,19 +153,23 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
         // setDirty(false);
     }
 
+    @Override
     public void doSaveAs() {
     }
 
     /* TODO Permit saving at some point */
+    @Override
     public boolean isDirty() {
         return false;
     }
 
     /* TODO Permit saving at some point */
+    @Override
     public boolean isSaveAsAllowed() {
         return true;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     protected void createActions() {
         super.createActions();
@@ -171,13 +177,14 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
 
         Collection<BoxAction> actions = PrintingPlugin.getBoxExtensionActions(this);
 
-        for( IAction action : actions ) {
+        for (IAction action : actions) {
             registry.registerAction(action);
             getSelectionActions().add(action.getId());
         }
 
     }
 
+    @Override
     protected PaletteRoot getPaletteRoot() {
 
         if (paletteRoot == null) {
@@ -187,13 +194,16 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
         return paletteRoot;
     }
 
+    @Override
     protected FlyoutPreferences getPalettePreferences() {
         return PageEditorPaletteFactory.createPalettePreferences();
     }
 
+    @Override
     protected PaletteViewerProvider createPaletteViewerProvider() {
-        return new PaletteViewerProvider(getEditDomain()){
-            protected void configurePaletteViewer( PaletteViewer viewer ) {
+        return new PaletteViewerProvider(getEditDomain()) {
+            @Override
+            protected void configurePaletteViewer(PaletteViewer viewer) {
                 super.configurePaletteViewer(viewer);
                 // create a drag source listener for this palette viewer
                 // together with an appropriate transfer drop target listener, this will enable
@@ -205,7 +215,8 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
         };
     }
 
-    public void createPartControl( Composite parent ) {
+    @Override
+    public void createPartControl(Composite parent) {
         super.createPartControl(parent);
 
         // enable printing
@@ -213,8 +224,9 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
         actionBars.setGlobalActionHandler(ActionFactory.PRINT.getId(), new PrintAction());
     }
 
+    @Override
     @SuppressWarnings("unchecked")
-    public Object getAdapter( Class type ) {
+    public Object getAdapter(Class type) {
         if (type == IContentOutlinePage.class) {
             if (outlinePage == null) {
                 outlinePage = new PageEditorOutlinePage(this, new TreeViewer());
@@ -223,15 +235,15 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
         }
         if (type.isAssignableFrom(Map.class)) {
             Map found = null;
-            for( Box box : page.getBoxes() ) {
+            for (Box box : page.getBoxes()) {
                 if (box instanceof IAdaptable) {
                     Object obj2 = ((IAdaptable) box).getAdapter(Map.class);
                     if (obj2 instanceof Map) {
-                        /*
-                         * If multiple maps are found, return null. This will prevent entities
-                         * that operate only on one map from losing their context.
-                         * (Imagine the layers view with two map objects selected. It would
-                         * only display the layers from one of the objects - confusing to user)
+                        /**
+                         * If multiple maps are found, return null. This will prevent entities that
+                         * operate only on one map from losing their context. (Imagine the layers
+                         * view with two map objects selected. It would only display the layers from
+                         * one of the objects - confusing to user)
                          */
                         if (found != null) {
                             found = null;
@@ -254,6 +266,7 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
 
         return super.getAdapter(type);
     }
+
     void disposeOutlinePage() {
         this.outlinePage = null;
     }
@@ -268,7 +281,7 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
         if (PlatformUI.getWorkbench().isClosing()) {
             ProjectPlugin.getPlugin().turnOffEvents();
 
-            // save the map's URI in the preferences so that it will be loaded the next time udig is
+            // save the map's URI in the preferences so that it will be loaded the next time uDig is
             // run.
 
             Resource resource = this.page.eResource();
@@ -288,10 +301,11 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
         }
 
         try {
-            getSite().getWorkbenchWindow().run(false, false, new IRunnableWithProgress(){
+            getSite().getWorkbenchWindow().run(false, false, new IRunnableWithProgress() {
 
-                public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                        InterruptedException {
+                @Override
+                public void run(IProgressMonitor monitor)
+                        throws InvocationTargetException, InterruptedException {
                     Project p = page.getProjectInternal();
                     try {
                         if (p != null) {
@@ -315,8 +329,8 @@ public class PageEditor extends GraphicalEditorWithFlyoutPalette implements IAda
                     final Resource resource = page.eResource();
 
                     resource.save(ProjectPlugin.getPlugin().saveOptions);
-                    if (!resource.getContents().contains(
-                            ProjectPlugin.getPlugin().getProjectRegistry()))
+                    if (!resource.getContents()
+                            .contains(ProjectPlugin.getPlugin().getProjectRegistry()))
                         ;
                     resource.unload();
                 }

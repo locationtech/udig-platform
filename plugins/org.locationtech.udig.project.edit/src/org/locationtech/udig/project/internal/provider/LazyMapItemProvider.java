@@ -1,54 +1,16 @@
 /**
- * <copyright>
- * </copyright>
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2022, Refractions Research Inc.
  *
- * $Id$
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.project.internal.provider;
 
-import java.io.File;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
-import org.locationtech.udig.project.edit.internal.Messages;
-import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.LayerDecorator;
-import org.locationtech.udig.project.internal.Map;
-import org.locationtech.udig.project.internal.ProjectFactory;
-import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.impl.SynchronizedEList;
-import org.locationtech.udig.project.internal.render.ViewportModel;
-import org.locationtech.udig.project.internal.render.provider.ViewportModelItemProvider;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.edit.command.CommandParameter;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.graphics.Image;
-import org.osgi.framework.Bundle;
 
 /**
  * This is the original lazy map item provided gerneated from EMF with the super class replaced.

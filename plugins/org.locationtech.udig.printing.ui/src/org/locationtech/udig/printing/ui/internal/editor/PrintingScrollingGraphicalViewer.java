@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -9,23 +10,22 @@
  */
 package org.locationtech.udig.printing.ui.internal.editor;
 
-import org.eclipse.gef.editparts.LayerManager;
 import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
 
 /**
  * Adds a reference to the PageEditor so that EditParts can get access to the PageEditor and add
  * actions to its ActionRegistry.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
-public class PrintingScrollingGraphicalViewer extends ScrollingGraphicalViewer{
+public class PrintingScrollingGraphicalViewer extends ScrollingGraphicalViewer {
 
     private PageEditor editor;
 
-    PrintingScrollingGraphicalViewer( PageEditor editor ){
+    PrintingScrollingGraphicalViewer(PageEditor editor) {
         super();
-        this.editor=editor;
+        this.editor = editor;
     }
 
     /**
@@ -34,5 +34,5 @@ public class PrintingScrollingGraphicalViewer extends ScrollingGraphicalViewer{
     public PageEditor getEditor() {
         return editor;
     }
-    
+
 }

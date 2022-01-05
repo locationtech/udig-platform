@@ -1,6 +1,7 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * http://udig.refractions.net
+ * (C) 2022 HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,13 +10,7 @@
  */
 package org.locationtech.udig.printing.ui.internal;
 
-import org.locationtech.udig.printing.model.Page;
-import org.locationtech.udig.printing.ui.internal.editor.PageEditor;
-import org.locationtech.udig.printing.ui.internal.editor.PageEditorInput;
-import org.locationtech.udig.project.ui.UDIGEditorInput;
-
 import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -23,10 +18,13 @@ import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.ui.internal.editor.PageEditorInput;
+import org.locationtech.udig.project.ui.UDIGEditorInput;
 
 /**
  * Action to zoom in the print page.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  *
  */
@@ -36,13 +34,16 @@ public class ZoomInAction extends Action implements IEditorActionDelegate {
         super();
     }
 
-    public void setActiveEditor( IAction action, IEditorPart targetEditor ) {
+    @Override
+    public void setActiveEditor(IAction action, IEditorPart targetEditor) {
     }
 
-    public void run( IAction action ) {
+    @Override
+    public void run(IAction action) {
         run();
     }
 
+    @Override
     public void run() {
 
         Page page = null;
@@ -73,7 +74,8 @@ public class ZoomInAction extends Action implements IEditorActionDelegate {
         // zoomManager.setZoom(next);
     }
 
-    public void selectionChanged( IAction action, ISelection selection ) {
+    @Override
+    public void selectionChanged(IAction action, ISelection selection) {
     }
 
 }

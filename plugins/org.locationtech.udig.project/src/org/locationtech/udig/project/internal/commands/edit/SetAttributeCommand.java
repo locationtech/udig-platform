@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -11,6 +12,11 @@ package org.locationtech.udig.project.internal.commands.edit;
 
 import java.text.MessageFormat;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.data.FeatureStore;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.udig.core.IBlockingProvider;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.project.ILayer;
@@ -20,24 +26,16 @@ import org.locationtech.udig.project.command.provider.EditFeatureProvider;
 import org.locationtech.udig.project.command.provider.EditLayerProvider;
 import org.locationtech.udig.project.command.provider.FIDFeatureProvider;
 import org.locationtech.udig.project.internal.Messages;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.data.FeatureStore;
-import org.geotools.data.simple.SimpleFeatureStore;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.util.factory.GeoTools;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
 
-import org.locationtech.jts.geom.Geometry;
-
 /**
  * This command modifies an attribute of the current editFeature(the victim that is currently
- * edittable).
- * 
+ * editable).
+ *
  * @author jeichar
  * @since 0.3
  */
@@ -54,13 +52,13 @@ public class SetAttributeCommand extends AbstractEditCommand implements Undoable
 
     /**
      * Creates a new instance of SetAttributeCommand.
-     * 
+     *
      * @param feature the feature to modify
      * @param xpath the xpath that identifies an attribute in the current edit feature.
      * @param value the value that will replace the old attribute value.
      */
-    public SetAttributeCommand( IBlockingProvider<SimpleFeature> feature, IBlockingProvider<ILayer> layer, String xpath,
-            Object value ) {
+    public SetAttributeCommand(IBlockingProvider<SimpleFeature> feature,
+            IBlockingProvider<ILayer> layer, String xpath, Object value) {
         this.xpath = xpath;
         this.value = value;
         editFeature = feature;
@@ -73,40 +71,42 @@ public class SetAttributeCommand extends AbstractEditCommand implements Undoable
      * @param xpath2
      * @param geom
      */
-    public SetAttributeCommand( String featureID, IBlockingProvider<ILayer> layer, String xpath2,
-            Geometry geom ) {
-        this( new FIDFeatureProvider(featureID, layer), layer, xpath2, geom );
+    public SetAttributeCommand(String featureID, IBlockingProvider<ILayer> layer, String xpath2,
+            Geometry geom) {
+        this(new FIDFeatureProvider(featureID, layer), layer, xpath2, geom);
     }
+
     /**
      * Creates a new instance of SetAttributeCommand.
-     * 
+     *
      * @param feature the feature to modify
      * @param xpath the xpath that identifies an attribute in the current edit feature.
      * @param value the value that will replace the old attribute value.
      */
-    public SetAttributeCommand( String xpath, Object value ) {
-        editFeature=new EditFeatureProvider(this);
-        editLayer=new EditLayerProvider(this);
-        this.xpath=xpath;
-        this.value=value; 
+    public SetAttributeCommand(String xpath, Object value) {
+        editFeature = new EditFeatureProvider(this);
+        editLayer = new EditLayerProvider(this);
+        this.xpath = xpath;
+        this.value = value;
     }
 
     /**
      * @see org.locationtech.udig.project.command.MapCommand#run()
      */
-    public void run( IProgressMonitor monitor ) throws Exception {
+    @Override
+    public void run(IProgressMonitor monitor) throws Exception {
         ILayer layer = editLayer.get(monitor);
-        if( layer==null ){
-            System.err.println("class "+editLayer.getClass().getName()+" is returning null");  //$NON-NLS-1$//$NON-NLS-2$
+        if (layer == null) {
+            System.err.println("class " + editLayer.getClass().getName() + " is returning null"); //$NON-NLS-1$//$NON-NLS-2$
             return;
         }
-        FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer.getResource(FeatureStore.class, null);
-        //SimpleFeatureStore resource = layer.getResource(SimpleFeatureStore.class, null );
+        FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer
+                .getResource(FeatureStore.class, null);
         SimpleFeature feature2 = editFeature.get(monitor);
 
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-		Id fidFilter = filterFactory.id(
-                FeatureUtils.stringToId(filterFactory,feature2.getID()));
+        FilterFactory filterFactory = CommonFactoryFinder
+                .getFilterFactory(GeoTools.getDefaultHints());
+        Id fidFilter = filterFactory.id(FeatureUtils.stringToId(filterFactory, feature2.getID()));
 
         this.oldValue = feature2.getAttribute(xpath);
         feature2.setAttribute(xpath, value);
@@ -115,31 +115,28 @@ public class SetAttributeCommand extends AbstractEditCommand implements Undoable
         resource.modifyFeatures(attributeType.getName(), value, fidFilter);
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.command.UndoableCommand#rollback()
-     */
-    public void rollback( IProgressMonitor monitor ) throws Exception {
+    @Override
+    public void rollback(IProgressMonitor monitor) throws Exception {
         SimpleFeature feature = editFeature.get(monitor);
         feature.setAttribute(xpath, oldValue);
         ILayer layer = editLayer.get(monitor);
-        FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer.getResource(FeatureStore.class, null);
+        FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer
+                .getResource(FeatureStore.class, null);
         AttributeDescriptor attributeType = layer.getSchema().getDescriptor(xpath);
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
-		Id id = filterFactory.id(
-                FeatureUtils.stringToId(filterFactory, feature.getID()));
+        FilterFactory filterFactory = CommonFactoryFinder
+                .getFilterFactory(GeoTools.getDefaultHints());
+        Id id = filterFactory.id(FeatureUtils.stringToId(filterFactory, feature.getID()));
         resource.modifyFeatures(attributeType.getName(), oldValue, id);
     }
 
-    /**
-     * @see org.locationtech.udig.project.command.MapCommand#getName()
-     */
+    @Override
     public String getName() {
-        return MessageFormat.format(
-                Messages.SetAttributeCommand_setFeatureAttribute, new Object[]{xpath}); 
+        return MessageFormat.format(Messages.SetAttributeCommand_setFeatureAttribute,
+                new Object[] { xpath });
     }
 
     @Override
-    public void setMap( IMap map ) {
+    public void setMap(IMap map) {
         super.setMap(map);
     }
 }

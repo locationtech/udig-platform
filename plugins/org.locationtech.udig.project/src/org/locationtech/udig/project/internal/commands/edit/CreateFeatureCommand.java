@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -13,6 +14,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
+import org.geotools.data.FeatureStore;
+import org.geotools.data.Transaction;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.referencing.CRS;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.udig.core.internal.ExtensionPointList;
 import org.locationtech.udig.core.internal.FeatureUtils;
 import org.locationtech.udig.core.internal.GeometryBuilder;
@@ -21,22 +34,9 @@ import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.command.UndoableMapCommand;
 import org.locationtech.udig.project.interceptor.FeatureInterceptor;
-import org.locationtech.udig.project.interceptor.MapInterceptor;
 import org.locationtech.udig.project.internal.Layer;
-import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.Messages;
 import org.locationtech.udig.project.internal.ProjectPlugin;
-
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Display;
-import org.geotools.data.FeatureStore;
-import org.geotools.data.Transaction;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.util.factory.GeoTools;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.geotools.referencing.CRS;
 import org.opengis.feature.Feature;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -45,12 +45,9 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.util.CodeList;
 
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Geometry;
-
 /**
  * Creates a new feature in the current edit layer.
- * 
+ *
  * @author jones
  * @since 0.3
  * @version 1.2
@@ -63,10 +60,10 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
 
     /**
      * Construct <code>CreateFeatureCommand</code>.
-     * 
+     *
      * @param coordinates Coordinates in Map coordinates.
      */
-    public CreateFeatureCommand( Coordinate[] coordinates ) {
+    public CreateFeatureCommand(Coordinate[] coordinates) {
         int i = 0;
         if (coordinates != null) {
             i = coordinates.length;
@@ -78,11 +75,9 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
         this.coordinates = c;
     }
 
-    /**
-     * @see org.locationtech.udig.project.command.MapCommand#run()
-     */
+    @Override
     @SuppressWarnings("unchecked")
-    public void run( IProgressMonitor monitor ) throws Exception {
+    public void run(IProgressMonitor monitor) throws Exception {
         ILayer editLayer = getMap().getEditManager().getEditLayer();
         if (editLayer == null) {
             editLayer = findEditLayer();
@@ -94,24 +89,16 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
             return;
         }
 
-        FeatureStore<SimpleFeatureType, SimpleFeature> store = editLayer.getResource(
-                FeatureStore.class, null);
+        FeatureStore<SimpleFeatureType, SimpleFeature> store = editLayer
+                .getResource(FeatureStore.class, null);
         transform();
         if (store.getTransaction() == Transaction.AUTO_COMMIT) {
             throw new Exception("Error transaction has not been started"); //$NON-NLS-1$
         }
         final SimpleFeatureType type = store.getSchema();
 
-        // Object[] attrs = new Object[type.getAttributeCount()];
-        // for( int i = 0; i < attrs.length; i++ ) {
-        // attrs[i] = toDefaultValue(type.getDescriptor(i));
-        // }
-        //        
-        // final SimpleFeature newFeature = SimpleFeatureBuilder.build(type, attrs, "newFeature"
-        // + new Random().nextInt());
-
-        String proposedFid = "newFeature"+"newFeature" + new Random().nextInt();
-        final SimpleFeature newFeature = SimpleFeatureBuilder.template(type, proposedFid );
+        String proposedFid = "newFeature" + "newFeature" + new Random().nextInt(); //$NON-NLS-1$ //$NON-NLS-2$
+        final SimpleFeature newFeature = SimpleFeatureBuilder.template(type, proposedFid);
 
         Class geomType = type.getGeometryDescriptor().getType().getBinding();
         Geometry geom = GeometryBuilder.create().safeCreateGeometry(geomType, coordinates);
@@ -119,21 +106,23 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
         fid = newFeature.getID();
 
         SimpleFeature feature = new AdaptableFeature(newFeature, editLayer);
-        
+
         runFeatureCreationInterceptors(feature);
 
         map.getEditManagerInternal().addFeature(newFeature, (Layer) editLayer);
     }
+
     /**
      * Retrieves a default value for the provided descriptor.
      * <p>
      * The descriptor getDefaultValue() is used if available; if not a default value is created base
      * on the descriptor binding. The default values mirror those used by Java; empty string,
-     * boolean false, 0 integer, 0.0 double, etc... >p>
-     * 
+     * boolean false, 0 integer, 0.0 double, etc...
+     * </p>
+     *
      * @param type attribute descriptor
      */
-    private Object toDefaultValue( AttributeDescriptor type ) {
+    private Object toDefaultValue(AttributeDescriptor type) {
         if (type.getDefaultValue() != null) {
             return type.getDefaultValue();
         }
@@ -167,9 +156,10 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
         if (map.getEditManagerInternal().getEditLayerInternal() != null) {
             return map.getEditManagerInternal().getEditLayerInternal();
         }
-        for( Iterator<Layer> iter = map.getLayersInternal().iterator(); iter.hasNext(); ) {
+        for (Iterator<Layer> iter = map.getLayersInternal().iterator(); iter.hasNext();) {
             layer = iter.next();
-            if (layer.hasResource(FeatureStore.class) && layer.isSelectable() && layer.isVisible()) {
+            if (layer.hasResource(FeatureStore.class) && layer.isSelectable()
+                    && layer.isVisible()) {
                 break;
             }
         }
@@ -178,64 +168,62 @@ public class CreateFeatureCommand extends AbstractEditCommand implements Undoabl
 
     /**
      * Transforms coordinates into the layer CRS if required
-     * 
+     *
      * @throws Exception
      */
     private void transform() throws Exception {
         ILayer editLayer = getMap().getEditManager().getEditLayer();
-        if (map.getViewportModel().getCRS().equals(editLayer.getCRS(null))) {
+        if (map.getViewportModel().getCRS().equals(editLayer.getCRS())) {
             return;
         }
-        MathTransform mt = CRS.findMathTransform(map.getViewportModel().getCRS(), editLayer
-                .getCRS(), true);
+        MathTransform mt = CRS.findMathTransform(map.getViewportModel().getCRS(),
+                editLayer.getCRS(), true);
         if (mt == null || mt.isIdentity()) {
             return;
         }
         double[] coords = new double[coordinates.length * 2];
-        for( int i = 0; i < coordinates.length; i++ ) {
+        for (int i = 0; i < coordinates.length; i++) {
             coords[i * 2] = coordinates[i].x;
             coords[i * 2 + 1] = coordinates[i].y;
         }
         mt.transform(coords, 0, coords, 0, coordinates.length);
-        for( int i = 0; i < coordinates.length; i++ ) {
+        for (int i = 0; i < coordinates.length; i++) {
             coordinates[i].x = coords[i * 2];
             coordinates[i].y = coords[i * 2 + 1];
         }
     }
 
+    @Override
     public MapCommand copy() {
         return new CreateFeatureCommand(coordinates);
     }
 
-    /**
-     * @see org.locationtech.udig.project.command.MapCommand#getName()
-     */
+    @Override
     public String getName() {
         return Messages.CreateFeatureCommand_createFeature;
     }
 
-    /**
-     * @see org.locationtech.udig.project.command.UndoableCommand#rollback()
-     */
-    public void rollback( IProgressMonitor monitor ) throws Exception {
+    @Override
+    public void rollback(IProgressMonitor monitor) throws Exception {
         ILayer editLayer = getMap().getEditManager().getEditLayer();
-        FilterFactory filterFactory = CommonFactoryFinder.getFilterFactory(GeoTools
-                .getDefaultHints());
-        editLayer.getResource(FeatureStore.class, null).removeFeatures(
-                filterFactory.id(FeatureUtils.stringToId(filterFactory, fid)));
+        FilterFactory filterFactory = CommonFactoryFinder
+                .getFilterFactory(GeoTools.getDefaultHints());
+        editLayer.getResource(FeatureStore.class, null)
+                .removeFeatures(filterFactory.id(FeatureUtils.stringToId(filterFactory, fid)));
     }
-    public static void runFeatureCreationInterceptors( Feature feature ) {
+
+    public static void runFeatureCreationInterceptors(Feature feature) {
         List<IConfigurationElement> interceptors = ExtensionPointList
                 .getExtensionPointList(FeatureInterceptor.EXTENSION_ID);
-        for( IConfigurationElement element : interceptors ) {
-            String id = element.getAttribute("id");
+        for (IConfigurationElement element : interceptors) {
+            String id = element.getAttribute("id"); //$NON-NLS-1$
             if (FeatureInterceptor.CREATED_ID.equals(element.getName())) {
                 try {
                     FeatureInterceptor interceptor = (FeatureInterceptor) element
-                            .createExecutableExtension("class");
+                            .createExecutableExtension("class"); //$NON-NLS-1$
                     interceptor.run(feature);
                 } catch (Exception e) {
-                    ProjectPlugin.log("FeatureInterceptor " + id + ":" + e, e);
+                    ProjectPlugin.log("FeatureInterceptor " + id + ":" + e, e); //$NON-NLS-2$
                 }
             }
         }

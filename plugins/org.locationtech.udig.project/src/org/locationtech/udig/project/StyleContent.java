@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,15 +19,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.io.StringWriter;
 import java.net.URL;
-import java.nio.charset.Charset;
-
-import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.project.internal.ProjectPlugin;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMemento;
+import org.locationtech.udig.catalog.IGeoResource;
+import org.locationtech.udig.project.internal.ProjectPlugin;
 
 /**
  * Provides a way to persist an arbitrary object placed on the style blackboard.
@@ -37,40 +34,30 @@ import org.eclipse.ui.IMemento;
  */
 public abstract class StyleContent {
     /**
-     * StyleContent to be used as a default; willing to save Strings and Serializable content.
+     * StyleContent to be used as a default; willing to save strings and serializable content.
      * Without class information we cannot do any better :-(
      */
-    public static StyleContent DEFAULT = new StyleContent("StyleContent.DEFAULT"){
-        public String toString() {
-            return "StyleContent.DEFAULT";
-        }
+    public static StyleContent DEFAULT = new StyleContent("StyleContent.DEFAULT") { //$NON-NLS-1$
         @Override
-        public void save( IMemento memento, Object value ) {
+        public String toString() {
+            return "StyleContent.DEFAULT"; //$NON-NLS-1$
+        }
+
+        @Override
+        public void save(IMemento memento, Object value) {
             if (value instanceof String) {
                 String text = (String) value;
                 memento.putTextData(text);
             } else if (value instanceof Serializable) {
-//                memento.putString("class", value.getClass().getName());
-//                try {
-//                    ByteArrayOutputStream bout = new ByteArrayOutputStream();
-//                    ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(bout));
-//                    out.writeObject(value);
-//
-//                    memento.putString("object", new String(bout.toByteArray()));
-//                    out.close();
-//                } catch (Throwable t) {
-//                    ProjectPlugin.trace(StyleContent.class, "Unable to persist:" + value, t);
-//                }
-//            }
-//            else {
                 try {
                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    ObjectOutputStream store = new ObjectOutputStream(new BufferedOutputStream(bytes));
+                    ObjectOutputStream store = new ObjectOutputStream(
+                            new BufferedOutputStream(bytes));
                     store.writeObject(value);
                     store.close();
 
-                    memento.putString("object", new String( bytes.toByteArray()));
-                    memento.putString("class", value.getClass().getName());
+                    memento.putString("object", new String(bytes.toByteArray())); //$NON-NLS-1$
+                    memento.putString("class", value.getClass().getName()); //$NON-NLS-1$
                 } catch (Throwable t) {
                     ProjectPlugin.trace(StyleContent.class, "Unable to persist:" + value, t);
                 }
@@ -78,46 +65,49 @@ public abstract class StyleContent {
         }
 
         @Override
-        public Object load( URL url, IProgressMonitor monitor ) throws IOException {
+        public Object load(URL url, IProgressMonitor monitor) throws IOException {
             return null; // no default can be generated for default !
         }
+
         @Override
-        public Object load( IMemento memento ) {
+        public Object load(IMemento memento) {
             String text = memento.getTextData();
             if (text != null) {
                 return text;
-            }
-            else {
-                String type = memento.getString("class");
+            } else {
+                String type = memento.getString("class"); //$NON-NLS-1$
                 if (type == null) {
                     return null; // we did not manage to store anything here :-(
                 }
                 try {
-                    text = memento.getString("object");
+                    text = memento.getString("object"); //$NON-NLS-1$
 
                     ByteArrayInputStream bytes = new ByteArrayInputStream(text.getBytes());
-                    ObjectInputStream restore = new ObjectInputStream(new BufferedInputStream(bytes));
+                    ObjectInputStream restore = new ObjectInputStream(
+                            new BufferedInputStream(bytes));
                     Object value = restore.readObject();
                     restore.close();
                     return value;
                 } catch (Throwable t) {
-                    ProjectPlugin.trace(StyleContent.class, "Unable to restore " + type+":"+t.getLocalizedMessage(), t);
+                    ProjectPlugin.trace(StyleContent.class,
+                            "Unable to restore " + type + ":" + t.getLocalizedMessage(), t); //$NON-NLS-2$
                 }
             }
             return null;
         }
 
         @Override
-        public Class< ? > getStyleClass() {
-            return null; // not avaialble
+        public Class<?> getStyleClass() {
+            return null; // not available
         }
 
         @Override
-        public Object createDefaultStyle( IGeoResource resource, Color colour,
-                IProgressMonitor monitor ) throws IOException {
+        public Object createDefaultStyle(IGeoResource resource, Color colour,
+                IProgressMonitor monitor) throws IOException {
             return null;
         }
     };
+
     /** <code>XPID</code> field */
     public static final String XPID = "org.locationtech.udig.project.style"; //$NON-NLS-1$
 
@@ -144,7 +134,7 @@ public abstract class StyleContent {
      *
      * @param id
      */
-    public StyleContent( String id ) {
+    public StyleContent(String id) {
         if (id == null) {
             throw new NullPointerException(
                     "You MUST supply an ID when creating a Style Content. It is used as the 'key' when storing things on the blackboard");
@@ -157,31 +147,31 @@ public abstract class StyleContent {
      *
      * @return the class of the style object.
      */
-    public abstract Class< ? > getStyleClass();
+    public abstract Class<?> getStyleClass();
 
     /**
      * Saves the state of a style object.
      * <p>
      * (Currently used with XMLMemento to persist StyleEntry, it is hoped that an EMFMemento can be
-     * writen).
+     * written).
      * </p>
      *
-     * @param style the style object to persisit.
-     * @param memento Momento used to store the style object state.
+     * @param style the style object to persist.
+     * @param memento Memento used to store the style object state.
      */
-    public abstract void save( IMemento memento, Object value );
+    public abstract void save(IMemento memento, Object value);
 
     /**
      * Loads a style object from a memento.
      * <p>
      * (Currently used with XMLMemento to persist StyleEntry, it is hoped that an EMFMemento can be
-     * writen).
+     * written).
      * </p>
      *
      * @param memento object which contains previously saved object state.
      * @return Loaded object and state.
      */
-    public abstract Object load( IMemento memento );
+    public abstract Object load(IMemento memento);
 
     /**
      * Loads a style object from a URL. This method is blocking.
@@ -191,7 +181,7 @@ public abstract class StyleContent {
      * @return a load style object, or null if it could not be loaded
      * @throws IOException if there is an error loading the URL
      */
-    public abstract Object load( URL url, IProgressMonitor monitor ) throws IOException;
+    public abstract Object load(URL url, IProgressMonitor monitor) throws IOException;
 
     /**
      * Creates a default Style give a resource and color.
@@ -202,23 +192,23 @@ public abstract class StyleContent {
      * @return a "default" style or null if the style does not apply to the resource
      * @throws IOException if a problem occurs accessing the GeoResource.
      */
-    public abstract Object createDefaultStyle( IGeoResource resource, Color colour,
-            IProgressMonitor monitor ) throws IOException;
+    public abstract Object createDefaultStyle(IGeoResource resource, Color colour,
+            IProgressMonitor monitor) throws IOException;
 
     @Override
     public String toString() {
         StringBuilder buf = new StringBuilder();
         buf.append(getClass().getName());
-        buf.append("( ");
+        buf.append("( "); //$NON-NLS-1$
         if (id != null) {
             buf.append(id);
-            buf.append(" ");
+            buf.append(" "); //$NON-NLS-1$
         }
         if (getStyleClass() != null) {
             buf.append(getStyleClass().getName());
-            buf.append(" ");
+            buf.append(" "); //$NON-NLS-1$
         }
-        buf.append(")");
+        buf.append(")"); //$NON-NLS-1$
         return buf.toString();
     }
 }

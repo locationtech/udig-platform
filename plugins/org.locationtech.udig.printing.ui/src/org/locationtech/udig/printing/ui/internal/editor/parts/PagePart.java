@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,12 +13,6 @@ package org.locationtech.udig.printing.ui.internal.editor.parts;
 
 import java.util.List;
 
-import org.locationtech.udig.printing.model.Box;
-import org.locationtech.udig.printing.model.Page;
-import org.locationtech.udig.printing.model.PropertyListener;
-import org.locationtech.udig.printing.ui.internal.editor.figures.PageFigure;
-import org.locationtech.udig.printing.ui.internal.editor.policies.CustomXYLayoutEditPolicy;
-
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.FreeformLayout;
 import org.eclipse.draw2d.IFigure;
@@ -28,10 +22,14 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.model.PropertyListener;
+import org.locationtech.udig.printing.ui.internal.editor.figures.PageFigure;
+import org.locationtech.udig.printing.ui.internal.editor.policies.CustomXYLayoutEditPolicy;
 
 /**
  * Controller (Part) for Printing Pages.
- * 
+ *
  * @author Richard Gould
  * @since 0.3
  */
@@ -39,20 +37,24 @@ public class PagePart extends AbstractGraphicalEditPart {
 
     private InternalPropertyListener listener = new InternalPropertyListener();
 
-    protected List< ? > getModelChildren() {
+    @Override
+    protected List<?> getModelChildren() {
         return getModel().getBoxes();
     }
 
+    @Override
     protected IFigure createFigure() {
         Figure figure = new PageFigure(getModel().getSize());
         figure.setLayoutManager((new FreeformLayout()));
         return figure;
     }
 
+    @Override
     protected void createEditPolicies() {
         installEditPolicy(EditPolicy.LAYOUT_ROLE, new CustomXYLayoutEditPolicy());
     }
 
+    @Override
     public void activate() {
         if (isActive()) {
             return;
@@ -62,6 +64,7 @@ public class PagePart extends AbstractGraphicalEditPart {
         getModel().eAdapters().add(this.listener);
     }
 
+    @Override
     public void deactivate() {
         if (!isActive()) {
             return;
@@ -75,6 +78,7 @@ public class PagePart extends AbstractGraphicalEditPart {
         return (Page) super.getModel();
     }
 
+    @Override
     protected void refreshVisuals() {
         Page page = getModel();
 
@@ -96,16 +100,19 @@ public class PagePart extends AbstractGraphicalEditPart {
 
     }
 
+    @Override
     public GraphicalEditPart getParent() {
         return ((GraphicalEditPart) super.getParent());
     }
 
     protected class InternalPropertyListener extends PropertyListener {
 
+        @Override
         protected void boxesChanged() {
             refreshChildren();
         }
 
+        @Override
         protected void sizeChanged() {
             refreshVisuals();
         }

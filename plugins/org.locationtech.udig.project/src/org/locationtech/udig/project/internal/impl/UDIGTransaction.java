@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -10,24 +11,22 @@
 package org.locationtech.udig.project.internal.impl;
 
 import java.io.IOException;
-import java.util.Set;
-
-import org.locationtech.udig.project.internal.Messages;
 
 import org.geotools.data.DefaultTransaction;
 import org.geotools.data.Transaction;
+import org.locationtech.udig.project.internal.Messages;
 
 /**
  * This class helps protect the system from others trying to commit or close the transaction
  * programmatically rather than working through the EditManager API.
- * 
+ *
  * @author jones
  * @since 1.0.0
  */
 public class UDIGTransaction extends DefaultTransaction implements Transaction {
     @Override
     public void commit() throws IOException {
-        throw new IllegalStateException(Messages.UDIGTransaction_commitException); 
+        throw new IllegalStateException(Messages.UDIGTransaction_commitException);
     }
 
     @Override
@@ -37,7 +36,7 @@ public class UDIGTransaction extends DefaultTransaction implements Transaction {
 
     @Override
     public synchronized void close() {
-        throw new IllegalStateException(Messages.UDIGTransaction_closeException); 
+        throw new IllegalStateException(Messages.UDIGTransaction_closeException);
     }
 
     public void commitInternal() throws IOException {
