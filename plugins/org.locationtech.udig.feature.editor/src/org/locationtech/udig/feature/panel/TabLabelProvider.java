@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,51 +13,49 @@ package org.locationtech.udig.feature.panel;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.opengis.feature.Feature;
 import org.opengis.feature.simple.SimpleFeature;
-
 
 public class TabLabelProvider extends LabelProvider {
     ILabelProvider delegate;
-    
-    public TabLabelProvider(){
+
+    public TabLabelProvider() {
         this(null);
     }
-    public TabLabelProvider( ILabelProvider delegate ){
+
+    public TabLabelProvider(ILabelProvider delegate) {
         this.delegate = delegate;
     }
-    
+
     @Override
-    public String getText( Object element ) {
-        if( element instanceof StructuredSelection ){
+    public String getText(Object element) {
+        if (element instanceof StructuredSelection) {
             StructuredSelection sel = (StructuredSelection) element;
-            if (sel.isEmpty()){
+            if (sel.isEmpty()) {
                 return "Please select a feature";
             }
             element = sel.getFirstElement();
         }
-        if( element == null ){
+        if (element == null) {
             return null;
         }
-        if( element instanceof SimpleFeature ){
+        if (element instanceof SimpleFeature) {
             SimpleFeature feature = (SimpleFeature) element;
-            if( delegate != null ){
-                String text = delegate.getText( feature );
-                if( text != null ){
+            if (delegate != null) {
+                String text = delegate.getText(feature);
+                if (text != null) {
                     return text;
                 }
             }
             return feature.getID();
         }
-        if( element instanceof FeaturePanelTabDescriptor ){
+        if (element instanceof FeaturePanelTabDescriptor) {
             FeaturePanelTabDescriptor tabDescriptor = (FeaturePanelTabDescriptor) element;
             String title = tabDescriptor.getEntry().getTitle();
-            if( title == null || title.length() == 0 ){
+            if (title == null || title.length() == 0) {
                 title = tabDescriptor.getLabel();
             }
             return title;
-        }
-        else {
+        } else {
             String text = element.toString();
             return text;
         }

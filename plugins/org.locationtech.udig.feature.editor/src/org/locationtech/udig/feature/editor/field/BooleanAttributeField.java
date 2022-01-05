@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,10 +9,6 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.feature.editor.field;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -76,7 +72,7 @@ public class BooleanAttributeField extends AttributeField {
 
     /**
      * Creates a boolean attribute field in the given style.
-     * 
+     *
      * @param name the name of the preference this attribute field works on
      * @param labelText the label text of the attribute field
      * @param style the style, either <code>DEFAULT</code> or <code>SEPARATE_LABEL</code>
@@ -84,7 +80,7 @@ public class BooleanAttributeField extends AttributeField {
      * @see #DEFAULT
      * @see #SEPARATE_LABEL
      */
-    public BooleanAttributeField( String name, String labelText, int style, Composite parent ) {
+    public BooleanAttributeField(String name, String labelText, int style, Composite parent) {
         init(name, labelText);
         this.style = style;
         YES = Boolean.TRUE;
@@ -92,8 +88,9 @@ public class BooleanAttributeField extends AttributeField {
 
         createControl(parent);
     }
-    public BooleanAttributeField( String name, String labelText, int style, Composite parent,
-            Object yes, Object no ) {
+
+    public BooleanAttributeField(String name, String labelText, int style, Composite parent,
+            Object yes, Object no) {
         init(name, labelText);
         this.style = style;
         YES = yes;
@@ -103,31 +100,27 @@ public class BooleanAttributeField extends AttributeField {
 
     /**
      * Creates a boolean attribute field in the default style.
-     * 
+     *
      * @param name the name of the preference this attribute field works on
      * @param label the label text of the attribute field
      * @param parent the parent of the attribute field's control
      */
-    public BooleanAttributeField( String name, String label, Composite parent ) {
+    public BooleanAttributeField(String name, String label, Composite parent) {
         this(name, label, DEFAULT, parent);
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
-    public void adjustForNumColumns( int numColumns ) {
+    @Override
+    public void adjustForNumColumns(int numColumns) {
         if (style == SEPARATE_LABEL) {
             numColumns--;
         }
         ((GridData) checkBox.getLayoutData()).horizontalSpan = numColumns;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
-    protected void doFillIntoGrid( Composite parent, int numColumns ) {
+    @Override
+    protected void doFillIntoGrid(Composite parent, int numColumns) {
         String text = getLabelText();
-        switch( style ) {
+        switch (style) {
         case SEPARATE_LABEL:
             getLabelControl(parent);
             numColumns--;
@@ -149,107 +142,106 @@ public class BooleanAttributeField extends AttributeField {
      * be used to set a tooltip for a <code>BooleanAttributeField</code>. Note that the normal
      * pattern of <code>getLabelControl(parent).setToolTipText(tooltipText)</code> does not work for
      * boolean attribute fields, as it can lead to duplicate text (see bug 259952).
-     * 
+     *
      * @param parent the parent composite
      * @return the control responsible for displaying the label
      * @since 3.5
      */
-    public Control getDescriptionControl( Composite parent ) {
+    public Control getDescriptionControl(Composite parent) {
         if (style == SEPARATE_LABEL) {
             return getLabelControl(parent);
         }
         return getChangeControl(parent);
     }
 
-    /*
+    /**
      * (non-Javadoc) Method declared on AttributeField. Loads the value from the feature type schema
      * and sets it to the check box.
      */
+    @Override
     public void doLoad() {
         if (checkBox != null) {
-            Object value = getFeature().getAttribute( getAttributeName() );
+            Object value = getFeature().getAttribute(getAttributeName());
             Boolean check = toBoolean(value);
             checkBox.setSelection(check);
             wasSelected = check;
         }
     }
 
-    private Boolean toBoolean( Object value ) {
-        if( YES.equals( value )){
+    private Boolean toBoolean(Object value) {
+        if (YES.equals(value)) {
             return true;
         }
-        if( NO.equals( value )){
+        if (NO.equals(value)) {
             return false;
         }
         Class<?> target = YES.getClass(); // usually Boolean
-        
-        if( Boolean.class.isAssignableFrom(target)){
-            Boolean check = (Boolean) Converters.convert(value, target );
-            if( check != null ){
+
+        if (Boolean.class.isAssignableFrom(target)) {
+            Boolean check = (Boolean) Converters.convert(value, target);
+            if (check != null) {
                 return check;
             }
-            if( value instanceof Number ){
+            if (value instanceof Number) {
                 Number number = (Number) value;
                 check = number.longValue() != 0;
             }
         }
-        
-        Object test = Converters.convert(value, target );
-        if( test != null && YES.equals( test )){
+
+        Object test = Converters.convert(value, target);
+        if (test != null && YES.equals(test)) {
             return true;
-        }
-        else if ( test != null && NO.equals( test )){
+        } else if (test != null && NO.equals(test)) {
             return false;
         }
-        
-        Object sure = Converters.convert( YES, target );
-        Object huh = Converters.convert( NO, target );
-                
-        if( sure != null && sure.equals( value )){
-           return true;
-        }
-        else if ( huh != null && huh.equals( value )){
+
+        Object sure = Converters.convert(YES, target);
+        Object huh = Converters.convert(NO, target);
+
+        if (sure != null && sure.equals(value)) {
+            return true;
+        } else if (huh != null && huh.equals(value)) {
             return false;
         }
-        
+
         return false; // (sigh)
     }
-    /*
+
+    /**
      * (non-Javadoc) Method declared on AttributeField. Loads the default value from the feature
      * type schema and sets it to the check box.
      */
+    @Override
     protected void doLoadDefault() {
         if (checkBox != null) {
             SimpleFeatureType schema = getFeature().getFeatureType();
             AttributeDescriptor descriptor = schema.getDescriptor(getAttributeName());
             Object value = descriptor.getDefaultValue();
-            
+
             Boolean check = toBoolean(value);
-            
+
             checkBox.setSelection(check);
             wasSelected = check;
         }
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
+    @Override
     protected void doStore() {
         SimpleFeatureType schema = getFeature().getFeatureType();
         AttributeDescriptor descriptor = schema.getDescriptor(getAttributeName());
-        Class< ? > binding = descriptor.getType().getBinding();
-        
+        Class<?> binding = descriptor.getType().getBinding();
+
         boolean check = checkBox.getSelection();
-        
+
         Object checkValue = check ? YES : NO;
         Object value = Converters.convert(checkValue, binding);
-        
+
         getFeature().setAttribute(getAttributeName(), value);
     }
 
     /**
      * Returns this attribute field's current value.
-     * 
+     *
      * @return the value
      */
     public boolean getBooleanValue() {
@@ -258,23 +250,25 @@ public class BooleanAttributeField extends AttributeField {
 
     /**
      * Returns the change button for this attribute field.
-     * 
+     *
      * @param parent The Composite to create the receiver in.
      * @return the change button
      */
-    protected Button getChangeControl( Composite parent ) {
+    protected Button getChangeControl(Composite parent) {
         if (checkBox == null) {
             checkBox = new Button(parent, SWT.CHECK | SWT.LEFT);
             checkBox.setFont(parent.getFont());
-            checkBox.addSelectionListener(new SelectionAdapter(){
-                public void widgetSelected( SelectionEvent e ) {
+            checkBox.addSelectionListener(new SelectionAdapter() {
+                @Override
+                public void widgetSelected(SelectionEvent e) {
                     boolean isSelected = checkBox.getSelection();
                     valueChanged(wasSelected, isSelected);
                     wasSelected = isSelected;
                 }
             });
-            checkBox.addDisposeListener(new DisposeListener(){
-                public void widgetDisposed( DisposeEvent event ) {
+            checkBox.addDisposeListener(new DisposeListener() {
+                @Override
+                public void widgetDisposed(DisposeEvent event) {
                     checkBox = null;
                 }
             });
@@ -284,11 +278,9 @@ public class BooleanAttributeField extends AttributeField {
         return checkBox;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
+    @Override
     public int getNumberOfControls() {
-        switch( style ) {
+        switch (style) {
         case SEPARATE_LABEL:
             return 2;
         default:
@@ -296,19 +288,15 @@ public class BooleanAttributeField extends AttributeField {
         }
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
+    @Override
     public void setFocus() {
         if (checkBox != null) {
             checkBox.setFocus();
         }
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
-    public void setLabelText( String text ) {
+    @Override
+    public void setLabelText(String text) {
         super.setLabelText(text);
         Label label = getLabelControl();
         if (label == null && checkBox != null) {
@@ -319,11 +307,11 @@ public class BooleanAttributeField extends AttributeField {
     /**
      * Informs this attribute field's listener, if it has one, about a change to the value (
      * <code>VALUE</code> property) provided that the old and new values are different.
-     * 
+     *
      * @param oldValue the old value
      * @param newValue the new value
      */
-    protected void valueChanged( boolean oldValue, boolean newValue ) {
+    protected void valueChanged(boolean oldValue, boolean newValue) {
         setPresentsDefaultValue(false);
         if (oldValue != newValue) {
             fireStateChanged(VALUE, oldValue, newValue);
@@ -331,7 +319,7 @@ public class BooleanAttributeField extends AttributeField {
     }
 
     @Override
-    public void setVisible( boolean visible ) {
+    public void setVisible(boolean visible) {
         // Only call super if there is a label already
         if (style == SEPARATE_LABEL) {
             super.setVisible(visible);
@@ -340,10 +328,9 @@ public class BooleanAttributeField extends AttributeField {
             checkBox.setVisible(visible);
         }
     }
-    /*
-     * @see AttributeField.setEnabled
-     */
-    public void setEnabled( boolean enabled ) {
+
+    @Override
+    public void setEnabled(boolean enabled) {
         // Only call super if there is a label already
         if (style == SEPARATE_LABEL) {
             super.setEnabled(enabled);
@@ -355,14 +342,13 @@ public class BooleanAttributeField extends AttributeField {
 
     public String getStringValue() {
         // FIXME : return a correct String value here
-        if (YES == (Object)1){
-            System.out.println("Retired");
-            return "1";
-            
-        }
-        else{
-            System.out.println("un Retired");
-        return "0";
+        if (YES == (Object) 1) {
+            System.out.println("Retired"); //$NON-NLS-1$
+            return "1"; //$NON-NLS-1$
+
+        } else {
+            System.out.println("un Retired"); //$NON-NLS-1$
+            return "0"; //$NON-NLS-1$
         }
     }
 
