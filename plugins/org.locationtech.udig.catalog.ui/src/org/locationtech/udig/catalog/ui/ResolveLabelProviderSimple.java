@@ -44,11 +44,6 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
         CatalogPlugin.addListener(this);
     }
 
-    /*
-     * @see
-     * org.locationtech.udig.catalog.IResolveChangeListener#changed(org.locationtech.udig.catalog.
-     * IResolveChangeEvent)
-     */
     @Override
     public void changed(final IResolveChangeEvent event) {
         if (event.getType() != IResolveChangeEvent.Type.POST_CHANGE)

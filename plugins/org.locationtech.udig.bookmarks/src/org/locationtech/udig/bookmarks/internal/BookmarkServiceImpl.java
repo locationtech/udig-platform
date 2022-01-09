@@ -196,7 +196,7 @@ public class BookmarkServiceImpl implements IBookmarkService {
         mapsHash.remove(map.getMapID());
         URI projectID = map.getProjectID();
         Vector<MapReference> maps = projectsHash.get(projectID);
-        if (maps != null && maps.size() > 0) {
+        if (maps != null && !maps.isEmpty()) {
             maps.remove(map);
             if (maps.isEmpty()) {
                 projectsHash.remove(projectID);

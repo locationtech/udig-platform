@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,9 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.project.internal.impl.UDIGFeatureStore;
-import org.locationtech.udig.project.internal.impl.UDIGSimpleFeatureStore;
-
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -27,18 +24,21 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 import org.geotools.data.DataStore;
+import org.locationtech.udig.project.internal.impl.UDIGSimpleFeatureStore;
 
 public class FeatureChooserDialog extends AbstractChooserDialog {
 
     private IResourcesSelector active;
+
     private List<DataStore> selectedLayers;
 
-    public void open( Shell parentShell, final int selectionType ) {
+    @Override
+    public void open(Shell parentShell, final int selectionType) {
 
-        Dialog dialog = new Dialog(parentShell){
+        Dialog dialog = new Dialog(parentShell) {
 
             @Override
-            protected void configureShell( Shell shell ) {
+            protected void configureShell(Shell shell) {
                 super.configureShell(shell);
                 shell.setText("Select vector map"); //$NON-NLS-1$
             }
@@ -49,7 +49,7 @@ public class FeatureChooserDialog extends AbstractChooserDialog {
             }
 
             @Override
-            protected Control createDialogArea( Composite parent ) {
+            protected Control createDialogArea(Composite parent) {
 
                 parentPanel = (Composite) super.createDialogArea(parent);
                 GridLayout gLayout = (GridLayout) parentPanel.getLayout();
@@ -64,7 +64,7 @@ public class FeatureChooserDialog extends AbstractChooserDialog {
             }
 
             @Override
-            protected void buttonPressed( int buttonId ) {
+            protected void buttonPressed(int buttonId) {
                 if (buttonId == OK) {
                     Object tmp = null;
                     try {
@@ -77,8 +77,8 @@ public class FeatureChooserDialog extends AbstractChooserDialog {
                         selectedLayers = (List<DataStore>) active.getSelectedLayers();
                     } else if (tmp instanceof UDIGSimpleFeatureStore) {
                         List l = (List) active.getSelectedLayers();
-                        List<DataStore> ll = new ArrayList<DataStore>();
-                        for( Object object : l ) {
+                        List<DataStore> ll = new ArrayList<>();
+                        for (Object object : l) {
                             UDIGSimpleFeatureStore internal = (UDIGSimpleFeatureStore) object;
                             ll.add(internal.getDataStore());
                         }
@@ -95,7 +95,8 @@ public class FeatureChooserDialog extends AbstractChooserDialog {
         dialog.open();
     }
 
-    public void widgetSelected( SelectionEvent e ) {
+    @Override
+    public void widgetSelected(SelectionEvent e) {
 
         Button selectedButton = (Button) e.getSource();
 
@@ -107,7 +108,7 @@ public class FeatureChooserDialog extends AbstractChooserDialog {
 
         // remove the composite
         Widget[] childrens = parentPanel.getChildren();
-        for( int i = 0; i < childrens.length; i++ ) {
+        for (int i = 0; i < childrens.length; i++) {
             childrens[i].dispose();
         }
 
@@ -121,11 +122,13 @@ public class FeatureChooserDialog extends AbstractChooserDialog {
         parentPanel.layout();
     }
 
+    @Override
     public List<DataStore> getSelectedResources() {
         return selectedLayers;
     }
 
-    public String getNameOfResourceAtIndex( int index ) {
+    @Override
+    public String getNameOfResourceAtIndex(int index) {
         try {
             return selectedLayers.get(index).getTypeNames()[0];
         } catch (IOException e) {

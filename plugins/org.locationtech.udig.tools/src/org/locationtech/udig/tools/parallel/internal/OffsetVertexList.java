@@ -1,9 +1,10 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  * (C) 2006, Axios Engineering S.L. (Axios)
  * (C) 2006, County Council of Gipuzkoa, Department of Environment and Planning
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
@@ -19,126 +20,127 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.PrecisionModel;
 
 /**
- * Stores the offset vertex on a list, which is the same of stores the
- * coordinates of the parallel curve.
- * 
+ * Stores the offset vertex on a list, which is the same of stores the coordinates of the parallel
+ * curve.
+ *
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
  */
 public class OffsetVertexList {
 
-	private static final Coordinate[]	COORDINATE_ARRAY_TYPE	= new Coordinate[0];
+    private static final Coordinate[] COORDINATE_ARRAY_TYPE = new Coordinate[0];
 
-	private ArrayList<Coordinate>		ptList;
-	private PrecisionModel				precisionModel			= null;
+    private ArrayList<Coordinate> ptList;
 
-	/**
-	 * The distance below which two adjacent points on the curve are considered
-	 * to be coincident. This is chosen to be a small fraction of the offset
-	 * distance.
-	 */
-	private double						minimimVertexDistance	= 0.0;
+    private PrecisionModel precisionModel = null;
 
-	/**
-	 * Change when there is intersection.
-	 */
-	private boolean						isIntersected			= false;
+    /**
+     * The distance below which two adjacent points on the curve are considered to be coincident.
+     * This is chosen to be a small fraction of the offset distance.
+     */
+    private double minimimVertexDistance = 0.0;
 
-	public OffsetVertexList() {
-		ptList = new ArrayList<Coordinate>();
-	}
+    /**
+     * Change when there is intersection.
+     */
+    private boolean isIntersected = false;
 
-	public void setPrecisionModel(PrecisionModel precisionModel) {
-		this.precisionModel = precisionModel;
-	}
+    public OffsetVertexList() {
+        ptList = new ArrayList<>();
+    }
 
-	public void setMinimumVertexDistance(double minimimVertexDistance) {
-		this.minimimVertexDistance = minimimVertexDistance;
-	}
+    public void setPrecisionModel(PrecisionModel precisionModel) {
+        this.precisionModel = precisionModel;
+    }
 
-	public void addPt(Coordinate pt, boolean isIntersectionPt) {
+    public void setMinimumVertexDistance(double minimimVertexDistance) {
+        this.minimimVertexDistance = minimimVertexDistance;
+    }
 
-		Coordinate ptToAdd = new Coordinate(pt);
-		precisionModel.makePrecise(ptToAdd);
-		// don't add duplicate (or near-duplicate) points
-		if (isDuplicate(ptToAdd))
-			return;
+    public void addPt(Coordinate pt, boolean isIntersectionPt) {
 
-		if (isIntersectionPt) {
-			ptList.remove(ptList.size() - 1);
-			ptList.add(ptToAdd);
-			isIntersected = isIntersectionPt;
-			return;
-		}
-		if (isIntersected) {
-			// don't add this point.
-			isIntersected = false;
-			return;
-		}
-		ptList.add(ptToAdd);
-	}
+        Coordinate ptToAdd = new Coordinate(pt);
+        precisionModel.makePrecise(ptToAdd);
+        // don't add duplicate (or near-duplicate) points
+        if (isDuplicate(ptToAdd))
+            return;
 
-	/**
-	 * Tests whether the given point duplicates the previous point in the list
-	 * (up to tolerance)
-	 * 
-	 * @param pt
-	 * @return true if the point duplicates the previous point
-	 */
-	private boolean isDuplicate(Coordinate pt) {
-		if (ptList.size() < 1)
-			return false;
-		Coordinate lastPt = (Coordinate) ptList.get(ptList.size() - 1);
-		double ptDist = pt.distance(lastPt);
-		if (ptDist < minimimVertexDistance)
-			return true;
-		return false;
-	}
+        if (isIntersectionPt) {
+            ptList.remove(ptList.size() - 1);
+            ptList.add(ptToAdd);
+            isIntersected = isIntersectionPt;
+            return;
+        }
+        if (isIntersected) {
+            // don't add this point.
+            isIntersected = false;
+            return;
+        }
+        ptList.add(ptToAdd);
+    }
 
-	private Coordinate[] getCoordinates() {
+    /**
+     * Tests whether the given point duplicates the previous point in the list (up to tolerance)
+     *
+     * @param pt
+     * @return true if the point duplicates the previous point
+     */
+    private boolean isDuplicate(Coordinate pt) {
+        if (ptList.isEmpty()) {
+            return false;
+        }
+        Coordinate lastPt = ptList.get(ptList.size() - 1);
+        double ptDist = pt.distance(lastPt);
+        if (ptDist < minimimVertexDistance) {
+            return true;
+        }
+        return false;
+    }
 
-		Coordinate[] coord = (Coordinate[]) ptList.toArray(COORDINATE_ARRAY_TYPE);
-		return coord;
-	}
+    private Coordinate[] getCoordinates() {
 
-	@Override
-	public String toString() {
-		GeometryFactory fact = new GeometryFactory();
-		LineString line = fact.createLineString(getCoordinates());
-		return line.toString();
-	}
+        Coordinate[] coord = ptList.toArray(COORDINATE_ARRAY_TYPE);
+        return coord;
+    }
 
-	public int size() {
+    @Override
+    public String toString() {
+        GeometryFactory fact = new GeometryFactory();
+        LineString line = fact.createLineString(getCoordinates());
+        return line.toString();
+    }
 
-		return ptList.size();
-	}
+    public int size() {
 
-	public ArrayList<Coordinate> getList() {
+        return ptList.size();
+    }
 
-		return ptList;
-	}
+    public ArrayList<Coordinate> getList() {
 
-	/**
-	 * Delete the last added point.
-	 */
-	public void deleteLast() {
+        return ptList;
+    }
 
-		ptList.remove(ptList.size() - 1);
-	}
+    /**
+     * Delete the last added point.
+     */
+    public void deleteLast() {
 
-	/**
-	 * Delete the last item from the list.
-	 */
-	public Coordinate getLastItem() {
+        ptList.remove(ptList.size() - 1);
+    }
 
-		return ptList.get(ptList.size() - 1);
-	}
+    /**
+     * Delete the last item from the list.
+     */
+    public Coordinate getLastItem() {
 
-	/**
-	 * Delete the second to last item.
-	 */
-	public Coordinate getSecondToLastItem() {
+        return ptList.get(ptList.size() - 1);
+    }
 
-		return ptList.get(ptList.size() - 2);
-	}
+    /**
+     * Delete the second to last item.
+     */
+    public Coordinate getSecondToLastItem() {
+
+        return ptList.get(ptList.size() - 2);
+    }
 }

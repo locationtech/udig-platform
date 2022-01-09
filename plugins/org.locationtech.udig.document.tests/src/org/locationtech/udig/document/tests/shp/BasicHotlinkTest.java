@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,7 +26,6 @@ import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.factory.CommonFactoryFinder;
-import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.locationtech.udig.catalog.IGeoResource;
@@ -49,9 +48,11 @@ import org.osgi.framework.Bundle;
 public class BasicHotlinkTest {
 
     private static IService service;
+
     private static IGeoResource resource;
+
     private static BasicHotlinkDescriptorParser parser;
-    
+
     @BeforeClass
     public static void beforeClass() throws Exception {
         assertNotNull("Please run as Plugin Test", Activator.getDefault());
@@ -71,9 +72,11 @@ public class BasicHotlinkTest {
                 .resources(new NullProgressMonitor());
         resource = members.get(0);
 
-        final List<HotlinkDescriptor> descriptors = new ArrayList<HotlinkDescriptor>();
-        descriptors.add(new HotlinkDescriptor("File", "File Description", "FILE", ContentType.FILE, ""));
-        descriptors.add(new HotlinkDescriptor("Web", "Web Description", "LINK", ContentType.WEB, ""));
+        final List<HotlinkDescriptor> descriptors = new ArrayList<>();
+        descriptors.add(
+                new HotlinkDescriptor("File", "File Description", "FILE", ContentType.FILE, ""));
+        descriptors
+                .add(new HotlinkDescriptor("Web", "Web Description", "LINK", ContentType.WEB, ""));
 
         parser = new BasicHotlinkDescriptorParser(resource);
         parser.setDescriptors(descriptors);
@@ -82,25 +85,20 @@ public class BasicHotlinkTest {
 
     @Test
     public void testBasicResolveAdaptorFactory() throws Exception {
-        
-        // IResolveAdapterFactory adaptorFactory = new BasicHotlinkResolveFactory();
-        // assertTrue(adaptorFactory.canAdapt(resource, IHotlinkSource.class));
-        //
-        // IHotlinkSource hotlink = (IHotlinkSource) adaptorFactory.adapt(resource,
-        // IHotlinkSource.class, new NullProgressMonitor());
 
         final BasicHotlinkSource hotlink = new BasicHotlinkSource(resource);
         assertNotNull(hotlink);
 
-        List<HotlinkDescriptor> list = hotlink.getHotlinkDescriptors(null, new NullProgressMonitor());
+        List<HotlinkDescriptor> list = hotlink.getHotlinkDescriptors(null,
+                new NullProgressMonitor());
         assertEquals("descriptors found", 2, list.size());
 
         SimpleFeatureStore featureStore = resource.resolve(SimpleFeatureStore.class,
                 new NullProgressMonitor());
         SimpleFeatureType schema = featureStore.getSchema();
         for (HotlinkDescriptor hotlinkDescriptor : list) {
-            AttributeDescriptor attributeDescriptor = schema.getDescriptor(hotlinkDescriptor
-                    .getAttributeName());
+            AttributeDescriptor attributeDescriptor = schema
+                    .getDescriptor(hotlinkDescriptor.getAttributeName());
             assertNotNull("confirm attribute name matches", attributeDescriptor);
             assertTrue("Confirm String",
                     String.class.isAssignableFrom(attributeDescriptor.getType().getBinding()));
@@ -108,20 +106,14 @@ public class BasicHotlinkTest {
             assertNotNull(hotlinkDescriptor.getType() != null);
         }
         FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
-        SimpleFeatureCollection features = featureStore.getFeatures(ff.equals(ff.property("STATE"),
-                ff.literal("Tasmania")));
+        SimpleFeatureCollection features = featureStore
+                .getFeatures(ff.equals(ff.property("STATE"), ff.literal("Tasmania")));
         SimpleFeatureIterator iterator = features.features();
         assertTrue("Tasmania found", iterator.hasNext());
         SimpleFeature tasmania = iterator.next();
 
         List<IDocument> documents = hotlink.getDocuments(tasmania, new NullProgressMonitor());
         assertEquals("image document found", 2, documents.size());
-
-        // IDocument imageDocument = documents.get(0);
-        // assertEquals(ContentType.FILE, imageDocument.getContentType());
-
-        // IDocument webLink = documents.get(1);
-        // assertEquals(ContentType.WEB, webLink.getContentType());
 
     }
 

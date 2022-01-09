@@ -1,4 +1,4 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
  * (C) HydroloGIS - www.hydrologis.com
  *
@@ -100,32 +100,51 @@ import org.opengis.referencing.operation.TransformException;
  * @author Andrea Antonello (www.hydrologis.com)
  *
  */
-public class NavigationView extends ViewPart implements SelectionListener, IMapListener, IMapCompositionListener {
+public class NavigationView extends ViewPart
+        implements SelectionListener, IMapListener, IMapCompositionListener {
 
-    private static DateTimeFormatter ISO_DATE_TIME_FORMATTER =  DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneOffset.UTC);
+    private static DateTimeFormatter ISO_DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE_TIME
+            .withZone(ZoneOffset.UTC);
 
-    private static DateTimeFormatter ISO_DATE_TIME_PARSER = DateTimeFormatter.ISO_DATE_TIME .withZone(ZoneOffset.UTC);
+    private static DateTimeFormatter ISO_DATE_TIME_PARSER = DateTimeFormatter.ISO_DATE_TIME
+            .withZone(ZoneOffset.UTC);
 
     private Image worldImage;
+
     private Text lowerLeftText;
+
     private Text upperRightText;
+
     private Canvas canvas;
+
     private Combo scaleCombo;
+
     private Combo dateTimeCombo;
+
     private Combo verticalCombo;
 
-    private DecimalFormat numFormatter = new DecimalFormat("0.00");
+    private DecimalFormat numFormatter = new DecimalFormat("0.00"); //$NON-NLS-1$
+
     private Button verticalDownButton;
+
     private Button verticalUpButton;
+
     private Button scaleDownButton;
+
     private Button scaleUpButton;
+
     private Button dtUpButton;
+
     private Button dtDownButton;
+
     private Color color;
 
     private static final String ENTER_SEARCH_STRING = "enter search string";
+
     private Set<String> keySet;
+
     private Combo placesCombo;
+
     private HashMap<String, Coordinate> placesMap;
 
     private File folderFile;
@@ -134,15 +153,17 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
 
     private Combo countriesCombo;
 
-
     private List<Double> lavailableElevation = null;
+
     private List<LocalDateTime> lavailableTimesteps = null;
+
     private LocalDateTime currentTimestep = null;
+
     private Double currentElevation = null;
 
     public NavigationView() {
-        ImageDescriptor imageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID,
-                "icons/worldoverview2.png");
+        ImageDescriptor imageDescriptor = AbstractUIPlugin
+                .imageDescriptorFromPlugin(JGrassToolsPlugin.PLUGIN_ID, "icons/worldoverview2.png"); //$NON-NLS-1$
         worldImage = imageDescriptor.createImage();
 
         color = Display.getDefault().getSystemColor(SWT.COLOR_RED);
@@ -150,9 +171,10 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
     }
 
     @Override
-    public void createPartControl( Composite theparent ) {
+    public void createPartControl(Composite theparent) {
 
-        ScrolledComposite scrolledComposite = new ScrolledComposite(theparent, SWT.H_SCROLL | SWT.V_SCROLL);
+        ScrolledComposite scrolledComposite = new ScrolledComposite(theparent,
+                SWT.H_SCROLL | SWT.V_SCROLL);
         scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         scrolledComposite.setExpandVertical(true);
         scrolledComposite.setExpandHorizontal(true);
@@ -176,7 +198,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
         lowerLeftLabel.setText("Lower left (w,s)");
         lowerLeftText = new Text(boundsGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         lowerLeftText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        lowerLeftText.setText("");
+        lowerLeftText.setText(""); //$NON-NLS-1$
         lowerLeftText.setEditable(false);
 
         Label upperRightLabel = new Label(boundsGroup, SWT.NONE);
@@ -184,7 +206,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
         upperRightLabel.setText("Upper right (e,n)");
         upperRightText = new Text(boundsGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
         upperRightText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        upperRightText.setText("");
+        upperRightText.setText(""); //$NON-NLS-1$
         upperRightText.setEditable(false);
 
         Group scaleGroup = new Group(parent, SWT.NONE);
@@ -240,14 +262,16 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
         gd2.widthHint = 250;
         gd2.heightHint = 121;
         canvas.setLayoutData(gd2);
-        canvas.addPaintListener(new PaintListener(){
+        canvas.addPaintListener(new PaintListener() {
 
             @Override
-            public void paintControl( PaintEvent e ) {
+            public void paintControl(PaintEvent e) {
                 Rectangle canvasBounds = canvas.getBounds();
                 Rectangle imageBounds = worldImage.getBounds();
-                int h = (int) ((float) canvasBounds.width * (float) imageBounds.height / imageBounds.width);
-                e.gc.drawImage(worldImage, 0, 0, imageBounds.width, imageBounds.height, 0, 0, canvasBounds.width, h);
+                int h = (int) ((float) canvasBounds.width * (float) imageBounds.height
+                        / imageBounds.width);
+                e.gc.drawImage(worldImage, 0, 0, imageBounds.width, imageBounds.height, 0, 0,
+                        canvasBounds.width, h);
 
                 IMap activeMap = ApplicationGIS.getActiveMap();
                 ViewportModel viewportModel = (ViewportModel) activeMap.getViewportModel();
@@ -315,8 +339,6 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                     e.gc.fillRectangle(x, newy, fw, fh);
 
                     e.gc.drawLine(x + fw / 2, 0, x + fw / 2, newy);
-                    // e.gc.drawLine(x + fw / 2, newy + fh, x + fw / 2, h);
-                    //
                     e.gc.drawLine(0, newy + fh / 2, x, newy + fh / 2);
                     e.gc.drawLine(x + fw, newy + fh / 2, canvasBounds.width, newy + fh / 2);
 
@@ -329,9 +351,6 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
             }
         });
 
-        // Label fillLabel = new Label(parent, SWT.NONE);
-        // fillLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
         Group geonamesGroup = new Group(parent, SWT.NONE);
         geonamesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         geonamesGroup.setLayout(new GridLayout(4, false));
@@ -341,7 +360,8 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
         availableLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         availableLabel.setText("Available geonames data");
 
-        URL folderUrl = Platform.getBundle(JGrassToolsPlugin.PLUGIN_ID).getResource("/geonamesfiles");
+        URL folderUrl = Platform.getBundle(JGrassToolsPlugin.PLUGIN_ID)
+                .getResource("/geonamesfiles"); //$NON-NLS-1$
         String folderPath = null;
         try {
             folderPath = FileLocator.toFileURL(folderUrl).getPath();
@@ -353,16 +373,18 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
             countriesCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
             countriesCombo.setItems(namesArray);
             countriesCombo.select(0);
-            countriesCombo.addSelectionListener(new SelectionAdapter(){
+            countriesCombo.addSelectionListener(new SelectionAdapter() {
                 @Override
-                public void widgetSelected( SelectionEvent e ) {
+                public void widgetSelected(SelectionEvent e) {
                     int selectionIndex = countriesCombo.getSelectionIndex();
                     String item = countriesCombo.getItem(selectionIndex);
-                    final String file = folderFile.getAbsolutePath() + File.separator + item + ".txt";
+                    final String file = folderFile.getAbsolutePath() + File.separator + item
+                            + ".txt"; //$NON-NLS-1$
 
-                    IRunnableWithProgress operation = new IRunnableWithProgress(){
+                    IRunnableWithProgress operation = new IRunnableWithProgress() {
                         @Override
-                        public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
+                        public void run(IProgressMonitor pm)
+                                throws InvocationTargetException, InterruptedException {
                             try {
                                 populatePlacesMap(placesMap, file);
                             } catch (FileNotFoundException e1) {
@@ -372,19 +394,21 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                             }
                         }
                     };
-                    PlatformGIS.runInProgressDialog("Loading geonames data...", true, operation, true);
+                    PlatformGIS.runInProgressDialog("Loading geonames data...", true, operation,
+                            true);
                 }
             });
 
             Button addNewButton = new Button(geonamesGroup, SWT.PUSH);
             addNewButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
             addNewButton.setText("+");
-            addNewButton.setToolTipText("Add a new geonames file (get it at http://download.geonames.org/export/dump/)");
-            addNewButton.addSelectionListener(new SelectionAdapter(){
+            addNewButton.setToolTipText(
+                    "Add a new geonames file (get it at http://download.geonames.org/export/dump/)");
+            addNewButton.addSelectionListener(new SelectionAdapter() {
                 @Override
-                public void widgetSelected( SelectionEvent e ) {
+                public void widgetSelected(SelectionEvent e) {
                     FileDialog fileDialog = new FileDialog(countriesCombo.getShell(), SWT.OPEN);
-                    fileDialog.setFilterExtensions(new String[]{"*.txt"});
+                    fileDialog.setFilterExtensions(new String[] { "*.txt" }); //$NON-NLS-1$
                     String newFilePath = fileDialog.open();
                     try {
                         if (newFilePath != null) {
@@ -399,11 +423,12 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                             countriesCombo.setItems(geonamesFiles);
                             countriesCombo.select(0);
                         } else {
-                            countriesCombo.setItems(new String[]{"   --   "});
+                            countriesCombo.setItems(new String[] { "   --   " }); //$NON-NLS-1$
                         }
                     } catch (IOException e1) {
                         String message = "An error occurred while copying the new geonames file into the application.";
-                        ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, e1);
+                        ExceptionDetailsDialog.openError(null, message, IStatus.ERROR,
+                                JGrassToolsPlugin.PLUGIN_ID, e1);
                         e1.printStackTrace();
                     }
                 }
@@ -411,11 +436,11 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
 
             Button removeButton = new Button(geonamesGroup, SWT.PUSH);
             removeButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-            removeButton.setText("-");
+            removeButton.setText("-"); //$NON-NLS-1$
             removeButton.setToolTipText("Remove a geonames file");
-            removeButton.addSelectionListener(new SelectionAdapter(){
+            removeButton.addSelectionListener(new SelectionAdapter() {
                 @Override
-                public void widgetSelected( SelectionEvent e ) {
+                public void widgetSelected(SelectionEvent e) {
                     int selectionIndex = countriesCombo.getSelectionIndex();
                     String item = countriesCombo.getItem(selectionIndex);
 
@@ -429,11 +454,12 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                             countriesCombo.setItems(geonamesFiles);
                             countriesCombo.select(0);
                         } else {
-                            countriesCombo.setItems(new String[]{"   --   "});
+                            countriesCombo.setItems(new String[] { "   --   " }); //$NON-NLS-1$
                         }
                     } catch (IOException e1) {
                         String message = "An error occurred while removing the old geonames file into the application.";
-                        ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, e1);
+                        ExceptionDetailsDialog.openError(null, message, IStatus.ERROR,
+                                JGrassToolsPlugin.PLUGIN_ID, e1);
                         e1.printStackTrace();
                     }
                 }
@@ -452,14 +478,14 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
 
             final Text placesText = new Text(placesGroup, SWT.SINGLE | SWT.LEAD | SWT.BORDER);
             placesText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-            placesText.setText("");
+            placesText.setText(""); //$NON-NLS-1$
 
             Button searchButton = new Button(placesGroup, SWT.PUSH);
             searchButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
             searchButton.setText("search");
-            searchButton.addSelectionListener(new SelectionAdapter(){
+            searchButton.addSelectionListener(new SelectionAdapter() {
                 @Override
-                public void widgetSelected( SelectionEvent e ) {
+                public void widgetSelected(SelectionEvent e) {
                     String text = placesText.getText();
                     if (text.length() < 3) {
                         MessageBox msgBox = new MessageBox(placesText.getShell(), SWT.ICON_WARNING);
@@ -469,8 +495,8 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                     }
 
                     List<String> matchedList = new ArrayList<>();
-                    for( String name : keySet ) {
-                        if (name.toLowerCase().matches(".*" + text.toLowerCase() + ".*")) {
+                    for (String name : keySet) {
+                        if (name.toLowerCase().matches(".*" + text.toLowerCase() + ".*")) { //$NON-NLS-1$ //$NON-NLS-2$
                             matchedList.add(name);
                         }
                     }
@@ -483,16 +509,16 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
 
             placesCombo = new Combo(placesGroup, SWT.DROP_DOWN);
             placesCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-            placesCombo.setItems(new String[]{ENTER_SEARCH_STRING});
+            placesCombo.setItems(new String[] { ENTER_SEARCH_STRING });
 
             Button goButton = new Button(placesGroup, SWT.PUSH);
             goButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
             goButton.setText("go");
-            goButton.addSelectionListener(new SelectionAdapter(){
+            goButton.addSelectionListener(new SelectionAdapter() {
                 @Override
-                public void widgetSelected( SelectionEvent e ) {
+                public void widgetSelected(SelectionEvent e) {
                     IMap map = ApplicationGIS.getActiveMap();
-                    if (map.getMapLayers().size() < 1) {
+                    if (map.getMapLayers().isEmpty()) {
                         return;
                     }
 
@@ -501,10 +527,10 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
 
                     try {
                         GeometryFactory gF = new GeometryFactory();
-                        CoordinateReferenceSystem placeCrs = CRS.decode("EPSG:4326");
+                        CoordinateReferenceSystem placeCrs = CRS.decode("EPSG:4326"); //$NON-NLS-1$
                         // transform coordinates before check
                         MathTransform transform = CRS.findMathTransform(placeCrs, mapCrs, true);
-                        // jts geometry
+                        // JTS geometry
                         int selectionIndex = placesCombo.getSelectionIndex();
                         String item = placesCombo.getItem(selectionIndex);
                         Coordinate coordinate = placesMap.get(item);
@@ -529,14 +555,15 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
             gridData.horizontalSpan = 2;
             loadShapeButton.setLayoutData(gridData);
             loadShapeButton.setText("Load all places as feature layer");
-            loadShapeButton.addSelectionListener(new SelectionAdapter(){
+            loadShapeButton.addSelectionListener(new SelectionAdapter() {
                 @Override
-                public void widgetSelected( SelectionEvent e ) {
+                public void widgetSelected(SelectionEvent e) {
 
-                    IRunnableWithProgress operation = new IRunnableWithProgress(){
+                    IRunnableWithProgress operation = new IRunnableWithProgress() {
 
                         @Override
-                        public void run( IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
+                        public void run(IProgressMonitor pm)
+                                throws InvocationTargetException, InterruptedException {
 
                             try {
                                 GeometryFactory gF = new GeometryFactory();
@@ -554,13 +581,15 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
 
                                 pm.beginTask("Converting geometries of places...", size);
                                 int id = 0;
-                                for( String name : keySet ) {
+                                for (String name : keySet) {
                                     Coordinate coordinate = placesMap.get(name);
-                                    MultiPoint point = gF.createMultiPoint(new Coordinate[]{coordinate});
+                                    MultiPoint point = gF
+                                            .createMultiPoint(new Coordinate[] { coordinate });
                                     SimpleFeatureBuilder builder = new SimpleFeatureBuilder(type);
-                                    Object[] values = new Object[]{point, name};
+                                    Object[] values = new Object[] { point, name };
                                     builder.addAll(values);
-                                    SimpleFeature feature = builder.buildFeature(type.getTypeName() + "." + id);
+                                    SimpleFeature feature = builder
+                                            .buildFeature(type.getTypeName() + "." + id);
                                     id++;
                                     newCollection.add(feature);
                                     pm.worked(1);
@@ -571,12 +600,13 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                                         .createTemporaryResource(type);
 
                                 resource.resolve(FeatureStore.class, pm).addFeatures(newCollection);
-                                ApplicationGIS.addLayersToMap(ApplicationGIS.getActiveMap(), Collections.singletonList(resource),
-                                        -1);
+                                ApplicationGIS.addLayersToMap(ApplicationGIS.getActiveMap(),
+                                        Collections.singletonList(resource), -1);
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 String message = "An error occurred while loading the places to map";
-                                ExceptionDetailsDialog.openError(null, message, IStatus.ERROR, JGrassToolsPlugin.PLUGIN_ID, e);
+                                ExceptionDetailsDialog.openError(null, message, IStatus.ERROR,
+                                        JGrassToolsPlugin.PLUGIN_ID, e);
 
                             }
 
@@ -584,7 +614,8 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
 
                     };
 
-                    PlatformGIS.runInProgressDialog("Loading places in temporary layer...", true, operation, true);
+                    PlatformGIS.runInProgressDialog("Loading places in temporary layer...", true,
+                            operation, true);
 
                 }
             });
@@ -601,22 +632,22 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
         File[] listFiles = folderFile.listFiles();
 
         List<String> names = new ArrayList<>();
-        for( int i = 0; i < listFiles.length; i++ ) {
+        for (int i = 0; i < listFiles.length; i++) {
             String name = listFiles[i].getName();
-            if (name.startsWith(".svn")) {
+            if (name.startsWith(".svn")) { //$NON-NLS-1$
                 continue;
             }
             if (first == null) {
                 first = listFiles[i];
             }
-            names.add(name.replaceFirst(".txt", ""));
+            names.add(name.replaceFirst(".txt", "")); //$NON-NLS-1$ //$NON-NLS-2$
         }
         String[] namesArray = names.toArray(new String[names.size()]);
         return namesArray;
     }
 
     private void updateData() {
-        Display.getDefault().asyncExec(new Runnable(){
+        Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
                 IMap activeMap = ApplicationGIS.getActiveMap();
@@ -634,16 +665,20 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                 if (lowerLeftText.isDisposed()) {
                     return;
                 }
-                lowerLeftText.setText(numFormatter.format(west) + ", " + numFormatter.format(south));
-                upperRightText.setText(numFormatter.format(east) + ", " + numFormatter.format(north));
+                lowerLeftText
+                        .setText(numFormatter.format(west) + ", " + numFormatter.format(south)); //$NON-NLS-1$
+                upperRightText
+                        .setText(numFormatter.format(east) + ", " + numFormatter.format(north)); //$NON-NLS-1$
 
                 canvas.redraw();
 
-                SortedSet<Double> preferredScaleDenominators = viewportModel.getPreferredScaleDenominators();
-                Double[] scalesArray = preferredScaleDenominators.toArray(new Double[preferredScaleDenominators.size()]);
+                SortedSet<Double> preferredScaleDenominators = viewportModel
+                        .getPreferredScaleDenominators();
+                Double[] scalesArray = preferredScaleDenominators
+                        .toArray(new Double[preferredScaleDenominators.size()]);
                 String[] scales = new String[scalesArray.length];
-                for( int i = 0; i < scales.length; i++ ) {
-                    scales[i] = "1:" + String.valueOf(scalesArray[i]);
+                for (int i = 0; i < scales.length; i++) {
+                    scales[i] = "1:" + String.valueOf(scalesArray[i]); //$NON-NLS-1$
                 }
                 int itemCount = scaleCombo.getItemCount();
                 int selectionIndex = scaleCombo.getSelectionIndex();
@@ -658,7 +693,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                     dtDownButton.setEnabled(true);
                     dtUpButton.setEnabled(true);
                     String[] dates = new String[availableTimesteps.size()];
-                    for( int i = 0; i < dates.length; i++ ) {
+                    for (int i = 0; i < dates.length; i++) {
                         dates[i] = ISO_DATE_TIME_FORMATTER.format(availableTimesteps.get(i));
                     }
                     itemCount = dateTimeCombo.getItemCount();
@@ -679,7 +714,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                     verticalDownButton.setEnabled(true);
                     verticalUpButton.setEnabled(true);
                     String[] elev = new String[availableElevation.size()];
-                    for( int i = 0; i < elev.length; i++ ) {
+                    for (int i = 0; i < elev.length; i++) {
                         elev[i] = String.valueOf(availableElevation.get(i));
                     }
                     itemCount = verticalCombo.getItemCount();
@@ -698,14 +733,15 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
     }
 
     @Override
-    public void widgetSelected( SelectionEvent e ) {
-        ViewportModel viewportModel = (ViewportModel) ApplicationGIS.getActiveMap().getViewportModel();
+    public void widgetSelected(SelectionEvent e) {
+        ViewportModel viewportModel = (ViewportModel) ApplicationGIS.getActiveMap()
+                .getViewportModel();
 
         Object source = e.getSource();
         if (source.equals(scaleCombo)) {
             int index = scaleCombo.getSelectionIndex();
             String item = scaleCombo.getItem(index);
-            String scaleString = item.split(":")[1];
+            String scaleString = item.split(":")[1]; //$NON-NLS-1$
             double scale = Double.parseDouble(scaleString);
             viewportModel.setScale(scale);
         }
@@ -754,7 +790,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                 selectionIndex = 0;
             }
             String item = scaleCombo.getItem(selectionIndex);
-            double scale = Double.parseDouble(item.split(":")[1]);
+            double scale = Double.parseDouble(item.split(":")[1]); //$NON-NLS-1$
             viewportModel.setScale(scale);
             scaleCombo.select(selectionIndex);
         }
@@ -765,7 +801,7 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
                 selectionIndex = scaleCombo.getItemCount() - 1;
             }
             String item = scaleCombo.getItem(selectionIndex);
-            double scale = Double.parseDouble(item.split(":")[1]);
+            double scale = Double.parseDouble(item.split(":")[1]); //$NON-NLS-1$
             viewportModel.setScale(scale);
             scaleCombo.select(selectionIndex);
         }
@@ -795,12 +831,12 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
     }
 
     @Override
-    public void changed( MapEvent event ) {
+    public void changed(MapEvent event) {
         updateData();
     }
 
     @Override
-    public void changed( MapCompositionEvent event ) {
+    public void changed(MapCompositionEvent event) {
         updateData();
     }
 
@@ -810,15 +846,15 @@ public class NavigationView extends ViewPart implements SelectionListener, IMapL
     }
 
     @Override
-    public void widgetDefaultSelected( SelectionEvent e ) {
+    public void widgetDefaultSelected(SelectionEvent e) {
     }
 
-    private void populatePlacesMap( HashMap<String, Coordinate> placesMap, String fileToRead ) throws FileNotFoundException,
-            IOException {
+    private void populatePlacesMap(HashMap<String, Coordinate> placesMap, String fileToRead)
+            throws FileNotFoundException, IOException {
         BufferedReader bR = new BufferedReader(new FileReader(fileToRead));
         String line = null;
-        while( (line = bR.readLine()) != null ) {
-            String[] lineSplit = line.split("\t");
+        while ((line = bR.readLine()) != null) {
+            String[] lineSplit = line.split("\t"); //$NON-NLS-1$
             String name = lineSplit[1];
             String lat = lineSplit[4];
             String lon = lineSplit[5];

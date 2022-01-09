@@ -46,7 +46,7 @@ public abstract class AbstractUDIGImportPage extends WorkflowWizardPage
     public void setMessage(String newMessage, int newType) {
         super.setMessage(newMessage, newType);
 
-        // wizard pages are decorated by a connection page, so the default
+        // Wizard pages are decorated by a connection page, so the default
         // implementation of this method will not do anything
         IWizardPage page = getContainer().getCurrentPage();
         if (page != this && page instanceof WizardPage) {
@@ -65,7 +65,7 @@ public abstract class AbstractUDIGImportPage extends WorkflowWizardPage
     public void setErrorMessage(String newMessage) {
         super.setErrorMessage(newMessage);
 
-        // wizard pages are decorated by a connection page, so the default
+        // Wizard pages are decorated by a connection page, so the default
         // implementation of this method will not do anything
         IWizardPage page = getContainer().getCurrentPage();
         if (page != this && page instanceof WizardPage) {
@@ -114,7 +114,7 @@ public abstract class AbstractUDIGImportPage extends WorkflowWizardPage
     }
 
     /**
-     * Returns the ids of the GeoResource to use as the "selected" resources. If a non-empty
+     * Returns the IDs of the GeoResource to use as the "selected" resources. If a non-empty
      * collection is returned then the next states in the wizard "should" use these as the items
      * selected by the user.
      * <p>
@@ -151,7 +151,7 @@ public abstract class AbstractUDIGImportPage extends WorkflowWizardPage
         try {
             getContainer().run(false, true, runnable);
         } catch (InvocationTargetException e) {
-            setErrorMessage("Could not connect:" + e.getCause().getMessage()); //$NON-NLS-1$
+            setErrorMessage("Could not connect:" + e.getCause().getMessage());
             throw (RuntimeException) new RuntimeException().initCause(e);
         } catch (InterruptedException e) {
             setErrorMessage("Canceled"); //$NON-NLS-1$

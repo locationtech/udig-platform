@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -36,37 +36,45 @@ import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicalSymbol;
 
 /**
- * A wrapper for a {@link LineSymbolizer} to ease interaction with gui.
- * 
+ * A wrapper for a {@link LineSymbolizer} to ease interaction with GUI.
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class LineSymbolizerWrapper extends SymbolizerWrapper {
     protected String strokeColor;
+
     protected String strokeOpacity;
+
     protected String strokeWidth;
 
     protected boolean hasStroke;
+
     protected Stroke stroke;
+
     protected Graphic strokeGraphicStroke;
+
     protected String dash;
+
     protected String dashOffset;
+
     protected String lineCap;
+
     protected String lineJoin;
 
-    
     protected PointSymbolizerWrapper endPointStyle;
+
     protected PointSymbolizerWrapper startPointStyle;
-    
-    public LineSymbolizerWrapper( PolygonSymbolizer polygonSymbolizer, RuleWrapper parent ) {
+
+    public LineSymbolizerWrapper(PolygonSymbolizer polygonSymbolizer, RuleWrapper parent) {
         super(polygonSymbolizer, parent);
         initEndPointSymbolizers();
     }
 
-    public LineSymbolizerWrapper( Symbolizer symbolizer, RuleWrapper parent ) {
+    public LineSymbolizerWrapper(Symbolizer symbolizer, RuleWrapper parent) {
         super(symbolizer, parent);
 
         initEndPointSymbolizers();
-        
+
         LineSymbolizer lineSymbolizer = (LineSymbolizer) symbolizer;
 
         // offset
@@ -100,11 +108,11 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
                 strokeWidth = DEFAULT_WIDTH;
                 stroke.setWidth(ff.literal(DEFAULT_WIDTH));
             }
-            
+
             strokeGraphicStroke = stroke.getGraphicStroke();
             if (strokeGraphicStroke != null) {
                 List<GraphicalSymbol> graphicalSymbolsList = strokeGraphicStroke.graphicalSymbols();
-                if (graphicalSymbolsList.size() > 0) {
+                if (!graphicalSymbolsList.isEmpty()) {
                     GraphicalSymbol graphicalSymbol = graphicalSymbolsList.get(0);
                     if (graphicalSymbol instanceof ExternalGraphic) {
                         strokeExternalGraphicStroke = (ExternalGraphic) graphicalSymbol;
@@ -132,97 +140,104 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
         }
 
     }
-    
-    private void initEndPointSymbolizers(){
-    	for (Symbolizer x : super.getParent().getRule().getSymbolizers()){
-        	if (x instanceof PointSymbolizer){
-        		PointSymbolizer pnt = (PointSymbolizer) x;
-        		Expression ex = pnt.getGeometry();
-        		boolean endpnt = ex instanceof FilterFunction_endPoint;
-        		boolean startpnt = ex instanceof FilterFunction_startPoint;
-        		if (endpnt || startpnt){
-        			GraphicalSymbol gs = pnt.getGraphic().graphicalSymbols().get(0);
-        			if (gs instanceof Mark){
-        				String name = ((Mark) gs).getWellKnownName().evaluate(null, String.class);
-        				if (Utilities.lineEndStyles.values().contains(name)){
-        					if (endpnt){
-        						endPointStyle = new PointSymbolizerWrapper(pnt, super.getParent());
-        					}else if (startpnt){
-        						startPointStyle = new PointSymbolizerWrapper(pnt, super.getParent());
-        					}
-        				}
-        			}
-        		}
-        	}
+
+    private void initEndPointSymbolizers() {
+        for (Symbolizer x : super.getParent().getRule().getSymbolizers()) {
+            if (x instanceof PointSymbolizer) {
+                PointSymbolizer pnt = (PointSymbolizer) x;
+                Expression ex = pnt.getGeometry();
+                boolean endpnt = ex instanceof FilterFunction_endPoint;
+                boolean startpnt = ex instanceof FilterFunction_startPoint;
+                if (endpnt || startpnt) {
+                    GraphicalSymbol gs = pnt.getGraphic().graphicalSymbols().get(0);
+                    if (gs instanceof Mark) {
+                        String name = ((Mark) gs).getWellKnownName().evaluate(null, String.class);
+                        if (Utilities.lineEndStyles.values().contains(name)) {
+                            if (endpnt) {
+                                endPointStyle = new PointSymbolizerWrapper(pnt, super.getParent());
+                            } else if (startpnt) {
+                                startPointStyle = new PointSymbolizerWrapper(pnt,
+                                        super.getParent());
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
-    
-    public PointSymbolizerWrapper getEndPointStyle(){
-    	return endPointStyle;
-    }
-    
-    public PointSymbolizerWrapper getStartPointStyle(){
-    	return startPointStyle;
-    }
-    
-    public void setEndPointStyle(String geomName, String wkgName, String size, String color){
-    	endPointStyle = updateEndpointStyle(geomName, endPointStyle, wkgName, size, color, false);
-    }
-    
-    public void setStartPointStyle(String geomName, String wkgName, String size, String color){
-    	startPointStyle = updateEndpointStyle(geomName, startPointStyle, wkgName, size, color, true);
-    }
-    
-    private PointSymbolizerWrapper updateEndpointStyle(String geomName, PointSymbolizerWrapper wrapper, String wkgName, String size, String color, boolean isStart){
-    	if (wkgName == null || wkgName.length() == 0){
-    		if (wrapper != null){
-    			getParent().getRule().symbolizers().remove(wrapper.getSymbolizer());
-    			return null;
-    		}
-    	}
-    	if (wrapper == null){
-    		PointSymbolizer p = sf.createPointSymbolizer();
-    		if (isStart){
-    			p.setGeometry(ff.function("startPoint", ff.property(geomName))); //$NON-NLS-1$
-    			p.getGraphic().setRotation(ff.add(ff.function("startAngle", ff.property(geomName)), ff.literal(-180)));	//rotate start 180 degrees //$NON-NLS-1$
-    		}else{
-    			p.setGeometry(ff.function("endPoint", ff.property(geomName))); //$NON-NLS-1$
-    			p.getGraphic().setRotation(ff.function("endAngle", ff.property(geomName)));	//$NON-NLS-1$
-    		}
-    		wrapper = new PointSymbolizerWrapper(p, getParent());
-    		
-    		getParent().getRule().symbolizers().add(wrapper.getSymbolizer());
-    	}
-    	wrapper.setMarkName(wkgName);
-    	wrapper.setStrokeColor(color);
-    	wrapper.setFillColor(color);
-    	wrapper.setSize(size, false);
-    	return wrapper;
-    }
-    
-    
 
-    public void clearGraphicStroke(){
-    	if (stroke == null) return;
-   		stroke.setGraphicStroke(null);
-   		strokeGraphicStroke = null;
+    public PointSymbolizerWrapper getEndPointStyle() {
+        return endPointStyle;
     }
-    
+
+    public PointSymbolizerWrapper getStartPointStyle() {
+        return startPointStyle;
+    }
+
+    public void setEndPointStyle(String geomName, String wkgName, String size, String color) {
+        endPointStyle = updateEndpointStyle(geomName, endPointStyle, wkgName, size, color, false);
+    }
+
+    public void setStartPointStyle(String geomName, String wkgName, String size, String color) {
+        startPointStyle = updateEndpointStyle(geomName, startPointStyle, wkgName, size, color,
+                true);
+    }
+
+    private PointSymbolizerWrapper updateEndpointStyle(String geomName,
+            PointSymbolizerWrapper wrapper, String wkgName, String size, String color,
+            boolean isStart) {
+        if (wkgName == null || wkgName.length() == 0) {
+            if (wrapper != null) {
+                getParent().getRule().symbolizers().remove(wrapper.getSymbolizer());
+                return null;
+            }
+        }
+        if (wrapper == null) {
+            PointSymbolizer p = sf.createPointSymbolizer();
+            if (isStart) {
+                p.setGeometry(ff.function("startPoint", ff.property(geomName))); //$NON-NLS-1$
+                p.getGraphic().setRotation(
+                        ff.add(ff.function("startAngle", ff.property(geomName)), ff.literal(-180))); // rotate //$NON-NLS-1$
+                                                                                                     // start
+                                                                                                     // 180
+                                                                                                     // degrees
+            } else {
+                p.setGeometry(ff.function("endPoint", ff.property(geomName))); //$NON-NLS-1$
+                p.getGraphic().setRotation(ff.function("endAngle", ff.property(geomName))); //$NON-NLS-1$
+            }
+            wrapper = new PointSymbolizerWrapper(p, getParent());
+
+            getParent().getRule().symbolizers().add(wrapper.getSymbolizer());
+        }
+        wrapper.setMarkName(wkgName);
+        wrapper.setStrokeColor(color);
+        wrapper.setFillColor(color);
+        wrapper.setSize(size, false);
+        return wrapper;
+    }
+
+    public void clearGraphicStroke() {
+        if (stroke == null)
+            return;
+        stroke.setGraphicStroke(null);
+        strokeGraphicStroke = null;
+    }
+
     public Graphic getStrokeGraphicStroke() {
         return strokeGraphicStroke;
     }
 
-    public void setStrokeGraphicStroke( Graphic strokeGraphicStroke ) {
+    public void setStrokeGraphicStroke(Graphic strokeGraphicStroke) {
         this.strokeGraphicStroke = strokeGraphicStroke;
-        if (hasStroke){
-        	checkStrokeExists();
+        if (hasStroke) {
+            checkStrokeExists();
 
-        	stroke.setGraphicStroke(strokeGraphicStroke);
+            stroke.setGraphicStroke(strokeGraphicStroke);
         }
     }
 
     // ///// GETTERS/SETTERS
-    public void setHasStroke( boolean hasStroke ) {
+    public void setHasStroke(boolean hasStroke) {
         this.hasStroke = hasStroke;
         if (hasStroke) {
             checkStrokeExists();
@@ -248,86 +263,86 @@ public class LineSymbolizerWrapper extends SymbolizerWrapper {
         }
     }
 
-    public void setStrokeWidth( String strokeWidth, boolean isProperty ) {
+    public void setStrokeWidth(String strokeWidth, boolean isProperty) {
         this.strokeWidth = strokeWidth;
-        if (hasStroke){
-        	checkStrokeExists();
-        	if (isProperty) {
-        		stroke.setWidth(ff.property(strokeWidth));
-        	} else {
-        		stroke.setWidth(ff.literal(strokeWidth));
-        	}
-        }
-    }
-
-    public void setStrokeColor( String strokeColor, boolean isProperty ) {
-        this.strokeColor = strokeColor;
-        if (hasStroke){
-        	checkStrokeExists();
-        	if (isProperty) {
-        		stroke.setColor(ff.property(strokeColor));
-        	} else {
-        		if (strokeColor != null) {
-        			stroke.setColor(ff.literal(strokeColor));
-        		}
+        if (hasStroke) {
+            checkStrokeExists();
+            if (isProperty) {
+                stroke.setWidth(ff.property(strokeWidth));
+            } else {
+                stroke.setWidth(ff.literal(strokeWidth));
             }
         }
     }
 
-    public void setStrokeOpacity( String strokeOpacity, boolean isProperty ) {
+    public void setStrokeColor(String strokeColor, boolean isProperty) {
+        this.strokeColor = strokeColor;
+        if (hasStroke) {
+            checkStrokeExists();
+            if (isProperty) {
+                stroke.setColor(ff.property(strokeColor));
+            } else {
+                if (strokeColor != null) {
+                    stroke.setColor(ff.literal(strokeColor));
+                }
+            }
+        }
+    }
+
+    public void setStrokeOpacity(String strokeOpacity, boolean isProperty) {
         this.strokeOpacity = strokeOpacity;
-        if (hasStroke){
-        	checkStrokeExists();
-        	if (isProperty) {
-        		stroke.setOpacity(ff.property(strokeOpacity));
-        	} else {
-        		stroke.setOpacity(ff.literal(strokeOpacity));
-        	}
-        
-        	//update end point styles if applicable
-        	if (endPointStyle != null){
-        		endPointStyle.setStrokeOpacity(strokeOpacity, isProperty);
-        		endPointStyle.setFillOpacity(strokeOpacity, isProperty);
-        	}
-        	if (startPointStyle != null){
-        		startPointStyle.setStrokeOpacity(strokeOpacity, isProperty);
-        		startPointStyle.setFillOpacity(strokeOpacity, isProperty);
-        	}
+        if (hasStroke) {
+            checkStrokeExists();
+            if (isProperty) {
+                stroke.setOpacity(ff.property(strokeOpacity));
+            } else {
+                stroke.setOpacity(ff.literal(strokeOpacity));
+            }
+
+            // update end point styles if applicable
+            if (endPointStyle != null) {
+                endPointStyle.setStrokeOpacity(strokeOpacity, isProperty);
+                endPointStyle.setFillOpacity(strokeOpacity, isProperty);
+            }
+            if (startPointStyle != null) {
+                startPointStyle.setStrokeOpacity(strokeOpacity, isProperty);
+                startPointStyle.setFillOpacity(strokeOpacity, isProperty);
+            }
         }
     }
 
-    public void setDash( String dash ) {
+    public void setDash(String dash) {
         this.dash = dash;
-        if (hasStroke){
-        	checkStrokeExists();
-        	float[] dashArray = Utilities.getDash(dash);
-        	stroke.setDashArray(dashArray);
+        if (hasStroke) {
+            checkStrokeExists();
+            float[] dashArray = Utilities.getDash(dash);
+            stroke.setDashArray(dashArray);
         }
     }
 
-    public void setDashOffset( String dashOffset ) {
+    public void setDashOffset(String dashOffset) {
         this.dashOffset = dashOffset;
-        if (hasStroke){
-        	checkStrokeExists();
-        	if (dashOffset != null && dashOffset.length() > 0) {
-        		stroke.setDashOffset(ff.literal(dashOffset));
-        	}
+        if (hasStroke) {
+            checkStrokeExists();
+            if (dashOffset != null && dashOffset.length() > 0) {
+                stroke.setDashOffset(ff.literal(dashOffset));
+            }
         }
     }
 
-    public void setLineCap( String lineCap ) {
+    public void setLineCap(String lineCap) {
         this.lineCap = lineCap;
-        if (hasStroke){
-        	checkStrokeExists();
-        	stroke.setLineCap(ff.literal(lineCap));
+        if (hasStroke) {
+            checkStrokeExists();
+            stroke.setLineCap(ff.literal(lineCap));
         }
     }
 
-    public void setLineJoin( String lineJoin ) {
+    public void setLineJoin(String lineJoin) {
         this.lineJoin = lineJoin;
-        if (hasStroke){
-        	checkStrokeExists();
-        	stroke.setLineJoin(ff.literal(lineJoin));
+        if (hasStroke) {
+            checkStrokeExists();
+            stroke.setLineJoin(ff.literal(lineJoin));
         }
     }
 

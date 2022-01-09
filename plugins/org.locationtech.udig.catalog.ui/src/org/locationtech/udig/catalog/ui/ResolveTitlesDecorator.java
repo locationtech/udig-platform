@@ -174,16 +174,14 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
         }
     }
 
-    /*
-     * @see org.eclipse.jface.viewers.ILabelDecorator#decorateImage(org.eclipse.swt.graphics.Image,
-     * java.lang.Object)
-     */
     @Override
     public Image decorateImage(Image image, Object element) {
-        if (disposed)
+        if (disposed) {
             return null;
-        if (!(element instanceof IResolve))
+        }
+        if (!(element instanceof IResolve)) {
             return null;
+        }
 
         IResolve resolve = (IResolve) element;
 
@@ -233,8 +231,9 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
 
     @Override
     public String decorateText(String text, Object element) {
-        if (disposed)
+        if (disposed) {
             return null;
+        }
         if (!(element instanceof IResolve)) {
             return null;
         }
@@ -278,10 +277,12 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
 
     @Override
     public Color decorateForeground(Object element) {
-        if (disposed)
+        if (disposed) {
             return null;
-        if (!(element instanceof IResolve))
+        }
+        if (!(element instanceof IResolve)) {
             return null;
+        }
 
         IResolve resolve = (IResolve) element;
         if (resolve.getStatus() == org.locationtech.udig.catalog.IResolve.Status.BROKEN) {
@@ -296,8 +297,9 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
 
     @Override
     public Font decorateFont(Object element) {
-        if (!(element instanceof IResolve))
+        if (!(element instanceof IResolve)) {
             return null;
+        }
 
         IResolve resolve = (IResolve) element;
         if (resolve.getStatus() == org.locationtech.udig.catalog.IResolve.Status.BROKEN || resolve
@@ -317,9 +319,6 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
         return brokenFont;
     }
 
-    /**
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
-     */
     @Override
     public void dispose() {
         assert Display.getCurrent() != null;
@@ -335,14 +334,11 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
         listeners.removeAll(instanceListeners);
         instanceListeners.clear();
         CatalogPlugin.removeListener(listener);
-        if (brokenFont != null)
+        if (brokenFont != null) {
             brokenFont.dispose();
+        }
     }
 
-    /**
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang.Object,
-     *      java.lang.String)
-     */
     @Override
     public boolean isLabelProperty(Object element, String property) {
         return true;
@@ -352,9 +348,6 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
         return source;
     }
 
-    /**
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)
-     */
     @Override
     public void removeListener(ILabelProviderListener listener) {
         assert Display.getCurrent() != null;
@@ -362,10 +355,6 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
         instanceListeners.remove(listener);
     }
 
-    /*
-     * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.jface.viewers.
-     * ILabelProviderListener)
-     */
     @Override
     public void addListener(ILabelProviderListener listener) {
         assert Display.getCurrent() != null;
@@ -378,6 +367,7 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
      * <p>
      * It can actually get "stuck" on any bad label or icon (such as a WMS that takes a while); so
      * it is important to have default titles that work okay.
+     * </p>
      */
     private class UpdateLabel extends Job {
 
@@ -406,14 +396,17 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
             try {
                 while (true) {
                     final IResolve element = toDecorate.poll();
-                    if (element == null)
+                    if (element == null) {
                         break;
-                    // check if some how request has already been fullfilled.
+                    }
+                    // check if some how request has already been fulfilled.
                     LabelData labelData = decorated.get(element);
-                    if (text && labelData != null)
+                    if (text && labelData != null) {
                         continue;
-                    if (!text && labelData != null)
+                    }
+                    if (!text && labelData != null) {
                         continue;
+                    }
 
                     URL identifier = element.getIdentifier();
                     monitor.beginTask(Messages.ResolveTitlesDecorator_0 + identifier.getFile(),
@@ -462,8 +455,9 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
                         continue;
                     }
                     decorated.put(element, data);
-                    if (monitor.isCanceled())
+                    if (monitor.isCanceled()) {
                         return Status.OK_STATUS;
+                    }
 
                     addUpdate(monitor, element);
 
@@ -531,16 +525,18 @@ public class ResolveTitlesDecorator implements ILabelDecorator, IColorDecorator,
             } else {
                 data.image = imageDescriptorCache.get(element);// get cached
             }
-            if (i == null)
+            if (i == null) {
                 i = CatalogUIPlugin.image(element);
+            }
             synchronized (imageRegistry) {
                 Image i2 = imageRegistry.get(key);
                 if (i2 != null && !i2.isDisposed()) {
                     return i;
                 }
 
-                if (i2 != null && i2.isDisposed())
+                if (i2 != null && i2.isDisposed()) {
                     imageRegistry.remove(key);
+                }
 
                 imageRegistry.put(key, i);
             }
