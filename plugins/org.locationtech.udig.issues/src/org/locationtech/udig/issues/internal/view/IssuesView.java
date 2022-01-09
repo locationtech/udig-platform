@@ -696,7 +696,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
                     toRemove.add(issue);
             }
         }
-        if (toRemove.size() > 0) {
+        if (!toRemove.isEmpty()) {
             list1.removeAll(toRemove);
             list2.addAll(0, toRemove);
             if (!resolveList) {

@@ -250,9 +250,9 @@ public class JGrassCatalogUtilities {
             final List<IService> rereadService = locator.acquire(ID, connectionParams);
 
             /**
-             * replace the service
+             * Replace the service
              */
-            if (rereadService.size() > 0) {
+            if (!rereadService.isEmpty()) {
                 Runnable refreshCatalogRunner = new Runnable() {
                     @Override
                     public void run() {
@@ -288,7 +288,7 @@ public class JGrassCatalogUtilities {
                 try {
                     List<IGeoResource> geoResources = new ArrayList<>();
                     members = resolve.members(progressMonitor);
-                    if (members.size() < 1 && resolve.canResolve(IGeoResource.class)) {
+                    if (members.isEmpty() && resolve.canResolve(IGeoResource.class)) {
                         // if it is a map, it has no members
                         geoResources.add(resolve.resolve(IGeoResource.class, progressMonitor));
                     } else if (members.get(0).canResolve(IGeoResource.class)) {

@@ -245,8 +245,8 @@ public class EditBlackboard {
     }
 
     /**
-     * Adds a Coordinate at the x,y location on the screen to the end of the geomtry. Closure of the
-     * hole is not enforced.
+     * Adds a Coordinate at the x,y location on the screen to the end of the geometry. Closure of
+     * the hole is not enforced.
      *
      * @param x the x screen location to place the new coordinate
      * @param y the x screen location to place the new coordinate
@@ -477,8 +477,10 @@ public class EditBlackboard {
      *
      * @param x x coordinate of coordinates to move
      * @param y y coordinate of coordinates to move
-     * @param deltaX the number of pixels to move coordinates in the positive x direction(Screen space)
-     * @param deltaY the number of pixels to move coordinates in the positive y direction(Screen space)
+     * @param deltaX the number of pixels to move coordinates in the positive x direction(Screen
+     *        space)
+     * @param deltaY the number of pixels to move coordinates in the positive y direction(Screen
+     *        space)
      */
     public List<Coordinate> moveCoords(int x, int y, int endX, int endY) {
 
@@ -1216,7 +1218,7 @@ public class EditBlackboard {
     }
 
     /**
-     * Searchs for a vertext in a square i pixels away from the location.
+     * Searches for a vertext in a square i pixels away from the location.
      *
      * @param location center of search
      * @param i distance from center to search (is not an area search)
@@ -1231,22 +1233,22 @@ public class EditBlackboard {
         final int minY = location.getY() - i;
 
         for (int x = minX; x <= maxX; x++) {
-            if (getCoords(x, minY).size() > 0)
+            if (!getCoords(x, minY).isEmpty())
                 return Point.valueOf(x, minY);
         }
 
         for (int y = minY + 1; y <= maxY; y++) {
-            if (getCoords(maxX, y).size() > 0)
+            if (!getCoords(maxX, y).isEmpty())
                 return Point.valueOf(maxX, y);
         }
 
         for (int x = maxX - 1; x >= minX; x--) {
-            if (getCoords(x, maxY).size() > 0)
+            if (!getCoords(x, maxY).isEmpty())
                 return Point.valueOf(x, maxY);
         }
 
         for (int y = maxY - 1; y >= minY; y--) {
-            if (getCoords(minX, y).size() > 0)
+            if (!getCoords(minX, y).isEmpty())
                 return Point.valueOf(minX, y);
         }
 

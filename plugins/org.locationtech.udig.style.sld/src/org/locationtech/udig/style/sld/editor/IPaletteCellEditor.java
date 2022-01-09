@@ -163,7 +163,7 @@ final class IPaletteCellEditor implements ICellModifier {
                         }
                     }
                 }
-                if (min.size() > 0) {
+                if (!min.isEmpty()) {
                     // lets make a range (this will ignore explicit classifiers)
                     // really you can't mix the two so the UI
                     // should probably be made smarter.
@@ -240,7 +240,7 @@ final class IPaletteCellEditor implements ICellModifier {
                 } else if (symb[0] instanceof PointSymbolizer) {
                     PointSymbolizer ps = (PointSymbolizer) symb[0];
                     List<GraphicalSymbol> marks = ps.getGraphic().graphicalSymbols();
-                    if (marks != null && marks.size() > 0) {
+                    if (marks != null && !marks.isEmpty()) {
                         if (marks.get(0) instanceof Mark) {
                             oldColorExpr = ((Mark) marks.get(0)).getFill().getColor();
                             ((Mark) marks.get(0)).getFill().setColor(newColorExpr);

@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,23 +33,32 @@ import org.opengis.style.GraphicalSymbol;
 
 /**
  * A wrapper for a {@link PolygonSymbolizer} to ease interaction with gui.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
 
     private Fill fill;
+
     private String fillColor;
+
     private String fillOpacity;
+
     private Graphic fillGraphicFill;
+
     private String wkMarkNameFill;
+
     private String wkMarkColorFill;
+
     private String wkMarkWidthFill;
+
     private String wkMarkSizeFill;
+
     private boolean hasFill;
+
     private Mark mark;
 
-    public PolygonSymbolizerWrapper( Symbolizer tmpSymbolizer, RuleWrapper parent ) {
+    public PolygonSymbolizerWrapper(Symbolizer tmpSymbolizer, RuleWrapper parent) {
         super((PolygonSymbolizer) tmpSymbolizer, parent);
 
         PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) tmpSymbolizer;
@@ -89,7 +98,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
             strokeGraphicStroke = stroke.getGraphicStroke();
             if (strokeGraphicStroke != null) {
                 List<GraphicalSymbol> graphicalSymbolsList = strokeGraphicStroke.graphicalSymbols();
-                if (graphicalSymbolsList.size() > 0) {
+                if (!graphicalSymbolsList.isEmpty()) {
                     GraphicalSymbol graphicalSymbol = graphicalSymbolsList.get(0);
                     if (graphicalSymbol instanceof ExternalGraphic) {
                         strokeExternalGraphicStroke = (ExternalGraphic) graphicalSymbol;
@@ -129,7 +138,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
             if (fillGraphicFill != null) {
                 List<GraphicalSymbol> graphicalSymbolsList = fillGraphicFill.graphicalSymbols();
 
-                if (graphicalSymbolsList.size() > 0) {
+                if (!graphicalSymbolsList.isEmpty()) {
                     GraphicalSymbol graphicalSymbol = graphicalSymbolsList.get(0);
                     if (graphicalSymbol instanceof ExternalGraphic) {
                         fillExternalGraphicFill = (ExternalGraphic) graphicalSymbol;
@@ -179,9 +188,8 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
     public Graphic getFillGraphicFill() {
         return fillGraphicFill;
     }
-    
 
-    public void setFillGraphicFill( Graphic fillGraphicFill ) {
+    public void setFillGraphicFill(Graphic fillGraphicFill) {
         this.fillGraphicFill = fillGraphicFill;
         checkFillExists();
 
@@ -189,7 +197,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
     }
 
     // ///// GETTERS/SETTERS
-    public void setHasFill( boolean hasFill ) {
+    public void setHasFill(boolean hasFill) {
         this.hasFill = hasFill;
         if (hasFill) {
             checkFillExists();
@@ -200,7 +208,8 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         }
     }
 
-    public void setHasStroke( boolean hasStroke ) {
+    @Override
+    public void setHasStroke(boolean hasStroke) {
         this.hasStroke = hasStroke;
         if (hasStroke) {
             checkStrokeExists();
@@ -211,6 +220,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         }
     }
 
+    @Override
     protected void checkStrokeExists() {
         if (stroke == null) {
             if (strokeColor == null) {
@@ -226,7 +236,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         }
     }
 
-    public void setFillColor( String fillColor, boolean isProperty ) {
+    public void setFillColor(String fillColor, boolean isProperty) {
         this.fillColor = fillColor;
         checkFillExists();
         fill.setGraphicFill(null);
@@ -243,7 +253,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         }
     }
 
-    public void setFillOpacity( String fillOpacity, boolean isProperty ) {
+    public void setFillOpacity(String fillOpacity, boolean isProperty) {
         this.fillOpacity = fillOpacity;
         checkFillExists();
         if (isProperty) {
@@ -253,20 +263,20 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         }
     }
 
-    public void clearGraphics(){
-    	this.wkMarkColorFill = null;
-    	this.wkMarkNameFill = null;
-    	this.wkMarkSizeFill = null;
-    	this.wkMarkWidthFill = null;
-    	
-    	if (fillGraphicFill != null){
-    		fillGraphicFill.graphicalSymbols().clear();
-    	}
-//    	fillGraphicFill = null;
-    	mark= null;
+    public void clearGraphics() {
+        this.wkMarkColorFill = null;
+        this.wkMarkNameFill = null;
+        this.wkMarkSizeFill = null;
+        this.wkMarkWidthFill = null;
+
+        if (fillGraphicFill != null) {
+            fillGraphicFill.graphicalSymbols().clear();
+        }
+        // fillGraphicFill = null;
+        mark = null;
     }
-    
-    public void setWkMarkNameFill( String wkMarkNameFill ) {
+
+    public void setWkMarkNameFill(String wkMarkNameFill) {
         this.wkMarkNameFill = wkMarkNameFill;
         checkMarkExists();
         if (wkMarkNameFill != null) {
@@ -274,7 +284,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         }
     }
 
-    public void setWkMarkColorFill( String wkMarkColorFill ) {
+    public void setWkMarkColorFill(String wkMarkColorFill) {
         this.wkMarkColorFill = wkMarkColorFill;
         checkMarkExists();
         if (wkMarkColorFill != null) {
@@ -283,7 +293,7 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         }
     }
 
-    public void setWkMarkWidthFill( String wkMarkWidthFill ) {
+    public void setWkMarkWidthFill(String wkMarkWidthFill) {
         this.wkMarkWidthFill = wkMarkWidthFill;
         checkMarkExists();
         if (wkMarkWidthFill != null) {
@@ -292,12 +302,12 @@ public class PolygonSymbolizerWrapper extends LineSymbolizerWrapper {
         }
     }
 
-    public void setWkMarkSizeFill( String wkMarkSizeFill ) {
+    public void setWkMarkSizeFill(String wkMarkSizeFill) {
         this.wkMarkSizeFill = wkMarkSizeFill;
         checkFillExists();
         fillGraphicFill.setSize(ff.literal(wkMarkSizeFill));
     }
-    
+
     // getters
     public boolean hasFill() {
         return hasFill;

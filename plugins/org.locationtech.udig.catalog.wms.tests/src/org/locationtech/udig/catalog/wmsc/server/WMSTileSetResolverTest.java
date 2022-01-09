@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  *
@@ -14,9 +15,10 @@ import static org.junit.Assert.assertNotNull;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.ID;
@@ -26,34 +28,32 @@ import org.locationtech.udig.catalog.IServiceFactory;
 import org.locationtech.udig.catalog.tests.wmsc.Activator;
 import org.locationtech.udig.project.ui.preferences.PreferenceConstants;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 public class WMSTileSetResolverTest {
-    
-    public static String getCapabilities = "http://localhost:8080/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities";
+
+    public static String getCapabilities = "http://localhost:8080/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities"; //$NON-NLS-1$
+
     static boolean localGeoserver = false;
-    
+
     @BeforeClass
     public static void checkThatWeHaveLocalGeoServer() throws Exception {
-        URL url = new URL( getCapabilities );
+        URL url = new URL(getCapabilities);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         try {
             int responseCode = connection.getResponseCode();
-            if( responseCode == 200 ){
+            if (responseCode == 200) {
                 localGeoserver = true;
             }
-        }
-        catch (Throwable ignore){
-            localGeoserver = false; // obviously not avaialble!
+        } catch (Throwable ignore) {
+            localGeoserver = false; // obviously not available!
         } finally {
             connection.disconnect();
         }
     }
+
     @SuppressWarnings("nls")
     @Test
     public void testResolver() throws Exception {
-        if( !localGeoserver){
+        if (!localGeoserver) {
             return; // ignore this test
         }
         Activator instance = Activator.getDefault();
@@ -63,7 +63,7 @@ public class WMSTileSetResolverTest {
         IServiceFactory factory = CatalogPlugin.getDefault().getServiceFactory();
 
         // create the service
-        URL url = new URL( getCapabilities );
+        URL url = new URL(getCapabilities);
         List<IService> services = factory.createService(url);
 
         // ensure the service was created
@@ -79,18 +79,21 @@ public class WMSTileSetResolverTest {
 
         ID id = new ID(new ID(url), "tasmania");
 
-        IGeoResource resource = (IGeoResource) catalog.getById(IGeoResource.class, id, null);
+        IGeoResource resource = catalog.getById(IGeoResource.class, id, null);
 
-        /*
-         * setup the properties so this adapter is enabled
+        /**
+         * Setup the properties so this adapter is enabled
          */
         resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_ON_OFF, true);
-        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_WIDTH, PreferenceConstants.DEFAULT_TILE_SIZE+"");
-        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_HEIGHT,PreferenceConstants.DEFAULT_TILE_SIZE+"");
-        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_IMAGE_TYPE,PreferenceConstants.DEFAULT_IMAGE_TYPE);
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_WIDTH,
+                PreferenceConstants.DEFAULT_TILE_SIZE + "");
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_HEIGHT,
+                PreferenceConstants.DEFAULT_TILE_SIZE + "");
+        resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_IMAGE_TYPE,
+                PreferenceConstants.DEFAULT_IMAGE_TYPE);
         resource.getPersistentProperties().put(PreferenceConstants.P_TILESET_SCALES,
                 "1000000.0 100000.0 50000.0 20000.0 10000.0 5000.0 2500.0 1000.0");
-        
+
         assertNotNull(resource);
 
         TileSet ts = resource.resolve(TileSet.class, null);
