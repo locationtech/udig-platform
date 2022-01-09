@@ -568,7 +568,7 @@ public class ImportGeopaparazziFolderWizard extends Wizard implements IImportWiz
             pm.done();
         }
 
-        if (nonTakenFilesList.size() > 0) {
+        if (!nonTakenFilesList.isEmpty()) {
             final StringBuilder sB = new StringBuilder();
             sB.append("For the following media no *.properties file could be found:\n"); //$NON-NLS-1$
             for (String p : nonTakenFilesList) {

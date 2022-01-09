@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  *
@@ -13,25 +14,24 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.catalog.document.IDocument;
 import org.locationtech.udig.catalog.document.IDocument.Type;
 import org.locationtech.udig.catalog.document.IDocumentSource;
 import org.locationtech.udig.catalog.internal.shp.ShpGeoResourceImpl;
 import org.locationtech.udig.document.model.AbstractLinkedDocument;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-
 /**
  * Shapefile resource-level document source implementation. This implements getters and setters to
  * the documents attached to the resource.
- * 
+ *
  * @author Naz Chan
  */
 public class ShpDocumentSource extends AbstractShpDocumentSource implements IDocumentSource {
 
     /**
      * Creates a new ShpDocumentSource
-     * 
+     *
      * @param url of the existing .shp file
      * @throws Exception
      */
@@ -43,12 +43,12 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
     public boolean isEnabled() {
         return propParser.getShapefileFlag();
     }
-    
+
     @Override
     public boolean isEnabledEditable() {
         return true;
     }
-    
+
     @Override
     public boolean canAttach() {
         return true;
@@ -59,27 +59,27 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
         // Not implemented in this document source
         return false;
     }
-    
+
     @Override
     public boolean canLinkWeb() {
         return true;
     }
-    
+
     @Override
     public boolean canUpdate() {
         return true;
     }
-    
+
     @Override
     public boolean canRemove() {
         return true;
     }
-    
+
     @Override
     public List<IDocument> getDocuments(IProgressMonitor monitor) {
-        docs = new ArrayList<IDocument>();
+        docs = new ArrayList<>();
         final List<DocumentInfo> infos = propParser.getShapeDocumentInfos();
-        if (infos != null && infos.size() > 0) {
+        if (infos != null && !infos.isEmpty()) {
             docs.addAll(docFactory.create(infos));
         }
         return docs;
@@ -91,7 +91,7 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
         }
         return docs;
     }
-        
+
     @Override
     public IDocument add(DocumentInfo info, IProgressMonitor monitor) {
         final IDocument doc = addInternal(info, monitor);
@@ -101,7 +101,7 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
 
     @Override
     public List<IDocument> add(List<DocumentInfo> infos, IProgressMonitor monitor) {
-        final List<IDocument> newDocs = new ArrayList<IDocument>();
+        final List<IDocument> newDocs = new ArrayList<>();
         for (DocumentInfo info : infos) {
             addInternal(info, monitor);
         }
@@ -111,7 +111,8 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
 
     private IDocument addInternal(DocumentInfo info, IProgressMonitor monitor) {
         if (Type.ATTACHMENT == info.getType()) {
-            final File newFile = ShpDocUtils.copyFile(info.getInfo(), propParser.getShapefileAttachDir());
+            final File newFile = ShpDocUtils.copyFile(info.getInfo(),
+                    propParser.getShapefileAttachDir());
             info.setInfo(newFile.getAbsolutePath());
         } else if (Type.LINKED == info.getType()) {
             // Do special handling here for linked documents, if needed
@@ -146,7 +147,7 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
         getDocsInternal(monitor).remove(doc);
         return true;
     }
-    
+
     @Override
     public boolean update(IDocument doc, DocumentInfo info, IProgressMonitor monitor) {
         if (Type.ATTACHMENT == info.getType()) {
@@ -156,7 +157,7 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
             } else {
                 if (!oldFile.getAbsolutePath().equals(info.getInfo())) {
                     updateInternal(oldFile, info);
-                }    
+                }
             }
         } else if (Type.LINKED == info.getType()) {
             // Do special handling here for linked documents, if needed
@@ -165,15 +166,16 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
         save(monitor);
         return true;
     }
- 
+
     private void updateInternal(File oldFile, DocumentInfo info) {
         ShpDocUtils.deleteFile(oldFile);
-        final File newFile = ShpDocUtils.copyFile(info.getInfo(), propParser.getShapefileAttachDir());
+        final File newFile = ShpDocUtils.copyFile(info.getInfo(),
+                propParser.getShapefileAttachDir());
         info.setInfo(newFile.getAbsolutePath());
     }
-    
+
     private void save(IProgressMonitor monitor) {
-        final List<DocumentInfo> infos = new ArrayList<IDocumentSource.DocumentInfo>();
+        final List<DocumentInfo> infos = new ArrayList<>();
         for (IDocument doc : getDocsInternal(monitor)) {
             final AbstractLinkedDocument shpDoc = (AbstractLinkedDocument) doc;
             infos.add(shpDoc.getInfo());
@@ -181,5 +183,5 @@ public class ShpDocumentSource extends AbstractShpDocumentSource implements IDoc
         propParser.setShapeDocmentInfos(infos);
         propParser.writeProperties();
     }
-    
+
 }

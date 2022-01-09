@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012-2013, Refractions Research Inc.
  *
@@ -8,26 +9,16 @@
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.catalog.internal.wms.ui;
+
 import java.io.Serializable;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.internal.wms.WMSServiceExtension;
-import org.locationtech.udig.catalog.internal.wms.WMSServiceImpl;
-import org.locationtech.udig.catalog.internal.wms.WmsPlugin;
-import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
-import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
-import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
-import org.locationtech.udig.catalog.wms.internal.Messages;
-import org.locationtech.udig.core.RecentHistory;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -44,17 +35,26 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.internal.wms.WMSServiceExtension;
+import org.locationtech.udig.catalog.internal.wms.WMSServiceImpl;
+import org.locationtech.udig.catalog.internal.wms.WmsPlugin;
+import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
+import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
+import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
+import org.locationtech.udig.catalog.wms.internal.Messages;
+import org.locationtech.udig.core.RecentHistory;
 
 /**
  * Data page responsible for acquiring WMS services.
  * <p>
  * Responsibilities:
  * <ul>
- * <li>defaults based on selection - for URL, WMSService, and generic IService (from search)
- * <li>remember history in dialog settings
- * <li>complete list here: <a
- * href="http://udig.refractions.net/confluence/display/DEV/UDIGImportPage+Checklist">Import Page
- * Checklist</a>
+ * <li>defaults based on selection - for URL, WMSService, and generic IService (from search)</li>
+ * <li>remember history in dialog settings</li>
+ * <li>complete list here:
+ * <a href="http://udig.refractions.net/confluence/display/DEV/UDIGImportPage+Checklist">Import Page
+ * Checklist</a></li>
  * </ul>
  * </p>
  * <p>
@@ -64,14 +64,17 @@ import org.eclipse.ui.PlatformUI;
  * @author jgarnett
  * @since 1.0.0
  */
-public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListener, UDIGConnectionPage {
+public class WMSWizardPage extends AbstractUDIGImportPage
+        implements ModifyListener, UDIGConnectionPage {
 
-    static final String[] types = {"WMS", "Directory"}; //$NON-NLS-1$ //$NON-NLS-2$
+    static final String[] types = { "WMS", "Directory" }; //$NON-NLS-1$ //$NON-NLS-2$
 
     private String url = ""; //$NON-NLS-1$
 
     private static final String WMS_WIZARD = "WMS_WIZARD"; //$NON-NLS-1$
+
     private static final String WMS_RECENT = "WMS_RECENT"; //$NON-NLS-1$
+
     private IDialogSettings settings;
 
     private Combo urlCombo;
@@ -94,37 +97,44 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
         return "org.locationtech.udig.catalog.ui.WMS"; //$NON-NLS-1$
     }
 
-    /** Can be called during createControl */
-    protected Map<String,Serializable> defaultParams(){
-    	IStructuredSelection selection = (IStructuredSelection)PlatformUI
-			.getWorkbench() .getActiveWorkbenchWindow().getSelectionService()
-			.getSelection();
-        Map<String, Serializable> toParams = toParams( selection );
-        if( !toParams.isEmpty() ){
-        	return toParams;
+    /**
+     * Can be called during createControl
+     */
+    protected Map<String, Serializable> defaultParams() {
+        IStructuredSelection selection = (IStructuredSelection) PlatformUI.getWorkbench()
+                .getActiveWorkbenchWindow().getSelectionService().getSelection();
+        Map<String, Serializable> toParams = toParams(selection);
+        if (!toParams.isEmpty()) {
+            return toParams;
         }
 
-    	WMSConnectionFactory connectionFactory = new WMSConnectionFactory();
-    	Map<String, Serializable> params = connectionFactory.createConnectionParameters( getState().getWorkflow().getContext() );
-    	if( params !=null )
-    		return params;
+        WMSConnectionFactory connectionFactory = new WMSConnectionFactory();
+        Map<String, Serializable> params = connectionFactory
+                .createConnectionParameters(getState().getWorkflow().getContext());
+        if (params != null)
+            return params;
 
-    	return Collections.emptyMap();
+        return Collections.emptyMap();
     }
-    /** Retrieve "best" WMS guess of parameters based on provided context */
-    protected Map<String,Serializable> toParams( IStructuredSelection context){
-        if( context != null ) {
-        	WMSConnectionFactory connectionFactory = new WMSConnectionFactory();
-            for( Iterator itr = context.iterator(); itr.hasNext(); ) {
-				Map<String,Serializable> params = connectionFactory
-                	.createConnectionParameters(itr.next());
-                if( !params.isEmpty() ) return params;
+
+    /**
+     * Retrieve "best" WMS guess of parameters based on provided context
+     */
+    protected Map<String, Serializable> toParams(IStructuredSelection context) {
+        if (context != null) {
+            WMSConnectionFactory connectionFactory = new WMSConnectionFactory();
+            for (Iterator itr = context.iterator(); itr.hasNext();) {
+                Map<String, Serializable> params = connectionFactory
+                        .createConnectionParameters(itr.next());
+                if (!params.isEmpty())
+                    return params;
             }
         }
         return Collections.EMPTY_MAP;
     }
 
-    public void createControl( Composite parent ) {
+    @Override
+    public void createControl(Composite parent) {
         String[] recentWMSs = settings.getArray(WMS_RECENT);
         if (recentWMSs == null) {
             recentWMSs = new String[0];
@@ -148,24 +158,24 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
         gridData.widthHint = 400;
 
         // For Drag 'n Drop as well as for general selections
-        // look for a url as part of the selection
-        Map<String,Serializable> params = defaultParams(); // based on selection
+        // look for a URL as part of the selection
+        Map<String, Serializable> params = defaultParams(); // based on selection
 
         urlCombo = new Combo(composite, SWT.BORDER);
         urlCombo.setItems(recentWMSs);
         urlCombo.setVisibleItemCount(15);
         urlCombo.setLayoutData(gridData);
 
-        URL selectedURL = getURL( params );
+        URL selectedURL = getURL(params);
         if (selectedURL != null) {
-            urlCombo.setText( selectedURL.toExternalForm() );
+            urlCombo.setText(selectedURL.toExternalForm());
             url = selectedURL.toExternalForm();
             setPageComplete(true);
         } else if (url != null && url.length() != 0) {
             urlCombo.setText(url);
             setPageComplete(true);
         } else {
-        	url = null;
+            url = null;
             urlCombo.setText("http://"); //$NON-NLS-1$
             setPageComplete(false);
         }
@@ -174,83 +184,86 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
         setControl(composite);
 
         Display.getCurrent().asyncExec(new Runnable() {
-			public void run() {
+            @Override
+            public void run() {
 
-				EndConnectionState currentState = getState();
-				Map<IService, Throwable> errors = currentState.getErrors();
-				if( errors!=null && !errors.isEmpty()){
-					for (Map.Entry<IService, Throwable> entry : errors.entrySet()) {
-						if( entry.getKey() instanceof WMSServiceImpl ){
-							Throwable value = entry.getValue();
-							if( value instanceof ConnectException){
-								setErrorMessage(Messages.WMSWizardPage_serverConnectionError);
-							}else{
-								String message = Messages.WMSWizardPage_connectionProblem+value.getLocalizedMessage();
-								setErrorMessage(message);
-							}
-						}
-					}
-				}
+                EndConnectionState currentState = getState();
+                Map<IService, Throwable> errors = currentState.getErrors();
+                if (errors != null && !errors.isEmpty()) {
+                    for (Map.Entry<IService, Throwable> entry : errors.entrySet()) {
+                        if (entry.getKey() instanceof WMSServiceImpl) {
+                            Throwable value = entry.getValue();
+                            if (value instanceof ConnectException) {
+                                setErrorMessage(Messages.WMSWizardPage_serverConnectionError);
+                            } else {
+                                String message = Messages.WMSWizardPage_connectionProblem
+                                        + value.getLocalizedMessage();
+                                setErrorMessage(message);
+                            }
+                        }
+                    }
+                }
 
-			}
-		});
+            }
+        });
     }
 
     @Override
     public void setErrorMessage(String newMessage) {
-    	WizardPage page=(WizardPage) getContainer().getCurrentPage();
-    	page.setErrorMessage(newMessage);
+        WizardPage page = (WizardPage) getContainer().getCurrentPage();
+        page.setErrorMessage(newMessage);
     }
 
     @Override
     public void setMessage(String newMessage) {
-    	WizardPage page=(WizardPage) getContainer().getCurrentPage();
-    	page.setMessage(newMessage);
+        WizardPage page = (WizardPage) getContainer().getCurrentPage();
+        page.setMessage(newMessage);
     }
 
     @Override
     public void setMessage(String newMessage, int messageType) {
-    	WizardPage page=(WizardPage) getContainer().getCurrentPage();
-    	page.setMessage(newMessage, messageType);
+        WizardPage page = (WizardPage) getContainer().getCurrentPage();
+        page.setMessage(newMessage, messageType);
     }
 
-	public EndConnectionState getState() {
-		return (EndConnectionState) super.getState();
-	}
+    @Override
+    public EndConnectionState getState() {
+        return (EndConnectionState) super.getState();
+    }
 
-    public URL getURL( Map<String,Serializable> params ){
-        Object value = params.get( WMSServiceImpl.WMS_URL_KEY );
-        if( value == null ) return null;
-        if( value instanceof URL ) return (URL) value;
-        if( value instanceof String) {
+    public URL getURL(Map<String, Serializable> params) {
+        Object value = params.get(WMSServiceImpl.WMS_URL_KEY);
+        if (value == null)
+            return null;
+        if (value instanceof URL)
+            return (URL) value;
+        if (value instanceof String) {
             try {
-                URL url = new URL( (String) value );
+                URL url = new URL((String) value);
                 return url;
-            }
-            catch( MalformedURLException erp ){
+            } catch (MalformedURLException erp) {
             }
         }
         return null;
     }
+
     /**
-     * Double click in list, or return from url control.
+     * Double click in list, or return from URL control.
      *
      * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
      * @param e
      */
-    public void widgetDefaultSelected( SelectionEvent e ) {
+    public void widgetDefaultSelected(SelectionEvent e) {
         e.getClass();// kill warning
         if (getWizard().canFinish()) {
             getWizard().performFinish();
         }
     }
 
-
-
     /**
      * This should be called using the Wizard .. job when next/finish is pressed.
      */
-    public List<IService> getResources( IProgressMonitor monitor ) throws Exception {
+    public List<IService> getResources(IProgressMonitor monitor) throws Exception {
         URL location = new URL(url);
 
         WMSServiceExtension creator = new WMSServiceExtension();
@@ -259,10 +272,10 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
         IService service = creator.createService(location, params);
         service.getInfo(monitor); // load it
 
-        List<IService> servers = new ArrayList<IService>();
+        List<IService> servers = new ArrayList<>();
         servers.add(service);
 
-        /*
+        /**
          * Success! Store the URL in history.
          */
         saveWidgetValues();
@@ -270,9 +283,10 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
         return servers;
     }
 
-    public void modifyText( ModifyEvent e ) {
+    @Override
+    public void modifyText(ModifyEvent e) {
         try {
-        	getState().getErrors().clear();
+            getState().getErrors().clear();
             url = ((Combo) e.getSource()).getText();
             new URL(url);
             setErrorMessage(null);
@@ -290,13 +304,13 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
      */
     private void saveWidgetValues() {
         if (settings != null) {
-            RecentHistory<String> recent =
-                    new RecentHistory<String>( settings.getArray(WMS_RECENT) );
-            recent.add( url );
+            RecentHistory<String> recent = new RecentHistory<>(settings.getArray(WMS_RECENT));
+            recent.add(url);
             settings.put(WMS_RECENT, recent.toArray(new String[recent.size()]));
         }
     }
 
+    @Override
     public Map<String, Serializable> getParams() {
         try {
             URL location = new URL(url);
@@ -315,7 +329,7 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
 
     public List<URL> getURLs() {
         try {
-            ArrayList<URL> l = new ArrayList<URL>();
+            ArrayList<URL> l = new ArrayList<>();
             l.add(new URL(url));
 
             return l;
@@ -325,4 +339,3 @@ public class WMSWizardPage extends AbstractUDIGImportPage implements ModifyListe
     }
 
 }
-

@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -43,7 +43,7 @@ import org.opengis.feature.type.Name;
 
 /**
  * Common class for properties editors.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public abstract class PropertiesEditor {
@@ -59,11 +59,11 @@ public abstract class PropertiesEditor {
 
     protected Name geometryPropertyName;
 
-    protected List<String> stringAttributeNames = new ArrayList<String>();
+    protected List<String> stringAttributeNames = new ArrayList<>();
 
-    protected List<String> numericAttributeNames = new ArrayList<String>();
+    protected List<String> numericAttributeNames = new ArrayList<>();
 
-    protected List<String> allAttributeNames = new ArrayList<String>();
+    protected List<String> allAttributeNames = new ArrayList<>();
 
     protected Composite mainComposite;
 
@@ -153,7 +153,7 @@ public abstract class PropertiesEditor {
     public void reloadGroupsAndRules() {
         List<FeatureTypeStyleWrapper> featureTypeStylesWrapperList = styleWrapper
                 .getFeatureTypeStylesWrapperList();
-        if (featureTypeStylesWrapperList.size() > 0) {
+        if (!featureTypeStylesWrapperList.isEmpty()) {
             groupRulesTreeViewer.setInput(featureTypeStylesWrapperList);
         } else {
             groupRulesTreeViewer.setInput(null);

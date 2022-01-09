@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,21 +13,17 @@ package org.locationtech.udig.catalog.internal.geotiff;
 
 import java.io.IOException;
 
-import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.geotiff.internal.Messages;
 import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
 import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResourceInfo;
 import org.locationtech.udig.catalog.rasterings.AbstractRasterService;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-
-
 /**
- * Provides a handle to a geotiff resource allowing the service to be lazily 
- * loaded.
- * 
+ * Provides a handle to a GeoTiff resource allowing the service to be lazily loaded.
+ *
  * @author mleslie
  * @since 0.6.0
  */
@@ -38,24 +34,26 @@ public class GeoTiffGeoResourceImpl extends AbstractRasterGeoResource {
     public GeoTiffGeoResourceImpl(AbstractRasterService service, String name) {
         super(service, name);
     }
-    
-    protected AbstractRasterGeoResourceInfo createInfo(IProgressMonitor monitor) throws IOException {
-        if( monitor == null ) monitor = new NullProgressMonitor();
-        
-        monitor.beginTask(Messages.GeoTiffGeoResource_connect, 2); 
+
+    @Override
+    protected AbstractRasterGeoResourceInfo createInfo(IProgressMonitor monitor)
+            throws IOException {
+        if (monitor == null)
+            monitor = new NullProgressMonitor();
+
+        monitor.beginTask(Messages.GeoTiffGeoResource_connect, 2);
         try {
-            monitor.worked(1);  
-            return new AbstractRasterGeoResourceInfo(this, "GeoTiff", ".tif", ".tiff");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
-                    }
-        finally {
+            monitor.worked(1);
+            return new AbstractRasterGeoResourceInfo(this, "GeoTiff", ".tif", ".tiff"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+        } finally {
             monitor.done();
         }
     }
-    
+
     @Override
     public GeoTiffServiceImpl service(IProgressMonitor monitor) throws IOException {
-    	IService serv = super.service(monitor);
-    	return (serv != null && serv instanceof GeoTiffServiceImpl) 
-    			? (GeoTiffServiceImpl) serv : null;
+        IService serv = super.service(monitor);
+        return (serv != null && serv instanceof GeoTiffServiceImpl) ? (GeoTiffServiceImpl) serv
+                : null;
     }
 }

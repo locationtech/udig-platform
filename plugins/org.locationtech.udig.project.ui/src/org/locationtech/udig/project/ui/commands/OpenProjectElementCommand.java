@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -35,40 +35,36 @@ import org.locationtech.udig.ui.PlatformGIS;
 public class OpenProjectElementCommand implements UndoableCommand {
 
     IProjectElement element;
+
     private IEditorPart previous;
 
-    public OpenProjectElementCommand( IProjectElement element ) {
+    public OpenProjectElementCommand(IProjectElement element) {
         this.element = element;
     }
 
-    public void run( IProgressMonitor monitor ) throws Exception {
+    @Override
+    public void run(IProgressMonitor monitor) throws Exception {
         try {
             if (PlatformUI.getWorkbench().isClosing())
                 return;
-            
-            monitor.beginTask(Messages.OpenMapCommand_taskName, IProgressMonitor.UNKNOWN); 
+
+            monitor.beginTask(Messages.OpenMapCommand_taskName, IProgressMonitor.UNKNOWN);
             final UDIGEditorInput input = ApplicationGIS.getInput(element);
-//          if (element instanceof Map) {
-//              Map map = (Map) element;
-//              if (map.getViewportModel().getBounds().isNull()) {
-//                  Envelope bounds = map.getBounds(monitor);
-//                  map.getViewportModelInternal().setBounds(bounds);
-//              }
-//          }
             if (input == null) {
                 return;
             }
             input.setProjectElement(element);
 
-            PlatformGIS.syncInDisplayThread(new Runnable(){
+            PlatformGIS.syncInDisplayThread(new Runnable() {
+                @Override
                 public void run() {
-                    IWorkbenchPage activePage = PlatformUI.getWorkbench()
-                            .getActiveWorkbenchWindow().getActivePage();
+                    IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                            .getActivePage();
                     IEditorReference[] editors = activePage.getEditorReferences();
-                    for( IEditorReference reference : editors ) {
+                    for (IEditorReference reference : editors) {
                         try {
                             if (reference.getEditorInput().equals(input)) {
-                                previous=activePage.getActiveEditor();
+                                previous = activePage.getActiveEditor();
                                 activePage.activate(reference.getPart(true));
                                 return;
                             }
@@ -77,26 +73,27 @@ public class OpenProjectElementCommand implements UndoableCommand {
                         }
                     }
                     openMap(input);
-                    }
+                }
 
-                });
+            });
         } finally {
             monitor.done();
         }
     }
 
-    private void openMap( final UDIGEditorInput input ) {
+    private void openMap(final UDIGEditorInput input) {
         try {
-            IEditorPart part = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(input,
-                    input.getEditorId(), true, IWorkbenchPage.MATCH_NONE);
-            
+            IEditorPart part = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                    .openEditor(input, input.getEditorId(), true, IWorkbenchPage.MATCH_NONE);
+
             ProjectExplorer explorer = ProjectExplorer.getProjectExplorer();
             explorer.setSelection(Collections.singleton(input.getProjectElement()), true);
 
-            if( part instanceof MapEditorPart ){
-                MapEditorPart mapEditor=(MapEditorPart) part;
-                while( !mapEditor.getComposite().isVisible() || !mapEditor.getComposite().isEnabled() ){
-                    if( !Display.getCurrent().readAndDispatch() ){
+            if (part instanceof MapEditorPart) {
+                MapEditorPart mapEditor = (MapEditorPart) part;
+                while (!mapEditor.getComposite().isVisible()
+                        || !mapEditor.getComposite().isEnabled()) {
+                    if (!Display.getCurrent().readAndDispatch()) {
                         Thread.sleep(300);
                     }
                 }
@@ -104,27 +101,30 @@ public class OpenProjectElementCommand implements UndoableCommand {
         } catch (PartInitException e) {
             ProjectUIPlugin.log(e.getLocalizedMessage(), e);
         } catch (InterruptedException e) {
-            throw (RuntimeException) new RuntimeException( ).initCause( e );
+            throw (RuntimeException) new RuntimeException().initCause(e);
         }
     }
 
+    @Override
     public String getName() {
-        return Messages.OpenMapCommand_commandName; 
+        return Messages.OpenMapCommand_commandName;
     }
 
-    public void rollback( IProgressMonitor monitor ) throws Exception {
-        if (previous!=null){
+    @Override
+    public void rollback(IProgressMonitor monitor) throws Exception {
+        if (previous != null) {
             previous.getEditorSite().getPage().activate(previous);
             return;
         }
-        PlatformGIS.syncInDisplayThread(new Runnable(){
+        PlatformGIS.syncInDisplayThread(new Runnable() {
+            @Override
             public void run() {
                 UDIGEditorInput input = ApplicationGIS.getInput(element);
                 IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                         .getActivePage();
                 IEditorReference[] editors = activePage.getEditorReferences();
-                List<IEditorReference> matches = new ArrayList<IEditorReference>();
-                for( IEditorReference reference : editors ) {
+                List<IEditorReference> matches = new ArrayList<>();
+                for (IEditorReference reference : editors) {
                     try {
                         if (reference.getEditorInput().equals(input)) {
                             matches.add(reference);
@@ -134,12 +134,13 @@ public class OpenProjectElementCommand implements UndoableCommand {
                     }
                 }
 
-                activePage
-                        .closeEditors(matches.toArray(new IEditorReference[matches.size()]), true);
+                activePage.closeEditors(matches.toArray(new IEditorReference[matches.size()]),
+                        true);
             }
         });
     }
 
+    @Override
     public Command copy() {
         return null;
     }

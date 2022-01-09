@@ -52,6 +52,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     /**
      * The cached value of the '{@link #getCurrentProject() <em>Current Project</em>}' reference.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getCurrentProject()
      * @generated
      * @ordered
@@ -66,11 +67,11 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
      * @generated NOT
      * @ordered
      */
-    @SuppressWarnings("unchecked")
     protected List projects = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     protected ProjectRegistryImpl() {
@@ -79,6 +80,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -127,15 +129,18 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     @Override
     public Project getCurrentProject() {
         Project p = getCurrentProjectGen();
-        if (p == null && getProjects().size() > 0)
+        if (p == null && !getProjects().isEmpty()) {
             p = getProjects().get(0);
-        if (p == null)
+        }
+        if (p == null) {
             p = getDefaultProject();
+        }
         return p;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public Project getCurrentProjectGen() {
@@ -154,6 +159,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public Project basicGetCurrentProject() {
@@ -162,6 +168,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -245,16 +252,16 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
                     throw new NullPointerException(
                             "Unable to load " + uri + " - does not contain a project");
                 }
-                //                if (incomingProject == null) {
-                //                    incomingProject = createProject(uri, resource);
-                //                    List<ProjectElement> eContents = incomingProject.getElementsInternal();
-                //                    for( EObject eObject : contents ) {
-                //                        if (eObject instanceof MapImpl) {
-                //                            MapImpl tmpMap = (MapImpl) eObject;
-                //                            eContents.add(tmpMap);
-                //                        }
-                //                    }
-                //                }
+                // if (incomingProject == null) {
+                // incomingProject = createProject(uri, resource);
+                // List<ProjectElement> eContents = incomingProject.getElementsInternal();
+                // for( EObject eObject : contents ) {
+                // if (eObject instanceof MapImpl) {
+                // MapImpl tmpMap = (MapImpl) eObject;
+                // eContents.add(tmpMap);
+                // }
+                // }
+                // }
             }
 
             final Project newProject = incomingProject;
@@ -355,8 +362,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -373,8 +380,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -393,8 +400,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -411,8 +418,8 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -557,7 +564,7 @@ public class ProjectRegistryImpl extends EObjectImpl implements ProjectRegistry 
 
     /**
      * @see org.locationtech.udig.project.internal.ProjectFactory#getProjectRegistry()
-     * @uml.property   name="projectRegistry"
+     * @uml.property name="projectRegistry"
      */
     public static ProjectRegistry getProjectRegistry() {
         synchronized (ProjectRegistry.class) {

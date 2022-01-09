@@ -1,6 +1,6 @@
-/*
+/**
  * uDig - User Friendly Desktop Internet GIS client
- * (C) HydroloGIS - www.hydrologis.com 
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -47,33 +47,47 @@ import org.locationtech.udig.style.advanced.raster.internal.Messages;
 
 /**
  * The composite holding the raster map style logic.
- * 
+ *
  * @author Andrea Antonello - www.hydrologis.com
  * @author Frank Gasdorf
  */
 public class CoverageColorEditor extends Composite implements SelectionListener {
 
     private List<CoverageRule> listOfRules = null;
+
     private Button addRuleButton = null;
+
     private Button removeRuleButton = null;
+
     private Button moveRuleUpButton = null;
+
     private Button moveRuleDownButton = null;
+
     private Composite rulesComposite = null;
+
     private Group alphaGroup = null;
+
     private Scale alphaScale = null;
+
     private ScrolledComposite scrolledRulesComposite = null;
+
     private Label alphaLabel = null;
+
     private Combo predefinedRulesCombo;
+
     private Button resetColormapButton;
+
     private HashMap<String, String[][]> colorRulesMap;
+
     private GridCoverage2D gridCoverage;
 
     private double[] minMax = null;
+
     private Text novaluesText;
 
-    public CoverageColorEditor( Composite parent, int style ) {
+    public CoverageColorEditor(Composite parent, int style) {
         super(parent, style);
-        listOfRules = new ArrayList<CoverageRule>();
+        listOfRules = new ArrayList<>();
         initialize();
     }
 
@@ -104,7 +118,8 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         removeRuleButton.setText("-"); //$NON-NLS-1$
         removeRuleButton.setLayoutData(gridData1);
         removeRuleButton.addSelectionListener(this);
-        removeRuleButton.setToolTipText(Messages.CoverageColorEditor_removeDisabledColorMapEntryTooltip);
+        removeRuleButton
+                .setToolTipText(Messages.CoverageColorEditor_removeDisabledColorMapEntryTooltip);
         moveRuleUpButton = new Button(this, SWT.UP | SWT.ARROW);
         moveRuleUpButton.setLayoutData(gridData2);
         moveRuleUpButton.addSelectionListener(this);
@@ -132,9 +147,10 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         selectAllGD.horizontalSpan = 3;
         selectAllButton.setLayoutData(selectAllGD);
         selectAllButton.setText(Messages.CoverageColorEditor_2);
-        selectAllButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
-                for( CoverageRule cRule : listOfRules ) {
+        selectAllButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                for (CoverageRule cRule : listOfRules) {
                     cRule.setActive(true);
                 }
                 redoLayout();
@@ -146,9 +162,10 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         unselectAllGD.horizontalSpan = 3;
         unselectAllButton.setLayoutData(unselectAllGD);
         unselectAllButton.setText(Messages.CoverageColorEditor_3);
-        unselectAllButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
-                for( CoverageRule cRule : listOfRules ) {
+        unselectAllButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                for (CoverageRule cRule : listOfRules) {
                     cRule.setActive(false);
                 }
                 redoLayout();
@@ -160,9 +177,10 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         invertSelectionGD.horizontalSpan = 2;
         invertSelectionButton.setLayoutData(invertSelectionGD);
         invertSelectionButton.setText(Messages.CoverageColorEditor_4);
-        invertSelectionButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
-                for( CoverageRule cRule : listOfRules ) {
+        invertSelectionButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                for (CoverageRule cRule : listOfRules) {
                     cRule.setActive(!cRule.isActive());
                 }
                 redoLayout();
@@ -189,7 +207,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         predefinedRulesCombo.setLayoutData(comboGD);
         colorRulesMap = PredefinedColorRules.getColorsFolder(true);
         Set<String> keySet = colorRulesMap.keySet();
-        String[] rulesNames = (String[]) keySet.toArray(new String[keySet.size()]);
+        String[] rulesNames = keySet.toArray(new String[keySet.size()]);
         Arrays.sort(rulesNames);
         predefinedRulesCombo.setItems(rulesNames);
         predefinedRulesCombo.addSelectionListener(this);
@@ -213,12 +231,15 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         Button addNovalueRulesButton = new Button(novaluesGroup, SWT.PUSH);
         addNovalueRulesButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         addNovalueRulesButton.setText(Messages.CoverageColorEditor_9);
-        addNovalueRulesButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        addNovalueRulesButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
                 double[] nvArray = getExtraNovalues();
                 if (nvArray.length > 0) {
-                    for( double nv : nvArray ) {
-                        CoverageRule rule = new CoverageRule(new double[]{nv, nv}, RuleValues.asRGB(Color.WHITE), RuleValues.asRGB(Color.WHITE), 0.0, true);
+                    for (double nv : nvArray) {
+                        CoverageRule rule = new CoverageRule(new double[] { nv, nv },
+                                RuleValues.asRGB(Color.WHITE), RuleValues.asRGB(Color.WHITE), 0.0,
+                                true);
                         listOfRules.add(0, rule);
                         redoLayout();
                     }
@@ -227,7 +248,6 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         });
 
         createAlphaGroup();
-        // setSize(new Point(395, 331));
     }
 
     /**
@@ -292,18 +312,21 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         alphaScale.setSelection(100);
         alphaLabel = new Label(alphaGroup, SWT.NONE);
         alphaLabel.setText(alphaScale.getSelection() + ""); //$NON-NLS-1$
-        alphaScale.addListener(SWT.Selection, new Listener(){
-            public void handleEvent( Event event ) {
+        alphaScale.addListener(SWT.Selection, new Listener() {
+            @Override
+            public void handleEvent(Event event) {
                 int perspectiveValue = alphaScale.getSelection();
                 alphaLabel.setText(perspectiveValue + ""); //$NON-NLS-1$
             }
         });
     }
 
-    public void widgetDefaultSelected( SelectionEvent e ) {
+    @Override
+    public void widgetDefaultSelected(SelectionEvent e) {
     }
 
-    public void widgetSelected( SelectionEvent e ) {
+    @Override
+    public void widgetSelected(SelectionEvent e) {
         Object source = e.getSource();
         if (source instanceof Button) {
             Button selectedButton = (Button) source;
@@ -314,7 +337,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                 listOfRules.add(0, r);
                 redoLayout();
             } else if (selectedButton.equals(removeRuleButton)) {
-                List<CoverageRule> rulesToRemove = new ArrayList<CoverageRule>();
+                List<CoverageRule> rulesToRemove = new ArrayList<>();
                 for (CoverageRule rule : listOfRules) {
                     if (rule.isActive()) {
                         rulesToRemove.add(rule);
@@ -324,7 +347,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                 rulesToRemove.clear();
                 redoLayout();
             } else if (selectedButton.equals(moveRuleUpButton)) {
-                for( int i = 0; i < listOfRules.size(); i++ ) {
+                for (int i = 0; i < listOfRules.size(); i++) {
                     CoverageRule r = listOfRules.get(i);
                     if (r.isActive()) {
                         if (i > 0) {
@@ -335,7 +358,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                 }
                 redoLayout();
             } else if (selectedButton.equals(moveRuleDownButton)) {
-                for( int i = 0; i < listOfRules.size(); i++ ) {
+                for (int i = 0; i < listOfRules.size(); i++) {
                     CoverageRule r = listOfRules.get(i);
                     if (r.isActive()) {
                         if (i < listOfRules.size() - 1) {
@@ -347,12 +370,6 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                 }
                 redoLayout();
             } else if (selectedButton.equals(resetColormapButton)) {
-                // final OperationJAI op = new OperationJAI("Extrema");
-                // ParameterValueGroup params = op.getParameters();
-                // params.parameter("Source").setValue(gridCoverage);
-                // gridCoverage = (GridCoverage2D) op.doOperation(params, null);
-                // System.out.println(((double[]) gridCoverage.getProperty("minimum"))[0]);
-                // System.out.println(((double[]) gridCoverage.getProperty("maximum"))[0]);
 
                 double[] nvArray = getExtraNovalues();
 
@@ -365,7 +382,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                         double value = iter.getSampleDouble();
                         if (!Double.isNaN(value)) {
                             boolean jump = false;
-                            for( int i = 0; i < nvArray.length; i++ ) {
+                            for (int i = 0; i < nvArray.length; i++) {
                                 if (value - nvArray[i] < 10E-6) {
                                     jump = true;
                                     break;
@@ -382,12 +399,13 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
                                 max = value;
                             }
                         }
-                    } while( !iter.nextPixelDone() );
+                    } while (!iter.nextPixelDone());
                     iter.startPixels();
-                } while( !iter.nextLineDone() );
-                minMax = new double[]{min, max};
+                } while (!iter.nextLineDone());
+                minMax = new double[] { min, max };
 
-                CoverageRule rule = new CoverageRule(minMax, RuleValues.asRGB(Color.WHITE), RuleValues.asRGB(Color.BLACK), 1.0, true);
+                CoverageRule rule = new CoverageRule(minMax, RuleValues.asRGB(Color.WHITE),
+                        RuleValues.asRGB(Color.BLACK), 1.0, true);
                 listOfRules.clear();
                 listOfRules.add(rule);
                 redoLayout();
@@ -402,10 +420,14 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
 
                 try {
                     listOfRules.clear();
-                    List<RuleValues> rulesValuesList = PredefinedColorRules.getRulesValuesList(colorRules, minMax);
-                    for( RuleValues ruleValues : rulesValuesList ) {
-                        double[] fromToValues = new double[]{ruleValues.fromValue, ruleValues.toValue};
-                        CoverageRule rule = new CoverageRule(fromToValues, RuleValues.asRGB(ruleValues.fromColor), RuleValues.asRGB(ruleValues.toColor), 1.0, true);
+                    List<RuleValues> rulesValuesList = PredefinedColorRules
+                            .getRulesValuesList(colorRules, minMax);
+                    for (RuleValues ruleValues : rulesValuesList) {
+                        double[] fromToValues = new double[] { ruleValues.fromValue,
+                                ruleValues.toValue };
+                        CoverageRule rule = new CoverageRule(fromToValues,
+                                RuleValues.asRGB(ruleValues.fromColor),
+                                RuleValues.asRGB(ruleValues.toColor), 1.0, true);
                         listOfRules.add(rule);
                     }
                     redoLayout();
@@ -418,11 +440,11 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
     }
 
     private double[] getExtraNovalues() {
-        List<Double> novaluesList = new ArrayList<Double>();
+        List<Double> novaluesList = new ArrayList<>();
         String novaluesStr = novaluesText.getText();
         if (novaluesStr != null && novaluesStr.length() > 0) {
             String[] nvSplit = novaluesStr.split(","); //$NON-NLS-1$
-            for( String nvStr : nvSplit ) {
+            for (String nvStr : nvSplit) {
                 try {
                     double nv = Double.parseDouble(nvStr.trim());
                     novaluesList.add(nv);
@@ -432,7 +454,7 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
             }
         }
         double[] nvArray = new double[novaluesList.size()];
-        for( int i = 0; i < nvArray.length; i++ ) {
+        for (int i = 0; i < nvArray.length; i++) {
             nvArray[i] = novaluesList.get(i);
         }
         return nvArray;
@@ -441,10 +463,10 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
     /**
      * Set the layer that called this style editor. Needed for putting the alpha value into the
      * blackboard whenever it something changes.
-     * 
+     *
      * @param layer
      */
-    public void setLayer( Layer layer ) {
+    public void setLayer(Layer layer) {
         IGeoResource resource = layer.getGeoResource();
         try {
             gridCoverage = resource.resolve(GridCoverage2D.class, new NullProgressMonitor());
@@ -453,8 +475,9 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         }
     }
 
-    public void setAlphaValue( final int value ) {
-        Display.getDefault().syncExec(new Runnable(){
+    public void setAlphaValue(final int value) {
+        Display.getDefault().syncExec(new Runnable() {
+            @Override
             public void run() {
                 alphaScale.setSelection(value);
                 alphaLabel.setText(String.valueOf(value));
@@ -470,39 +493,39 @@ public class CoverageColorEditor extends Composite implements SelectionListener 
         }
     }
 
-    public void setRulesList( List<CoverageRule> listOfRules ) {
+    public void setRulesList(List<CoverageRule> listOfRules) {
         this.listOfRules = listOfRules;
-        /*
-         * take minMax out of that
+        /**
+         * Take minMax out of that
          */
-        if (listOfRules.size() > 0) {
+        if (!listOfRules.isEmpty()) {
             CoverageRule coverageRule = listOfRules.get(0);
             double from = coverageRule.getFromToValues()[0];
             coverageRule = listOfRules.get(listOfRules.size() - 1);
             double to = coverageRule.getFromToValues()[1];
-            minMax = new double[]{from, to};
+            minMax = new double[] { from, to };
         }
         redoLayout();
     }
 
     protected void redoLayout() {
 
-        Display.getDefault().syncExec(new Runnable(){
+        Display.getDefault().syncExec(new Runnable() {
+            @Override
             public void run() {
                 // remove the rules from the composite
                 Control[] rulesControls = rulesComposite.getChildren();
-                for( int i = 0; i < rulesControls.length; i++ ) {
+                for (int i = 0; i < rulesControls.length; i++) {
                     rulesControls[i].dispose();
                 }
 
                 // recreate the rules composites from the list
-                for( CoverageRule rule : listOfRules ) {
+                for (CoverageRule rule : listOfRules) {
                     new CoverageRuleComposite(rulesComposite, SWT.BORDER, rule);
                 }
 
                 rulesComposite.layout();
                 rulesComposite.pack();
-//                scrolledRulesComposite.pack();
             }
         });
     }

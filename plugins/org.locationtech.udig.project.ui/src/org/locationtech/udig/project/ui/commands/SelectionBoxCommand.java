@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,60 +24,54 @@ import org.locationtech.udig.project.preferences.PreferenceConstants;
 import org.locationtech.udig.ui.graphics.ViewportGraphics;
 
 /**
- * A command that draws the indicated shape onto the viewport in the correct "selection" style.  The default Shape is 
- * a rectangle.
- * 
+ * A command that draws the indicated shape onto the viewport in the correct "selection" style. The
+ * default Shape is a rectangle.
+ *
  * @author Jesse
  */
-public class SelectionBoxCommand extends AbstractDrawCommand implements
-		IDrawCommand {
+public class SelectionBoxCommand extends AbstractDrawCommand implements IDrawCommand {
 
-	private Shape shape;
-	
-	
-	/* (non-Javadoc)
-	 * @see org.locationtech.udig.project.ui.commands.IDrawCommand#getValidArea()
-	 */
-	public Rectangle getValidArea() {
-		return shape.getBounds();
-	}
+    private Shape shape;
 
-	/* (non-Javadoc)
-	 * @see org.locationtech.udig.project.command.Command#run(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	public void run(IProgressMonitor monitor) throws Exception {
-		if( shape!=null ){
-			graphics.setColor(getSelectionColor(75));
-			graphics.fill(shape);
-			graphics.setColor(getSelectionColor2(75));
-			graphics.setStroke(ViewportGraphics.LINE_SOLID, 3);
-			graphics.draw(shape);
-			graphics.setStroke(ViewportGraphics.LINE_SOLID, 1);
-			graphics.setColor(getSelectionColor(255));
-			graphics.draw(shape);
-		}
-	}
+    @Override
+    public Rectangle getValidArea() {
+        return shape.getBounds();
+    }
 
-	private Color getSelectionColor(int alpha) {
-		IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-		String name = PreferenceConstants.P_SELECTION_COLOR;
-		RGB rgb = PreferenceConverter.getColor(store, name );
-		return new Color( rgb.red, rgb.green, rgb.blue, alpha);
-	}
+    @Override
+    public void run(IProgressMonitor monitor) throws Exception {
+        if (shape != null) {
+            graphics.setColor(getSelectionColor(75));
+            graphics.fill(shape);
+            graphics.setColor(getSelectionColor2(75));
+            graphics.setStroke(ViewportGraphics.LINE_SOLID, 3);
+            graphics.draw(shape);
+            graphics.setStroke(ViewportGraphics.LINE_SOLID, 1);
+            graphics.setColor(getSelectionColor(255));
+            graphics.draw(shape);
+        }
+    }
 
-	private Color getSelectionColor2(int alpha) {
-		IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-		String name = PreferenceConstants.P_SELECTION2_COLOR;
-		RGB rgb = PreferenceConverter.getColor(store, name );
-		return new Color( rgb.red, rgb.green, rgb.blue, alpha);
-	}
+    private Color getSelectionColor(int alpha) {
+        IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
+        String name = PreferenceConstants.P_SELECTION_COLOR;
+        RGB rgb = PreferenceConverter.getColor(store, name);
+        return new Color(rgb.red, rgb.green, rgb.blue, alpha);
+    }
 
-	public void setShape(Shape shape) {
-		this.shape = shape;
-	}
+    private Color getSelectionColor2(int alpha) {
+        IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
+        String name = PreferenceConstants.P_SELECTION2_COLOR;
+        RGB rgb = PreferenceConverter.getColor(store, name);
+        return new Color(rgb.red, rgb.green, rgb.blue, alpha);
+    }
 
-	public Shape getShape() {
-		return shape;
-	}
+    public void setShape(Shape shape) {
+        this.shape = shape;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
 
 }
