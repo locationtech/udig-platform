@@ -237,7 +237,7 @@ public class ResourceSelectionState extends State {
             }
         }
 
-        return resources.size() > 0;
+        return !resources.isEmpty();
     }
 
     /**

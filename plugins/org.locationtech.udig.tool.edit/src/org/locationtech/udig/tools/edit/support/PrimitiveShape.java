@@ -691,13 +691,13 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
                     }
                     boolean addedBefore = false;
                     boolean addedAfter = false;
-                    if (before.coords.size() > 0) {
+                    if (!before.coords.isEmpty()) {
                         points.add(startIndex, before);
                         startBags.add(before);
                         addedBefore = true;
                     }
                     points.add(addedBefore ? startIndex + 1 : startIndex, endBag);
-                    if (after.coords.size() > 0) {
+                    if (!after.coords.isEmpty()) {
                         points.add(addedBefore ? startIndex + 2 : startIndex + 1, after);
                         startBags.add(after);
                         addedAfter = true;
@@ -1319,29 +1319,33 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
         for (int x = minX; x <= maxX; x++) {
             Point temp = Point.valueOf(x, minY);
             List<PointCoordMap> list = pointsToModel.get(temp);
-            if (list != null && list.size() > 0)
+            if (list != null && !list.isEmpty()) {
                 return temp;
+            }
         }
 
         for (int y = minY + 1; y <= maxY; y++) {
             Point temp = Point.valueOf(maxX, y);
             List<PointCoordMap> list = pointsToModel.get(temp);
-            if (list != null && list.size() > 0)
+            if (list != null && !list.isEmpty()) {
                 return temp;
+            }
         }
 
         for (int x = maxX - 1; x >= minX; x--) {
             Point temp = Point.valueOf(x, maxY);
             List<PointCoordMap> list = pointsToModel.get(temp);
-            if (list != null && list.size() > 0)
+            if (list != null && !list.isEmpty()) {
                 return temp;
+            }
         }
 
         for (int y = maxY - 1; y >= minY; y--) {
             Point temp = Point.valueOf(minX, y);
             List<PointCoordMap> list = pointsToModel.get(temp);
-            if (list != null && list.size() > 0)
+            if (list != null && !list.isEmpty()) {
                 return temp;
+            }
         }
 
         return null;
@@ -1396,19 +1400,23 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
     public boolean overlap(PrimitiveShape shape2, boolean treatUnknownAsPolygon,
             boolean acceptTouches) {
 
-        if (getNumPoints() == 0)
+        if (getNumPoints() == 0) {
             return false;
+        }
 
-        if (shape2.getNumPoints() == 0)
+        if (shape2.getNumPoints() == 0) {
             return false;
+        }
 
-        if (getNumPoints() == 1)
+        if (getNumPoints() == 1) {
             return shape2.contains(getPoint(0), treatUnknownAsPolygon, true)
                     && isAcceptableIntersection(shape2, getPoint(0), acceptTouches);
+        }
 
-        if (shape2.getNumPoints() == 1)
+        if (shape2.getNumPoints() == 1) {
             return contains(shape2.getPoint(0), treatUnknownAsPolygon, true)
                     && isAcceptableIntersection(this, shape2.getPoint(0), acceptTouches);
+        }
 
         Point last, current;
 
@@ -1422,8 +1430,9 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
         for (Point point : shape2) {
             if (s.contains(point.getX(), point.getY())
-                    && isAcceptableIntersection(this, point, acceptTouches))
+                    && isAcceptableIntersection(this, point, acceptTouches)) {
                 return true;
+            }
         }
 
         Iterator<Point> iter = iterator();
@@ -1434,18 +1443,21 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
 
             // now check if this shape's vertices are contained in the other shape
             if (s2.contains(last.getX(), last.getY())
-                    && isAcceptableIntersection(shape2, last, acceptTouches))
+                    && isAcceptableIntersection(shape2, last, acceptTouches)) {
                 return true;
+            }
 
-            if (edgeIntersect(last, current, shape2, acceptTouches))
+            if (edgeIntersect(last, current, shape2, acceptTouches)) {
                 return true;
+            }
 
             last = current;
         }
         if (isPolygon(treatUnknownAsPolygon)) {
             // do edge from last point to first point
-            if (edgeIntersect(getPoint(getNumPoints() - 1), getPoint(0), shape2, acceptTouches))
+            if (edgeIntersect(getPoint(getNumPoints() - 1), getPoint(0), shape2, acceptTouches)) {
                 return true;
+            }
         }
 
         return false;
@@ -1504,8 +1516,9 @@ public class PrimitiveShape implements Iterable<Point>, Shape {
      */
     private boolean isAcceptableIntersection(Point intersection, Point endPoint1, Point endPoint2,
             boolean acceptTouches) {
-        if (intersection.equals(endPoint1) || intersection.equals(endPoint2))
+        if (intersection.equals(endPoint1) || intersection.equals(endPoint2)) {
             return acceptTouches;
+        }
         return true;
     }
 
