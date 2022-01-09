@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2010-2012, Refractions Research Inc.
  *
@@ -16,7 +17,6 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.geotools.data.DataUtilities;
 import org.geotools.util.URLs;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IResolve;
@@ -25,14 +25,14 @@ import org.locationtech.udig.catalog.ui.UDIGConnectionFactory;
 
 /**
  * Try and connect to any GeoTools DataStore
- * 
+ *
  * @author jody
  * @since 1.1.0
  */
 public class DataStoreConnectionFactory extends UDIGConnectionFactory {
 
-        @Override
-    public Map<String, Serializable> createConnectionParameters( Object context ) {
+    @Override
+    public Map<String, Serializable> createConnectionParameters(Object context) {
         try {
             if (context instanceof URL) {
                 URL url = (URL) context;
@@ -70,7 +70,7 @@ public class DataStoreConnectionFactory extends UDIGConnectionFactory {
     }
 
     @Override
-    public URL createConnectionURL( Object context ) {
+    public URL createConnectionURL(Object context) {
         try {
             if (context instanceof URL) {
                 URL url = (URL) context;

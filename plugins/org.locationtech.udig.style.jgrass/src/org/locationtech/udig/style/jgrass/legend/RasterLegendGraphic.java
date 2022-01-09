@@ -282,7 +282,7 @@ public class RasterLegendGraphic implements MapGraphic {
                         JGRasterChooserDialog chooserDialog = new JGRasterChooserDialog(null);
                         chooserDialog.open(shell, SWT.SINGLE);
                         List<JGrassMapGeoResource> resources = chooserDialog.getSelectedResources();
-                        if (resources != null && resources.size() > 0) {
+                        if (resources != null && !resources.isEmpty()) {
                             JGrassMapGeoResource res = resources.get(0);
                             File mapFile = res.getMapFile();
                             legendStyle.mapPath = mapFile.getAbsolutePath();

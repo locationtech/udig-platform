@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2011-2012, Refractions Research Inc.
  *
@@ -105,45 +106,64 @@ import net.miginfocom.swt.MigLayout;
  * The Document View provides a user interface to view, edit, delete and open attached documents. In
  * this current release, the view uses shapefile specific implementations of {@link IDocumentSource}
  * and {@link IAttachmentSource} as its document sources.
- * 
+ *
  * @author paul.pfeiffer
  * @author Naz Chan
  */
 public class DocumentView extends ViewPart {
-    
+
     private TreeViewer viewer;
+
     private Button attachButton;
+
     private Button linkButton;
+
     private Button editButton;
+
     private Button openButton;
+
     private Button saveAsButton;
+
     private Action saveAsAction;
+
     private Button removeButton;
 
     private ResourceSelectionProvider resourceSelectionProvider = new ResourceSelectionProvider();
+
     private IGeoResource geoResource;
+
     private SimpleFeature feature;
+
     private IStructuredSelection viewerSelection;
+
     private IStructuredSelection workbenchSelection;
+
     private DocumentItemModel itemModel;
-    
+
     private boolean isActive = false;
+
     private ISelectionListener workbenchSelectionListener;
+
     private IPartListener workbenchPartListener;
-    
+
     private boolean isResourceEnabled = false;
+
     private boolean isFeatureEnabled = false;
+
     private boolean isHotlinkEnabled = false;
-    
+
     private static final int DOCUMENT_INDEX = 0;
+
     private static final int DOCUMENT_WEIGHT = 40;
-    
+
     private static final int TYPE_INDEX = 1;
+
     private static final int TYPE_WEIGHT = 10;
-    
+
     private static final int DESCRIPTION_INDEX = 2;
+
     private static final int DESCRIPTION_WEIGHT = 50;
-    
+
     public DocumentView() {
         this.itemModel = new DocumentItemModel();
     }
@@ -157,18 +177,18 @@ public class DocumentView extends ViewPart {
         final IWorkbenchPartSite partSite = getSite();
         final ISelectionService selectionService = partSite.getWorkbenchWindow()
                 .getSelectionService();
-        
+
         // Add workbench selection listener
         workbenchSelectionListener = new ISelectionListener() {
             @Override
-            public void selectionChanged(IWorkbenchPart part, ISelection selection) {                
+            public void selectionChanged(IWorkbenchPart part, ISelection selection) {
                 if (!(part instanceof DocumentView)) {
-                    handleWorkbenchSelection(selection);    
+                    handleWorkbenchSelection(selection);
                 }
             }
         };
         selectionService.addPostSelectionListener(workbenchSelectionListener);
-        
+
         // Add workbench part listener
         workbenchPartListener = new IPartListener() {
             @Override
@@ -177,27 +197,31 @@ public class DocumentView extends ViewPart {
                     handleWorkbenchSelection(selectionService.getSelection());
                 }
             }
+
             @Override
             public void partDeactivated(IWorkbenchPart part) {
                 // Nothing
             }
+
             @Override
             public void partClosed(IWorkbenchPart part) {
                 // Nothing
             }
+
             @Override
             public void partBroughtToTop(IWorkbenchPart part) {
                 // Nothing
             }
+
             @Override
             public void partActivated(IWorkbenchPart part) {
                 isActive = (part instanceof DocumentView);
             }
         };
         partSite.getPage().addPartListener(workbenchPartListener);
-        
+
     }
-    
+
     /**
      * Removes the workbench listeners. This cleans up the listeners we are adding during startup of
      * the view.
@@ -213,19 +237,19 @@ public class DocumentView extends ViewPart {
             workbenchPartListener = null;
         }
     }
-    
+
     @Override
     public void createPartControl(final Composite viewParent) {
-        
+
         setPartName(Messages.docView_name);
         createViewMenu();
-        
+
         final Composite parent = new Composite(viewParent, SWT.NONE);
         final String treeLayoutConst = "insets 0, fill, wrap 2"; //$NON-NLS-1$
         final String treeColConst = "[85%]0[15%]"; //$NON-NLS-1$
         final String treeRowConst = "[100%]"; //$NON-NLS-1$
         parent.setLayout(new MigLayout(treeLayoutConst, treeColConst, treeRowConst));
-        
+
         createTreeControlArea(parent);
         createButtonControlArea(parent);
         refreshBtns();
@@ -250,27 +274,28 @@ public class DocumentView extends ViewPart {
         final IActionBars actionBars = getViewSite().getActionBars();
         final IMenuManager menuManager = actionBars.getMenuManager();
         menuManager.add(saveAsAction);
-        menuManager.add( new Separator() );
-        
-        PropertyDialogAction resourcePropertyAction = new PropertyDialogAction( getSite(), resourceSelectionProvider );  
-        menuManager.add( resourcePropertyAction );
+        menuManager.add(new Separator());
+
+        PropertyDialogAction resourcePropertyAction = new PropertyDialogAction(getSite(),
+                resourceSelectionProvider);
+        menuManager.add(resourcePropertyAction);
     }
-    
+
     /**
      * Creates the tree-table control for displaying the documents.
-     * 
+     *
      * @param parent
      */
     private void createTreeControlArea(Composite parent) {
-        
-        final Tree viewerTree = new Tree(parent, SWT.FULL_SELECTION | SWT.BORDER
-                | SWT.H_SCROLL | SWT.V_SCROLL);
+
+        final Tree viewerTree = new Tree(parent,
+                SWT.FULL_SELECTION | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
         viewerTree.setLayoutData("grow, h 100%!, w 85%!"); //$NON-NLS-1$
         viewerTree.setHeaderVisible(true);
         viewerTree.setLinesVisible(true);
-        
+
         final TableLayout viewerTreeLayout = new TableLayout();
-        
+
         final TreeColumn nameColumn = new TreeColumn(viewerTree, SWT.LEFT, DOCUMENT_INDEX);
         nameColumn.setText(Messages.docView_documentColumn);
         viewerTreeLayout.addColumnData(new ColumnWeightData(DOCUMENT_WEIGHT));
@@ -278,13 +303,13 @@ public class DocumentView extends ViewPart {
         final TreeColumn detailColumn = new TreeColumn(viewerTree, SWT.CENTER, TYPE_INDEX);
         detailColumn.setText(Messages.docView_typeColumn);
         viewerTreeLayout.addColumnData(new ColumnWeightData(TYPE_WEIGHT));
-        
+
         final TreeColumn descColumn = new TreeColumn(viewerTree, SWT.LEFT, DESCRIPTION_INDEX);
         descColumn.setText(Messages.docView_descriptionColumn);
         viewerTreeLayout.addColumnData(new ColumnWeightData(DESCRIPTION_WEIGHT));
-        
-        viewerTree.setLayout(viewerTreeLayout); 
-        
+
+        viewerTree.setLayout(viewerTreeLayout);
+
         viewer = new TreeViewer(viewerTree);
         viewer.setContentProvider(new DocumentViewContentProvider());
         viewer.setLabelProvider(new DocumentViewTableLabelProvider());
@@ -300,18 +325,18 @@ public class DocumentView extends ViewPart {
                 handleListDoubleClick(event.getSelection());
             }
         });
-        
+
         getSite().setSelectionProvider(viewer);
-        
+
     }
-    
+
     /**
      * Creates the button controls panel for actions related to documents.
-     * 
+     *
      * @param parent
      */
     private void createButtonControlArea(Composite parent) {
-        
+
         final SelectionAdapter btnSelectionListener = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -319,28 +344,28 @@ public class DocumentView extends ViewPart {
                 handleBtnSelection(e.widget);
             }
         };
-        
+
         final Composite btnSection = new Composite(parent, SWT.NONE);
         final String btnLayoutConst = "fillx, wrap 1"; //$NON-NLS-1$
         final String btnColConst = ""; //$NON-NLS-1$
         final String btnRowConst = "[][][][][]push[]"; //$NON-NLS-1$
         btnSection.setLayout(new MigLayout(btnLayoutConst, btnColConst, btnRowConst));
         btnSection.setLayoutData("grow"); //$NON-NLS-1$
-        
+
         final String btnLayoutData = "growx"; //$NON-NLS-1$
-        
+
         // attach button
         attachButton = new Button(btnSection, SWT.PUSH);
         attachButton.setText(Messages.docView_attach);
         attachButton.setLayoutData(btnLayoutData);
         attachButton.addSelectionListener(btnSelectionListener);
-        
+
         // link button
         linkButton = new Button(btnSection, SWT.PUSH);
         linkButton.setText(Messages.docView_link);
         linkButton.setLayoutData(btnLayoutData);
         linkButton.addSelectionListener(btnSelectionListener);
-        
+
         // edit button
         editButton = new Button(btnSection, SWT.PUSH);
         editButton.setText(Messages.docView_edit);
@@ -352,22 +377,22 @@ public class DocumentView extends ViewPart {
         openButton.setText(Messages.docView_open);
         openButton.setLayoutData(btnLayoutData);
         openButton.addSelectionListener(btnSelectionListener);
-        
+
         // save as button
         saveAsButton = new Button(btnSection, SWT.PUSH);
         saveAsButton.setText(Messages.docView_saveAs);
         saveAsButton.setLayoutData(btnLayoutData);
         saveAsButton.addSelectionListener(btnSelectionListener);
         saveAsButton.setVisible(false); // Re: Brett's comment
-        
+
         // remove button
         removeButton = new Button(btnSection, SWT.PUSH);
         removeButton.setText(Messages.docView_clear);
         removeButton.setLayoutData(btnLayoutData);
         removeButton.addSelectionListener(btnSelectionListener);
-        
+
     }
-    
+
     @Override
     public void setFocus() {
         // Do something
@@ -382,7 +407,7 @@ public class DocumentView extends ViewPart {
     /**
      * Handles list selection changes. This should refresh the UI with respect to the current
      * selection.
-     * 
+     *
      * @param selection
      */
     private void handleListSelection(ISelection selection) {
@@ -392,24 +417,24 @@ public class DocumentView extends ViewPart {
         }
         refreshBtns();
     }
-    
+
     /**
      * Handles list double clicks. This will open the document if the selection is a document and if
      * it is not empty.
-     * 
+     *
      * @param selection
      */
     private void handleListDoubleClick(ISelection selection) {
         final StructuredSelection structSelection = (StructuredSelection) selection;
-        final Object element = structSelection.getFirstElement(); 
+        final Object element = structSelection.getFirstElement();
         if (element instanceof IDocument) {
             final IDocument doc = (IDocument) element;
             if (!doc.isEmpty()) {
-                open();    
+                open();
             }
         }
     }
-    
+
     /**
      * Refreshes the buttons with respect to the current list selection.
      */
@@ -417,20 +442,20 @@ public class DocumentView extends ViewPart {
         setBtns(false);
         refreshBtnsOnType();
     }
-    
+
     /**
      * Sets the button's enablement.
-     * 
+     *
      * @param isEnabled
      */
     private void setBtns(boolean isEnabled) {
-        
+
         openButton.setEnabled(isEnabled);
         attachButton.setEnabled(isEnabled);
         linkButton.setEnabled(isEnabled);
         editButton.setEnabled(isEnabled);
         removeButton.setEnabled(isEnabled);
-        
+
         saveAsButton.setEnabled(isEnabled);
         saveAsAction.setEnabled(isEnabled);
     }
@@ -438,46 +463,46 @@ public class DocumentView extends ViewPart {
     /**
      * Refreshes the buttons with respect to the selection's type (if {@link IDocument} or
      * {@link IDocumentFolder}), document type (refer to {@link Type}) and document content type
-     * (refer to {@link ContentType}). And also with respect to the selection's document source. Refer to
-     * {@link IAbstractDocumentSource}.
+     * (refer to {@link ContentType}). And also with respect to the selection's document source.
+     * Refer to {@link IAbstractDocumentSource}.
      */
     private void refreshBtnsOnType() {
-        
+
         if (viewerSelection != null) {
             if (viewerSelection.size() == 1) {
-                
+
                 final Object element = viewerSelection.getFirstElement();
                 final IAbstractDocumentSource folderSource = getDocumentSource();
-                
+
                 attachButton.setEnabled(DocSourceUtils.canAttach(folderSource));
                 linkButton.setEnabled(DocSourceUtils.canLink(folderSource));
-                
+
                 if (element instanceof IDocument) {
-                    
+
                     final IDocument doc = (IDocument) element;
                     final Type docType = doc.getType();
-                    
+
                     editButton.setEnabled(DocSourceUtils.canUpdate(doc.getSource()));
-                    
-                    if (Type.ATTACHMENT == docType 
-                            && ContentType.FILE == doc.getContentType()) {
+
+                    if (Type.ATTACHMENT == docType && ContentType.FILE == doc.getContentType()) {
                         saveAsButton.setEnabled(true);
                         saveAsAction.setEnabled(true);
                     }
-                    
+
                     if (!doc.isEmpty()) {
                         openButton.setEnabled(true);
                     }
-                    
+
                     final boolean isHotlink = (Type.HOTLINK == docType);
-                    removeButton.setText(isHotlink ? Messages.docView_clear : Messages.docView_delete);
+                    removeButton
+                            .setText(isHotlink ? Messages.docView_clear : Messages.docView_delete);
                     removeButton.setEnabled(isHotlink ? !doc.isEmpty() : true);
                     if (removeButton.isEnabled()) {
-                        removeButton.setEnabled(DocSourceUtils.canRemove(doc.getSource()));    
+                        removeButton.setEnabled(DocSourceUtils.canRemove(doc.getSource()));
                     }
-                    
+
                 }
-                
+
             } else if (viewerSelection.size() > 1) {
                 int count = 0;
                 for (Object obj : viewerSelection.toList()) {
@@ -486,17 +511,18 @@ public class DocumentView extends ViewPart {
                     }
                 }
                 final boolean isAllFolders = (count == viewerSelection.size());
-                removeButton.setEnabled(!isAllFolders);    
+                removeButton.setEnabled(!isAllFolders);
             }
         }
-        
+
     }
-    
+
     /**
      * Handles workbench selection changes. This should refresh the current list with respect to the
      * selection. As the workbench selection change event happens ALOT of times, it is being checked
-     * here is the selection is the same as the previous one as to reduce the number of list refreshes.
-     * 
+     * here is the selection is the same as the previous one as to reduce the number of list
+     * refreshes.
+     *
      * @param selection
      */
     private void handleWorkbenchSelection(ISelection selection) {
@@ -524,21 +550,21 @@ public class DocumentView extends ViewPart {
         updateList(UpdateType.CLEAR, null);
 
     }
-    
+
     private enum UpdateType {
         CLEAR, UPDATE, CHECK_UPDATE
     }
-    
+
     /**
      * Creates a job to get the related documents of the selection. This transitions the processing
      * to another thread.
-     * 
+     *
      * @param option
      * @param selection
      */
     private void updateList(final UpdateType option, final IStructuredSelection selection) {
 
-        final Job getDocsJob = new Job(Messages.DocumentView_retrieveDocsProgressMsg){
+        final Job getDocsJob = new Job(Messages.DocumentView_retrieveDocsProgressMsg) {
             @Override
             protected IStatus run(IProgressMonitor monitor) {
 
@@ -572,14 +598,14 @@ public class DocumentView extends ViewPart {
         getDocsJob.schedule();
 
     }
-    
-    
+
     /**
      * Updates the document list with the related documents of the selection. This transitions the
      * processing back to the UI thread.
      */
     private void updateListCallback() {
         Display.getDefault().asyncExec(new Runnable() {
+            @Override
             public void run() {
                 if (viewer != null) {
                     final Tree viewerTree = viewer.getTree();
@@ -594,42 +620,40 @@ public class DocumentView extends ViewPart {
             }
         });
     }
-    
-    
+
     /**
      * Checks if the selection is the same as the previous one.
-     * 
+     *
      * @param newSelection
      * @return true if same, otherwise false
      */
     private boolean isSameSelection(IStructuredSelection newSelection) {
-        
+
         final Iterator<?> wbIterator = workbenchSelection.iterator();
         final Iterator<?> nwIterator = newSelection.iterator();
         while (nwIterator.hasNext() && wbIterator.hasNext()) {
-            final Object wbObj = (Object) wbIterator.next();
-            final Object nwObj = (Object) nwIterator.next();
+            final Object wbObj = wbIterator.next();
+            final Object nwObj = nwIterator.next();
             if (!isSameSelectionObj(wbObj, nwObj)) {
                 return false;
             }
         }
-        
+
         return true;
     }
-    
-    
+
     /**
      * Checks if the selection object is the same as the previous selection's object in the same
      * index.
-     * 
+     *
      * @param obj1
      * @param obj2
      * @return true if same, otherwise false
      */
     private boolean isSameSelectionObj(Object obj1, Object obj2) {
-        
+
         final IProgressMonitor monitor = new NullProgressMonitor();
-        
+
         final IGeoResource resource1 = toGeoResource(obj1, monitor);
         final IGeoResource resource2 = toGeoResource(obj2, monitor);
         if ((resource1 != null && resource2 != null)
@@ -637,7 +661,7 @@ public class DocumentView extends ViewPart {
 
             final FidFilterImpl filter1 = toFilter(obj1, monitor);
             final FidFilterImpl filter2 = toFilter(obj2, monitor);
-            
+
             if (filter1 == null && filter2 == null) {
                 return true;
             } else if ((filter1 != null && filter2 != null) && (filter1.equals(filter2))) {
@@ -651,96 +675,101 @@ public class DocumentView extends ViewPart {
 
     void setGeoResourceInternal(IGeoResource geoResource) {
         this.geoResource = geoResource;
-        this.resourceSelectionProvider.setSelection( geoResource );
+        this.resourceSelectionProvider.setSelection(geoResource);
     }
 
     /**
      * Gets the document items from the current selection.
-     * 
+     *
      * @return document items
      */
     private List<Object> getItems(IProgressMonitor monitor) {
-        
-        final List<Object> items = new ArrayList<Object>();
+
+        final List<Object> items = new ArrayList<>();
         for (Iterator<?> iterator = workbenchSelection.iterator(); iterator.hasNext();) {
-            
+
             final Object obj = iterator.next();
-            setGeoResourceInternal( toGeoResource(obj, monitor) );
+            setGeoResourceInternal(toGeoResource(obj, monitor));
             if (geoResource != null) {
-                
+
                 feature = getFeature(geoResource, toFilter(obj, monitor));
                 if (feature != null) {
-                    
-                    final IHotlinkSource hotlinkSource = toSource(geoResource, IHotlinkSource.class, monitor);
+
+                    final IHotlinkSource hotlinkSource = toSource(geoResource, IHotlinkSource.class,
+                            monitor);
                     isHotlinkEnabled = hotlinkSource != null && hotlinkSource.isEnabled();
-                    final IAttachmentSource attachmentSource = toSource(geoResource, IAttachmentSource.class, monitor);
+                    final IAttachmentSource attachmentSource = toSource(geoResource,
+                            IAttachmentSource.class, monitor);
                     isFeatureEnabled = attachmentSource != null && attachmentSource.isEnabled();
-                    
+
                     if (isFeatureEnabled || isHotlinkEnabled) {
                         final String featureLabel = getFeatureLabel(geoResource, feature);
-                        final IDocumentFolder folder = ShpDocFactory.createFolder(feature, featureLabel, attachmentSource);
+                        final IDocumentFolder folder = ShpDocFactory.createFolder(feature,
+                                featureLabel, attachmentSource);
                         if (isFeatureEnabled) {
                             // Set so that source's document list is same with folder's
-                            folder.setDocuments(attachmentSource.getDocuments(feature, monitor));    
+                            folder.setDocuments(attachmentSource.getDocuments(feature, monitor));
                         }
                         if (isHotlinkEnabled) {
                             folder.insertDocuments(hotlinkSource.getDocuments(feature, monitor), 0);
                         }
                         items.add(folder);
                     }
-                    
+
                 }
-                
-                final IDocumentSource docSource = toSource(geoResource, IDocumentSource.class, monitor);
+
+                final IDocumentSource docSource = toSource(geoResource, IDocumentSource.class,
+                        monitor);
                 isResourceEnabled = docSource != null && docSource.isEnabled();
-                
+
                 if (isResourceEnabled) {
-                    final IDocumentFolder folder = ShpDocFactory.createFolder(null, geoResource.getTitle(), docSource);
+                    final IDocumentFolder folder = ShpDocFactory.createFolder(null,
+                            geoResource.getTitle(), docSource);
                     // Set so that source's document list is same with folder's
                     folder.setDocuments(docSource.getDocuments(monitor));
                     items.add(folder);
                 }
-                
+
             }
         }
-        
+
         return items;
-        
+
     }
-    
+
     private static final String FEATURE_LABEL = "FEATURE_LABEL"; //$NON-NLS-1$
-    
+
     /**
      * Gets the feature label by running the feature label expression set for the feature.
-     * 
+     *
      * @param resource
      * @param feature
      * @return feature label
      */
     private String getFeatureLabel(IGeoResource resource, SimpleFeature feature) {
-        
-        final String labelExpression = (String) resource.getPersistentProperties().get(
-                FEATURE_LABEL);
-        
+
+        final String labelExpression = (String) resource.getPersistentProperties()
+                .get(FEATURE_LABEL);
+
         if (labelExpression != null) {
             try {
                 final Expression exp = ECQL.toExpression(labelExpression);
                 final String featureLabel = (String) exp.evaluate(feature);
                 if (featureLabel != null && featureLabel.trim().length() > 0) {
-                    return featureLabel;    
+                    return featureLabel;
                 }
             } catch (CQLException e) {
                 e.printStackTrace();
-            }    
+            }
         }
-        
+
         return feature.getID();
-        
+
     }
-    
+
     /**
      * Resolves the object to a geo resource. This returns null if it is not able to resolve.
-     * 
+     *
      * @param obj
      * @param monitor
      * @return geo resource
@@ -754,14 +783,14 @@ public class DocumentView extends ViewPart {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }       
+            }
         }
         return null;
     }
 
     /**
      * Resolves the object to a document source. This returns null if it is not able to resolve.
-     * 
+     *
      * @param geoResource
      * @param type
      * @param monitor
@@ -775,14 +804,14 @@ public class DocumentView extends ViewPart {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }    
+            }
         }
         return null;
     }
 
     /**
      * Resolves the object to a feature ID filter. This returns null if it is unable to resolve.
-     * 
+     *
      * @param obj
      * @param monitor
      * @return feature ID filter
@@ -797,14 +826,14 @@ public class DocumentView extends ViewPart {
                 // e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-            }    
+            }
         }
         return null;
     }
-    
+
     /**
      * Gets the feature from the geo resource given the filter.
-     * 
+     *
      * @param geoResource
      * @param filter
      * @return feature
@@ -813,30 +842,31 @@ public class DocumentView extends ViewPart {
         if (filter != null) {
             try {
                 if (geoResource.canResolve(SimpleFeatureStore.class)) {
-                    final SimpleFeatureStore featureSource = geoResource.resolve(SimpleFeatureStore.class,
-                            new NullProgressMonitor());
-                    final SimpleFeatureCollection featureCollection = featureSource.getFeatures(filter);
+                    final SimpleFeatureStore featureSource = geoResource
+                            .resolve(SimpleFeatureStore.class, new NullProgressMonitor());
+                    final SimpleFeatureCollection featureCollection = featureSource
+                            .getFeatures(filter);
                     final SimpleFeatureIterator featureIterator = featureCollection.features();
                     try {
-                         if (featureIterator.hasNext()) {
-                             return featureIterator.next();
-                         }
+                        if (featureIterator.hasNext()) {
+                            return featureIterator.next();
+                        }
                     } finally {
                         if (featureIterator != null) {
                             featureIterator.close();
                         }
-                    }    
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-            }            
+            }
         }
         return null;
     }
-    
+
     /**
      * Handles button selection (click) actions.
-     * 
+     *
      * @param btn
      */
     private void handleBtnSelection(Widget btn) {
@@ -854,7 +884,7 @@ public class DocumentView extends ViewPart {
             saveAs();
         }
     }
-    
+
     /**
      * Opens the documents in the current selection.
      */
@@ -864,21 +894,21 @@ public class DocumentView extends ViewPart {
         if (ContentType.ACTION == doc.getContentType()) {
             openAction(doc);
         } else {
-            doc.open();  
+            doc.open();
         }
     }
 
     /**
      * Opens the action document - action selection dialog that allows the user to select the action
      * to be opened.
-     * 
+     *
      * @param doc
      */
-    private void openAction(IDocument doc) { 
-        
+    private void openAction(IDocument doc) {
+
         final IHotlink hotlinkDoc = (IHotlink) doc;
         final List<HotlinkDescriptor> descriptors = hotlinkDoc.getDescriptors();
-        
+
         if (descriptors.size() > 1) {
             final ListDialog dialog = new ListDialog(openButton.getShell());
             dialog.setTitle(Messages.DocumentView_openActionDialogTitle);
@@ -900,18 +930,18 @@ public class DocumentView extends ViewPart {
                     final HotlinkDescriptor descriptor = (HotlinkDescriptor) results[0];
                     openAction(hotlinkDoc, descriptor);
                 }
-            }            
+            }
         } else if (descriptors.size() == 1) {
             final HotlinkDescriptor descriptor = descriptors.get(0);
             openAction(hotlinkDoc, descriptor);
         }
-        
+
     }
-    
+
     /**
      * Opens the action document. This gets the value from the hotlink document and the action
      * definition from the desriptor.
-     * 
+     *
      * @param hotlinkDoc
      * @param descriptor
      */
@@ -920,7 +950,7 @@ public class DocumentView extends ViewPart {
                 hotlinkDoc.getContent().toString());
         Program.launch(action);
     }
-    
+
     /**
      * Adds a new document. This opens the {@link DocumentDialog} to allow the user to input details
      * of the document to be added.
@@ -929,61 +959,63 @@ public class DocumentView extends ViewPart {
 
         final IDocumentFolder folder = getDocumentFolder();
         if (folder != null) {
-            final Map<String, Object> params = new HashMap<String, Object>();
+            final Map<String, Object> params = new HashMap<>();
             params.put(DocumentDialog.P_TYPE, Type.ATTACHMENT);
             params.put(DocumentDialog.P_MODE, Mode.ADD);
             params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(folder));
 
             final IAbstractDocumentSource source = folder.getSource();
             final boolean isFeatureDoc = (source instanceof IAttachmentSource);
-            final DocumentDialog docDialog = openDocDialog(new HashMap<String, Object>(), params, isFeatureDoc);
+            final DocumentDialog docDialog = openDocDialog(new HashMap<String, Object>(), params,
+                    isFeatureDoc);
             if (docDialog != null) {
                 addDocument(folder, docDialog.getDocInfo());
-            }            
+            }
         }
-        
+
     }
 
     /**
-     * Links a new document. This opens the {@link DocumentDialog} to allow the user to input details
-     * of the document to be linked.
+     * Links a new document. This opens the {@link DocumentDialog} to allow the user to input
+     * details of the document to be linked.
      */
     private void link() {
 
         final IDocumentFolder folder = getDocumentFolder();
         if (folder != null) {
             final IAbstractDocumentSource source = folder.getSource();
-            
-            final Map<String, Object> params = new HashMap<String, Object>();
+
+            final Map<String, Object> params = new HashMap<>();
             params.put(DocumentDialog.P_TYPE, Type.LINKED);
             params.put(DocumentDialog.P_MODE, Mode.ADD);
             params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(folder));
-            final List<ContentType> contentTypes = new ArrayList<ContentType>();
+            final List<ContentType> contentTypes = new ArrayList<>();
             if (DocSourceUtils.canLinkFile(source)) {
                 contentTypes.add(ContentType.FILE);
             }
             if (DocSourceUtils.canLinkWeb(source)) {
                 contentTypes.add(ContentType.WEB);
             }
-            if (contentTypes != null && contentTypes.size() > 0) {
-                params.put(DocumentDialog.P_CONTENT_TYPES, contentTypes);    
+            if (contentTypes != null && !contentTypes.isEmpty()) {
+                params.put(DocumentDialog.P_CONTENT_TYPES, contentTypes);
             }
-            
+
             final boolean isFeatureDoc = (source instanceof IAttachmentSource);
-            final DocumentDialog docDialog = openDocDialog(new HashMap<String, Object>(), params, isFeatureDoc);
-            if (docDialog != null) { 
+            final DocumentDialog docDialog = openDocDialog(new HashMap<String, Object>(), params,
+                    isFeatureDoc);
+            if (docDialog != null) {
                 addDocument(folder, docDialog.getDocInfo());
-            }            
+            }
         }
-        
+
     }
-    
+
     /**
      * Adds a new document to the document folder with the given document info.
      */
     private void addDocument(final IDocumentFolder folder, final DocumentInfo info) {
-                
-        final Job addDocJob = new Job(Messages.DocumentView_addDocProgressMsg){
+
+        final Job addDocJob = new Job(Messages.DocumentView_addDocProgressMsg) {
             @Override
             protected IStatus run(IProgressMonitor monitor) {
 
@@ -992,10 +1024,11 @@ public class DocumentView extends ViewPart {
                     final IDocumentSource resourceDocSource = (IDocumentSource) folder.getSource();
                     doc = resourceDocSource.add(info, monitor);
                 } else if (folder.getSource() instanceof IAttachmentSource) {
-                    final IAttachmentSource featureDocSource = (IAttachmentSource) folder.getSource();
+                    final IAttachmentSource featureDocSource = (IAttachmentSource) folder
+                            .getSource();
                     doc = featureDocSource.add(feature, info, monitor);
-                }                
-                
+                }
+
                 addDocumentCallback(doc);
                 return Status.OK_STATUS;
 
@@ -1004,31 +1037,33 @@ public class DocumentView extends ViewPart {
         addDocJob.schedule();
 
     }
-    
+
     /**
      * Refreshes the documents list after adding a document. This transitions the processing back to
      * the UI thread.
      */
     private void addDocumentCallback(final IDocument doc) {
         Display.getDefault().asyncExec(new Runnable() {
+            @Override
             public void run() {
                 if (doc == null) {
                     MessageDialog.openError(attachButton.getShell(),
-                            Messages.DocumentView_addDocPopupTitle, Messages.DocumentView_addDocError);
+                            Messages.DocumentView_addDocPopupTitle,
+                            Messages.DocumentView_addDocError);
                 } else {
                     viewer.refresh();
-                    viewer.expandAll();    
+                    viewer.expandAll();
                 }
             }
         });
     }
-    
+
     /**
-     * Edits an existing document. This opens the {@link DocumentDialog} to allow the user to input details
-     * of the document to be edited.
+     * Edits an existing document. This opens the {@link DocumentDialog} to allow the user to input
+     * details of the document to be edited.
      */
     private void edit() {
-        
+
         final Object obj = viewerSelection.getFirstElement();
         if (obj instanceof IDocument) {
             final IDocument doc = (IDocument) obj;
@@ -1038,35 +1073,35 @@ public class DocumentView extends ViewPart {
                 editDocument(doc);
             }
         }
-        
+
     }
-    
+
     /**
      * Edits an existing document.
-     * 
+     *
      * @param doc
      */
     private void editDocument(final IDocument doc) {
-        
-        final Map<String, Object> values = new HashMap<String, Object>();
+
+        final Map<String, Object> values = new HashMap<>();
         if (!doc.isEmpty()) {
-            values.put(DocumentDialog.V_INFO, doc.getContent().toString());    
+            values.put(DocumentDialog.V_INFO, doc.getContent().toString());
         }
         values.put(DocumentDialog.V_CONTENT_TYPE, doc.getContentType());
         values.put(DocumentDialog.V_LABEL, doc.getLabel());
         values.put(DocumentDialog.V_DESCRIPTION, doc.getDescription());
         values.put(DocumentDialog.V_TEMPLATE, doc.isTemplate());
-        
-        final Map<String, Object> params = new HashMap<String, Object>();
+
+        final Map<String, Object> params = new HashMap<>();
         params.put(DocumentDialog.P_TYPE, doc.getType());
         params.put(DocumentDialog.P_MODE, Mode.EDIT);
         params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(doc));
-        
+
         final IAbstractDocumentSource source = doc.getSource();
         final boolean isFeatureDoc = (source instanceof IAttachmentSource);
         final DocumentDialog docDialog = openDocDialog(values, params, isFeatureDoc);
         if (docDialog != null) {
-            final Job editDocJob = new Job(Messages.DocumentView_updateDocProgressMsg){
+            final Job editDocJob = new Job(Messages.DocumentView_updateDocProgressMsg) {
                 @Override
                 protected IStatus run(IProgressMonitor monitor) {
                     boolean isUpdated = false;
@@ -1077,47 +1112,49 @@ public class DocumentView extends ViewPart {
                     } else if (source instanceof IAttachmentSource) {
                         final IAttachmentSource featureDocSource = (IAttachmentSource) source;
                         isUpdated = featureDocSource.update(feature, doc, info, monitor);
-                    }              
+                    }
                     editDocumentCallback(isUpdated);
                     return Status.OK_STATUS;
                 }
             };
             editDocJob.schedule();
         }
-        
+
     }
-    
+
     /**
      * Refreshes the documents list after updating a document. This transitions the processing back
      * to the UI thread.
      */
     private void editDocumentCallback(final boolean isUpdated) {
         Display.getDefault().asyncExec(new Runnable() {
+            @Override
             public void run() {
                 if (!isUpdated) {
                     MessageDialog.openError(attachButton.getShell(),
-                            Messages.DocumentView_updateDocPopupTitle, Messages.DocumentView_updateDocError);
+                            Messages.DocumentView_updateDocPopupTitle,
+                            Messages.DocumentView_updateDocError);
                 } else {
                     viewer.refresh();
-                    viewer.expandAll();    
+                    viewer.expandAll();
                 }
             }
         });
     }
-    
+
     /**
      * Edits an existing hotlink document.
-     * 
+     *
      * @param doc
      */
     private void editHotlink(final IDocument doc) {
-        
+
         final IHotlink hotlinkDoc = (IHotlink) doc;
         final String attributeName = hotlinkDoc.getAttributeName();
-        
-        final Map<String, Object> values = new HashMap<String, Object>();
+
+        final Map<String, Object> values = new HashMap<>();
         if (!doc.isEmpty()) {
-            values.put(DocumentDialog.V_INFO, doc.getContent().toString());    
+            values.put(DocumentDialog.V_INFO, doc.getContent().toString());
         }
         values.put(DocumentDialog.V_CONTENT_TYPE, doc.getContentType());
         values.put(DocumentDialog.V_ATTRIBUTE, attributeName);
@@ -1126,36 +1163,40 @@ public class DocumentView extends ViewPart {
         if (ContentType.ACTION == doc.getContentType()) {
             values.put(DocumentDialog.V_ACTIONS, hotlinkDoc.getDescriptors());
         }
-        
-        final Map<String, Object> params = new HashMap<String, Object>();
+
+        final Map<String, Object> params = new HashMap<>();
         params.put(DocumentDialog.P_TYPE, Type.HOTLINK);
         params.put(DocumentDialog.P_MODE, Mode.EDIT);
         if (ContentType.FILE == doc.getContentType()) {
             params.put(DocumentDialog.P_TEMPLATES, itemModel.getTemplates(doc));
         }
-        
+
         final DocumentDialog docDialog = openDocDialog(values, params, true);
         if (docDialog != null) {
-            final Job editHotlinkJob = new Job(Messages.DocumentView_updateHotlinkProgressMsg){
+            final Job editHotlinkJob = new Job(Messages.DocumentView_updateHotlinkProgressMsg) {
                 @Override
                 protected IStatus run(IProgressMonitor monitor) {
                     boolean isUpdated = false;
                     final IHotlinkSource featureDocSource = (IHotlinkSource) doc.getSource();
                     switch (doc.getContentType()) {
                     case FILE:
-                        isUpdated = featureDocSource.setFile(feature, attributeName, docDialog.getFileInfo(), monitor);
+                        isUpdated = featureDocSource.setFile(feature, attributeName,
+                                docDialog.getFileInfo(), monitor);
                         break;
                     case WEB:
-                        isUpdated = featureDocSource.setLink(feature, attributeName, docDialog.getUrlInfo(), monitor);
+                        isUpdated = featureDocSource.setLink(feature, attributeName,
+                                docDialog.getUrlInfo(), monitor);
                         break;
                     case ACTION:
-                        isUpdated = featureDocSource.setAction(feature, attributeName, docDialog.getInfo(), monitor);
+                        isUpdated = featureDocSource.setAction(feature, attributeName,
+                                docDialog.getInfo(), monitor);
                         break;
                     default:
                         break;
                     }
                     if (isUpdated) {
-                        isUpdated = set(attributeName, feature.getAttribute(attributeName), monitor);
+                        isUpdated = set(attributeName, feature.getAttribute(attributeName),
+                                monitor);
                     }
                     itemModel.getClass();
                     editHotlinkCallback(isUpdated);
@@ -1164,30 +1205,32 @@ public class DocumentView extends ViewPart {
             };
             editHotlinkJob.schedule();
         }
-        
+
     }
-    
+
     /**
      * Refreshes the documents list after updating a hotlink. This transitions the processing back
      * to the UI thread.
      */
     private void editHotlinkCallback(final boolean isUpdated) {
         Display.getDefault().asyncExec(new Runnable() {
+            @Override
             public void run() {
                 if (!isUpdated) {
                     MessageDialog.openError(attachButton.getShell(),
-                            Messages.DocumentView_setHotlinkPopupTitle, Messages.DocumentView_setHotlinkError);
+                            Messages.DocumentView_setHotlinkPopupTitle,
+                            Messages.DocumentView_setHotlinkError);
                 } else {
                     viewer.refresh();
-                    viewer.expandAll();    
+                    viewer.expandAll();
                 }
             }
         });
     }
-    
+
     /**
      * Opens the {@link DocumentDialog} for inputting document metadata.
-     * 
+     *
      * @param values
      * @param params
      * @return document info
@@ -1205,14 +1248,13 @@ public class DocumentView extends ViewPart {
         }
         return null;
     }
-    
-    
+
     /**
      * Removes the documents in the current selection.
      */
     private void remove() {
 
-        final Map<IAbstractDocumentSource, ArrayList<IDocument>> docMap = new HashMap<IAbstractDocumentSource, ArrayList<IDocument>>();
+        final Map<IAbstractDocumentSource, ArrayList<IDocument>> docMap = new HashMap<>();
 
         final Iterator<?> iterator = viewerSelection.iterator();
         while (iterator.hasNext()) {
@@ -1222,7 +1264,7 @@ public class DocumentView extends ViewPart {
                 if (docMap.containsKey(doc.getSource())) {
                     docMap.get(doc.getSource()).add(doc);
                 } else {
-                    final ArrayList<IDocument> docs = new ArrayList<IDocument>();
+                    final ArrayList<IDocument> docs = new ArrayList<>();
                     docs.add(doc);
                     docMap.put(doc.getSource(), docs);
                 }
@@ -1232,7 +1274,7 @@ public class DocumentView extends ViewPart {
         for (final IAbstractDocumentSource source : docMap.keySet()) {
             final ArrayList<IDocument> docs = docMap.get(source);
             for (final IDocument doc : docs) {
-                
+
                 boolean doDelete = true;
                 if (Type.ATTACHMENT == doc.getType() && ContentType.FILE == doc.getContentType()
                         && !doc.isEmpty()) {
@@ -1240,10 +1282,11 @@ public class DocumentView extends ViewPart {
                             Messages.docView_deleteAttachConfirmTitle,
                             Messages.docView_deleteAttachConfirmMsg);
                 }
-                
+
                 if (doDelete) {
                     if (source instanceof IDocumentSource) {
-                        final Job removeLayerDocJob = new Job(Messages.DocumentView_removeDocProgressMsg){
+                        final Job removeLayerDocJob = new Job(
+                                Messages.DocumentView_removeDocProgressMsg) {
                             @Override
                             protected IStatus run(IProgressMonitor monitor) {
                                 final IDocumentSource docSource = (IDocumentSource) source;
@@ -1255,10 +1298,12 @@ public class DocumentView extends ViewPart {
                         removeLayerDocJob.schedule();
                     } else if (source instanceof IAttachmentSource) {
                         final IAttachmentSource featureDocSource = (IAttachmentSource) source;
-                        final Job removeFeatureDocJob = new Job(Messages.DocumentView_removeDocProgressMsg){
+                        final Job removeFeatureDocJob = new Job(
+                                Messages.DocumentView_removeDocProgressMsg) {
                             @Override
                             protected IStatus run(IProgressMonitor monitor) {
-                                final boolean isRemoved = featureDocSource.remove(feature, doc, monitor);
+                                final boolean isRemoved = featureDocSource.remove(feature, doc,
+                                        monitor);
                                 removeDocumentCallback(isRemoved);
                                 return Status.OK_STATUS;
                             }
@@ -1266,7 +1311,8 @@ public class DocumentView extends ViewPart {
                         removeFeatureDocJob.schedule();
                     } else if (source instanceof IHotlinkSource) {
                         final IHotlinkSource featureHotlinkSource = (IHotlinkSource) source;
-                        final Job clearHotlinkJob = new Job(Messages.DocumentView_clearHotlinkProgressMsg) {
+                        final Job clearHotlinkJob = new Job(
+                                Messages.DocumentView_clearHotlinkProgressMsg) {
                             @Override
                             protected IStatus run(IProgressMonitor monitor) {
                                 final IHotlink hotlinkDoc = (IHotlink) doc;
@@ -1281,53 +1327,57 @@ public class DocumentView extends ViewPart {
                             }
                         };
                         clearHotlinkJob.schedule();
-                    }                    
+                    }
                 }
-                
+
             }
         }
-        
+
     }
-    
+
     /**
      * Refreshes the documents list after clearing a hotlink. This transitions the processing back
      * to the UI thread.
      */
     private void clearHotlinkCallback(final boolean isCleared) {
         Display.getDefault().asyncExec(new Runnable() {
+            @Override
             public void run() {
                 if (!isCleared) {
                     MessageDialog.openError(attachButton.getShell(),
-                            Messages.DocumentView_clearHotlinkPopupTitle, Messages.DocumentView_clearHotlinkError);
+                            Messages.DocumentView_clearHotlinkPopupTitle,
+                            Messages.DocumentView_clearHotlinkError);
                 } else {
                     viewer.refresh();
-                    viewer.expandAll();    
+                    viewer.expandAll();
                 }
             }
         });
     }
-    
+
     /**
      * Refreshes the documents list after removing a document. This transitions the processing back
      * to the UI thread.
      */
     private void removeDocumentCallback(final boolean isRemoved) {
         Display.getDefault().asyncExec(new Runnable() {
+            @Override
             public void run() {
                 if (!isRemoved) {
                     MessageDialog.openError(attachButton.getShell(),
-                            Messages.DocumentView_removeDocPopupTitle, Messages.DocumentView_removeDocError);
+                            Messages.DocumentView_removeDocPopupTitle,
+                            Messages.DocumentView_removeDocError);
                 } else {
                     viewer.refresh();
-                    viewer.expandAll();    
+                    viewer.expandAll();
                 }
             }
         });
     }
-    
+
     /**
      * Sets the attribute value of the feature.
-     * 
+     *
      * @param fid
      * @param attributeName
      * @param obj
@@ -1341,10 +1391,10 @@ public class DocumentView extends ViewPart {
             return setOnGeoResource(fid, attributeName, obj, monitor);
         }
     }
-    
+
     /**
      * Sets the attribute value of the feature given that the layer in on the map.
-     * 
+     *
      * @param map
      * @param fid
      * @param attributeName
@@ -1356,10 +1406,10 @@ public class DocumentView extends ViewPart {
         map.sendCommandASync(cmd);
         return true;
     }
-    
+
     /**
      * Sets the attribute value of the feature directly to the geoResource.
-     * 
+     *
      * @param fid
      * @param attributeName
      * @param obj
@@ -1370,19 +1420,19 @@ public class DocumentView extends ViewPart {
         try {
             if (geoResource.canResolve(SimpleFeatureStore.class)) {
                 final Filter filter = CommonFactoryFinder.getFilterFactory2().id(fid);
-                final SimpleFeatureStore featureStore = geoResource.resolve(
-                        SimpleFeatureStore.class, monitor);
+                final SimpleFeatureStore featureStore = geoResource
+                        .resolve(SimpleFeatureStore.class, monitor);
                 featureStore.modifyFeatures(attributeName, obj, filter);
                 return true;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         return false;
 
     }
-    
+
     /**
      * Saves the current file document's file as another file.
      */
@@ -1392,7 +1442,7 @@ public class DocumentView extends ViewPart {
         if (element instanceof IAttachment) {
             final IAttachment attachDoc = (IAttachment) element;
             final File file = (File) attachDoc.getContent();
-            
+
             final FileDialog dialog = new FileDialog(saveAsButton.getShell(), SWT.SAVE);
             dialog.setText(Messages.DocumentView_saveAsDialogTitle);
             dialog.setOverwrite(true);
@@ -1415,20 +1465,20 @@ public class DocumentView extends ViewPart {
         }
 
     }
-    
+
     // Utility inner classes
-    
+
     /**
      * The label provider for the document item tree viewer in the {@link DocumentView}.
      */
     private class DocumentViewTableLabelProvider implements ITableLabelProvider {
 
         private DocumentImageProvider imageProvider;
-        
+
         public DocumentViewTableLabelProvider() {
             imageProvider = new DocumentImageProvider();
         }
-        
+
         @Override
         public Image getColumnImage(Object element, int columnIndex) {
             switch (columnIndex) {
@@ -1436,7 +1486,7 @@ public class DocumentView extends ViewPart {
                 if (element instanceof IDocumentFolder) {
                     return imageProvider.createFolderImage();
                 } else if (element instanceof IDocument) {
-                    final IDocument doc = (IDocument) element;                
+                    final IDocument doc = (IDocument) element;
                     return imageProvider.createDocumentImage(doc);
                 }
                 return imageProvider.createDefaultImage();
@@ -1465,10 +1515,10 @@ public class DocumentView extends ViewPart {
                 case DESCRIPTION_INDEX:
                     final String description = doc.getDescription();
                     if (description != null) {
-                        return description;    
+                        return description;
                     }
                     return ""; //$NON-NLS-1$
-                }                
+                }
             }
             return null;
         }
@@ -1487,7 +1537,7 @@ public class DocumentView extends ViewPart {
         public void addListener(ILabelProviderListener listener) {
             // Nothing
         }
-        
+
         @Override
         public void removeListener(ILabelProviderListener listener) {
             // Nothing
@@ -1504,13 +1554,13 @@ public class DocumentView extends ViewPart {
         public Object[] getElements(Object inputElement) {
             if (inputElement instanceof DocumentItemModel) {
                 final DocumentItemModel itemModel = (DocumentItemModel) inputElement;
-                return itemModel.getItems().toArray(new Object[0]);    
+                return itemModel.getItems().toArray(new Object[0]);
             }
             return null;
         }
 
         @Override
-        public Object[] getChildren( Object element ) {
+        public Object[] getChildren(Object element) {
             if (element instanceof IDocumentFolder) {
                 final IDocumentFolder folder = (IDocumentFolder) element;
                 return folder.getItems().toArray(new Object[0]);
@@ -1519,50 +1569,50 @@ public class DocumentView extends ViewPart {
         }
 
         @Override
-        public Object getParent( Object element ) {
+        public Object getParent(Object element) {
             return null;
         }
 
         @Override
-        public boolean hasChildren( Object element ) {
+        public boolean hasChildren(Object element) {
             if (element instanceof IDocumentFolder) {
                 final IDocumentFolder folder = (IDocumentFolder) element;
-                return folder.getItems().size() > 0;
+                return !folder.getItems().isEmpty();
             }
             return false;
         }
 
         @Override
-        public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
+        public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
             // Do input change stuff here
         }
-        
+
         @Override
         public void dispose() {
             // Do dispose stuff here
         }
-        
+
     }
- 
+
     /**
      * The data model for the document item tree viewer in the {@link DocumentView}.
      */
     private class DocumentItemModel {
-        
+
         private List<Object> items;
-        
+
         public DocumentItemModel() {
-            items = new ArrayList<Object>();
+            items = new ArrayList<>();
         }
-        
+
         public List<Object> getItems() {
             return items;
         }
-        
+
         public void setItems(List<Object> items) {
             this.items = items;
         }
-        
+
         public IDocumentFolder getFolder(IDocument doc) {
             for (Object item : items) {
                 if (item instanceof IDocumentFolder) {
@@ -1572,34 +1622,31 @@ public class DocumentView extends ViewPart {
                             return folder;
                         }
                     }
-                    // if (folder.getSource().equals(doc.getSource())) {
-                    // return folder;
-                    // }
                 }
             }
             return null;
         }
-     
+
         public List<IDocument> getTemplates(IDocumentFolder folder) {
             return getTemplates(folder.getSource(), folder, null);
         }
-        
+
         public List<IDocument> getTemplates(IDocument doc) {
             return getTemplates(doc.getSource(), getFolder(doc), doc);
         }
-        
-        private List<IDocument> getTemplates(IAbstractDocumentSource source,
-                IDocumentFolder folder, IDocument doc) {
+
+        private List<IDocument> getTemplates(IAbstractDocumentSource source, IDocumentFolder folder,
+                IDocument doc) {
             if (source instanceof IDocumentSource) {
                 return getTemplatesInternal(folder, doc);
             } else {
                 return getTemplatesInternal(doc);
             }
         }
-        
+
         private List<IDocument> getTemplatesInternal(IDocumentFolder folder, IDocument refDoc) {
-            
-            final List<IDocument> templates = new ArrayList<IDocument>();
+
+            final List<IDocument> templates = new ArrayList<>();
             for (IDocument doc : folder.getDocuments()) {
                 if (!doc.equals(refDoc) && doc.isTemplate()) {
                     templates.add(doc);
@@ -1607,9 +1654,9 @@ public class DocumentView extends ViewPart {
             }
             return templates;
         }
-        
+
         private List<IDocument> getTemplatesInternal(IDocument refDoc) {
-            final List<IDocument> templates = new ArrayList<IDocument>();
+            final List<IDocument> templates = new ArrayList<>();
             for (Object item : items) {
                 if (item instanceof IDocumentFolder) {
                     final IDocumentFolder folder = (IDocumentFolder) item;
@@ -1618,13 +1665,13 @@ public class DocumentView extends ViewPart {
             }
             return templates;
         }
-        
+
     }
- 
+
     /**
      * Gets the document folder containing the current selection. Or the current selection if it is
      * a folder.
-     * 
+     *
      * @return document folder
      */
     private IDocumentFolder getDocumentFolder() {
@@ -1636,41 +1683,43 @@ public class DocumentView extends ViewPart {
             } else if (obj instanceof IDocument) {
                 folder = itemModel.getFolder((IDocument) obj);
             }
-            return folder;    
+            return folder;
         }
         return null;
     }
-    
+
     /**
      * Gets the document source of the folder containing the current selection. This should also be
      * the same document source of the current selection if it is not a folder.
-     * 
+     *
      * @return document source
      */
     private IAbstractDocumentSource getDocumentSource() {
         final IDocumentFolder folder = getDocumentFolder();
         if (folder != null) {
-            return folder.getSource();    
+            return folder.getSource();
         }
         return null;
     }
-    
+
     /**
      * Selection provider that reports back the {@link #geoReosurce}.
      */
     public class ResourceSelectionProvider implements ISelectionProvider {
         protected ListenerList listeners;
+
         ISelection selection;
-        
+
         public ResourceSelectionProvider() {
-            listeners = new ListenerList( ListenerList.IDENTITY );
+            listeners = new ListenerList(ListenerList.IDENTITY);
             selection = StructuredSelection.EMPTY;
         }
 
         @Override
         public void addSelectionChangedListener(ISelectionChangedListener listener) {
-            listeners.add( listener );
+            listeners.add(listener);
         }
+
         @Override
         public void removeSelectionChangedListener(ISelectionChangedListener listener) {
             listeners.remove(listener);
@@ -1680,29 +1729,29 @@ public class DocumentView extends ViewPart {
         public ISelection getSelection() {
             return this.selection;
         }
-        public void setSelection(IGeoResource resource){
-            if ( resource != null ){
-                this.selection = new StructuredSelection( DocumentView.this.geoResource );
-            }
-            else {
+
+        public void setSelection(IGeoResource resource) {
+            if (resource != null) {
+                this.selection = new StructuredSelection(DocumentView.this.geoResource);
+            } else {
                 this.selection = StructuredSelection.EMPTY; // no dice!
-            }            
+            }
         }
-        
+
         @Override
         public void setSelection(ISelection selection) {
             this.selection = selection;
             fire();
         }
-        
+
         private void fire() {
             SelectionChangedEvent event = null;
-            for( Object item : listeners.getListeners() ){
+            for (Object item : listeners.getListeners()) {
                 ISelectionChangedListener listener = (ISelectionChangedListener) item;
-                if( event == null ){
-                    event = new SelectionChangedEvent( this, this.selection);
+                if (event == null) {
+                    event = new SelectionChangedEvent(this, this.selection);
                 }
-                listener.selectionChanged( event );                
+                listener.selectionChanged(event);
             }
         }
     }

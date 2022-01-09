@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,7 +14,6 @@ import java.util.List;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -38,22 +37,24 @@ import org.geotools.gce.grassraster.JGrassConstants;
 public class W03CreateLocationWizardPage extends WizardPage {
 
     public static final String ID = "W03CreateLocationWizardPage"; //$NON-NLS-1$
+
     private final WorkspaceProperties properties;
+
     private TableViewer lv;
+
     private List<String> mapsetNames = null;
 
-    public W03CreateLocationWizardPage( WorkspaceProperties properties ) {
+    public W03CreateLocationWizardPage(WorkspaceProperties properties) {
         super(ID);
         this.properties = properties;
         setTitle("Add mapsets to the location");
-        setDescription("In this page the user is asked to supply additional mapsets to be used in the location.");
+        setDescription(
+                "In this page the user is asked to supply additional mapsets to be used in the location.");
         mapsetNames = properties.mapsets;
     }
 
-    /**
-     * @see IDialogPage#createControl(Composite)
-     */
-    public void createControl( Composite maxparent ) {
+    @Override
+    public void createControl(Composite maxparent) {
         Composite parent = new Composite(maxparent, SWT.None);
         parent.setLayout(new GridLayout(2, false));
 
@@ -63,14 +64,15 @@ public class W03CreateLocationWizardPage extends WizardPage {
                 .setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL));
         Button addButton = new Button(parent, SWT.PUSH);
         addButton.setText("  add  ");
-        addButton.addSelectionListener(new SelectionAdapter(){
-            public void widgetSelected( SelectionEvent e ) {
+        addButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
                 String mapset = newMapseText.getText();
                 if (mapset.length() > 0) {
                     if (mapset.indexOf(' ') != -1) {
                         MessageBox msgBox = new MessageBox(newMapseText.getShell(), SWT.ICON_ERROR);
-                        msgBox
-                                .setMessage("Mapset names can't contain spaces. Please choose a name without spaces.");
+                        msgBox.setMessage(
+                                "Mapset names can't contain spaces. Please choose a name without spaces.");
                         msgBox.open();
                         return;
                     }
@@ -78,7 +80,7 @@ public class W03CreateLocationWizardPage extends WizardPage {
                     mapsetNames.add(mapset);
                     lv.setInput(mapsetNames);
                     newMapseText.setText("");
-                    if (mapsetNames.size() > 0) {
+                    if (!mapsetNames.isEmpty()) {
                         canDoFinish(true);
                     } else {
                         canDoFinish(false);
@@ -88,8 +90,8 @@ public class W03CreateLocationWizardPage extends WizardPage {
         });
 
         lv = new TableViewer(parent);
-        GridData gd = new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL
-                | GridData.GRAB_VERTICAL);
+        GridData gd = new GridData(
+                GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL);
         gd.horizontalSpan = 2;
         lv.getControl().setLayoutData(gd);
         lv.setContentProvider(new ArrayContentProvider());
@@ -101,7 +103,8 @@ public class W03CreateLocationWizardPage extends WizardPage {
         Menu menu = popManager.createContextMenu(lv.getTable());
         lv.getTable().setMenu(menu);
         // clear all entries
-        IAction clearAction = new Action(){
+        IAction clearAction = new Action() {
+            @Override
             public void run() {
                 mapsetNames.clear();
                 mapsetNames.add(JGrassConstants.PERMANENT_MAPSET);
@@ -112,7 +115,8 @@ public class W03CreateLocationWizardPage extends WizardPage {
         clearAction.setText("Clear all entries");
         popManager.add(clearAction);
         // clear all entries
-        IAction deleteSelectedAction = new Action(){
+        IAction deleteSelectedAction = new Action() {
+            @Override
             public void run() {
                 IStructuredSelection selection = (IStructuredSelection) lv.getSelection();
                 String sel = (String) selection.getFirstElement();
@@ -121,7 +125,7 @@ public class W03CreateLocationWizardPage extends WizardPage {
                     return;
                 mapsetNames.remove(sel);
                 lv.setInput(mapsetNames);
-                if (mapsetNames.size() > 0) {
+                if (!mapsetNames.isEmpty()) {
                     canDoFinish(true);
                 } else {
                     canDoFinish(false);
@@ -135,7 +139,7 @@ public class W03CreateLocationWizardPage extends WizardPage {
     }
 
     @Override
-    public void setVisible( boolean visible ) {
+    public void setVisible(boolean visible) {
 
         if (visible) {
             canDoFinish(false);
@@ -144,7 +148,7 @@ public class W03CreateLocationWizardPage extends WizardPage {
         super.setVisible(visible);
     }
 
-    private void canDoFinish( boolean canDoFinish ) {
+    private void canDoFinish(boolean canDoFinish) {
         ((NewJGrassLocationWizard) getWizard()).canFinish = canDoFinish;
         getWizard().getContainer().updateButtons();
     }

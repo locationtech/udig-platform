@@ -183,7 +183,7 @@ public class VectorLegendGraphic implements MapGraphic {
 
                     FeatureTypeStyle[] styles = locateStyle(layer);
 
-                    if (styles != null && rules(styles).size() > 0) {
+                    if (styles != null && !rules(styles).isEmpty()) {
                         numberOfEntries[0] += rules(styles).size();
 
                         List<Rule> rules = rules(styles);

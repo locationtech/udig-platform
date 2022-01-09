@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,25 +17,24 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Stack;
-
-import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
-import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPage;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
+import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
+import org.locationtech.udig.catalog.ui.workflow.WorkflowWizardPage;
 
 /**
  * Abstract implementation of UDIGImportPage.
- * 
+ *
  * @author jdeolive
  */
-public abstract class AbstractUDIGImportPage extends WorkflowWizardPage implements UDIGConnectionPage {
+public abstract class AbstractUDIGImportPage extends WorkflowWizardPage
+        implements UDIGConnectionPage {
 
-    public AbstractUDIGImportPage( String pageName ) {
+    public AbstractUDIGImportPage(String pageName) {
         super(pageName);
     }
 
@@ -44,10 +43,10 @@ public abstract class AbstractUDIGImportPage extends WorkflowWizardPage implemen
      * default implementation Fails
      */
     @Override
-    public void setMessage( String newMessage, int newType ) {
+    public void setMessage(String newMessage, int newType) {
         super.setMessage(newMessage, newType);
 
-        // wizard pages are decorated by a connection page, so the default
+        // Wizard pages are decorated by a connection page, so the default
         // implementation of this method will not do anything
         IWizardPage page = getContainer().getCurrentPage();
         if (page != this && page instanceof WizardPage) {
@@ -63,10 +62,10 @@ public abstract class AbstractUDIGImportPage extends WorkflowWizardPage implemen
      * page the default implementation Fails to display the error.
      */
     @Override
-    public void setErrorMessage( String newMessage ) {
+    public void setErrorMessage(String newMessage) {
         super.setErrorMessage(newMessage);
 
-        // wizard pages are decorated by a connection page, so the default
+        // Wizard pages are decorated by a connection page, so the default
         // implementation of this method will not do anything
         IWizardPage page = getContainer().getCurrentPage();
         if (page != this && page instanceof WizardPage) {
@@ -96,22 +95,26 @@ public abstract class AbstractUDIGImportPage extends WorkflowWizardPage implemen
      * </p>
      * <p>
      * If an expensive method is called make sure to run it in the container:
-     * 
+     *
      * <pre>
      * getContainer().run(false, cancelable, runnable);
      * </pre>
-     * Remember to pass in false as the fork parameter so that it blocks until the method has completed executing.
+     *
+     * Remember to pass in false as the fork parameter so that it blocks until the method has
+     * completed executing.
      * </p>
+     *
      * @see WorkflowWizardPage#leavingPage()
      * @return true if it is acceptable to leave the page false if the page must not be left
      */
+    @Override
     public boolean leavingPage() {
         // default does nothing
         return true;
     }
 
     /**
-     * Returns the ids of the GeoResource to use as the "selected" resources. If a non-empty
+     * Returns the IDs of the GeoResource to use as the "selected" resources. If a non-empty
      * collection is returned then the next states in the wizard "should" use these as the items
      * selected by the user.
      * <p>
@@ -121,9 +124,10 @@ public abstract class AbstractUDIGImportPage extends WorkflowWizardPage implemen
      * it needs a selection of IGeoResources <br>
      * In the ResourceSelectionState example it would use this collection and not need to query the
      * user with a wizard page for that input
-     * 
+     *
      * @return the ids of the GeoResource to use as the "selected" resources.
      */
+    @Override
     public Collection<URL> getResourceIDs() {
         return Collections.emptySet();
     }
@@ -132,34 +136,39 @@ public abstract class AbstractUDIGImportPage extends WorkflowWizardPage implemen
      * Default implementation creates a collection of services from the parameters returned
      * {@link UDIGConnectionPage#getParams()}
      */
+    @Override
     public Collection<IService> getServices() {
         final Map<String, Serializable> params = getParams();
-        final Collection<IService> services = new HashSet<IService>();
-        IRunnableWithProgress runnable = new IRunnableWithProgress(){
+        final Collection<IService> services = new HashSet<>();
+        IRunnableWithProgress runnable = new IRunnableWithProgress() {
+            @Override
             public void run(IProgressMonitor monitor) {
-                Collection<IService> newServices = EndConnectionState.constructServices(monitor, params, new HashSet<URL>());
+                Collection<IService> newServices = EndConnectionState.constructServices(monitor,
+                        params, new HashSet<URL>());
                 services.addAll(newServices);
             }
         };
         try {
             getContainer().run(false, true, runnable);
         } catch (InvocationTargetException e) {
-            setErrorMessage( "Could not connect:"+e.getCause().getMessage() );
-            throw (RuntimeException) new RuntimeException( ).initCause( e );
+            setErrorMessage("Could not connect:" + e.getCause().getMessage());
+            throw (RuntimeException) new RuntimeException().initCause(e);
         } catch (InterruptedException e) {
-            setErrorMessage( "Canceled");
-            throw (RuntimeException) new RuntimeException( ).initCause( e );
+            setErrorMessage("Canceled");
+            throw (RuntimeException) new RuntimeException().initCause(e);
         }
-        if( !services.isEmpty() ){
+        if (!services.isEmpty()) {
             return services; // found!
         }
         return services;
     }
-    
-    /** 
+
+    /**
      * Gather up connection parameters from the user interface
+     *
      * @return connection parameters from the user interface
      */
+    @Override
     public Map<String, Serializable> getParams() {
         return null;
     }
