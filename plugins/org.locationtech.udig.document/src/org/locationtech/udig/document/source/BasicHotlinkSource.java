@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  *
@@ -16,48 +17,48 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.document.IDocument;
+import org.locationtech.udig.catalog.document.IDocument.ContentType;
 import org.locationtech.udig.catalog.document.IHotlink;
 import org.locationtech.udig.catalog.document.IHotlinkSource;
-import org.locationtech.udig.catalog.document.IDocument.ContentType;
 import org.locationtech.udig.document.model.AbstractDocument;
 import org.locationtech.udig.document.model.AbstractHotlinkDocument;
 import org.locationtech.udig.document.model.ActionHotlinkDocument;
 import org.locationtech.udig.document.model.FileHotlinkDocument;
 import org.locationtech.udig.document.model.WebHotlinkDocument;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * Basic hotlink document source implementation. This provides methods for hotlink documents access.
- * 
+ *
  * @author Naz Chan
  */
 public class BasicHotlinkSource extends AbstractDocumentSource implements IHotlinkSource {
-    
+
     private BasicHotlinkDescriptorParser parser;
 
     private List<HotlinkDescriptor> descriptors;
+
     private Map<String, List<HotlinkDescriptor>> attributeDescriptorMap;
-    
+
     public BasicHotlinkSource(IGeoResource resource) {
         super(resource);
         this.resource = resource;
         this.parser = new BasicHotlinkDescriptorParser(resource);
     }
-    
+
     @Override
     public boolean isEnabled() {
         return parser.isEnabled();
     }
-    
+
     @Override
     public boolean isEnabledEditable() {
         return true;
     }
-    
+
     @Override
     public boolean canSetHotlink() {
         return true;
@@ -67,7 +68,7 @@ public class BasicHotlinkSource extends AbstractDocumentSource implements IHotli
     public boolean canClearHotlink() {
         return true;
     }
-    
+
     @Override
     public List<HotlinkDescriptor> getHotlinkDescriptors(SimpleFeature feature,
             IProgressMonitor monitor) {
@@ -75,12 +76,12 @@ public class BasicHotlinkSource extends AbstractDocumentSource implements IHotli
         attributeDescriptorMap = getDescriptorMap(descriptors);
         return descriptors;
     }
-    
+
     @Override
     public List<IDocument> getDocuments(SimpleFeature feature, IProgressMonitor monitor) {
-        docs = new ArrayList<IDocument>();
+        docs = new ArrayList<>();
         final List<HotlinkDescriptor> featureDescriptors = getHotlinkDescriptors(feature, monitor);
-        if (featureDescriptors != null && featureDescriptors.size() > 0) {
+        if (featureDescriptors != null && !featureDescriptors.isEmpty()) {
             for (String attributeName : attributeDescriptorMap.keySet()) {
                 final List<HotlinkDescriptor> attributeDescriptors = attributeDescriptorMap
                         .get(attributeName);
@@ -96,7 +97,7 @@ public class BasicHotlinkSource extends AbstractDocumentSource implements IHotli
 
     /**
      * Gets the cached list of documents.
-     * 
+     *
      * @param feature
      * @param monitor
      * @return documents
@@ -107,9 +108,10 @@ public class BasicHotlinkSource extends AbstractDocumentSource implements IHotli
         }
         return docs;
     }
-    
+
     @Override
-    public IDocument getDocument(SimpleFeature feature, String attributeName, IProgressMonitor monitor) {
+    public IDocument getDocument(SimpleFeature feature, String attributeName,
+            IProgressMonitor monitor) {
         for (IDocument doc : getDocsInternal(feature, monitor)) {
             if (doc instanceof IHotlink) {
                 final IHotlink hotlinkDoc = (IHotlink) doc;
@@ -143,14 +145,15 @@ public class BasicHotlinkSource extends AbstractDocumentSource implements IHotli
     public boolean clear(SimpleFeature feature, String attributeName, IProgressMonitor monitor) {
         return setHotlink(feature, attributeName, null, monitor);
     }
-    
+
     /**
      * Gets the decoded hotlink value to be used by the document. This provides subclasses the
-     * utility to customise how the hotlink values are encoded/decoded into the feature.
+     * utility to customize how the hotlink values are encoded/decoded into the feature.
      * <p>
      * Example. file hotlinks may be stored as relative file path in the feature - this decodes the
      * path to an absolute path
-     * 
+     * </p>
+     *
      * @param contentType
      * @param featureInfo
      * @return decoded hotlink value
@@ -161,11 +164,12 @@ public class BasicHotlinkSource extends AbstractDocumentSource implements IHotli
 
     /**
      * Gets the encoded hotlink value to be used by the feature. This provides subclasses the
-     * utility to customise how the hotlink values are encoded/decoded into the feature.
+     * utility to customize how the hotlink values are encoded/decoded into the feature.
      * <p>
      * Example. file hotlinks may be stored as relative file path in the feature - this encodes the
      * path to a relative path
-     * 
+     * </p>
+     *
      * @param contentType
      * @param documentInfo
      * @return encoded hotlink value
@@ -173,10 +177,10 @@ public class BasicHotlinkSource extends AbstractDocumentSource implements IHotli
     protected String encodeInfo(ContentType contentType, String documentInfo) {
         return documentInfo;
     }
-    
+
     /**
      * Sets the hotlink attribute value.
-     * 
+     *
      * @param feature
      * @param attributeName
      * @param value
@@ -192,33 +196,33 @@ public class BasicHotlinkSource extends AbstractDocumentSource implements IHotli
         feature.setAttribute(attributeName, encodedValue);
         return true;
     }
-    
+
     /**
      * Maps the descriptors per attribute as an attribute can have more than one descriptor.
-     * 
+     *
      * @param descriptors
      * @return attribute descriptor map
      */
     private Map<String, List<HotlinkDescriptor>> getDescriptorMap(
             List<HotlinkDescriptor> descriptors) {
-        final Map<String, List<HotlinkDescriptor>> descriptorMap = new HashMap<String, List<HotlinkDescriptor>>();
+        final Map<String, List<HotlinkDescriptor>> descriptorMap = new HashMap<>();
         for (HotlinkDescriptor descriptor : descriptors) {
             final String attributeName = descriptor.getAttributeName();
             if (descriptorMap.containsKey(attributeName)) {
                 descriptorMap.get(attributeName).add(descriptor);
             } else {
-                final ArrayList<HotlinkDescriptor> attributeDescriptors = new ArrayList<HotlinkDescriptor>();
+                final ArrayList<HotlinkDescriptor> attributeDescriptors = new ArrayList<>();
                 attributeDescriptors.add(descriptor);
                 descriptorMap.put(attributeName, attributeDescriptors);
             }
         }
         return descriptorMap;
     }
-    
+
     /**
      * Creates a document from the info (is the attribute value) and the list of hotlink descriptors
      * related to an attribute.
-     * 
+     *
      * @param info
      * @param descriptors
      * @return document
@@ -239,9 +243,9 @@ public class BasicHotlinkSource extends AbstractDocumentSource implements IHotli
             break;
         }
         if (doc != null) {
-            doc.setSource(this);    
+            doc.setSource(this);
         }
         return doc;
     }
-    
+
 }

@@ -196,9 +196,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * </p>
      */
     Adapter contextModelAdapter = new AdapterImpl() {
-        /**
-         * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
-         */
         @Override
         public void notifyChanged(Notification msg) {
             registerWithContainers(msg);
@@ -242,7 +239,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             }
         }
 
-        @SuppressWarnings("unchecked")
         private void registerWithContainers(Notification msg) {
             // register itself with container objects
             switch (msg.getEventType()) {
@@ -769,9 +765,9 @@ public class LayerImpl extends EObjectImpl implements Layer {
             geoResourceCacheLock.lock();
             try {
                 if (geoResource == null) {
-                    if (getGeoResources() != NULL && getGeoResources().size() > 0)
+                    if (getGeoResources() != NULL && !getGeoResources().isEmpty()) {
                         geoResource = getGeoResources().get(0);
-                    else {
+                    } else {
                         return NULL.get(0);
                     }
                 }

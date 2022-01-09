@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,74 +15,69 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.locationtech.udig.catalog.IGeoResourceInfo;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.geotools.parameter.ParameterGroup;
 import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResource;
 import org.locationtech.udig.catalog.rasterings.AbstractRasterGeoResourceInfo;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.geotools.coverage.grid.io.AbstractGridFormat;
-import org.geotools.parameter.ParameterGroup;
-
 /**
- * Provides a handle to a MrSID resource allowing the service to be lazily
- * loaded.
- * 
+ * Provides a handle to a MrSID resource allowing the service to be lazily loaded.
+ *
  * @author mleslie
  * @author Daniele Romagnoli, GeoSolutions
  * @author Jody Garnett
  * @author Simone Giannecchini, GeoSolutions
- * 
+ *
  * @since 0.6.0
  */
 public class ImageGeoResourceImpl extends AbstractRasterGeoResource {
 
-	String name;
+    String name;
 
-	/**
-	 * Construct <code>ImageGeoResourceImpl</code>.
-	 * 
-	 * @param service
-	 *            Service creating this resource.
-	 * @param name
-	 *            Human readable name of this resource.
-	 */
-	public ImageGeoResourceImpl(ImageServiceImpl service, String name) {
-		super(service, name);
-		// System.out.println(service.getDescription());
-	}
-	
-	/**
-	 * Get metadata about a geoResource, represented by instance of
-	 * {@link ImageGeoResourceInfo}.
-	 */
-	protected AbstractRasterGeoResourceInfo createInfo(IProgressMonitor monitor)
-			throws IOException {
-		this.lock.lock();
-		try {
-		    if( getStatus() == Status.BROKEN) {
-		        return null; // not available
-		    }
-			return new AbstractRasterGeoResourceInfo(this, "ECW", "SID"); //$NON-NLS-1$ //$NON-NLS-2$
-		} finally {
-			lock.unlock();
-		}
-	}
-
-	/**
-	 * Retrieves the parameters used to create the
-	 * <code>GridCoverageReader</code> for this resource.
-	 */
-	public ParameterGroup getReadParameters() {
-		final Map<String, Object> info1 = new HashMap<String, Object>();
-		info1.put("name", "Imageio-ext"); //$NON-NLS-1$//$NON-NLS-2$
-		info1.put("description", //$NON-NLS-1$
-				"A MrSID raster file"); //$NON-NLS-1$
-		info1.put("vendor", "Geotools"); //$NON-NLS-1$ //$NON-NLS-2$
-		info1.put("docURL", "http://www.geotools.org/"); //$NON-NLS-1$ //$NON-NLS-2$
-		info1.put("version", "1.0"); //$NON-NLS-1$ //$NON-NLS-2$
-
-        return (ParameterGroup) ((AbstractGridFormat) ImageServiceExtension
-                .getFactory("HFA").createFormat()).getReadParameters(); //$NON-NLS-1$
+    /**
+     * Construct <code>ImageGeoResourceImpl</code>.
+     *
+     * @param service Service creating this resource.
+     * @param name Human readable name of this resource.
+     */
+    public ImageGeoResourceImpl(ImageServiceImpl service, String name) {
+        super(service, name);
+        // System.out.println(service.getDescription());
     }
-	
+
+    /**
+     * Get metadata about a geoResource, represented by instance of {@link ImageGeoResourceInfo}.
+     */
+    @Override
+    protected AbstractRasterGeoResourceInfo createInfo(IProgressMonitor monitor)
+            throws IOException {
+        this.lock.lock();
+        try {
+            if (getStatus() == Status.BROKEN) {
+                return null; // not available
+            }
+            return new AbstractRasterGeoResourceInfo(this, "ECW", "SID"); //$NON-NLS-1$ //$NON-NLS-2$
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    /**
+     * Retrieves the parameters used to create the <code>GridCoverageReader</code> for this
+     * resource.
+     */
+    @Override
+    public ParameterGroup getReadParameters() {
+        final Map<String, Object> info1 = new HashMap<>();
+        info1.put("name", "Imageio-ext"); //$NON-NLS-1$//$NON-NLS-2$
+        info1.put("description", //$NON-NLS-1$
+                "A MrSID raster file"); //$NON-NLS-1$
+        info1.put("vendor", "Geotools"); //$NON-NLS-1$ //$NON-NLS-2$
+        info1.put("docURL", "http://www.geotools.org/"); //$NON-NLS-1$ //$NON-NLS-2$
+        info1.put("version", "1.0"); //$NON-NLS-1$ //$NON-NLS-2$
+
+        return (ParameterGroup) ImageServiceExtension.getFactory("HFA") //$NON-NLS-1$
+                .createFormat().getReadParameters();
+    }
+
 }

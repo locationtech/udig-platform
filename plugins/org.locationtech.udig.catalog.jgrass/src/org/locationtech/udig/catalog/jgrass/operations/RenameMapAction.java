@@ -1,6 +1,6 @@
-/*
- * JGrass - Free Open Source Java GIS http://www.jgrass.org 
- * (C) HydroloGIS - www.hydrologis.com 
+/**
+ * JGrass - Free Open Source Java GIS http://www.jgrass.org
+ * (C) HydroloGIS - www.hydrologis.com
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,12 +14,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.locationtech.udig.project.ILayer;
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.commands.DeleteLayersCommand;
-import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.ui.PlatformGIS;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -43,29 +37,40 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.IWorkbenchWindowPulldownDelegate;
 import org.eclipse.ui.PlatformUI;
 import org.geotools.gce.grassraster.JGrassConstants;
-
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapGeoResource;
 import org.locationtech.udig.catalog.jgrass.core.JGrassMapsetGeoResource;
 import org.locationtech.udig.catalog.jgrass.utils.JGrassCatalogUtilities;
+import org.locationtech.udig.project.ILayer;
+import org.locationtech.udig.project.IMap;
+import org.locationtech.udig.project.internal.commands.DeleteLayersCommand;
+import org.locationtech.udig.project.ui.ApplicationGIS;
+import org.locationtech.udig.ui.PlatformGIS;
 
 /**
  * Action to remove a map from disk.
- * 
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
-public class RenameMapAction implements IObjectActionDelegate, IWorkbenchWindowActionDelegate, IWorkbenchWindowPulldownDelegate {
+public class RenameMapAction implements IObjectActionDelegate, IWorkbenchWindowActionDelegate,
+        IWorkbenchWindowPulldownDelegate {
 
     IStructuredSelection selection = null;
 
-    public void setActivePart( IAction action, IWorkbenchPart targetPart ) {
+    @Override
+    public void setActivePart(IAction action, IWorkbenchPart targetPart) {
+
     }
 
-    public void run( IAction action ) {
+    @Override
+    public void run(IAction action) {
 
-        IRunnableWithProgress operation = new IRunnableWithProgress(){
+        IRunnableWithProgress operation = new IRunnableWithProgress() {
 
-            public void run( final IProgressMonitor pm ) throws InvocationTargetException, InterruptedException {
-                Display.getDefault().syncExec(new Runnable(){
+            @Override
+            public void run(final IProgressMonitor pm)
+                    throws InvocationTargetException, InterruptedException {
+                Display.getDefault().syncExec(new Runnable() {
+                    @Override
                     public void run() {
 
                         final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
@@ -83,15 +88,20 @@ public class RenameMapAction implements IObjectActionDelegate, IWorkbenchWindowA
                                     String oldMapName = mapsetpathAndMapname[1];
                                     String mapsetName = mapsetpathAndMapname[0];
                                     try {
-                                        InputDialog iDialog = new InputDialog(Display.getDefault().getActiveShell(),
-                                                "New map name", "Please enter the new name for the map: " + oldMapName, "new_"
-                                                        + oldMapName, null);
+                                        InputDialog iDialog = new InputDialog(
+                                                Display.getDefault().getActiveShell(),
+                                                "New map name",
+                                                "Please enter the new name for the map: "
+                                                        + oldMapName,
+                                                "new_" + oldMapName, null);
                                         iDialog.open();
                                         String newMapName = iDialog.getValue();
                                         if (newMapName.indexOf(' ') != -1) {
-                                            MessageBox msgBox = new MessageBox(Display.getDefault().getActiveShell(),
+                                            MessageBox msgBox = new MessageBox(
+                                                    Display.getDefault().getActiveShell(),
                                                     SWT.ICON_ERROR);
-                                            msgBox.setMessage("Map names can't contain spaces. Please choose a name without spaces.");
+                                            msgBox.setMessage(
+                                                    "Map names can't contain spaces. Please choose a name without spaces.");
                                             msgBox.open();
                                             newMapName = null;
                                             return;
@@ -101,8 +111,8 @@ public class RenameMapAction implements IObjectActionDelegate, IWorkbenchWindowA
                                             // remove map from layer view
                                             IMap activeMap = ApplicationGIS.getActiveMap();
                                             List<ILayer> mapLayers = activeMap.getMapLayers();
-                                            List<ILayer> toRemove = new ArrayList<ILayer>();
-                                            for( int i = 0; i < mapLayers.size(); i++ ) {
+                                            List<ILayer> toRemove = new ArrayList<>();
+                                            for (int i = 0; i < mapLayers.size(); i++) {
                                                 String layerName = mapLayers.get(i).getName();
                                                 if (layerName.equals(oldMapName)) {
                                                     // remove it from layer list
@@ -110,18 +120,24 @@ public class RenameMapAction implements IObjectActionDelegate, IWorkbenchWindowA
                                                 }
 
                                             }
-                                            if (toRemove.size() > 0)
-                                                activeMap.sendCommandSync(new DeleteLayersCommand((ILayer[]) toRemove
-                                                        .toArray(new ILayer[toRemove.size()])));
+                                            if (!toRemove.isEmpty())
+                                                activeMap.sendCommandSync(
+                                                        new DeleteLayersCommand(toRemove.toArray(
+                                                                new ILayer[toRemove.size()])));
 
                                             // rename the map
-                                            renameGrassRasterMap(mapsetName, oldMapName, newMapName);
+                                            renameGrassRasterMap(mapsetName, oldMapName,
+                                                    newMapName);
                                             // remove old map
-                                            ((JGrassMapsetGeoResource) mr.parent(new NullProgressMonitor())).removeMap(
-                                                    oldMapName, JGrassConstants.GRASSBINARYRASTERMAP);
+                                            ((JGrassMapsetGeoResource) mr
+                                                    .parent(new NullProgressMonitor())).removeMap(
+                                                            oldMapName,
+                                                            JGrassConstants.GRASSBINARYRASTERMAP);
                                             // add new name map
-                                            ((JGrassMapsetGeoResource) mr.parent(new NullProgressMonitor())).addMap(newMapName,
-                                                    JGrassConstants.GRASSBINARYRASTERMAP);
+                                            ((JGrassMapsetGeoResource) mr
+                                                    .parent(new NullProgressMonitor())).addMap(
+                                                            newMapName,
+                                                            JGrassConstants.GRASSBINARYRASTERMAP);
                                         }
 
                                     } catch (Exception e) {
@@ -145,50 +161,44 @@ public class RenameMapAction implements IObjectActionDelegate, IWorkbenchWindowA
         PlatformGIS.runInProgressDialog("Remove maps...", true, operation, true);
     }
 
-    /**
-    * @see org.eclipse.ui.IActionDelegate#selectionChanged(org.eclipse.jface.action.IAction,
-    *      org.eclipse.jface.viewers.ISelection)
-    */
-    public void selectionChanged( IAction action, ISelection selection ) {
+    @Override
+    public void selectionChanged(IAction action, ISelection selection) {
 
         if (selection instanceof IStructuredSelection)
             this.selection = (IStructuredSelection) selection;
     }
 
-    /*
-    * @see org.eclipse.ui.IWorkbenchWindowActionDelegate#dispose()
-    */
+    @Override
     public void dispose() {
+
     }
 
-    /*
-    * @see org.eclipse.ui.IWorkbenchWindowActionDelegate#init(org.eclipse.ui.IWorkbenchWindow)
-    */
-    public void init( IWorkbenchWindow window ) {
+    @Override
+    public void init(IWorkbenchWindow window) {
         // do nothing
     }
 
-    /*
-    * @see org.eclipse.ui.IWorkbenchWindowPulldownDelegate#getMenu(org.eclipse.swt.widgets.Control)
-    */
-    public Menu getMenu( Control parent ) {
+    @Override
+    public Menu getMenu(Control parent) {
         return null;
     }
 
     /**
-     * Given the mapsetpath and the old and new mapname, the map is renamed with all its accessor files
-     * 
+     * Given the mapsetpath and the old and new mapname, the map is renamed with all its accessor
+     * files
+     *
      * @param mapsetPath the mapset path.
      * @param oldMapName the old map name.
      * @param newMapName the new map name.
      * @throws IOException
      */
-    private void renameGrassRasterMap( String mapsetPath, String oldMapName, String newMapName ) throws IOException {
+    private void renameGrassRasterMap(String mapsetPath, String oldMapName, String newMapName)
+            throws IOException {
         // list of files to remove
         String mappaths[] = JGrassCatalogUtilities.filesOfRasterMap(mapsetPath, oldMapName);
 
         // first delete the list above, which are just files
-        for( int j = 0; j < mappaths.length; j++ ) {
+        for (int j = 0; j < mappaths.length; j++) {
             File filetorename = new File(mappaths[j]);
             if (filetorename.exists()) {
                 File parentFile = filetorename.getParentFile();

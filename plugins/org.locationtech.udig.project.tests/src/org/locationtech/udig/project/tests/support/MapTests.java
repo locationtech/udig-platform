@@ -55,9 +55,11 @@ public class MapTests {
      * RenderContexts.
      * <p>
      * The viewport model will contain all the features in the resource and will be the same CRS.
+     * </p>
      * <p>
      * map.getRenderExecutor().getRenderContext.getImage() contains the rendered image. (After a
      * refresh is called).
+     * </p>
      *
      * @param resource
      * @param displaySize
@@ -188,14 +190,16 @@ public class MapTests {
             displaySize = new Dimension(1024, 800);
         }
         int toCreate = numFeatures;
-        if (numFeatures == 0)
+        if (numFeatures == 0) {
             toCreate = 1;
+        }
         SimpleFeature[] features = UDIGTestUtil.createDefaultTestFeatures(featureTypeName,
                 toCreate);
         IGeoResource resource = CatalogTests.createGeoResource(features, deleteExistingService);
-        if (numFeatures == 0)
+        if (numFeatures == 0) {
             resource.resolve(FeatureStore.class, new NullProgressMonitor())
                     .removeFeatures(Filter.INCLUDE);
+        }
         return createNonDynamicMapAndRenderer(resource, displaySize, null, createRenderManager);
     }
 
@@ -204,11 +208,12 @@ public class MapTests {
         List<IGeoResource> list = new ArrayList<>();
         list.add(resource);
         TestLayer testLayer = new TestLayer(list);
-        if (map == null)
+        if (map == null) {
             ProjectFactory.eINSTANCE.createMap(null, "TestMap", //$NON-NLS-1$
                     Collections.singletonList(testLayer));
-        else
+        } else {
             map.getLayersInternal().add(testLayer);
+        }
         return testLayer;
     }
 
@@ -218,8 +223,9 @@ public class MapTests {
         renderContextImpl.setMapInternal(map);
         renderContextImpl.setRenderManagerInternal(map.getRenderManagerInternal());
         creator.setContext(renderContextImpl);
-        if (!creator.getConfiguration().isEmpty())
+        if (!creator.getConfiguration().isEmpty()) {
             throw new AssertionError("configuration should be empty on creation"); //$NON-NLS-1$
+        }
         return creator;
     }
 
@@ -248,16 +254,19 @@ public class MapTests {
             }
         }
 
-        if (s == null)
+        if (s == null) {
             throw new AssertionError();
-        if (!(s.resources(null).size() > 0))
+        }
+        if (s.resources(null).isEmpty()) {
             throw new AssertionError();
+        }
 
         CatalogPlugin.getDefault().getLocalCatalog().add(s);
         List<IResolve> resources = CatalogPlugin.getDefault().getLocalCatalog()
                 .find(new URL(resourceURL), null);
-        if (!(resources.size() > 0))
+        if (resources.isEmpty()) {
             throw new AssertionError();
+        }
 
         Layer layer = map.getLayerFactory().createLayer((IGeoResource) resources.get(0));
         layer.setName(name);
