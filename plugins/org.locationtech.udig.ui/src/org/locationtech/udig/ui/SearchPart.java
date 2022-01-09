@@ -134,8 +134,9 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
 
     void computeOrientation() {
         saveSplitterRatio();
-        if (save != null)
+        if (save != null) {
             save.putInteger("orientation", orientation.ordinal()); //$NON-NLS-1$
+        }
         if (orientation != Orientation.AUTOMATIC) {
             setOrientation(orientation);
         } else {
@@ -144,10 +145,11 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
 
             Point size = parent.getSize();
             if (size.x != 0 && size.y != 0) {
-                if (size.x > size.y)
+                if (size.x > size.y) {
                     setOrientation(Orientation.HORIZONTAL);
-                else
+                } else {
                     setOrientation(Orientation.VERTICAL);
+                }
             }
         }
     }
@@ -473,7 +475,6 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
             public void run() {
                 stopSearch();
                 setEnabled(false);
-                // book.showPage( promptPage );
             }
         };
         Messages.initAction(cancel, "cancel"); //$NON-NLS-1$
@@ -557,8 +558,9 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
-                if (!newObjects.isEmpty())
+                if (!newObjects.isEmpty()) {
                     viewer.refresh(true);
+                }
             }
         });
     }
@@ -573,10 +575,11 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
      * @return the selection that will be set in the viewer. may be null.
      */
     protected ISelection getSelection(List<Object> input) {
-        if (input.size() > 0)
+        if (!input.isEmpty()) {
             return new StructuredSelection(input.get(0));
-        else
+        } else {
             return new StructuredSelection();
+        }
     }
 
     /**
@@ -650,9 +653,6 @@ public class SearchPart extends ViewPart implements ISetSelectionTarget {
             return orientation;
         }
 
-        /*
-         * @see Action#actionPerformed
-         */
         @Override
         public void run() {
             if (isChecked()) {

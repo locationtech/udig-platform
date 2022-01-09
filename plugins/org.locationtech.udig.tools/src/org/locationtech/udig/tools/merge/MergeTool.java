@@ -1,9 +1,10 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  * (C) 2006, Axios Engineering S.L. (Axios)
  * (C) 2006, County Council of Gipuzkoa, Department of Environment and Planning
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Axios BSD
@@ -17,6 +18,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.command.MapCommand;
 import org.locationtech.udig.project.internal.commands.selection.BBoxSelectionCommand;
@@ -29,20 +36,11 @@ import org.locationtech.udig.project.ui.tool.ModalTool;
 import org.locationtech.udig.project.ui.tool.SimpleTool;
 import org.locationtech.udig.tools.edit.animation.MessageBubble;
 import org.locationtech.udig.tools.edit.preferences.PreferenceUtil;
-
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.filter.Filter;
-
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
-
 import org.locationtech.udig.tools.internal.i18n.Messages;
 import org.locationtech.udig.tools.internal.ui.util.StatusBar;
 import org.locationtech.udig.tools.merge.internal.view.MergeView;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.filter.Filter;
 
 /**
  * Merge the features in bounding box
@@ -50,7 +48,7 @@ import org.locationtech.udig.tools.merge.internal.view.MergeView;
  * This implementation is based in BBoxSelection. The extension add behavior object which displays
  * the merge dialog.
  * </p>
- * 
+ *
  * @author Aritz Davila (www.axios.es)
  * @author Mauricio Pazos (www.axios.es)
  * @author Marco Foi (www.mcfoi.it)
@@ -97,9 +95,9 @@ public class MergeTool extends SimpleTool implements ModalTool {
             // Set tool mode (also set in MergeOperation.op to MERGEMODE_OPERATION)
             this.mergeContext.setMergeMode(MergeContext.MERGEMODE_TOOL);
 
-            // feedback to the user indeed that he can select some features to merege
+            // feedback to the user indeed that he can select some features to merge
             StatusBar.setStatusBarMessage(this.mergeContext.getToolContext(), "");//$NON-NLS-1$
-            if (this.mergeContext.getToolContext().getMapLayers().size() > 0) {
+            if (!this.mergeContext.getToolContext().getMapLayers().isEmpty()) {
 
                 String message = Messages.MergeTool_select_features_to_merge;
                 StatusBar.setStatusBarMessage(this.mergeContext.getToolContext(), message);
@@ -125,6 +123,7 @@ public class MergeTool extends SimpleTool implements ModalTool {
     private void closeMergeView() {
         Display.getCurrent().asyncExec(new Runnable() {
 
+            @Override
             public void run() {
 
                 // When the tool is deactivated, hide the view.
@@ -185,7 +184,7 @@ public class MergeTool extends SimpleTool implements ModalTool {
 
     /**
      * Remove the bbox drawn
-     * 
+     *
      * @param start
      * @param end
      */
@@ -210,15 +209,19 @@ public class MergeTool extends SimpleTool implements ModalTool {
     }
 
     /**
-     * This hook is used to catch two events: <lu> <li>Bbox drawing action to select one or more
-     * features was finished</li> <li>select individual feature for click (press and release in the
-     * same position)</li> <li>Unselect one feature using control key and mouse pressed.</li> </lu>
+     * This hook is used to catch two events:
+     * <ul>
+     * <li>Bbox drawing action to select one or more features was finished</li>
+     * <li>select individual feature for click (press and release in the same position)</li>
+     * <li>Unselect one feature using control key and mouse pressed.</li>
+     * </ul>
      */
     @Override
     protected void onMouseReleased(MapMouseEvent mouseEvent) {
 
-        if (!isActive())
+        if (!isActive()) {
             return;
+        }
 
         if (mouseEvent.button != MapMouseEvent.BUTTON1) {
             return;
@@ -250,7 +253,7 @@ public class MergeTool extends SimpleTool implements ModalTool {
 
     /**
      * Display the feature selected on the view
-     * 
+     *
      * @param e mouse event
      * @param selectedLayer
      * @param mergeView
@@ -282,12 +285,13 @@ public class MergeTool extends SimpleTool implements ModalTool {
 
     /**
      * Presents the features selected using the bbox interaction in the merge view
-     * 
+     *
      * @param xyMouse
      * @param selectedLayer
      * @param mergeView
      */
-    private void displayFeaturesUnderBBox(Point xyMouse, ILayer selectedLayer, MergeView mergeView) {
+    private void displayFeaturesUnderBBox(Point xyMouse, ILayer selectedLayer,
+            MergeView mergeView) {
 
         Filter filterSelectedFeatures;
         Envelope bound;
@@ -323,7 +327,7 @@ public class MergeTool extends SimpleTool implements ModalTool {
 
     /**
      * Opens the Merge view
-     * 
+     *
      * @param eventX
      * @param eventY
      * @param context
@@ -345,9 +349,9 @@ public class MergeTool extends SimpleTool implements ModalTool {
             mergeContext.activeMergeView(view);
 
         } catch (Exception ex) {
-            AnimationUpdater.runTimer(getContext().getMapDisplay(), new MessageBubble(eventX,
-                    eventY, "It cannot be merge", //$NON-NLS-1$
-                    PreferenceUtil.instance().getMessageDisplayDelay()));
+            AnimationUpdater.runTimer(getContext().getMapDisplay(),
+                    new MessageBubble(eventX, eventY, "It cannot be merge", //$NON-NLS-1$
+                            PreferenceUtil.instance().getMessageDisplayDelay()));
         }
 
     }
@@ -355,10 +359,10 @@ public class MergeTool extends SimpleTool implements ModalTool {
     /**
      * Selects the features under the bbox. This method builds a command to show the features
      * selected to merge
-     * 
+     *
      * @param boundDrawn the drawn bbox by the usr
      * @param context
-     * 
+     *
      * @return {@link Filter} filter that contains the selected features
      */
     private Filter selectFeaturesUnderBBox(Envelope boundDrawn, int SelectionType) {
@@ -369,10 +373,6 @@ public class MergeTool extends SimpleTool implements ModalTool {
         MapCommand command = context.getSelectionFactory().createBBoxSelectionCommand(boundDrawn,
                 SelectionType);
         getContext().sendSyncCommand(command);
-
-        // SelectionBoxCommand selectionBoxCommand = this.mergeContext.getSelectionBoxCommand();
-        // selectionBoxCommand.setValid(true);
-
         getContext().getViewportPane().repaint();
 
         Filter filterSelectedFeatures = getContext().getSelectedLayer().getFilter();

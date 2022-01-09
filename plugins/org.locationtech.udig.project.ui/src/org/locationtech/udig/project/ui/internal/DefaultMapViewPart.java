@@ -128,7 +128,7 @@ public abstract class DefaultMapViewPart extends ViewPart implements MapPart, ID
                 toolManager.contributeActionTools(toolbarManager, bars);
                 toolManager.setCurrentEditor(this);
             }
-            if (createdMap.getLayersInternal().size() > 0) {
+            if (!createdMap.getLayersInternal().isEmpty()) {
                 createdMap.getEditManagerInternal().setSelectedLayer(
                         createdMap.getLayersInternal().get(createdMap.getMapLayers().size() - 1));
             }
