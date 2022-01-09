@@ -205,7 +205,7 @@ public class ClassificationEngine {
         params.parameter("dataImage").setValue(gcRaw); //$NON-NLS-1$
         params.parameter("stats").setValue(stats); //$NON-NLS-1$
         params.parameter("bands").setValue(new Integer[] { 0 }); //$NON-NLS-1$
-        if (ignore.size() > 0) {
+        if (!ignore.isEmpty()) {
             params.parameter("ranges").setValue(ignore); //$NON-NLS-1$
             params.parameter("rangesType").setValue(Range.Type.EXCLUDE); //$NON-NLS-1$
             params.parameter("rangeLocalStats").setValue(false); //$NON-NLS-1$

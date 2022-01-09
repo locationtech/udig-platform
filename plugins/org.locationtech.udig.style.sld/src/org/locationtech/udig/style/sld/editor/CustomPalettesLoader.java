@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -38,17 +38,17 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * A loader for custom colortables. The colorbrewer 15 values hardcoded is simply not enough.
- * 
+ * A loader for custom colortables. The colorbrewer 15 values hard coded is simply not enough.
+ *
  * @author Andrea Antonello (www.hydrologis.com)
  */
 public class CustomPalettesLoader implements IStartup {
-    // public static final PaletteType UDIG_CUSTOM = new PaletteType(true, true, "UDIG_CUSTOM");
 
-    public static final List<BrewerPalette> PALETTESLIST = new ArrayList<BrewerPalette>();
+    public static final List<BrewerPalette> PALETTESLIST = new ArrayList<>();
 
+    @Override
     public void earlyStartup() {
-        if (PALETTESLIST.size() > 0) {
+        if (!PALETTESLIST.isEmpty()) {
             // read only first time
             return;
         }
@@ -58,13 +58,14 @@ public class CustomPalettesLoader implements IStartup {
             palettesFolderPath = FileLocator.toFileURL(palettesFolderUrl).getPath();
 
             File palettesFolderFile = new File(palettesFolderPath);
-            File[] palettesList = palettesFolderFile.listFiles(new FilenameFilter(){
-                public boolean accept( File dir, String name ) {
+            File[] palettesList = palettesFolderFile.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
                     return name.endsWith(".xml"); //$NON-NLS-1$
                 }
             });
 
-            for( File file : palettesList ) {
+            for (File file : palettesList) {
                 try {
                     load(new FileInputStream(file), ColorBrewer.ALL);
                 } catch (Exception e) {
@@ -77,73 +78,77 @@ public class CustomPalettesLoader implements IStartup {
         }
     }
 
-    private void load( InputStream stream, PaletteType type ) throws Exception {
+    private void load(InputStream stream, PaletteType type) throws Exception {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(stream);
-        String name = fixToString(document.getElementsByTagName("name").item(0).getFirstChild().toString());
-        String description = fixToString(document.getElementsByTagName("description").item(0).getFirstChild().toString());
+        String name = fixToString(
+                document.getElementsByTagName("name").item(0).getFirstChild().toString()); //$NON-NLS-1$
+        String description = fixToString(
+                document.getElementsByTagName("description").item(0).getFirstChild().toString()); //$NON-NLS-1$
 
         SampleScheme scheme = new SampleScheme();
 
-        NodeList samples = document.getElementsByTagName("sample");
+        NodeList samples = document.getElementsByTagName("sample"); //$NON-NLS-1$
 
-        for( int i = 0; i < samples.getLength(); i++ ) {
+        for (int i = 0; i < samples.getLength(); i++) {
             Node sample = samples.item(i);
-            int size = Integer.parseInt(sample.getAttributes().getNamedItem("size").getNodeValue());
+            int size = Integer.parseInt(sample.getAttributes().getNamedItem("size").getNodeValue()); //$NON-NLS-1$
             String values = fixToString(sample.getFirstChild().toString());
             int[] list = new int[size];
             StringTokenizer tok = new StringTokenizer(values);
 
-            for( int j = 0; j < size; j++ ) {
-                list[j] = Integer.parseInt(tok.nextToken(","));
+            for (int j = 0; j < size; j++) {
+                list[j] = Integer.parseInt(tok.nextToken(",")); //$NON-NLS-1$
             }
 
             scheme.setSampleScheme(size, list);
         }
 
-        NodeList palettes = document.getElementsByTagName("palette");
+        NodeList palettes = document.getElementsByTagName("palette"); //$NON-NLS-1$
 
-        for( int i = 0; i < palettes.getLength(); i++ ) {
+        for (int i = 0; i < palettes.getLength(); i++) {
             BrewerPalette pal = new BrewerPalette();
             PaletteSuitability suitability = new PaletteSuitability();
             NodeList paletteInfo = palettes.item(i).getChildNodes();
 
-            for( int j = 0; j < paletteInfo.getLength(); j++ ) {
+            for (int j = 0; j < paletteInfo.getLength(); j++) {
                 Node item = paletteInfo.item(j);
 
-                if (item.getNodeName().equals("name")) {
+                if (item.getNodeName().equals("name")) { //$NON-NLS-1$
                     pal.setName(fixToString(item.getFirstChild().toString()));
                 }
 
-                if (item.getNodeName().equals("description")) {
+                if (item.getNodeName().equals("description")) { //$NON-NLS-1$
                     pal.setDescription(fixToString(item.getFirstChild().toString()));
                 }
 
-                if (item.getNodeName().equals("colors")) {
-                    StringTokenizer oTok = new StringTokenizer(fixToString(item.getFirstChild().toString()));
-                    List<Color> colors = new ArrayList<Color>();
+                if (item.getNodeName().equals("colors")) { //$NON-NLS-1$
+                    StringTokenizer oTok = new StringTokenizer(
+                            fixToString(item.getFirstChild().toString()));
+                    List<Color> colors = new ArrayList<>();
 
-                    while( oTok.hasMoreTokens() ) {
-                        String entry = oTok.nextToken(":");
+                    while (oTok.hasMoreTokens()) {
+                        String entry = oTok.nextToken(":"); //$NON-NLS-1$
                         StringTokenizer iTok = new StringTokenizer(entry);
-                        int r = Integer.parseInt(iTok.nextToken(",").trim());
-                        int g = Integer.parseInt(iTok.nextToken(",").trim());
-                        int b = Integer.parseInt(iTok.nextToken(",").trim());
+                        int r = Integer.parseInt(iTok.nextToken(",").trim()); //$NON-NLS-1$
+                        int g = Integer.parseInt(iTok.nextToken(",").trim()); //$NON-NLS-1$
+                        int b = Integer.parseInt(iTok.nextToken(",").trim()); //$NON-NLS-1$
                         colors.add(new Color(r, g, b));
                     }
 
-                    pal.setColors((Color[]) colors.toArray(new Color[colors.size()]));
+                    pal.setColors(colors.toArray(new Color[colors.size()]));
                 }
 
-                if (item.getNodeName().equals("suitability")) {
+                if (item.getNodeName().equals("suitability")) { //$NON-NLS-1$
                     NodeList schemeSuitability = item.getChildNodes();
 
-                    for( int k = 0; k < schemeSuitability.getLength(); k++ ) {
+                    for (int k = 0; k < schemeSuitability.getLength(); k++) {
                         Node palScheme = schemeSuitability.item(k);
 
-                        if (palScheme.getNodeName().equals("scheme")) {
-                            int paletteSize = Integer.parseInt(palScheme.getAttributes().getNamedItem("size").getNodeValue());
+                        if (palScheme.getNodeName().equals("scheme")) { //$NON-NLS-1$
+                            int paletteSize = Integer.parseInt(
+                                    palScheme.getAttributes().getNamedItem("size").getNodeValue()); //$NON-NLS-1$
 
                             String values = fixToString(palScheme.getFirstChild().toString());
                             String[] list = new String[6];
@@ -151,8 +156,8 @@ public class CustomPalettesLoader implements IStartup {
 
                             // obtain all 6 values, which should each be
                             // G=GOOD, D=DOUBTFUL, B=BAD, or ?=UNKNOWN.
-                            for( int m = 0; m < 6; m++ ) {
-                                list[m] = tok.nextToken(",");
+                            for (int m = 0; m < 6; m++) {
+                                list[m] = tok.nextToken(","); //$NON-NLS-1$
                             }
 
                             suitability.setSuitability(paletteSize, list);
@@ -167,10 +172,10 @@ public class CustomPalettesLoader implements IStartup {
                 Color[] colors = pal.getColors();
                 int length = colors.length;
                 CustomSampleScheme scheme2 = new CustomSampleScheme(length);
-                
-                for( int j = 2; j < length; j++ ) {
+
+                for (int j = 2; j < length; j++) {
                     int[] list = new int[j];
-                    for( int k = 0; k < list.length; k++ ) {
+                    for (int k = 0; k < list.length; k++) {
                         list[k] = k;
                     }
                     scheme2.setSampleScheme(j, list);
@@ -187,19 +192,18 @@ public class CustomPalettesLoader implements IStartup {
      * Converts "[#text: 1,2,3]" to "1,2,3".
      *
      * <p>
-     * This is a fix for the org.w3c.dom API. Under j1.4
-     * Node.toString() returns "1,2,3", under j1.5 Node.toString() returns
-     * "[#text: 1,2,3]".
+     * This is a fix for the org.w3c.dom API. Under j1.4 Node.toString() returns "1,2,3", under j1.5
+     * Node.toString() returns "[#text: 1,2,3]".
      * </p>
      *
      * @param input A String with the input.
      *
      * @return A String with the modified input.
      */
-    private String fixToString( String input ) {
-        if (input.startsWith("[") && input.endsWith("]")) {
+    private String fixToString(String input) {
+        if (input.startsWith("[") && input.endsWith("]")) { //$NON-NLS-1$ //$NON-NLS-2$
             input = input.substring(1, input.length() - 1); // remove []
-            input = input.replaceAll("#text: ", ""); // remove "#text: "
+            input = input.replaceAll("#text: ", ""); // remove "#text: " //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         return input;

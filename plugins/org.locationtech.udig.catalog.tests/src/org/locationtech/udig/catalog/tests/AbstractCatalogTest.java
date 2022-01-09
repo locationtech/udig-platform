@@ -17,6 +17,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.ICatalogInfo;
 import org.locationtech.udig.catalog.IGeoResource;
@@ -26,18 +30,13 @@ import org.locationtech.udig.catalog.IResolveChangeListener;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.IServiceInfo;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import org.locationtech.jts.geom.Envelope;
-
 /**
  * Sub-class me and fill in the appripriate protected methods ...
- * 
+ *
  * @author dzwiers
  */
 public abstract class AbstractCatalogTest extends AbstractResolveTest {
+    @Override
     protected abstract ICatalog getResolve();
 
     protected abstract boolean mutable();
@@ -45,37 +44,46 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
     @Test(timeout = BLOCK)
     public void testAddService() {
         if (mutable()) {
-            IService service = new IService(){
+            IService service = new IService() {
 
-                public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor )
+                @Override
+                public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor)
                         throws IOException {
                     return null;
                 }
 
-                public List< ? extends IGeoResource> resources( IProgressMonitor monitor )
+                @Override
+                public List<? extends IGeoResource> resources(IProgressMonitor monitor)
                         throws IOException {
                     return null;
                 }
 
+                @Override
                 public Map<String, Serializable> getConnectionParams() {
                     return null;
                 }
 
-                public <T> boolean canResolve( Class<T> adaptee ) {
+                @Override
+                public <T> boolean canResolve(Class<T> adaptee) {
                     return false;
                 }
 
+                @Override
                 public Status getStatus() {
                     return null;
                 }
 
+                @Override
                 public Throwable getMessage() {
                     return null;
                 }
 
-                protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+                @Override
+                protected IServiceInfo createInfo(IProgressMonitor monitor) throws IOException {
                     return null;
                 }
+
+                @Override
                 public URL getIdentifier() {
                     try {
                         return new URL("http://localhost/udig-tests"); //$NON-NLS-1$
@@ -97,37 +105,46 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
     @Test(timeout = BLOCK)
     public void testRemoveService() {
         if (mutable()) {
-            IService service = new IService(){
+            IService service = new IService() {
 
-                public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor )
+                @Override
+                public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor)
                         throws IOException {
                     return null;
                 }
 
-                public List< ? extends IGeoResource> resources( IProgressMonitor monitor )
+                @Override
+                public List<? extends IGeoResource> resources(IProgressMonitor monitor)
                         throws IOException {
                     return null;
                 }
 
+                @Override
                 public Map<String, Serializable> getConnectionParams() {
                     return null;
                 }
 
-                public <T> boolean canResolve( Class<T> adaptee ) {
+                @Override
+                public <T> boolean canResolve(Class<T> adaptee) {
                     return false;
                 }
 
+                @Override
                 public Status getStatus() {
                     return null;
                 }
 
-                protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+                @Override
+                protected IServiceInfo createInfo(IProgressMonitor monitor) throws IOException {
                     return null;
                 }
+
+                @Override
                 public Throwable getMessage() {
                     return null;
                 }
 
+                @Override
                 public URL getIdentifier() {
                     try {
                         return new URL("http://localhost/udig-tests"); //$NON-NLS-1$
@@ -151,37 +168,46 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
     @Test(timeout = BLOCK)
     public void testReplaceService() {
         if (mutable()) {
-            IService service1 = new IService(){
+            IService service1 = new IService() {
 
-                public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor )
+                @Override
+                public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor)
                         throws IOException {
                     return null;
                 }
 
-                public List< ? extends IGeoResource> resources( IProgressMonitor monitor )
+                @Override
+                public List<? extends IGeoResource> resources(IProgressMonitor monitor)
                         throws IOException {
                     return null;
                 }
 
+                @Override
                 public Map<String, Serializable> getConnectionParams() {
                     return null;
                 }
 
-                public <T> boolean canResolve( Class<T> adaptee ) {
+                @Override
+                public <T> boolean canResolve(Class<T> adaptee) {
                     return false;
                 }
 
-                protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+                @Override
+                protected IServiceInfo createInfo(IProgressMonitor monitor) throws IOException {
                     return null;
                 }
+
+                @Override
                 public Status getStatus() {
                     return null;
                 }
 
+                @Override
                 public Throwable getMessage() {
                     return null;
                 }
 
+                @Override
                 public URL getIdentifier() {
                     try {
                         return new URL("http://localhost/udig-tests/1"); //$NON-NLS-1$
@@ -192,37 +218,46 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
                 }
 
             };
-            IService service2 = new IService(){
+            IService service2 = new IService() {
 
-                public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor )
+                @Override
+                public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor)
                         throws IOException {
                     return null;
                 }
 
-                public List< ? extends IGeoResource> resources( IProgressMonitor monitor )
+                @Override
+                public List<? extends IGeoResource> resources(IProgressMonitor monitor)
                         throws IOException {
                     return null;
                 }
 
+                @Override
                 public Map<String, Serializable> getConnectionParams() {
                     return null;
                 }
 
-                protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+                @Override
+                protected IServiceInfo createInfo(IProgressMonitor monitor) throws IOException {
                     return null;
                 }
-                public <T> boolean canResolve( Class<T> adaptee ) {
+
+                @Override
+                public <T> boolean canResolve(Class<T> adaptee) {
                     return false;
                 }
 
+                @Override
                 public Status getStatus() {
                     return null;
                 }
 
+                @Override
                 public Throwable getMessage() {
                     return null;
                 }
 
+                @Override
                 public URL getIdentifier() {
                     try {
                         return new URL("http://localhost/udig-tests/2"); //$NON-NLS-1$
@@ -252,11 +287,12 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
         FakeProgress monitor = new FakeProgress();
         ICatalogInfo info = getResolve().getInfo(monitor);
         assertNotNull("Info is required", info); //$NON-NLS-1$
-        assertEquals( "Monitor must be finished",  monitor.total, monitor.completed); //$NON-NLS-1$
+        assertEquals("Monitor must be finished", monitor.total, monitor.completed); //$NON-NLS-1$
         assertTrue("Monitor must be used.", monitor.total != 0); //$NON-NLS-1$
     }
 
     protected abstract Envelope getSearchBounds();
+
     protected abstract String getSearchString();
 
     @Ignore("fails")
@@ -265,17 +301,18 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
         if (getSearchString() != null) {
             List<IResolve> results = search(getResolve(), getSearchString(), null, null);
             assertNotNull("Must return a non-null list", results); //$NON-NLS-1$
-            assertTrue("Must have found at least one item", results.size() > 0); //$NON-NLS-1$
+            assertTrue("Must have found at least one item", !results.isEmpty()); //$NON-NLS-1$
         }
         if (getSearchBounds() != null && !getSearchBounds().isNull()) {
             List<IResolve> results = search(getResolve(), null, getSearchBounds(), null);
             assertNotNull("Must return a non-null list", results); //$NON-NLS-1$
-            assertTrue("Must have found at least one item", results.size() > 0); //$NON-NLS-1$
+            assertTrue("Must have found at least one item", !results.isEmpty()); //$NON-NLS-1$
         }
         if (getSearchString() != null && getSearchBounds() != null) {
-            List<IResolve> results = search(getResolve(), getSearchString(), getSearchBounds(), null);
+            List<IResolve> results = search(getResolve(), getSearchString(), getSearchBounds(),
+                    null);
             assertNotNull("Must return a non-null list", results); //$NON-NLS-1$
-            assertTrue("Must have found at least one item", results.size() > 0); //$NON-NLS-1$
+            assertTrue("Must have found at least one item", !results.isEmpty()); //$NON-NLS-1$
         }
     }
 
@@ -286,33 +323,35 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
             FakeProgress monitor = new FakeProgress();
             List<IResolve> results = search(getResolve(), getSearchString(), null, monitor);
             assertNotNull("Must return a non-null list", results); //$NON-NLS-1$
-            assertTrue("Must have found at least one item", results.size() > 0); //$NON-NLS-1$
-            assertEquals( "Monitor must be finished",  monitor.total, monitor.completed); //$NON-NLS-1$
+            assertTrue("Must have found at least one item", !results.isEmpty()); //$NON-NLS-1$
+            assertEquals("Monitor must be finished", monitor.total, monitor.completed); //$NON-NLS-1$
             assertTrue("Monitor must be used.", monitor.total != 0); //$NON-NLS-1$
         }
         if (getSearchBounds() != null) {
             FakeProgress monitor = new FakeProgress();
             List<IResolve> results = search(getResolve(), null, getSearchBounds(), monitor);
             assertNotNull("Must return a non-null list", results); //$NON-NLS-1$
-            assertTrue("Must have found at least one item", results.size() > 0); //$NON-NLS-1$
-            assertEquals( "Monitor must be finished",  monitor.total, monitor.completed); //$NON-NLS-1$
+            assertTrue("Must have found at least one item", !results.isEmpty()); //$NON-NLS-1$
+            assertEquals("Monitor must be finished", monitor.total, monitor.completed); //$NON-NLS-1$
             assertTrue("Monitor must be used.", monitor.total != 0); //$NON-NLS-1$
         }
         if (getSearchString() != null && getSearchBounds() != null) {
             FakeProgress monitor = new FakeProgress();
-            List<IResolve> results = search(getResolve(), getSearchString(), getSearchBounds(), monitor);
+            List<IResolve> results = search(getResolve(), getSearchString(), getSearchBounds(),
+                    monitor);
             assertNotNull("Must return a non-null list", results); //$NON-NLS-1$
-            assertTrue("Must have found at least one item", results.size() > 0); //$NON-NLS-1$
-            assertEquals( "Monitor must be finished",  monitor.total, monitor.completed); //$NON-NLS-1$
+            assertTrue("Must have found at least one item", !results.isEmpty()); //$NON-NLS-1$
+            assertEquals("Monitor must be finished", monitor.total, monitor.completed); //$NON-NLS-1$
             assertTrue("Monitor must be used.", monitor.total != 0); //$NON-NLS-1$
         }
     }
 
     @Test(timeout = BLOCK)
     public void testAddRemoveListener() {
-        IResolveChangeListener listner = new IResolveChangeListener(){
+        IResolveChangeListener listner = new IResolveChangeListener() {
 
-            public void changed( IResolveChangeEvent event ) {
+            @Override
+            public void changed(IResolveChangeEvent event) {
                 // no op
             }
 
@@ -330,44 +369,55 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
 
         final BWrap action = new BWrap();
 
-        IResolveChangeListener listner = new IResolveChangeListener(){
+        IResolveChangeListener listner = new IResolveChangeListener() {
 
-            public void changed( IResolveChangeEvent event ) {
+            @Override
+            public void changed(IResolveChangeEvent event) {
                 action.value = true;
             }
 
         };
         getResolve().addCatalogListener(listner);
 
-        IService service = new IService(){
+        IService service = new IService() {
 
-            public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
+            @Override
+            public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
                 return null;
             }
 
-            public List< ? extends IGeoResource> resources( IProgressMonitor monitor )
+            @Override
+            public List<? extends IGeoResource> resources(IProgressMonitor monitor)
                     throws IOException {
                 return null;
             }
 
+            @Override
             public Map<String, Serializable> getConnectionParams() {
                 return null;
             }
 
-            public <T> boolean canResolve( Class<T> adaptee ) {
+            @Override
+            public <T> boolean canResolve(Class<T> adaptee) {
                 return false;
             }
 
+            @Override
             public Status getStatus() {
                 return null;
             }
 
+            @Override
             public Throwable getMessage() {
                 return null;
             }
-            protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+
+            @Override
+            protected IServiceInfo createInfo(IProgressMonitor monitor) throws IOException {
                 return null;
             }
+
+            @Override
             public URL getIdentifier() {
                 try {
                     return new URL("http://localhost/udig-tests/listen"); //$NON-NLS-1$
@@ -423,18 +473,18 @@ public abstract class AbstractCatalogTest extends AbstractResolveTest {
                 ((monitor.total == monitor.completed) && (monitor.total != 0)));
     }
 
-    protected List<IResolve> search(final ICatalog catalog, final String pattern, final Envelope bbox,
-        final IProgressMonitor monitor) throws IOException {
-        
+    protected List<IResolve> search(final ICatalog catalog, final String pattern,
+            final Envelope bbox, final IProgressMonitor monitor) throws IOException {
+
         final Callable<List<IResolve>> job = new Callable<List<IResolve>>() {
-            
+
             @Override
             public List<IResolve> call() throws Exception {
                 return catalog.search(pattern, bbox, monitor);
             }
-            
+
         };
-        
+
         return retrieveInNewThread(job);
     }
 }

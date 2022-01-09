@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  *
@@ -16,19 +17,20 @@ import org.locationtech.udig.catalog.document.IHotlinkSource.HotlinkDescriptor;
 
 /**
  * Abstract model for hotlink documents.
- * 
+ *
  * @author Naz Chan
  */
 public abstract class AbstractHotlinkDocument extends AbstractDocument implements IHotlink {
 
     protected String info;
+
     protected List<HotlinkDescriptor> descriptors;
-    
+
     public AbstractHotlinkDocument(String info, List<HotlinkDescriptor> descriptors) {
         setInfo(info);
         this.descriptors = descriptors;
     }
-    
+
     public String getInfo() {
         return info;
     }
@@ -36,7 +38,7 @@ public abstract class AbstractHotlinkDocument extends AbstractDocument implement
     public void setInfo(String info) {
         this.info = info;
     }
-    
+
     @Override
     public List<HotlinkDescriptor> getDescriptors() {
         return descriptors;
@@ -48,14 +50,14 @@ public abstract class AbstractHotlinkDocument extends AbstractDocument implement
 
     @Override
     public String getLabel() {
-        if (descriptors != null && descriptors.size() > 0) {
+        if (descriptors != null && !descriptors.isEmpty()) {
             int count = 0;
             final StringBuilder sb = new StringBuilder();
             for (HotlinkDescriptor descriptor : descriptors) {
                 count++;
                 sb.append(descriptor.getLabel());
                 if (count < descriptors.size()) {
-                    sb.append(", "); //$NON-NLS-1$    
+                    sb.append(", "); //$NON-NLS-1$
                 }
             }
             return sb.toString();
@@ -65,7 +67,7 @@ public abstract class AbstractHotlinkDocument extends AbstractDocument implement
 
     @Override
     public String getDescription() {
-        if (descriptors != null && descriptors.size() > 0) {
+        if (descriptors != null && !descriptors.isEmpty()) {
             int count = 0;
             final StringBuilder sb = new StringBuilder();
             for (HotlinkDescriptor descriptor : descriptors) {
@@ -74,8 +76,8 @@ public abstract class AbstractHotlinkDocument extends AbstractDocument implement
                 if (description != null) {
                     sb.append(description);
                     if (count < descriptors.size()) {
-                        sb.append(", "); //$NON-NLS-1$    
-                    }    
+                        sb.append(", "); //$NON-NLS-1$
+                    }
                 }
             }
             return sb.toString();
@@ -90,15 +92,15 @@ public abstract class AbstractHotlinkDocument extends AbstractDocument implement
 
     @Override
     public ContentType getContentType() {
-        if (descriptors != null && descriptors.size() > 0) {
+        if (descriptors != null && !descriptors.isEmpty()) {
             return descriptors.get(0).getType();
         }
         return null;
     }
-    
+
     @Override
     public String getAttributeName() {
-        if (descriptors != null && descriptors.size() > 0) {
+        if (descriptors != null && !descriptors.isEmpty()) {
             return descriptors.get(0).getAttributeName();
         }
         return null;
@@ -108,5 +110,5 @@ public abstract class AbstractHotlinkDocument extends AbstractDocument implement
     public boolean isTemplate() {
         return false; // Hotlink documents cannot be templates
     }
-    
+
 }

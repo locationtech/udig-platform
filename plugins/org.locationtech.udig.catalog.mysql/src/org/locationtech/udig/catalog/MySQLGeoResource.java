@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,91 +18,92 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Connection;
 
-import org.locationtech.udig.catalog.internal.mysql.MySQLPlugin;
-import org.locationtech.udig.catalog.mysql.internal.Messages;
-import org.locationtech.udig.core.internal.CorePlugin;
-import org.locationtech.udig.ui.graphics.Glyph;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.geotools.data.DataSourceException;
 import org.geotools.data.FeatureSource;
-import org.geotools.data.FeatureStore;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.udig.catalog.internal.mysql.MySQLPlugin;
+import org.locationtech.udig.catalog.mysql.internal.Messages;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.ui.graphics.Glyph;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import org.locationtech.jts.geom.Envelope;
 
 /**
  * Provides GeoResouces for MySQL based features.
  * <p>
  * This copies the postgisGeoResouce and is used to identify MySql features.
  * </p>
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @author Harry Bullen, Intelligent Automation
  * @since 1.1.0
  */
 public class MySQLGeoResource extends IGeoResource {
     MySQLServiceImpl parent;
+
     String typename = null;
+
     private volatile Status status;
+
     private volatile Throwable message;
+
     private URL identifier;
 
     /**
      * Construct <code>MySQLGeoResource</code>.
-     * 
+     *
      * @param parent
      * @param typename
      */
-    public MySQLGeoResource( MySQLServiceImpl parent, String typename ) {
+    public MySQLGeoResource(MySQLServiceImpl parent, String typename) {
         this.service = parent;
         this.parent = parent;
         this.typename = typename;
         try {
-            identifier = new URL(null,
-                    parent.getIdentifier().toString() + "#" + typename, CorePlugin.RELAXED_HANDLER); //$NON-NLS-1$
+            identifier = new URL(null, parent.getIdentifier().toString() + "#" + typename, //$NON-NLS-1$
+                    CorePlugin.RELAXED_HANDLER);
         } catch (MalformedURLException e) {
             identifier = parent.getIdentifier();
         }
     }
 
+    @Override
     public URL getIdentifier() {
         return identifier;
     }
 
-    /*
-     * @see org.locationtech.udig.catalog.IGeoResource#getStatus()
-     */
+    @Override
     public Status getStatus() {
         if (status != null)
             return status;
         return parent.getStatus();
     }
 
-    /*
-     * @see org.locationtech.udig.catalog.IGeoResource#getStatusMessage()
-     */
+    @Override
     public Throwable getMessage() {
         if (message != null)
             return message;
         return parent.getMessage();
     }
 
-    /*
-     * Required adaptations: <ul> <li>IGeoResourceInfo.class <li>IService.class </ul>
-     * @see org.locationtech.udig.catalog.IResolve#resolve(java.lang.Class,
-     * org.eclipse.core.runtime.IProgressMonitor)
+    /**
+     * Required adaptations:
+     * <ul>
+     * <li>IGeoResourceInfo.class<li>
+     * <li>IService.class<li>
+     * </ul>
      */
-    public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
+    @Override
+    public <T> T resolve(Class<T> adaptee, IProgressMonitor monitor) throws IOException {
         if (adaptee == null)
             return null;
         if (adaptee.isAssignableFrom(IGeoResourceInfo.class))
@@ -110,11 +111,11 @@ public class MySQLGeoResource extends IGeoResource {
         if (adaptee.isAssignableFrom(IGeoResource.class))
             return adaptee.cast(this);
         if (adaptee.isAssignableFrom(SimpleFeatureStore.class)) {
-            SimpleFeatureSource fs = parent.getDS().getFeatureSource( typename);
-            if (fs instanceof SimpleFeatureStore){
+            SimpleFeatureSource fs = parent.getDS().getFeatureSource(typename);
+            if (fs instanceof SimpleFeatureStore) {
                 return adaptee.cast(fs);
             }
-            if (adaptee.isAssignableFrom(SimpleFeatureSource.class)){
+            if (adaptee.isAssignableFrom(SimpleFeatureSource.class)) {
                 return adaptee.cast(parent.getDS().getFeatureSource(typename));
             }
         }
@@ -124,23 +125,25 @@ public class MySQLGeoResource extends IGeoResource {
 
         return super.resolve(adaptee, monitor);
     }
-    /*
-     * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
-     */
-    public <T> boolean canResolve( Class<T> adaptee ) {
+
+    @Override
+    public <T> boolean canResolve(Class<T> adaptee) {
         if (adaptee == null)
             return false;
         return (adaptee.isAssignableFrom(IGeoResourceInfo.class)
                 || adaptee.isAssignableFrom(SimpleFeatureStore.class)
-                || adaptee.isAssignableFrom(SimpleFeatureSource.class) || adaptee
-                .isAssignableFrom(IService.class))
+                || adaptee.isAssignableFrom(SimpleFeatureSource.class)
+                || adaptee.isAssignableFrom(IService.class))
                 || adaptee.isAssignableFrom(Connection.class) || super.canResolve(adaptee);
     }
+
     @Override
-    public MySQLResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
+    public MySQLResourceInfo getInfo(IProgressMonitor monitor) throws IOException {
         return (MySQLResourceInfo) super.getInfo(monitor);
     }
-    protected MySQLResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
+
+    @Override
+    protected MySQLResourceInfo createInfo(IProgressMonitor monitor) throws IOException {
         if (getStatus() == Status.BROKEN) {
             return null; // not connected
         }
@@ -171,13 +174,13 @@ public class MySQLGeoResource extends IGeoResource {
                 message = e;
                 MySQLPlugin.log(
                         "Unable to retrieve FeatureType schema for type '" + typename + "'.", e); //$NON-NLS-1$ //$NON-NLS-2$
-                keywords = new String[]{"mysql", //$NON-NLS-1$
-                        typename};
+                keywords = new String[] { "mysql", //$NON-NLS-1$
+                        typename };
                 return;
             }
 
-            keywords = new String[]{"mysql", //$NON-NLS-1$
-                    typename, ft.getName().getNamespaceURI()};
+            keywords = new String[] { "mysql", //$NON-NLS-1$
+                    typename, ft.getName().getNamespaceURI() };
 
             icon = Glyph.icon(ft);
 
@@ -200,10 +203,11 @@ public class MySQLGeoResource extends IGeoResource {
                         org.opengis.geometry.Envelope envelope = CRS.getEnvelope(crs);
 
                         if (envelope != null) {
-                            bounds = new ReferencedEnvelope(envelope.getLowerCorner()
-                                    .getOrdinate(0), envelope.getUpperCorner().getOrdinate(0),
-                                    envelope.getLowerCorner().getOrdinate(1), envelope
-                                            .getUpperCorner().getOrdinate(1), crs);
+                            bounds = new ReferencedEnvelope(
+                                    envelope.getLowerCorner().getOrdinate(0),
+                                    envelope.getUpperCorner().getOrdinate(0),
+                                    envelope.getLowerCorner().getOrdinate(1),
+                                    envelope.getUpperCorner().getOrdinate(1), crs);
                         } else {
                             // TODO: perhaps access a preference which indicates
                             // whether to do a full table scan
@@ -212,7 +216,7 @@ public class MySQLGeoResource extends IGeoResource {
                             bounds = new ReferencedEnvelope(new Envelope(), crs);
                             FeatureIterator<SimpleFeature> iter = source.getFeatures().features();
                             try {
-                                while( iter.hasNext() ) {
+                                while (iter.hasNext()) {
                                     SimpleFeature element = iter.next();
                                     if (bounds.isNull())
                                         bounds.init(element.getBounds());
@@ -227,13 +231,10 @@ public class MySQLGeoResource extends IGeoResource {
                 } catch (DataSourceException e) {
                     MySQLPlugin.log("Exception while generating MySQLGeoResource.", e); //$NON-NLS-1$
                 } catch (Exception e) {
-                    CatalogPlugin
-                            .getDefault()
-                            .getLog()
-                            .log(
-                                    new org.eclipse.core.runtime.Status(
-                                            IStatus.WARNING,
-                                            "org.locationtech.udig.catalog", 0, Messages.MySQLGeoResource_error_layer_bounds, e)); //$NON-NLS-1$
+                    CatalogPlugin.getDefault().getLog()
+                            .log(new org.eclipse.core.runtime.Status(IStatus.WARNING,
+                                    "org.locationtech.udig.catalog", 0, //$NON-NLS-1$
+                                    Messages.MySQLGeoResource_error_layer_bounds, e));
                     bounds = new ReferencedEnvelope(new Envelope(), null);
                 }
 
@@ -241,6 +242,7 @@ public class MySQLGeoResource extends IGeoResource {
             return super.getBounds();
         }
 
+        @Override
         public CoordinateReferenceSystem getCRS() {
             if (status == Status.BROKEN || status == Status.RESTRICTED_ACCESS)
                 return DefaultGeographicCRS.WGS84;
@@ -248,10 +250,12 @@ public class MySQLGeoResource extends IGeoResource {
             return ft.getCoordinateReferenceSystem();
         }
 
+        @Override
         public String getName() {
             return typename;
         }
 
+        @Override
         public URI getSchema() {
             if (status == Status.BROKEN || status == Status.RESTRICTED_ACCESS)
                 return null;
@@ -262,6 +266,7 @@ public class MySQLGeoResource extends IGeoResource {
             }
         }
 
+        @Override
         public String getTitle() {
             return typename;
         }
