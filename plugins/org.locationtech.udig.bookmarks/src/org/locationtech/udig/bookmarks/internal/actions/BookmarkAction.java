@@ -46,8 +46,6 @@ import org.locationtech.udig.project.ui.ApplicationGIS;
 
 /**
  * The action delegate the provides all of the actions for working with bookmarks.
- * <p>
- * </p>
  *
  * @author cole.markham
  * @since 1.0.0
@@ -274,7 +272,7 @@ public class BookmarkAction extends Action
     @Override
     public void doubleClick(DoubleClickEvent event) {
         final IStructuredSelection eventSelection = (IStructuredSelection) event.getSelection();
-        if (eventSelection.size() > 0 && eventSelection.getFirstElement() instanceof Bookmark) {
+        if (!eventSelection.isEmpty() && eventSelection.getFirstElement() instanceof Bookmark) {
             Bookmark bookmark = (Bookmark) eventSelection.getFirstElement();
             gotoBookmark(bookmark);
         }

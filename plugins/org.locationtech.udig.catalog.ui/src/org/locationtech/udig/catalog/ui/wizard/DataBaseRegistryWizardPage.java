@@ -1,8 +1,8 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004-2007, Refractions Research Inc.
- *    (C) 2007,      Adrian Custer.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004-2007, Refractions Research Inc.
+ * (C) 2007,      Adrian Custer.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,10 +19,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.sql.DataSource;
-
-import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
-import org.locationtech.udig.catalog.ui.internal.Messages;
-import org.locationtech.udig.ui.PlatformGIS;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -45,6 +41,9 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
+import org.locationtech.udig.catalog.ui.CatalogUIPlugin;
+import org.locationtech.udig.catalog.ui.internal.Messages;
+import org.locationtech.udig.ui.PlatformGIS;
 
 // TODO: HTMLify this javadoc
 /**
@@ -101,121 +100,121 @@ import org.eclipse.swt.widgets.Widget;
  * the database: * since we can only use spatial tables, the databases offered to the user should be
  * evaluated to ensure they can hold spatial data. ****************** Class Outline (i.e. the key
  * pieces) ********************
- * 
+ *
  * <pre>
- * 
- *   FIELDS:                      // The fields describe here all use instances 
- *                                // of the inner class 
+ *
+ *   FIELDS:                      // The fields describe here all use instances
+ *                                // of the inner class
  *                                //   DataBaseConnInfo
  *                                // which is essentially a structure of
- *                                //       : host 
- *                                //       : port 
- *                                //       : user 
- *                                //       : ?pass? 
- *                                //         NOTE: the password field should 
+ *                                //       : host
+ *                                //       : port
+ *                                //       : user
+ *                                //       : ?pass?
+ *                                //         NOTE: the password field should
  *                                //               probably be dropped in the
- *                                //               future since we want to treat 
+ *                                //               future since we want to treat
  *                                //               it specially for safety.
- *                                //       : database 
- *                                //       : schema 
- *                                //       : timestamp (for sorting) 
- *   
- *       * currentDBCI            - The connection parameters gathered by the 
+ *                                //       : database
+ *                                //       : schema
+ *                                //       : timestamp (for sorting)
+ *
+ *       * currentDBCI            - The connection parameters gathered by the
  *                                  GUI and used to make the final connection.
- *                                  
+ *
  *       * defaultDBCI            - Parameters which generally apply to the DBMS
  *                                - The database name will be used during initial
  *                                  lookup of the available databases and schema.
- *                                - The values will be provided as hints to the 
+ *                                - The values will be provided as hints to the
  *                                  user.
  *                            !MUST BE PROVIDED BY THE EXTENDING CONSTRUCTOR!
- *                            
- *       * storedDBCIList         - A java.util.List of DBCI which may be empty 
- *                                  if no successful connections have been made 
- *                                  or will hold a list of all the connections 
+ *
+ *       * storedDBCIList         - A java.util.List of DBCI which may be empty
+ *                                  if no successful connections have been made
+ *                                  or will hold a list of all the connections
  *                                  made along with their timestamps.
- *   
- *   
- *   CONSTRUCTORS:                // Merely call the superclass with a String 
+ *
+ *
+ *   CONSTRUCTORS:                // Merely call the superclass with a String
  *                                // for the page title area
- *   
- *   
- *   UTILITY METHODS:             // These are internal to the uDig system of 
- *                                // Database connection dialogs and therefore 
+ *
+ *
+ *   UTILITY METHODS:             // These are internal to the uDig system of
+ *                                // Database connection dialogs and therefore
  *                                // only required by our needs.
- *   
- *   
- *   CONTRACT METHODS:            // Satisfy extension point contracts and 
+ *
+ *
+ *   CONTRACT METHODS:            // Satisfy extension point contracts and
  *                                // interface requirements.
- *   
+ *
  *       * setVisible             //TODO: document
- *       
+ *
  *       * isPageComplete         //TODO: document
- *       
+ *
  *       * createControl          // This creates the GUI as follows:
  *                                //   1. Instantiate the widgets
  *                                //   2. Populate the 'Previous' drop down list
  *                                //   3. Hook up the listeners
  *                                //   4? Connect the tab traversal
  *                                //   5? set page complete
- *       
- *       * createAdvancedControl  // Implemented in extending classes to add 
+ *
+ *       * createAdvancedControl  // Implemented in extending classes to add
  *                                // GUI elements for DBMS specific parameters
- *       
+ *
  *       * getConnection          // THE WHOLE POINT, here is abstract, will be
- *                                // implemented with DBMS specific logic by the 
+ *                                // implemented with DBMS specific logic by the
  *                                // concrete extendors of this class
- *   
- *   LOOKUP METHODS               // Two methods to lookup the databases and 
+ *
+ *   LOOKUP METHODS               // Two methods to lookup the databases and
  *                                // schemata available
- *                                
+ *
  *       * lookupDB               - Gets a String array of available database
  *                                  names
- *       
+ *
  *       * lookupSchema           - Gets a String array of available schema
  *                                - names
- *   
+ *
  *   EVENT HANDLERS:
- *   
+ *
  *       * focusGain              //Does little
- *       
+ *
  *       * focusLoss              //Does little
- *       
+ *
  *       * verifyText             //Not yet implemented
- *           
+ *
  *       * modifyText             //Handles *all* the modification logic:
- *                                - uses the widget text to set the appropriate 
+ *                                - uses the widget text to set the appropriate
  *                                  current connection parameter
- *                                - resets the available database and schema 
+ *                                - resets the available database and schema
  *                                  lists if they are no longer valid
  *                                - activates the lookup and connect buttons if
  *                                  the parameters are complete enough
- *       
+ *
  *       * widgetSelected         //Handles the button clicked events
- *       
- *           -lookupButtonWdg     - connects to the server with the default 
- *                                  database/schema and gets the list of 
+ *
+ *           -lookupButtonWdg     - connects to the server with the default
+ *                                  database/schema and gets the list of
  *                                  available databases and schemata.
- *                                  
+ *
  *           -connectButtonWdg    - makes the connection using currentDBCI.
- *           
+ *
  *           -advButtonWdg        - exposes the advanced section of the GUI.
- *           
+ *
  *       * widgetDefaultSelected  //Not used
- *   
- *   
+ *
+ *
  *   DataBaseConnInfo class       // A bean inner class, essentially a structure
- *                                // to hold the connection parameters and a 
- *                                // timestamp for the last successful 
+ *                                // to hold the connection parameters and a
+ *                                // timestamp for the last successful
  *                                // connection using those parameters.
- * 
- * 
+ *
+ *
  * </pre>
- * 
+ *
  * ****************** Contract with Concrete Extending Classses *************** This class, being
  * abstract, is designed specifically for the needs of the extending classes, notably the
  * PostGISWizardPage and the AbstractProprietaryDatastoreWizardPage classes. See
- * 
+ *
  * @see org.locationtech.udig.catalog.internal.postgis.ui.PostGisWizardPage for the cannonical
  *      example of how to use (extend) this class in a concrete implementation. This class
  *      implicitly establishes the following contract with its extendors: I. EXTENDING CLASSES MUST:
@@ -237,7 +236,7 @@ import org.eclipse.swt.widgets.Widget;
  *      'Connection' to the Db or Schema on the DBMS will be obtained in response to the user
  *      clicking on the "Connect" button - This will be performed by the selectionListener(..)
  *      method tied to the connectButton. The selectionListener will eventually call the
- *      getConnection(..) method assuming the paramters to use are stored in the currConn
+ *      getConnection(..) method assuming the parameters to use are stored in the currConn
  *      DataBaseConnInfo field. The list of databases and schema available to the user on the DBMS
  *      will be obtained in response to the user clicking on the "Lookup" button - The
  *      selectionListener tied to to the button will create a temporary, dummy connection to the
@@ -251,7 +250,7 @@ import org.eclipse.swt.widgets.Widget;
  *      the user a drop down list of past successful values and selection by the user will cause
  *      both the values to be stored into the currInfo object and into the text area of the input
  *      widgets. TODO: Input will be verified both character by character during input to the GUI
- *      widgets and as overall urls prior to connection - ? should this happen as each widget is
+ *      widgets and as overall URLs prior to connection - ? should this happen as each widget is
  *      about to loose focus? ? There are two strategies to help child classes: either a bunch of
  *      new methods can be created with names like verifyHostText() or we can create inner Listener
  *      classes. TODO: When focus arrives on an entry widget, the contents should be pre-selected so
@@ -274,10 +273,7 @@ import org.eclipse.swt.widgets.Widget;
  * @since 0.3
  */
 public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
-        implements
-            FocusListener,
-            ModifyListener,
-            SelectionListener
+        implements FocusListener, ModifyListener, SelectionListener
 // TODO: ,VerifyListener
 {
 
@@ -288,11 +284,13 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * user.
      */
     protected final DataBaseConnInfo currentDBCI = new DataBaseConnInfo(""); //$NON-NLS-1$
+
     /**
      * The parameters which work as defaults for the particular DBMS of the concrete extender; will
      * be populated during construction.
      */
     protected final DataBaseConnInfo defaultDBCI = new DataBaseConnInfo(""); //$NON-NLS-1$
+
     /**
      * The parameters of any previous successful connection, obtained from storage during
      * construction of the concrete extending class, added to following any successful connection
@@ -300,7 +298,8 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * DataBaseConnInfo(""); storedDBCIList.add(dbci.setParameters(dbciToAdd)) rather than adding
      * the DBCI directly in order to preserve the separation of instances.
      */
-    protected final java.util.List<DataBaseConnInfo> storedDBCIList = new ArrayList<DataBaseConnInfo>();
+    protected final java.util.List<DataBaseConnInfo> storedDBCIList = new ArrayList<>();
+
     /**
      * The RCP structure to hold and store the successful connection parameters. This must be here
      * because we need to store the settings on successful connection.
@@ -319,56 +318,54 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * storage system.
      */
     protected String settingsArrayName;
+
     // WIDGETS
     protected Combo rcntComboWgt = null;
+
     protected Text hostTextWgt = null;
+
     protected Text portTextWgt = null;
+
     protected Text userTextWgt = null;
+
     protected Text passTextWgt = null;
+
     protected Combo dbComboWgt = null;
+
     protected Combo schemaComboWgt = null;
+
     protected Button lookupBtnWgt = null;
+
     protected Button connectBtnWgt = null;
+
     protected Button advancedBtnWgt = null;
+
     protected Group advancedGrp = null;
+
     // STATE variables for the Logic
     private Widget wgtLostFocus = null; // To ignore focusGain on widgets that
     // just lost focus
     // EXCLUSION Lists
+
     /**
      * The names of any databases which should not be offered to the user, generally used for
      * databases that are part of the DBMS itself. The list will be populated during construction.
      */
-    protected final java.util.List<String> dbExclusionList = new ArrayList<String>();
+    protected final java.util.List<String> dbExclusionList = new ArrayList<>();
+
     /**
      * The names of any schemata which should not be offered to the user, generally used for
      * schemata that are part of the DBMS itself. The list will be populated during construction.
      */
-    protected final java.util.List<String> schemaExclusionList = new ArrayList<String>();
-
-    // VALIDATION Lists
-    // protected final java.util.List<Character> invalidCharList = new ArrayList
-    // <Character> ();
-    // protected final java.util.List<Character> invalidHostCharList = new
-    // ArrayList <Character> ();
-    // protected final java.util.List<Character> invalidUserCharList = new
-    // ArrayList <Character> ();
-    // protected final java.util.List<Character> invalidPassCharList = new
-    // ArrayList <Character> ();
-    // protected final java.util.List<String> invalidHostSeqList = new ArrayList
-    // <String> ();
-    // protected final java.util.List<String> invalidUserSeqList = new ArrayList
-    // <String> ();
-    // protected final java.util.List<String> invalidPassSeqList = new ArrayList
-    // <String> ();
+    protected final java.util.List<String> schemaExclusionList = new ArrayList<>();
 
     // CONSTRUCTORS
     /**
      * The usual (?only one used?) constructor.
-     * 
+     *
      * @param header The string presented to the user in the topmost part of the wizard page.
      */
-    public DataBaseRegistryWizardPage( String header ) {
+    public DataBaseRegistryWizardPage(String header) {
         super(header);
     }
 
@@ -376,7 +373,7 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
     /**
      * Checks if the DBMS uses Schema or not; if true, the schema widget will be shown and the
      * schema parameter passed to the DBMS during connect.
-     * 
+     *
      * @return true if the DBMS uses a Schema.
      */
     protected abstract boolean dbmsUsesSchema();
@@ -385,12 +382,12 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * Checks the database name against those that should not be offered to the user for connection;
      * by default, all database names are acceptable so the method always returns false. The
      * constructor of implementing classes should add appropriate names to the exclusion list.
-     * 
+     *
      * @param d the name of the database to check.
      * @return true if the name should be excluded from those presented to the user. Here it will be
      *         false always, because by default the dbExclusionList is empty.
      */
-    protected boolean excludeDbFromUserChoices( String d ) {
+    protected boolean excludeDbFromUserChoices(String d) {
         if (dbExclusionList.contains(d))
             return true;
         return false;
@@ -400,12 +397,12 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * Checks the schema name against those that should not be offered to the user for connection;
      * by default, all schema names are acceptable so the method always returns false. The
      * constructor of implementing classes should add appropriate names to the exclusion list.
-     * 
+     *
      * @param s the name of the schema to check.
      * @return true if the name should be excluded from those presented to the user. Here it will be
      *         false always, because by default the schemaExclusionList is empty.
      */
-    protected boolean excludeSchemaFromUserChoices( String s ) {
+    protected boolean excludeSchemaFromUserChoices(String s) {
         if (schemaExclusionList.contains(s))
             return true;
         return false;
@@ -414,13 +411,12 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
     /**
      * Evaluates if the currentDBCI is complete enough that we could attempt a connection to lookup
      * values.
-     * 
+     *
      * @return true if we have all the pieces to connect, false otherwise
      */
     protected boolean couldLookup() {
 
-        if ((currentDBCI.getHostString().length() > 0)
-                && (currentDBCI.getPortString().length() > 0)
+        if ((currentDBCI.getHostString().length() > 0) && (currentDBCI.getPortString().length() > 0)
                 && (currentDBCI.getUserString().length() > 0)
                 && (currentDBCI.getPassString().length() > 0)
                 && (currentDBCI.getDbString().length() > 0))
@@ -430,15 +426,13 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
     }
 
     /**
-     * Evaluates if the currentDBCI is complete enough that
-     * we could attempt a connection
-     * 
+     * Evaluates if the currentDBCI is complete enough that we could attempt a connection
+     *
      * @return true if we have all the pieces to connect, false otherwise
      */
     protected boolean couldConnect() {
 
-        if ((currentDBCI.getHostString().length() > 0)
-                && (currentDBCI.getPortString().length() > 0)
+        if ((currentDBCI.getHostString().length() > 0) && (currentDBCI.getPortString().length() > 0)
                 && (currentDBCI.getUserString().length() > 0)
                 && (currentDBCI.getPassString().length() > 0)
                 && (currentDBCI.getDbString().length() > 0)) {
@@ -470,34 +464,33 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
         canNowLookup();
         connectBtnWgt.setEnabled(true);
     }
-    
+
     /**
-     * This method will run the provided activity using the
-     * wizard page progress bar; and wait for the result to
-     * complete.
+     * This method will run the provided activity using the wizard page progress bar; and wait for
+     * the result to complete.
      * <p>
      * If anything goes wrong the message will be shown to the user
-     * 
+     *
      * @param activity
      */
-    protected void runInPage( final IRunnableWithProgress activity ){
+    protected void runInPage(final IRunnableWithProgress activity) {
         // on a technical level I am not sure which one of these we should use
         //
         boolean guess = true;
         try {
-            if( guess ){
+            if (guess) {
                 // This is what I think PostGIS wizard page does
-                getContainer().run( false, true, activity );
-            }
-            else {
-                // This is what the origional wizard pages did
+                getContainer().run(false, true, activity);
+            } else {
+                // This is what the original wizard pages did
                 // note the use of an internal blocking call to run the activity
                 // and wait for it to complete?
                 //
-                getContainer().run(false, true, new IRunnableWithProgress(){
-                    public void run( IProgressMonitor monitor ) throws InvocationTargetException,
-                            InterruptedException {
-                        PlatformGIS.runBlockingOperation( activity, monitor );
+                getContainer().run(false, true, new IRunnableWithProgress() {
+                    @Override
+                    public void run(IProgressMonitor monitor)
+                            throws InvocationTargetException, InterruptedException {
+                        PlatformGIS.runBlockingOperation(activity, monitor);
                     }
                 });
             }
@@ -506,20 +499,19 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
             CatalogUIPlugin.log(e2.getLocalizedMessage(), e2);
             // tell the user
             setErrorMessage(e2.getCause().getLocalizedMessage());
-            
+
             // preferences.performDefaults();
         } catch (InterruptedException e2) {
             // user got tired of waiting ...
         }
     }
-    
 
     // CONTRACT METHODS
     /**
      * Method required by the IDialogPage implementation contract.
      */
     @Override
-    public void setVisible( boolean visible ) {
+    public void setVisible(boolean visible) {
         super.setVisible(visible);
         // TODO: is this needed, e.g. for return after <back< and >forward>
         hostTextWgt.setFocus();
@@ -538,11 +530,12 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
 
     /**
      * Called by the Wizard to instantiate the page and draw the GUI.
-     * 
+     *
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      * @param parent
      */
-    public void createControl( Composite comp ) {
+    @Override
+    public void createControl(Composite comp) {
 
         /* ****************************************************************** */
         /* Create the GUI */
@@ -558,7 +551,7 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
         FormData fd;
         Label lbl;
 
-        // Defensively build a new Composite eventhough arg0 already is one
+        // Defensively build a new Composite even though arg0 already is one
         Composite topComp = new Composite(comp, SWT.NULL);
         FormLayout topLayout = new FormLayout();
         topLayout.marginWidth = 0;
@@ -566,7 +559,7 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
         topComp.setLayout(topLayout);
 
         // Stored settings: show only if we have some storage.
-        if (storedDBCIList.size() > 0) {
+        if (!storedDBCIList.isEmpty()) {
             // create the combo
             lbl = new Label(topComp, SWT.NONE);
             lbl.setText(Messages.DataBaseRegistryWizardPage_label_recent_text);
@@ -734,7 +727,7 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
             d.left = new FormAttachment(0, 5);
             d.right = new FormAttachment(100, -5);
             advancedGrp.setLayoutData(d);
-            //            
+            //
             // //Hide and turn off the Group
             advancedGrp.setVisible(false);// hide it - show with button click
             advancedGrp.setEnabled(false);// turn off - we don't want events
@@ -761,7 +754,7 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
         // If there are stored valid connections, add them to the Combo Widget
         // TODO: This should be limited to only n recent connections
         if (null != storedDBCIList) {
-            for( DataBaseConnInfo dbci : storedDBCIList ) {
+            for (DataBaseConnInfo dbci : storedDBCIList) {
                 rcntComboWgt.add(dbci.toDisplayString());
             }
         }
@@ -835,7 +828,7 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
         // This currently doesn't work because we have widgets in different
         // trees (not sure that's the reason it is broken).
         // Focus currently follows the default pattern of the order of addition
-        // of the widgets plus the occaisional setFocus() methods which can
+        // of the widgets plus the occasional setFocus() methods which can
         // be found with a simple text search.
         // Code left here for any future coder wishing to be brave.
         // List<Control> tablist=new LinkedList<Control>();
@@ -865,12 +858,12 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * Creates a GUI Group with widgets to set advanced parameters of the connection or, by default,
      * null if there are no advanced settings. Classes extending this abstract class may override
      * this method and both provide the widgets and handle the events.
-     * 
+     *
      * @param arg0 the parent widget in which the widgets will be added.
      * @return the Group containing the widgets which will be drawn in the 'Advanced' section of the
      *         wizard page or null (the default) if there is none.
      */
-    protected Group createAdvancedControl( Composite arg0 ) {
+    protected Group createAdvancedControl(Composite arg0) {
         return null;
 
     }
@@ -879,7 +872,7 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * This is the class that will actually obtain the DataSource. It will try and make a connection
      * to ensure this works out, as such it throws an SQLException if it's an odd day of the week or
      * if you squint too hard.
-     * 
+     *
      * @return A working DataSource for the database. It should not be closed. But it might be if
      *         you are unlucky.
      */
@@ -891,39 +884,38 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * available databases on the DBMS server. Instead of overriding this method it is better to
      * override the getDatabaseResultSet method if a custom way of getting the database names is
      * needed
-     * 
+     *
      * @param con the java.sql.Connection returned by getConnection()
-     * @return An array of Strings containing the names of only the databases available on the server
-     *         which are suitable for display to the user.
+     * @return An array of Strings containing the names of only the databases available on the
+     *         server which are suitable for display to the user.
      */
-    protected String[] lookupDbNamesForDisplay( DataSource dataSource ) {
-        java.util.List<String> dbList = new ArrayList<String>();
+    protected String[] lookupDbNamesForDisplay(DataSource dataSource) {
+        java.util.List<String> dbList = new ArrayList<>();
         Connection con = null;
         try {
             con = dataSource.getConnection();
-            ResultSet rs = null;            
+            ResultSet rs = null;
             if (con != null) {
                 rs = getDatabaseResultSet(con);
-                while( rs.next() ) {
+                while (rs.next()) {
                     String dbName = rs.getString(1);
                     if (!excludeDbFromUserChoices(dbName)) {
                         dbList.add(dbName);
                     }
-                }                
+                }
             }
-            return dbList.toArray( new String[dbList.size()] );
+            return dbList.toArray(new String[dbList.size()]);
         } catch (SQLException e) {
             setMessage(Messages.DataBaseRegistryWizardPage_databaseMessage);
             setErrorMessage(e.getLocalizedMessage());
             return null;
-        }
-        finally {
-            if( con != null ){
+        } finally {
+            if (con != null) {
                 try {
                     con.close(); // return to pool
                 } catch (SQLException e) {
                     // closing anyways
-                }                
+                }
             }
         }
     }
@@ -931,35 +923,35 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
     /**
      * This method can is called so that diffrent databases can provied their own method of
      * obtaining the list of databases without overriding the lookupDbNamesForDisplay method.
-     * 
+     *
      * @param c the java.sql.Connection returned by getConnection()
      * @return A ResultSet that contains the Database names, for this connection.
      */
-    protected ResultSet getDatabaseResultSet( Connection c ) throws SQLException {
+    protected ResultSet getDatabaseResultSet(Connection c) throws SQLException {
         return c.getMetaData().getCatalogs();
     }
 
     /**
      * This method is called in response to selection of the lookup button and gets the names of the
      * available schemata on the DBMS server. Like lookupDbNameForDisplay it is better to avoid
-     * overiding this method if a database specific implementation is needed. Instead overide
+     * overriding this method if a database specific implementation is needed. Instead override
      * getSchemaResultSet WARNING: This should never be called if !dbmsUsesSchema().
-     * 
+     *
      * @param con the java.sql.Connection object returned by getConnection()
      * @return An array of Strings containing the names of the schemata available on the server.
      */
-    protected String[] lookupSchemaNamesForDisplay( DataSource dataSource ) {
+    protected String[] lookupSchemaNamesForDisplay(DataSource dataSource) {
         if (dataSource == null) {
             return null; // not connected
         }
         Connection con = null;
-        java.util.List<String> schemaList = new ArrayList<String>();
+        java.util.List<String> schemaList = new ArrayList<>();
         try {
             con = dataSource.getConnection();
             ResultSet rs = null;
             if (con != null) {
                 rs = getSchemasResultSet(con);
-                while( rs.next() ) {
+                while (rs.next()) {
                     String schemaName = rs.getString(1);
                     if (!excludeSchemaFromUserChoices(schemaName)) {
                         schemaList.add(schemaName);
@@ -983,13 +975,13 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
     }
 
     /**
-     * This method can is called so that diffrent databases can provied their own method of
+     * This method can is called so that different databases can provided their own method of
      * obtaining the list of schemas without overriding the lookupSchemasNamesForDisplay method.
-     * 
+     *
      * @param c the java.sql.Connection returned by getConnection()
      * @return A ResultSet that contains the Schema names, for this connection.
      */
-    protected ResultSet getSchemasResultSet( Connection c ) throws SQLException {
+    protected ResultSet getSchemasResultSet(Connection c) throws SQLException {
         return c.getMetaData().getSchemas();
     }
 
@@ -1004,11 +996,12 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * such widgets should still be in the correct state. We no longer trigger connections or
      * validation on focusEvents because of this uncertainty. TODO: Gain of focus on text widgets
      * merely pre-selects the text for deletion if the user inputs new text.
-     * 
+     *
      * @see org.eclipse.swt.events.FocusListener#focusGained(org.eclipse.swt.events.FocusEvent)
      * @param e the event object describing the action that triggered this call
      */
-    public void focusGained( FocusEvent e ) {
+    @Override
+    public void focusGained(FocusEvent e) {
 
         // Catch the situation where we are disposed between the event being
         // fired and this handler.
@@ -1034,11 +1027,12 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * part of the operating system---the user's mouse could have slipped onto another window or
      * they could be checking email. We no longer trigger connections or validation on focusEvents
      * because of this uncertainty.
-     * 
+     *
      * @see org.eclipse.swt.events.FocusListener#focusLost(org.eclipse.swt.events.FocusEvent)
      * @param e the event (and widget via e.widget) generated for the focus change.
      */
-    public void focusLost( FocusEvent e ) {
+    @Override
+    public void focusLost(FocusEvent e) {
 
         // Catch the situation where we are disposed between the event being
         // fired and this handler.
@@ -1067,7 +1061,7 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * characters which are obviously wrong. Extending classes can override this method, starting
      * with a call to this method, i.e. super.verifyText(ve), and then continue with their own, more
      * restrictive, assessment.
-     * 
+     *
      * @param ve the VerifyEvent object representing the action which triggered the method call.
      */
     /*
@@ -1093,7 +1087,8 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * step, we also evaluate if we can now connect, and if so activate the lookup and connect
      * buttons.
      */
-    public void modifyText( ModifyEvent e ) {
+    @Override
+    public void modifyText(ModifyEvent e) {
 
         // Catch the situation where we are disposed between the event being
         // fired and this handler.
@@ -1104,7 +1099,7 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
         // SWITCH ON e.widget
         if (e.widget == rcntComboWgt) {
             // set the connection info
-            // NOTE: This presumes the two idices are strictly equal. If we make
+            // NOTE: This presumes the two indices are strictly equal. If we make
             // the combo hold only a subset of the stored list, we will
             // have to use a different index.
             int i = rcntComboWgt.getSelectionIndex();
@@ -1210,12 +1205,13 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * widgets we care about are the button widgets. Text and Combo widgets will receive
      * modifyEvents for any changes to their contents so we handle their entries in the
      * modifyText(..) method.
-     * 
+     *
      * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
      * @see #widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
      * @param e the SelectionEvent which includes e.widget, the widget generating the event
      */
-    public void widgetSelected( SelectionEvent e ) {
+    @Override
+    public void widgetSelected(SelectionEvent e) {
         // Catch the situation where we are disposed between the event being
         // fired and this handler being called.
         if (null == e.widget) {
@@ -1293,10 +1289,10 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
             dbComboWgt.setFocus();
 
             // Close the connection used for lookup
-            if (dataSource != null ){
+            if (dataSource != null) {
                 // dataSource.close();
             }
-        
+
             // Re-enable the lookup widget
             // This allows the user can try again, for example, if the server
             // has changed in the meantime.
@@ -1355,8 +1351,8 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
 
             // Store all connection parameters
             int s = storedDBCIList.size();
-            java.util.List<String> rec = new ArrayList<String>(s);
-            for( DataBaseConnInfo i : storedDBCIList ) {
+            java.util.List<String> rec = new ArrayList<>(s);
+            for (DataBaseConnInfo i : storedDBCIList) {
                 rec.add(i.toString());
             }
             settings.put(settingsArrayName, rec.toArray(new String[s]));
@@ -1391,12 +1387,13 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
      * key is typed while focus is on the Text field. Since changes to the text field all generate
      * the modifyEvent as well, we will handle modifications in the modifyText(..) method and can do
      * nothing here.
-     * 
+     *
      * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
      * @see #widgetSelected(org.eclipse.swt.events.SelectionEvent)
      * @param e
      */
-    public void widgetDefaultSelected( SelectionEvent e ) {
+    @Override
+    public void widgetDefaultSelected(SelectionEvent e) {
 
         return;
 
@@ -1408,6 +1405,7 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
 
     }
 
+    @Override
     public void dispose() {
         if (dataSource != null) {
             try {

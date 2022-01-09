@@ -228,7 +228,7 @@ public class CatalogJGrassMapsetsTreeViewer extends Composite
                     }
                 }
 
-                if (finalCatalogMembers.size() > 0) {
+                if (!finalCatalogMembers.isEmpty()) {
                     return finalCatalogMembers.toArray();
                 } else {
                     return null;

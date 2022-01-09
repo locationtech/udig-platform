@@ -80,9 +80,10 @@ import org.opengis.feature.simple.SimpleFeatureType;
  * The use of ISelectionListener.selectionChanged(IWorkbenchPart,ISelection) is used to track what
  * is going on; it is the responsibility of the container to feed this page events via this method.
  * <ul>
- * <li>IWorkbenchPart - is checked to see if it can adapt to a Map
- * <li>ISelection -
+ * <li>IWorkbenchPart - is checked to see if it can adapt to a Map</li>
+ * <li>ISelection - ?</li>
  * </ul>
+ * </p>
  *
  * @see TabbedPropertySheetPage
  */
@@ -972,7 +973,7 @@ public class FeaturePanelPage extends Page
      */
     public List<FeaturePanelTabDescriptor> getActiveTabs() {
         List<FeaturePanelTabDescriptor> elements = tabbedPropertyViewer.getElements();
-        if (elements != null && elements.size() > 0) {
+        if (elements != null && !elements.isEmpty()) {
             return elements;
         }
         return elements;
@@ -985,7 +986,7 @@ public class FeaturePanelPage extends Page
      */
     public void setSelectedTab(String id) {
         List<FeaturePanelTabDescriptor> elements = tabbedPropertyViewer.getElements();
-        if (elements != null && elements.size() > 0) {
+        if (elements != null && !elements.isEmpty()) {
             for (FeaturePanelTabDescriptor tabDescriptor : elements) {
                 if (tabDescriptor.getId() != null && tabDescriptor.getId().equals(id)) {
                     tabbedPropertyViewer.setSelection(new StructuredSelection(tabDescriptor), true);
