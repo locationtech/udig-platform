@@ -250,9 +250,9 @@ public class JGrassCatalogUtilities {
             final List<IService> rereadService = locator.acquire(ID, connectionParams);
 
             /**
-             * replace the service
+             * Replace the service
              */
-            if (rereadService.size() > 0) {
+            if (!rereadService.isEmpty()) {
                 Runnable refreshCatalogRunner = new Runnable() {
                     @Override
                     public void run() {
