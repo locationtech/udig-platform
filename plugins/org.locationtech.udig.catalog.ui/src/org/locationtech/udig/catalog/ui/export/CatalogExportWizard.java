@@ -221,13 +221,13 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
                     }
                 }
 
-                if (polygonCollection.size() > 0) {
+                if (!polygonCollection.isEmpty()) {
                     exportPolygonFeatures(data, monitor, file, polygonCollection, schema, mt);
                 }
-                if (pointCollection.size() > 0) {
+                if (!pointCollection.isEmpty()) {
                     exportPointFeatures(data, monitor, file, pointCollection, schema, mt);
                 }
-                if (lineCollection.size() > 0) {
+                if (!lineCollection.isEmpty()) {
                     exportLineFeatures(data, monitor, file, lineCollection, schema, mt);
                 }
             } else {
@@ -620,8 +620,6 @@ public class CatalogExportWizard extends WorkflowWizard implements IExportWizard
         Class geometryType = schema.getGeometryDescriptor().getType().getBinding();
 
         return geometryType.isAssignableFrom(Geometry.class);
-        // return Geometry.class.isAssignableFrom(geometryType);
-        // return Geometry.class==geometryType;
     }
 
     static String SHAPEFILE_EXT = ".shp"; //$NON-NLS-1$

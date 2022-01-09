@@ -208,8 +208,8 @@ public class GrassReprojectAction implements IObjectActionDelegate, IWorkbenchWi
                                     | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL));
                             resolutionGroup.setText("output map resolution");
 
-                            String res = "";
-                            if (maps.size() > 0) {
+                            String res = ""; //$NON-NLS-1$
+                            if (!maps.isEmpty()) {
                                 try {
                                     JGrassRegion activeWindow = maps.get(0).getActiveWindow();
                                     res = String.valueOf(activeWindow.getNSResolution());
