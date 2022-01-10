@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -12,9 +13,10 @@ package org.locationtech.udig.project.interceptor;
 import org.locationtech.udig.project.internal.Layer;
 
 /**
- * An interceptor that is ran on a layer.  See the org.locationtech.udig.mapInterceptor extension point for more details.
- * 
- * @author Jessegit 
+ * An interceptor that is ran on a layer. See the org.locationtech.udig.mapInterceptor extension
+ * point for more details.
+ *
+ * @author Jessegit
  * @since 1.1.0
  */
 public interface LayerInterceptor {
@@ -22,14 +24,17 @@ public interface LayerInterceptor {
      * Extension Point ID of Layer interceptors
      */
     String EXTENSION_ID = "org.locationtech.udig.project.layerInterceptor"; //$NON-NLS-1$
+
     /**
      * Attribute name of layer created interceptors
      */
     String CREATED_ID = "layerCreated"; //$NON-NLS-1$
+
     /**
      * Attribute name of layer added interceptors
      */
     String ADDED_ID = "layerAdded"; //$NON-NLS-1$
+
     /**
      * Attribute name of layer removed interceptors
      */
@@ -38,7 +43,7 @@ public interface LayerInterceptor {
     /**
      * Performs an action on the layer.
      *
-     * @param layer 
+     * @param layer
      */
     public void run(Layer layer);
 }
