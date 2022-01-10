@@ -61,8 +61,6 @@ public class EventHandler implements Listener {
         case SWT.Resize:
             controlResized(event);
             break;
-        case SWT.KeyDown:
-            break;
         default:
             break;
         }
