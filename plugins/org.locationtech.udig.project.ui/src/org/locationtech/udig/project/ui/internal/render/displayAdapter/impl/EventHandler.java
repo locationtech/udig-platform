@@ -1,5 +1,12 @@
 /**
- * 
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2021, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.project.ui.internal.render.displayAdapter.impl;
 
@@ -20,21 +27,14 @@ public class EventHandler implements Listener {
 
     ViewportPane pane;
 
-    // ControlListener, MouseListener, MouseMoveListener, MouseTrackListener {
-
-    /**
-     * @param java
-     */
-    public EventHandler( ViewportPane pane, EventJob eventJob ) {
+    public EventHandler(ViewportPane pane, EventJob eventJob) {
         this.eventJob = eventJob;
         this.pane = pane;
     }
 
-    /**
-     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-     */
-    public void handleEvent( Event event ) {
-        switch( event.type ) {
+    @Override
+    public void handleEvent(Event event) {
+        switch (event.type) {
         case SWT.MouseMove:
             mouseMove(event);
             break;
@@ -60,19 +60,15 @@ public class EventHandler implements Listener {
             break;
         case SWT.Resize:
             controlResized(event);
-        case SWT.KeyDown:
-        // System.out.println("keydown");
+            break;
+        default:
+            break;
         }
     }
 
-    /**
-     * TODO summary sentence for mouseWheel ...
-     * 
-     * @param event
-     */
-    private void mouseWheel( Event e ) {
-        MapMouseEvent m = new MapMouseWheelEvent(pane, e.x, e.y, e.stateMask, getButtonsDown(e), getButton(e.button),
-                e.count);
+    private void mouseWheel(Event e) {
+        MapMouseEvent m = new MapMouseWheelEvent(pane, e.x, e.y, e.stateMask, getButtonsDown(e),
+                getButton(e.button), e.count);
         eventJob.fire(EventJob.WHEEL, m);
     }
 
@@ -80,59 +76,55 @@ public class EventHandler implements Listener {
 
     private long scheduledTime;
 
-    /**
-     * @see org.eclipse.swt.events.ControlListener#controlResized(org.eclipse.swt.events.ControlEvent)
-     */
-    public void controlResized( final Event e ) {
-        if( e==null )
-            return; 
+    public void controlResized(final Event e) {
+        if (e == null)
+            return;
         synchronized (this) {
-            scheduledTime=System.currentTimeMillis()+400;
+            scheduledTime = System.currentTimeMillis() + 400;
         }
         org.locationtech.udig.ui.PlatformGIS.asyncInDisplayThread(new Runnable() {
-			public void run() {
-				e.display.timerExec(500, new Runnable(){
-					public void run() {
-						long currentTimeMillis = System.currentTimeMillis();
-						long l;
-						synchronized (EventHandler.this) {
-							l = scheduledTime;
-						}
-						if( l<=currentTimeMillis){
-							eventJob.fire(EventJob.RESIZED, new MapDisplayEvent(pane, size, pane.getDisplaySize()));
-							size=pane.getDisplaySize();
-						}
-					}
-				});
-			}
-		}, true);
+            @Override
+            public void run() {
+                e.display.timerExec(500, new Runnable() {
+                    @Override
+                    public void run() {
+                        long currentTimeMillis = System.currentTimeMillis();
+                        long l;
+                        synchronized (EventHandler.this) {
+                            l = scheduledTime;
+                        }
+                        if (l <= currentTimeMillis) {
+                            eventJob.fire(EventJob.RESIZED,
+                                    new MapDisplayEvent(pane, size, pane.getDisplaySize()));
+                            size = pane.getDisplaySize();
+                        }
+                    }
+                });
+            }
+        }, true);
 
     }
 
-    /**
-     * @see org.eclipse.swt.events.MouseListener#mouseDoubleClick(org.eclipse.swt.events.MouseEvent)
-     */
-    public void mouseDoubleClick( Event e ) {
+    public void mouseDoubleClick(Event e) {
         MapMouseEvent m = createMapMouseEvent(e);
-        m=new MapMouseEvent(pane, m.x, m.y,
-                m.modifiers, m.buttons|m.button, m.button);
+        m = new MapMouseEvent(pane, m.x, m.y, m.modifiers, m.buttons | m.button, m.button);
         eventJob.fire(EventJob.DOUBLE_CLICK, m);
     }
 
     private MapMouseEvent createMapMouseEvent(Event e) {
-        return new MapMouseEvent(pane, e.x, e.y,
-                e.stateMask, getButtonsDown(e), getButton(e.button));
+        return new MapMouseEvent(pane, e.x, e.y, e.stateMask, getButtonsDown(e),
+                getButton(e.button));
     }
 
-    private int getButtonsDown( Event e ) {
-        int button1 = (e.stateMask&SWT.BUTTON1)!=0?1:-1;
-        int button2 = (e.stateMask&SWT.BUTTON2)!=0?2:-1;
-        int button3 = (e.stateMask&SWT.BUTTON3)!=0?3:-1;
-        
-        return getButton(button1)|getButton(button2)|getButton(button3);
+    private int getButtonsDown(Event e) {
+        int button1 = (e.stateMask & SWT.BUTTON1) != 0 ? 1 : -1;
+        int button2 = (e.stateMask & SWT.BUTTON2) != 0 ? 2 : -1;
+        int button3 = (e.stateMask & SWT.BUTTON3) != 0 ? 3 : -1;
+
+        return getButton(button1) | getButton(button2) | getButton(button3);
     }
 
-    private int getButton(int button ) {
+    private int getButton(int button) {
         int state = 0;
         if (button == 1)
             state = state | MapMouseEvent.BUTTON1;
@@ -143,30 +135,20 @@ public class EventHandler implements Listener {
         return state;
     }
 
-    /**
-     * @see org.eclipse.swt.events.MouseListener#mouseDown(org.eclipse.swt.events.MouseEvent)
-     */
-    public void mouseDown( Event e ) {
+    public void mouseDown(Event e) {
         MapMouseEvent m = createMapMouseEvent(e);
-        m=new MapMouseEvent(pane, m.x, m.y,
-                m.modifiers, m.buttons|m.button, m.button);
+        m = new MapMouseEvent(pane, m.x, m.y, m.modifiers, m.buttons | m.button, m.button);
         eventJob.fire(EventJob.PRESSED, m);
     }
 
-    /**
-     * @see org.eclipse.swt.events.MouseListener#mouseUp(org.eclipse.swt.events.MouseEvent)
-     */
-    public void mouseUp( Event e ) {
+    public void mouseUp(Event e) {
         MapMouseEvent m = createMapMouseEvent(e);
-        if( (m.button&m.buttons)!=0 )
-            m=new MapMouseEvent(m.source, m.x, m.y, m.modifiers, m.buttons^m.button, m.button );
+        if ((m.button & m.buttons) != 0)
+            m = new MapMouseEvent(m.source, m.x, m.y, m.modifiers, m.buttons ^ m.button, m.button);
         eventJob.fire(EventJob.RELEASED, m);
     }
 
-    /**
-     * @see org.eclipse.swt.events.MouseMoveListener#mouseMove(org.eclipse.swt.events.MouseEvent)
-     */
-    public void mouseMove( Event e ) {
+    public void mouseMove(Event e) {
         MapMouseEvent m = createMapMouseEvent(e);
         if (m.buttons == 0)
             eventJob.fire(EventJob.MOVED, m);
@@ -175,26 +157,17 @@ public class EventHandler implements Listener {
         }
     }
 
-    /**
-     * @see org.eclipse.swt.events.MouseTrackListener#mouseEnter(org.eclipse.swt.events.MouseEvent)
-     */
-    public void mouseEnter( Event e ) {
+    public void mouseEnter(Event e) {
         MapMouseEvent m = createMapMouseEvent(e);
         eventJob.fire(EventJob.ENTERED, m);
     }
 
-    /**
-     * @see org.eclipse.swt.events.MouseTrackListener#mouseExit(org.eclipse.swt.events.MouseEvent)
-     */
-    public void mouseExit( Event e ) {
+    public void mouseExit(Event e) {
         MapMouseEvent m = createMapMouseEvent(e);
         eventJob.fire(EventJob.EXITED, m);
     }
 
-    /**
-     * @see org.eclipse.swt.events.MouseTrackListener#mouseHover(org.eclipse.swt.events.MouseEvent)
-     */
-    public void mouseHover( Event e ) {
+    public void mouseHover(Event e) {
         MapMouseEvent m = createMapMouseEvent(e);
         eventJob.fire(EventJob.HOVERED, m);
     }

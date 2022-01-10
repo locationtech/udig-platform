@@ -239,7 +239,7 @@ public class MapFactory {
                     monitor.worked(1);
                 }
 
-                if (unChosenServices.size() > 0) {
+                if (!unChosenServices.isEmpty()) {
                     geoResources.addAll(getResourcesFromUser(unChosenServices));
                 }
 
@@ -296,9 +296,10 @@ public class MapFactory {
                     }
                     monitor.worked(1);
                 }
-                if (!layers.isEmpty())
+                if (!layers.isEmpty()) {
                     map.getLayersInternal().addAll(layers);
-                if (map.getLayersInternal().size() > 0 || newMap == true) {
+                }
+                if (!map.getLayersInternal().isEmpty() || newMap == true) {
                     ProjectExplorer.getProjectExplorer().open(map);
                 } else if (!mapExists) {
                     // this is very ambigious? what is going on here?
@@ -407,7 +408,7 @@ public class MapFactory {
     /**
      * Will acquire services for a single URL, as long as one service works we don't have an error.
      * <p>
-     * If no servies work we will just punt out the exception from the last entry.
+     * If no services work we will just punt out the exception from the last entry.
      * </p>
      *
      * @param url
@@ -526,20 +527,12 @@ public class MapFactory {
     private static class CurrentMapFinder implements Runnable {
         Map map = null;
 
-        /**
-         * @return
-         */
         Map getCurrentMap() {
             map = null;
             PlatformGIS.syncInDisplayThread(this);
             return map;
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see java.lang.Runnable#run()
-         */
         @Override
         public void run() {
             if (isMapOpen()) {

@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  *
@@ -16,30 +17,29 @@ import org.locationtech.udig.project.internal.Map;
 
 /**
  * Provides content control for the LegendView's tree viewer.
- * 
+ *
  * @author Naz Chan (LISAsoft)
  * @since 1.3.1
  */
 public class LegendViewContentProvider extends AdapterFactoryContentProvider {
 
     private LegendView view;
-    
-    public LegendViewContentProvider( LegendView view ) {
+
+    public LegendViewContentProvider(LegendView view) {
         super(ProjectUIPlugin.getDefault().getAdapterFactory());
         this.view = view;
     }
 
     @Override
-    public Object[] getElements( Object object ) {
+    public Object[] getElements(Object object) {
         if (object != null && object instanceof Map) {
-            return ((Map) object).getLegend().toArray();    
+            return ((Map) object).getLegend().toArray();
         }
         return super.getElements(object);
     }
-    
-    
+
     @Override
-    public Object[] getChildren( Object parentElement ) {
+    public Object[] getChildren(Object parentElement) {
         if (parentElement instanceof Folder || parentElement instanceof IFolder) {
             final Folder folder = (Folder) parentElement;
             return folder.getItems().toArray();
@@ -48,19 +48,19 @@ public class LegendViewContentProvider extends AdapterFactoryContentProvider {
     }
 
     @Override
-    public Object getParent( Object element ) {
+    public Object getParent(Object element) {
         return null;
     }
 
     @Override
-    public boolean hasChildren( Object element ) {
+    public boolean hasChildren(Object element) {
         if (element instanceof Folder || element instanceof IFolder) {
             final Folder folder = (Folder) element;
-            if (folder.getItems().size() > 0) {
+            if (!folder.getItems().isEmpty()) {
                 return true;
             }
         }
         return false;
     }
-    
+
 }

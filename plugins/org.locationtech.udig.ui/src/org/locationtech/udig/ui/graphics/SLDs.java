@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -67,34 +67,41 @@ import org.opengis.style.GraphicalSymbol;
 import org.opengis.style.SemanticType;
 
 /**
- * Utility class for working with Geotools SLD objects.
+ * Utility class for working with GeoTools SLD objects.
  * <p>
  * This class assumes a subset of the SLD specification:
  * <ul>
- * <li>Single Rule - matching Filter.INCLUDE
- * <li>Symbolizer lookup by name
+ * <li>Single Rule - matching Filter.INCLUDE</li>
+ * <li>Symbolizer lookup by name</li>
  * </ul>
  * </p>
  * <p>
- * When you start to branch out to SLD information that contains
- * multiple rules you will need to modify this class.
+ * When you start to branch out to SLD information that contains multiple rules you will need to
+ * modify this class.
  * </p>
+ *
  * @author Jody Garnett, Refractions Research.
  * @since 0.7.0
  * @version 1.3.2
  */
 public class SLDs extends SLD {
     private static StyleFactory sf = CommonFactoryFinder.getStyleFactory(null);
+
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
     public static final double ALIGN_LEFT = 1.0;
+
     public static final double ALIGN_CENTER = 0.5;
+
     public static final double ALIGN_RIGHT = 0.0;
+
     public static final double ALIGN_BOTTOM = 1.0;
+
     public static final double ALIGN_MIDDLE = 0.5;
+
     public static final double ALIGN_TOP = 0.0;
 
-    public static int size( Graphic graphic ) {
+    public static int size(Graphic graphic) {
         if (graphic == null) {
             return NOTFOUND;
         }
@@ -115,71 +122,87 @@ public class SLDs extends SLD {
         Expression color = fill.getColor();
         return color(color);
     }
+
     public static Color color(Expression expr) {
         if (expr == null) {
             return null;
         }
         try {
-            return expr.evaluate(null, Color.class );
-        }
-        catch( Throwable t ){
+            return expr.evaluate(null, Color.class);
+        } catch (Throwable t) {
             class ColorVisitor implements ExpressionVisitor {
                 Color found;
-                public Object visit( Literal expr, Object data ) {
-                    if( found != null ) return null;
+
+                @Override
+                public Object visit(Literal expr, Object data) {
+                    if (found != null)
+                        return null;
                     try {
-                        Color color = expr.evaluate(expr, Color.class );
-                        if( color != null ){
+                        Color color = expr.evaluate(expr, Color.class);
+                        if (color != null) {
                             found = color;
                         }
-                    }
-                    catch (Throwable t){
+                    } catch (Throwable t) {
                         // not a color
                     }
                     return data;
                 }
-                public Object visit( NilExpression arg0, Object data ) {
+
+                @Override
+                public Object visit(NilExpression arg0, Object data) {
                     return data;
                 }
-                public Object visit( Add arg0, Object data ) {
+
+                @Override
+                public Object visit(Add arg0, Object data) {
                     return data;
                 }
-                public Object visit( Divide arg0, Object data ) {
+
+                @Override
+                public Object visit(Divide arg0, Object data) {
                     return null;
                 }
-                public Object visit( Function function, Object data ) {
-                    for( Expression param : function.getParameters() ){
-                        param.accept(this, data ); 
+
+                @Override
+                public Object visit(Function function, Object data) {
+                    for (Expression param : function.getParameters()) {
+                        param.accept(this, data);
                     }
                     return data;
                 }
-                public Object visit( Multiply arg0, Object data ) {
+
+                @Override
+                public Object visit(Multiply arg0, Object data) {
                     return data;
                 }
-                public Object visit( PropertyName arg0, Object data ) {
+
+                @Override
+                public Object visit(PropertyName arg0, Object data) {
                     return data;
                 }
-                public Object visit( Subtract arg0, Object data ) {
+
+                @Override
+                public Object visit(Subtract arg0, Object data) {
                     return data;
                 }
             }
             ColorVisitor search = new ColorVisitor();
-            expr.accept(search, null );
-            
-            return search.found;            
+            expr.accept(search, null);
+
+            return search.found;
         }
     }
-    
+
     /**
      * Grabs the font from the first TextSymbolizer.
      * <p>
-     * If you are using something fun like symbols you 
-     * will need to do your own thing.
+     * If you are using something fun like symbols you will need to do your own thing.
      * </p>
+     *
      * @param symbolizer Text symbolizer information.
      * @return FontData[] of the font's fill, or null if unavailable.
      */
-    public static FontData[] textFont( TextSymbolizer symbolizer ) {
+    public static FontData[] textFont(TextSymbolizer symbolizer) {
 
         Font font = font(symbolizer);
         if (font == null)
@@ -210,14 +233,15 @@ public class SLDs extends SLD {
 
     /**
      * Retrieves all colour names defined in a rule
+     *
      * @param rule the rule
      * @return an array of unique colour names
      */
-    public static String[] colors( Rule rule ) {
-        Set<String> colorSet = new HashSet<String>();
+    public static String[] colors(Rule rule) {
+        Set<String> colorSet = new HashSet<>();
 
         Color color = null;
-        for( Symbolizer sym : rule.symbolizers() ) {
+        for (Symbolizer sym : rule.symbolizers()) {
             if (sym instanceof PolygonSymbolizer) {
                 PolygonSymbolizer symb = (PolygonSymbolizer) sym;
                 color = polyFill(symb);
@@ -236,7 +260,7 @@ public class SLDs extends SLD {
             }
         }
 
-        if (colorSet.size() > 0) {
+        if (!colorSet.isEmpty()) {
             return colorSet.toArray(new String[0]);
         } else {
             return new String[0];
@@ -245,11 +269,12 @@ public class SLDs extends SLD {
 
     /**
      * Extracts the fill color with a given opacity from the {@link PointSymbolizer}.
-     * 
+     *
      * @param symbolizer the point symbolizer from which to get the color.
-     * @return the {@link Color} with transparency if available. Returns null if no color is available.
+     * @return the {@link Color} with transparency if available. Returns null if no color is
+     *         available.
      */
-    public static Color pointFillWithAlpha( PointSymbolizer symbolizer ) {
+    public static Color pointFillWithAlpha(PointSymbolizer symbolizer) {
         if (symbolizer == null) {
             return null;
         }
@@ -259,7 +284,7 @@ public class SLDs extends SLD {
             return null;
         }
 
-        for( GraphicalSymbol gs : graphic.graphicalSymbols() ) {
+        for (GraphicalSymbol gs : graphic.graphicalSymbols()) {
             if ((gs != null) && (gs instanceof Mark)) {
                 Mark mark = (Mark) gs;
                 Fill fill = mark.getFill();
@@ -272,7 +297,8 @@ public class SLDs extends SLD {
                     if (opacity == null)
                         opacity = ff.literal(1.0);
                     float alpha = (float) Filters.asDouble(opacity);
-                    colour = new Color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, alpha);
+                    colour = new Color(colour.getRed() / 255f, colour.getGreen() / 255f,
+                            colour.getBlue() / 255f, alpha);
                     if (colour != null) {
                         return colour;
                     }
@@ -285,11 +311,12 @@ public class SLDs extends SLD {
 
     /**
      * Extracts the stroke color with a given opacity from the {@link PointSymbolizer}.
-     * 
+     *
      * @param symbolizer the point symbolizer from which to get the color.
-     * @return the {@link Color} with transparency if available. Returns null if no color is available.
+     * @return the {@link Color} with transparency if available. Returns null if no color is
+     *         available.
      */
-    public static Color pointStrokeColorWithAlpha( PointSymbolizer symbolizer ) {
+    public static Color pointStrokeColorWithAlpha(PointSymbolizer symbolizer) {
         if (symbolizer == null) {
             return null;
         }
@@ -299,7 +326,7 @@ public class SLDs extends SLD {
             return null;
         }
 
-        for( GraphicalSymbol gs : graphic.graphicalSymbols() ) {
+        for (GraphicalSymbol gs : graphic.graphicalSymbols()) {
             if ((gs != null) && (gs instanceof Mark)) {
                 Mark mark = (Mark) gs;
                 Stroke stroke = mark.getStroke();
@@ -312,7 +339,8 @@ public class SLDs extends SLD {
                     if (opacity == null)
                         opacity = ff.literal(1.0);
                     float alpha = (float) Filters.asDouble(opacity);
-                    colour = new Color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, alpha);
+                    colour = new Color(colour.getRed() / 255f, colour.getGreen() / 255f,
+                            colour.getBlue() / 255f, alpha);
                     if (colour != null) {
                         return colour;
                     }
@@ -323,16 +351,16 @@ public class SLDs extends SLD {
         return null;
     }
 
-    public static Font font( TextSymbolizer symbolizer ) {
+    public static Font font(TextSymbolizer symbolizer) {
         if (symbolizer == null)
             return null;
         Font font = symbolizer.getFont();
         return font;
     }
 
-    public static Style getDefaultStyle( StyledLayerDescriptor sld ) {
+    public static Style getDefaultStyle(StyledLayerDescriptor sld) {
         Style[] styles = styles(sld);
-        for( int i = 0; i < styles.length; i++ ) {
+        for (int i = 0; i < styles.length; i++) {
             Style style = styles[i];
             List<FeatureTypeStyle> ftStyles = style.featureTypeStyles();
             genericizeftStyles(ftStyles);
@@ -345,30 +373,32 @@ public class SLDs extends SLD {
     }
 
     /**
-     * Converts the type name of all FeatureTypeStyles to Feature so that the all apply to any feature type.  This is admittedly dangerous
-     * but is extremely useful because it means that the style can be used with any feature type.
+     * Converts the type name of all FeatureTypeStyles to Feature so that the all apply to any
+     * feature type. This is admittedly dangerous but is extremely useful because it means that the
+     * style can be used with any feature type.
      *
      * @param ftStyles
      */
-    private static void genericizeftStyles( List<FeatureTypeStyle> ftStyles ) {
-        for( FeatureTypeStyle featureTypeStyle : ftStyles ) {
+    private static void genericizeftStyles(List<FeatureTypeStyle> ftStyles) {
+        for (FeatureTypeStyle featureTypeStyle : ftStyles) {
             featureTypeStyle.featureTypeNames().clear();
             featureTypeStyle.featureTypeNames().add(new NameImpl(SLDs.GENERIC_FEATURE_TYPENAME));
         }
     }
 
-    public static boolean isSemanticTypeMatch( FeatureTypeStyle fts, String regex ) {
-    	for (SemanticType type : fts.semanticTypeIdentifiers()) {
-    		if (type.name().matches(regex)) return true;
-    	}
+    public static boolean isSemanticTypeMatch(FeatureTypeStyle fts, String regex) {
+        for (SemanticType type : fts.semanticTypeIdentifiers()) {
+            if (type.name().matches(regex))
+                return true;
+        }
         return false;
     }
 
     /**
-     * Returns the min scale of the default rule, or 0 if none is set 
+     * Returns the min scale of the default rule, or 0 if none is set
      */
-    public static double minScale( FeatureTypeStyle fts ) {
-        if (fts == null || fts.rules().isEmpty()){
+    public static double minScale(FeatureTypeStyle fts) {
+        if (fts == null || fts.rules().isEmpty()) {
             return 0.0;
         }
         Rule r = fts.rules().get(0);
@@ -376,10 +406,10 @@ public class SLDs extends SLD {
     }
 
     /**
-     * Returns the max scale of the default rule, or {@linkplain Double#NaN} if none is set 
+     * Returns the max scale of the default rule, or {@linkplain Double#NaN} if none is set
      */
-    public static double maxScale( FeatureTypeStyle fts ) {
-        if (fts == null || fts.rules().isEmpty()){
+    public static double maxScale(FeatureTypeStyle fts) {
+        if (fts == null || fts.rules().isEmpty()) {
             return Double.NaN;
         }
         Rule r = fts.rules().get(0);
@@ -387,10 +417,10 @@ public class SLDs extends SLD {
     }
 
     /**
-     * gets the first FeatureTypeStyle
+     * Gets the first FeatureTypeStyle
      */
-    public static FeatureTypeStyle getFeatureTypeStyle( Style s ) {
-         List<FeatureTypeStyle> fts = s.featureTypeStyles();
+    public static FeatureTypeStyle getFeatureTypeStyle(Style s) {
+        List<FeatureTypeStyle> fts = s.featureTypeStyles();
         if (!fts.isEmpty()) {
             return fts.get(0);
         }
@@ -403,10 +433,10 @@ public class SLDs extends SLD {
      * @param s A style to search in
      * @return a rule, or null if no raster symbolizers are found.
      */
-    public static Rule getRasterSymbolizerRule( Style s ) {
-        for( FeatureTypeStyle featureTypeStyle : s.featureTypeStyles() ) {
-            for( Rule rule : featureTypeStyle.rules()  ) {
-                for( Symbolizer symbolizer : rule.getSymbolizers()) {
+    public static Rule getRasterSymbolizerRule(Style s) {
+        for (FeatureTypeStyle featureTypeStyle : s.featureTypeStyles()) {
+            for (Rule rule : featureTypeStyle.rules()) {
+                for (Symbolizer symbolizer : rule.getSymbolizers()) {
                     if (symbolizer instanceof RasterSymbolizer) {
                         return rule;
                     }
@@ -417,35 +447,33 @@ public class SLDs extends SLD {
     }
 
     /**
-     * The type name that can be used in an SLD in the featuretypestyle that matches all feature types.
+     * The type name that can be used in an SLD in the featuretypestyle that matches all feature
+     * types.
      */
-    public static final String GENERIC_FEATURE_TYPENAME = "Feature";
+    public static final String GENERIC_FEATURE_TYPENAME = "Feature"; //$NON-NLS-1$
 
     public static StyledLayerDescriptor parseSLD(File file) throws IOException {
         StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory();
-     // try SLD 1.1 first
+        // try SLD 1.1 first
         SLDConfiguration config = new SLDConfiguration();
         Reader reader = null;
         try {
-            Parser parser = new Parser( config );
+            Parser parser = new Parser(config);
             reader = new FileReader(file);
-            Object object = parser.parse( reader );
-            if( object instanceof StyledLayerDescriptor){
+            Object object = parser.parse(reader);
+            if (object instanceof StyledLayerDescriptor) {
                 StyledLayerDescriptor sld = (StyledLayerDescriptor) object;
                 return sld;
-            }
-            else if ( object instanceof NamedStyle ){
+            } else if (object instanceof NamedStyle) {
                 NamedStyle style = (NamedStyle) object;
-                StyledLayerDescriptor sld = createDefaultSLD( style );
+                StyledLayerDescriptor sld = createDefaultSLD(style);
                 return sld;
             }
-        }
-        catch(Exception ignore){
+        } catch (Exception ignore) {
             // we are ignoring this error and will try the more forgiving option below
-            UiPlugin.trace(SLDs.class,"SLD 1.1 configuration failed to parse "+file, ignore);
-        }
-        finally {
-            if( reader != null){
+            UiPlugin.trace(SLDs.class, "SLD 1.1 configuration failed to parse " + file, ignore);
+        } finally {
+            if (reader != null) {
                 reader.close();
             }
         }
@@ -459,80 +487,74 @@ public class SLDs extends SLD {
             return null; // well that is unexpected since f.exists()
         }
     }
-    
+
     public static Style parseStyle(URL url) throws IOException {
         // try SLD 1.1 first
         SLDConfiguration config = new SLDConfiguration();
         InputStream input = null;
         try {
-            Parser parser = new Parser( config );
+            Parser parser = new Parser(config);
             input = url.openStream();
-            Object object = parser.parse( input );
-            if( object instanceof StyledLayerDescriptor){
+            Object object = parser.parse(input);
+            if (object instanceof StyledLayerDescriptor) {
                 StyledLayerDescriptor sld = (StyledLayerDescriptor) object;
-                Style[] array = SLDs.styles( sld );
-                if( array != null && array.length > 0 ){
+                Style[] array = SLDs.styles(sld);
+                if (array != null && array.length > 0) {
                     return array[0];
                 }
-            }
-            else if ( object instanceof NamedStyle ){
+            } else if (object instanceof NamedStyle) {
                 NamedStyle style = (NamedStyle) object;
                 return style;
             }
-        }
-        catch(Exception ignore){
+        } catch (Exception ignore) {
             // we are ignoring this error and will try the more forgiving option below
-            UiPlugin.trace(SLDs.class,"SLD 1.1 configuration failed to parse "+url, ignore);
-        }
-        finally {
-            if( input != null){
+            UiPlugin.trace(SLDs.class, "SLD 1.1 configuration failed to parse " + url, ignore);
+        } finally {
+            if (input != null) {
                 input.close();
             }
         }
-        // The SLD 1.0 parser is far more forgiving 
+        // The SLD 1.0 parser is far more forgiving
         StyleFactory factory = CommonFactoryFinder.getStyleFactory(GeoTools.getDefaultHints());
         SLDParser styleReader = new SLDParser(factory, url);
         Style style = styleReader.readXML()[0];
         return style;
     }
-    
+
     public static Style praseStyle(File file) throws IOException {
         StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory();
         // try SLD 1.1 first
         SLDConfiguration config = new SLDConfiguration();
         Reader reader = null;
         try {
-            Parser parser = new Parser( config );
+            Parser parser = new Parser(config);
             reader = new FileReader(file);
-            Object object = parser.parse( reader );
-            if( object instanceof StyledLayerDescriptor){
+            Object object = parser.parse(reader);
+            if (object instanceof StyledLayerDescriptor) {
                 StyledLayerDescriptor sld = (StyledLayerDescriptor) object;
-                Style[] array = SLDs.styles( sld );
-                if( array != null && array.length > 0 ){
+                Style[] array = SLDs.styles(sld);
+                if (array != null && array.length > 0) {
                     return array[0];
                 }
-            }
-            else if ( object instanceof NamedStyle ){
+            } else if (object instanceof NamedStyle) {
                 NamedStyle style = (NamedStyle) object;
                 return style;
             }
-        }
-        catch(Exception ignore){
+        } catch (Exception ignore) {
             // we are ignoring this error and will try the more forgiving option below
-            UiPlugin.trace(SLDs.class,"SLD 1.1 configuration failed to parse "+file, ignore);
-        }
-        finally {
-            if( reader != null){
+            UiPlugin.trace(SLDs.class, "SLD 1.1 configuration failed to parse " + file, ignore);
+        } finally {
+            if (reader != null) {
                 reader.close();
             }
         }
-        
+
         // parse it up
         SLDParser parser = new SLDParser(styleFactory);
         try {
             parser.setInput(file);
             Style[] array = parser.readXML();
-            if( array != null && array.length > 0 ){
+            if (array != null && array.length > 0) {
                 return array[0];
             }
         } catch (FileNotFoundException e) {
@@ -540,9 +562,10 @@ public class SLDs extends SLD {
         }
         return null;
     }
+
     /**
-     * Creates an SLD and UserLayer, and nests the style (SLD-->UserLayer-->Style). 
-     * 
+     * Creates an SLD and UserLayer, and nests the style (SLD-->UserLayer-->Style).
+     *
      * @see net.refractions.project.internal.render.SelectionStyleContent#createDefaultStyledLayerDescriptor
      * @param style
      * @return SLD
@@ -550,8 +573,7 @@ public class SLDs extends SLD {
     public static StyledLayerDescriptor createDefaultSLD(Style style) {
         StyledLayerDescriptor sld = sf.createStyledLayerDescriptor();
         UserLayer layer = sf.createUserLayer();
-        //FeatureTypeConstraint ftc = styleFactory.createFeatureTypeConstraint(null, Filter.INCLUDE, null);
-        layer.setLayerFeatureConstraints(new FeatureTypeConstraint[] {null});
+        layer.setLayerFeatureConstraints(new FeatureTypeConstraint[] { null });
         sld.addStyledLayer(layer);
         layer.addUserStyle(style);
         return sld;
