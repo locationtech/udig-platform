@@ -232,10 +232,11 @@ public class LayersView extends ViewPart
                             new String[] { MylarAction.KEY });
             }
         };
-        if (Display.getCurrent() == null)
+        if (Display.getCurrent() == null) {
             Display.getDefault().asyncExec(runnable);
-        else
+        } else {
             runnable.run();
+        }
     }
 
     /**
@@ -250,11 +251,13 @@ public class LayersView extends ViewPart
         }
 
         this.currentMap = currentMap;
-        if (viewer != null)
+        if (viewer != null) {
             viewer.setInput(currentMap == null ? placeholder : currentMap);
+        }
 
-        if (editManagerListener == null)
+        if (editManagerListener == null) {
             editManagerListener = new EditManagerListener();
+        }
 
         if (currentMap != null) {
             this.currentMap.getViewportModel().addViewportModelListener(zoomListener);
@@ -262,8 +265,9 @@ public class LayersView extends ViewPart
             this.currentMap.getBlackboard().addListener(mylarListener);
             currentMap.addDeepAdapter(checkboxContextListener);
 
-            if (!(currentMap.getEditManager()).containsListener(editManagerListener))
+            if (!(currentMap.getEditManager()).containsListener(editManagerListener)) {
                 currentMap.getEditManager().addListener(editManagerListener);
+            }
 
             Object selectedLayer = currentMap.getEditManager().getSelectedLayer();
             if (selectedLayer != null && viewer != null) {
@@ -297,8 +301,9 @@ public class LayersView extends ViewPart
          */
         @Override
         public void partActivated(IWorkbenchPart part) {
-            if (part == currentPart)
+            if (part == currentPart) {
                 return;
+            }
             if (part instanceof IAdaptable) {
                 IAdaptable adaptable = part;
                 Object obj = adaptable.getAdapter(Map.class);
@@ -310,107 +315,46 @@ public class LayersView extends ViewPart
             }
         }
 
-        // private LayerApplicabilityMenuCreator applicabilityCreator;
-        // private LayerApplicabilityMenuCreator getApplicabilityMenu() {
-        // if (applicabilityCreator == null) {
-        // applicabilityCreator = new LayerApplicabilityMenuCreator();
-        // }
-        //
-        // return applicabilityCreator;
-        // }
-        // private void addLayersMenu(EditorPart editor) {
-        // IMenuManager
-        // manager=editor.getEditorSite().getActionBars().getMenuManager();
-        // IMenuManager layerMenu=manager.findMenuUsingPath("layer");
-        // //$NON-NLS-1$
-        // layerMenu.add(getApplicabilityMenu().getMenuManager());
-        // editor.getEditorSite().getActionBars().updateActionBars();
-        // }
-
-        /**
-         * @see org.eclipse.ui.IPartListener#partBroughtToTop(org.eclipse.ui.IWorkbenchPart)
-         */
         @Override
         public void partBroughtToTop(IWorkbenchPart part) {
             partActivated(part);
         }
 
-        /**
-         * @see org.eclipse.ui.IPartListener#partClosed(org.eclipse.ui.IWorkbenchPart)
-         */
         @Override
         public void partClosed(IWorkbenchPart part) {
             if (part == this) {
                 disposeInternal();
                 return;
             }
-            if (part != currentPart)
+            if (part != currentPart) {
                 return;
-            // if (part.getSite() != null) {
-            // ISelectionProvider provider = part.getSite().getSelectionProvider();
-            // if (provider != null) {
-            // provider.removeSelectionChangedListener(this);
-            // }
-            // }
+            }
             currentPart = null;
             setCurrentMap(null);
             if (part.getSite().getPage().getEditorReferences().length == 0
-                    && part instanceof EditorPart)
+                    && part instanceof EditorPart) {
                 removeApplicabilityMenu((EditorPart) part);
+            }
             viewer.refresh(true);
         }
 
         private void removeApplicabilityMenu(EditorPart part) {
 
-            // IMenuManager manager = part.getEditorSite().getActionBars()
-            // .getMenuManager();
-            // manager.findMenuUsingPath("layer/,)
         }
 
-        /**
-         * @see org.eclipse.ui.IPartListener#partDeactivated(org.eclipse.ui.IWorkbenchPart)
-         */
         @Override
         public void partDeactivated(IWorkbenchPart part) {
+
         }
 
-        /**
-         * @see org.eclipse.ui.IPartListener#partOpened(org.eclipse.ui.IWorkbenchPart)
-         */
         @Override
         public void partOpened(IWorkbenchPart part) {
-            // partActivated(part);
+
         }
 
         @Override
         public void selectionChanged(SelectionChangedEvent event) {
-            // StructuredSelection selection = (StructuredSelection) event.getSelection();
-            // Map found = null;
-            // Iterator iter = selection.iterator();
-            // while( iter.hasNext() ) {
-            // Object obj = iter.next();
-            // Map map = null;
-            // if (obj instanceof Map) {
-            // map = (Map) obj;
-            // } else if (obj instanceof IAdaptable) {
-            // IAdaptable adaptable = (IAdaptable) obj;
-            // map = (Map) adaptable.getAdapter(Map.class);
-            // }
-            // if (map != null) {
-            // // Abort if we find two valid maps - want only one
-            // if (found != null) {
-            // map = null;
-            // break;
-            // } else {
-            // found = map;
-            // }
-            // }
-            // }
-            // if (found != null) {
-            // setCurrentMap(found);
-            // } else {
-            // partBroughtToTop(currentPart);
-            // }
+
         }
     }
 
@@ -438,10 +382,6 @@ public class LayersView extends ViewPart
             getSite().getPage().addSelectionListener(this);
         }
 
-        /**
-         * @see org.eclipse.ui.ISelectionListener#selectionChanged(org.eclipse.ui.IWorkbenchPart,
-         *      org.eclipse.jface.viewers.ISelection)
-         */
         @Override
         public void selectionChanged(IWorkbenchPart part, ISelection selection) {
             if (!(selection instanceof IStructuredSelection))
@@ -512,9 +452,6 @@ public class LayersView extends ViewPart
             return selectionIndex.toString();
         }
 
-        /**
-         * @see org.eclipse.jface.action.Action#setEnabled(boolean)
-         */
         @Override
         @SuppressWarnings("rawtypes")
         public void setEnabled(boolean enabled) {
@@ -713,9 +650,6 @@ public class LayersView extends ViewPart
 
     private static LayersView instance;
 
-    /**
-     * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
-     */
     @Override
     public void createPartControl(Composite parent) {
 
@@ -742,7 +676,7 @@ public class LayersView extends ViewPart
         labelProvider = new AdapterFactoryLabelProviderDecorator(
                 ProjectExplorer.getProjectExplorer().getAdapterFactory(), viewer);
         viewer.setLabelProvider(labelProvider);
-        /*
+        /**
          * In dispose() method we need to remove this listener manually!
          */
         labelProvider.addListener(labelProviderListener);
@@ -757,7 +691,7 @@ public class LayersView extends ViewPart
 
         viewer.setComparator(new ViewerLayerSorter());
 
-        // sets the layer visibility to match the check box setting.
+        // Sets the layer visibility to match the check box setting.
         viewer.addCheckStateListener(new ICheckStateListener() {
             @Override
             public void checkStateChanged(CheckStateChangedEvent event) {
@@ -800,7 +734,7 @@ public class LayersView extends ViewPart
                 if (PlatformUI.getWorkbench().isClosing())
                     return;
 
-                if (getCurrentMap().getLayersInternal().size() > 0) {
+                if (!getCurrentMap().getLayersInternal().isEmpty()) {
                     if (getCurrentMap() != null) {
                         if (getCurrentMap().getLayersInternal().contains(newSelection)) {
                             viewer.setSelection(new StructuredSelection(newSelection));
@@ -936,9 +870,6 @@ public class LayersView extends ViewPart
                 contextMenu.add(getDeleteAction());
                 contextMenu.add(new Separator());
                 contextMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-                // LayerApplicabilityMenuCreator creator = getApplicabilityMenu();
-                // if (creator != null)
-                // contextMenu.add(creator.getMenuManager());
                 contextMenu.add(ApplicationGIS.getToolManager()
                         .createOperationsContextMenu(viewer.getSelection()));
                 contextMenu.add(new Separator());
@@ -958,8 +889,9 @@ public class LayersView extends ViewPart
                 IStructuredSelection selection = (IStructuredSelection) viewer2.getSelection();
                 for (Iterator iter = selection.iterator(); iter.hasNext();) {
                     Object element = iter.next();
-                    if (!(element instanceof Layer))
+                    if (!(element instanceof Layer)) {
                         return null;
+                    }
                 }
 
                 return applicabilityCreator;

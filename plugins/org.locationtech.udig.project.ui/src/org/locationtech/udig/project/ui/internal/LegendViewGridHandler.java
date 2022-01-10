@@ -254,7 +254,7 @@ public class LegendViewGridHandler implements ILayerListener {
             if (gridLayers == null) {
                 gridAction.setEnabled(false);
             } else {
-                if (gridLayers.size() > 0) {
+                if (!gridLayers.isEmpty()) {
                     gridAction.setEnabled(true);
                     setGridActionCheckedState(gridLayers);
                 } else {

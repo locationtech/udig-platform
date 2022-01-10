@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2008, Refractions Research Inc.
  *
@@ -995,8 +996,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             newcontexts = null;
             for (Iterator<AbstractRenderMetrics> iterator = newconfig.iterator(); iterator
                     .hasNext();) {
-                AbstractRenderMetrics abstractRenderMetrics = iterator
-                        .next();
+                AbstractRenderMetrics abstractRenderMetrics = iterator.next();
                 // setup label painter
                 ((RenderContextImpl) abstractRenderMetrics.getRenderContext())
                         .setLabelPainterLocal(tilelabelpainter);
@@ -1055,8 +1055,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
     private RenderExecutorComposite createRenderExecutor(ReferencedEnvelope bounds) {
         checkState();
 
-        CompositeRendererImpl renderer = RenderFactory.eINSTANCE
-                .createTiledCompositeRenderer();
+        CompositeRendererImpl renderer = RenderFactory.eINSTANCE.createTiledCompositeRenderer();
 
         CompositeRenderContext context = new CompositeRenderContextImpl() {
             @Override
@@ -1578,7 +1577,7 @@ public class TiledRenderManagerDynamic extends RenderManagerImpl {
             }
             Tile t = tilestorender.remove(0);
             manager.renderTile(t);
-            if (tilestorender.size() > 0) {
+            if (!tilestorender.isEmpty()) {
                 schedule();
             }
             return Status.OK_STATUS;
