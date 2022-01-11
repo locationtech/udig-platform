@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -52,8 +53,10 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     public CoordinateReferenceSystem getCRS();
 
     /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCRS <em>CRS</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Sets the value of the
+     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCRS <em>CRS</em>}'
+     * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @param value the new value of the '<em>CRS</em>' attribute.
      * @see #isSetCRS()
      * @see #unsetCRS()
@@ -68,9 +71,10 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * This set is used to provide good options for a user to change the scale
      * </p>
      * <p>
-     * The values will always be present but if the object returned by {@link #getDefaultPreferredScaleDenominators()} and this method
-     * are the same <em>instance</em> then they are simply defaults and can be ignored if desired.  However if they are not the same
-     * then assume that the values are only hints and can be ignored
+     * The values will always be present but if the object returned by
+     * {@link #getDefaultPreferredScaleDenominators()} and this method are the same
+     * <em>instance</em> then they are simply defaults and can be ignored if desired. However if
+     * they are not the same then assume that the values are only hints and can be ignored
      * </p>
      *
      * @see #getScaleDenominator() for a definition of scale denominator
@@ -81,7 +85,9 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     public SortedSet<Double> getPreferredScaleDenominators();
 
     /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getPreferredScaleDenominators <em>Preferred Scale Denominators</em>}' attribute.
+     * Sets the value of the
+     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getPreferredScaleDenominators
+     * <em>Preferred Scale Denominators</em>}' attribute.
      *
      * If set to null getPreferredScaleDenominators will return the defaults.
      *
@@ -92,8 +98,10 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     void setPreferredScaleDenominators(SortedSet<Double> value);
 
     /**
-     * Unsets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCRS <em>CRS</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Unsets the value of the
+     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCRS <em>CRS</em>}'
+     * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #isSetCRS()
      * @see #getCRS()
      * @see #setCRS(CoordinateReferenceSystem)
@@ -102,8 +110,10 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     void unsetCRS();
 
     /**
-     * Returns whether the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCRS <em>CRS</em>}' attribute is set.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Returns whether the value of the
+     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCRS <em>CRS</em>}'
+     * attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @return whether the value of the '<em>CRS</em>' attribute is set.
      * @see #unsetCRS()
      * @see #getCRS()
@@ -127,9 +137,10 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     public ReferencedEnvelope getBounds();
 
     /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getBounds <em>Bounds</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * Sets the value of the
+     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getBounds
+     * <em>Bounds</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @param value the new value of the '<em>Bounds</em>' attribute.
      * @see #getBounds()
      * @generated
@@ -138,20 +149,23 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
 
     /**
      * Set the bounds of the viewport model
+     *
      * @param value the new desired bounds
-     * @param forceContainBBoxZoom Whether or not the {@link #setBounds(ReferencedEnvelope)} will always contain the
-     * 				envelope after execution.  In normal execution this is not an issue but if
-     * 				{@link #setPreferredScaleDenominators(SortedSet)} has been called then this does matter because
-     * 				zoom to features will not necessary contain all the features.  When taking into account
-     * 				preferredScaleDenominators setting the bounds the closest scale to the desired scale is chosen.
-     * 				This can mean that the scale chosen will not be able to fit the entire bounds.  This is fine
-     * 				when zooming but in other cases it is not acceptable
+     * @param forceContainBBoxZoom Whether or not the {@link #setBounds(ReferencedEnvelope)} will
+     *        always contain the envelope after execution. In normal execution this is not an issue
+     *        but if {@link #setPreferredScaleDenominators(SortedSet)} has been called then this
+     *        does matter because zoom to features will not necessary contain all the features. When
+     *        taking into account preferredScaleDenominators setting the bounds the closest scale to
+     *        the desired scale is chosen. This can mean that the scale chosen will not be able to
+     *        fit the entire bounds. This is fine when zooming but in other cases it is not
+     *        acceptable
      */
     void setBounds(ReferencedEnvelope value, boolean forceContainBBoxZoom);
 
     /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getBounds <em>Bounds</em>}'
-     * attribute. <!-- begin-user-doc -->
+     * Sets the value of the
+     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getBounds
+     * <em>Bounds</em>}' attribute. <!-- begin-user-doc -->
      * <p>
      * The bbox must have a positive width and height and must have a aspect ratio within 0.0000001
      * units of the value returned by {@linkplain #getAspectRatio()} .
@@ -159,7 +173,7 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
      * <p>
      * It is recommended that setHeight() or setWidth() methods are used since they preserve the
      * aspect ratio of the Viewport
-     * <p>
+     * </p>
      * <!-- end-user-doc -->
      *
      * @param value the new value of the '<em>Bounds</em>' attribute.
@@ -169,8 +183,8 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     void setBounds(Envelope value);
 
     /**
-     * Sets the viewport's bounding box. The bounding box will be fit to the window based on the MapDisplay so
-     * the bounds provided here may not be the final bounds.
+     * Sets the viewport's bounding box. The bounding box will be fit to the window based on the
+     * MapDisplay so the bounds provided here may not be the final bounds.
      *
      * @param minx the minimum x value of the new bounding box.
      * @param maxx the maximum x value of the new bounding box.
@@ -193,8 +207,10 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     public Coordinate getCenter();
 
     /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCenter <em>Center</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Sets the value of the
+     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getCenter
+     * <em>Center</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @param value the new value of the '<em>Center</em>' attribute.
      * @see #getCenter()
      * @generated
@@ -212,8 +228,10 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     public double getHeight();
 
     /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getHeight <em>Height</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Sets the value of the
+     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getHeight
+     * <em>Height</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @param value the new value of the '<em>Height</em>' attribute.
      * @see #getHeight()
      * @generated
@@ -231,8 +249,10 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     public double getWidth();
 
     /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getWidth <em>Width</em>}' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Sets the value of the
+     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getWidth <em>Width</em>}'
+     * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @param value the new value of the '<em>Width</em>' attribute.
      * @see #getWidth()
      * @generated
@@ -257,8 +277,10 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     public Map getMapInternal();
 
     /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getMapInternal <em>Map Internal</em>}' container reference.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Sets the value of the
+     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getMapInternal <em>Map
+     * Internal</em>}' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @param value the new value of the '<em>Map Internal</em>' container reference.
      * @see #getMapInternal()
      * @generated
@@ -266,14 +288,16 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     void setMapInternal(Map value);
 
     /**
-     * Returns the value of the '<em><b>Render Manager Internal</b></em>' reference.
-     * It is bidirectional and its opposite is '{@link org.locationtech.udig.project.internal.render.RenderManager#getViewportModelInternal <em>Viewport Model Internal</em>}'.
-     * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Render Manager Internal</b></em>' reference. It is
+     * bidirectional and its opposite is
+     * '{@link org.locationtech.udig.project.internal.render.RenderManager#getViewportModelInternal
+     * <em>Viewport Model Internal</em>}'. <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Render Manager</em>' reference isn't clear, there really
-     * should be more of a description here...
+     * If the meaning of the '<em>Render Manager</em>' reference isn't clear, there really should be
+     * more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     *
      * @return the value of the '<em>Render Manager Internal</em>' reference.
      * @see #setRenderManagerInternal(RenderManager)
      * @see org.locationtech.udig.project.internal.render.RenderPackage#getViewportModel_RenderManagerInternal()
@@ -284,8 +308,10 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     RenderManager getRenderManagerInternal();
 
     /**
-     * Sets the value of the '{@link org.locationtech.udig.project.internal.render.ViewportModel#getRenderManagerInternal <em>Render Manager Internal</em>}' reference.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Sets the value of the
+     * '{@link org.locationtech.udig.project.internal.render.ViewportModel#getRenderManagerInternal
+     * <em>Render Manager Internal</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @param value the new value of the '<em>Render Manager Internal</em>' reference.
      * @see #getRenderManagerInternal()
      * @generated
@@ -325,9 +351,10 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
 
     /**
      * Returns the size of a pixel in world units.
-     * <p>For example if the world is in WGS 84(lat long) then
-     * the size will be in degrees
+     * <p>
+     * For example if the world is in WGS 84(lat long) then the size will be in degrees
      * </p>
+     *
      * @return the size of a pixel in world units.
      * @model volatile="true" changeable="false" transient="true"
      */
@@ -423,27 +450,32 @@ public interface ViewportModel extends EObject, IMapDisplayListener, IViewportMo
     public void setInitialized(boolean initialized);
 
     /**
-     * Sets the zoom level of the viewport so that the scale denominator will be equal to
-     * scale
+     * Sets the zoom level of the viewport so that the scale denominator will be equal to scale
      *
      * @param scaleDenominator desired scale denominator
      */
     public void setScale(double scaleDenominator);
 
     /**
-     * Sets the zoom level of the viewport so that the scale denominator will be equal to
-     * scale
+     * Sets the zoom level of the viewport so that the scale denominator will be equal to scale
      *
      * @param scaleDenominator desired scale denominator
      */
     public void setScale(double scaleDenominator, int dpi, int displayWidth, int displayHeight);
 
     /**
-     * The attribute indicates that any upcoming changes to the value
-     * of the model should be consider a single event.
+     * The attribute indicates that any upcoming changes to the value of the model should be
+     * consider a single event.
      *
      * @param changing
      */
     public void setIsBoundsChanging(boolean changing);
 
+    /**
+     * @return reverence envelope with BAD_DEFAULT CRS and zero width and zero height for the
+     *         envelope at position 0/0.
+     */
+    static ReferencedEnvelope getNullReferenceEnvelope() {
+        return new ReferencedEnvelope(0, 0, 0, 0, BAD_DEFAULT);
+    }
 }
