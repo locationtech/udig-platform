@@ -11,6 +11,7 @@
 package org.locationtech.udig.ui.operations;
 
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.internal.ui.UiPlugin;
 
 /**
@@ -25,15 +26,14 @@ public class EnablementUtil {
 
         if (!validateChildren(extensionID, enablement) || enablement[0] == null) {
             if (enablement.length > 0 && enablement[0] == null)
-                UiPlugin.log("EnablementUtil: null enablement", null); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), "EnablementUtil: null enablement"); //$NON-NLS-1$
             return OpFilter.TRUE;
         }
 
         IConfigurationElement[] children = enablement[0].getChildren();
         if (!validateChildren(extensionID, children)) {
-            UiPlugin.log(
-                    "EnablementUtil: Expected child of " + extensionID + " but didn't find one...", //$NON-NLS-1$ //$NON-NLS-2$
-                    null);
+            LoggingSupport.log(UiPlugin.getDefault(),
+                    "EnablementUtil: Expected child of " + extensionID + " but didn't find one..."); //$NON-NLS-1$ //$NON-NLS-2$
             return OpFilter.TRUE;
         }
         OpFilterParser parser = new OpFilterParser(
@@ -48,8 +48,8 @@ public class EnablementUtil {
             return false;
         }
         if (children.length > 1) {
-            UiPlugin.log("EnablementUtil: Error, more than one enablement element " + extensionID, //$NON-NLS-1$
-                    null);
+            LoggingSupport.log(UiPlugin.getDefault(),
+                    "EnablementUtil: Error, more than one enablement element " + extensionID); //$NON-NLS-1$
             return false;
         }
         return true;
@@ -77,8 +77,8 @@ public class EnablementUtil {
                 data.minHits = Integer.parseInt(enablesFor);
                 data.exactMatch = true;
             } catch (Exception e) {
-                UiPlugin.log("Error parsing extension: " + configElem.getNamespaceIdentifier() + "/" //$NON-NLS-1$//$NON-NLS-2$
-                        + configElem.getName(), e);
+                LoggingSupport.log(UiPlugin.getDefault(), "Error parsing extension: " //$NON-NLS-1$
+                        + configElem.getNamespace() + "/" + configElem.getName(), e); //$NON-NLS-1$
                 data.minHits = 0;
                 data.exactMatch = false;
             }

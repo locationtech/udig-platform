@@ -82,7 +82,7 @@ public class AttributeValidator implements ICellEditorValidator {
 	                	}
 	                }
 	            } catch (Throwable e1) {
-	                UiPlugin.log("Tried to create a feature for validating the attribute value but something went wrong (this may not be an error)", e1); //$NON-NLS-1$
+	                LoggingSupport.log(UiPlugin.getDefault()"Tried to create a feature for validating the attribute value but something went wrong (this may not be an error)", e1); //$NON-NLS-1$
 	            }
 		    }
 		    */

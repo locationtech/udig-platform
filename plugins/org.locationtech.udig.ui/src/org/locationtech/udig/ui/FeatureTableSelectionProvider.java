@@ -12,18 +12,11 @@ package org.locationtech.udig.ui;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
-
-import org.locationtech.udig.core.IProvider;
-import org.locationtech.udig.core.internal.FeatureUtils;
-import org.locationtech.udig.internal.ui.Trace;
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.ui.internal.Messages;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -38,14 +31,19 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
-import org.geotools.data.Query;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.util.factory.GeoTools;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.filter.FilterAttributeExtractor;
+import org.geotools.util.factory.GeoTools;
+import org.locationtech.udig.core.IProvider;
+import org.locationtech.udig.core.internal.FeatureUtils;
+import org.locationtech.udig.core.logging.LoggingSupport;
+import org.locationtech.udig.internal.ui.Trace;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.internal.Messages;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -55,15 +53,15 @@ import org.opengis.filter.identity.Identifier;
 
 /**
  * Manages selection for the {@link FeatureTableControl}
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
 class FeatureTableSelectionProvider implements ISelectionProvider {
 
     private FeatureTableControl owner;
-    private Set<String> selectionFids = new HashSet<String>();
-    private Set<ISelectionChangedListener> selectionChangedListeners = new CopyOnWriteArraySet<ISelectionChangedListener>();
+    private Set<String> selectionFids = new HashSet<>();
+    private Set<ISelectionChangedListener> selectionChangedListeners = new CopyOnWriteArraySet<>();
 
     /**
      * if null then no set selection is running if not null then it must be cancelled.
@@ -76,10 +74,12 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
         this.progressMonitorProvider=progressMonitorProvider;
     }
 
+    @Override
     public void addSelectionChangedListener( ISelectionChangedListener listener ) {
         selectionChangedListeners.add(listener);
     }
 
+    @Override
     public ISelection getSelection() {
         checkWidget();
         if (selectionFids.isEmpty())
@@ -88,10 +88,12 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
 
     }
 
+    @Override
     public void removeSelectionChangedListener( ISelectionChangedListener listener ) {
         selectionChangedListeners.remove(listener);
     }
 
+    @Override
     public void setSelection( ISelection selection ) {
         setSelection(selection, true);
     }
@@ -100,20 +102,21 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
         checkWidget();
         if (progressMonitor != null) {
             progressMonitor.setCanceled(true);
-            UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableSelectionProvider.class, 
+            UiPlugin.trace(Trace.FEATURE_TABLE, FeatureTableSelectionProvider.class,
                     "#setSelection(): cancelled monitor", null); //$NON-NLS-1$
 
         }
         try {
             PlatformGIS.wait(500, -1, new WaitCondition(){
 
+                @Override
                 public boolean isTrue() {
                     return progressMonitor==null;
                 }
-                
+
             }, this);
         } catch (InterruptedException e) {
-            UiPlugin.log("Interrupted", e); //$NON-NLS-1$
+            LoggingSupport.log(UiPlugin.getDefault(), "Interrupted", e); //$NON-NLS-1$
             return;
         }
 
@@ -133,7 +136,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
             try{
                 listener.selectionChanged(event);
             }catch (Throwable e) {
-                UiPlugin.log("", e); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), e);
             }
         }
     }
@@ -169,10 +172,12 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
             this.reveal = reveal;
         }
 
+        @Override
         public void handleException( Throwable exception ) {
-            UiPlugin.log("Error setting selection on table view", exception); //$NON-NLS-1$
+            LoggingSupport.log(UiPlugin.getDefault(), "Error setting selection on table view", exception); //$NON-NLS-1$
         }
 
+        @Override
         public void run() throws Exception {
             startProgress();
             try {
@@ -182,6 +187,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
                         return;
                     }
                     owner.getViewer().getControl().getDisplay().asyncExec(new Runnable(){
+                        @Override
                         public void run() {
                             updateMonitor(3);
                             owner.getViewer().getTable().setSelection(new TableItem[0]);
@@ -189,7 +195,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
                             selectionFids.clear();
 
                             updateMonitor(3);
-                            
+
                             owner.getViewer().getTable().clearAll();
                             notifyListeners();
                         }
@@ -198,7 +204,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
 
                 } else if (newSelection instanceof IStructuredSelection) {
                     IStructuredSelection structured = (IStructuredSelection) newSelection;
-                    final Set<String> fids = new HashSet<String>();
+                    final Set<String> fids = new HashSet<>();
                     obtainFidsFromSelection(structured, fids);
 
                     // selection is equivalent to last selection so return
@@ -218,12 +224,13 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
                             i++;
                         }
                     }
-                    
+
                     updateMonitor(1);
 
                     final int index = i;
 
                     owner.getViewer().getControl().getDisplay().asyncExec(new Runnable(){
+                        @Override
                         public void run() {
                             updateMonitor(1);
 
@@ -257,6 +264,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
                 progressMonitor.worked(ticks);
             }else{
                 owner.getControl().getDisplay().asyncExec(new Runnable(){
+                    @Override
                     public void run() {
                         progressMonitor.worked(ticks);
                     }
@@ -266,6 +274,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
 
         private void done() {
             Runnable runnable = new Runnable(){
+                @Override
                 public void run() {
                     synchronized (FeatureTableSelectionProvider.this) {
                         progressMonitor.done();
@@ -283,6 +292,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
 
         private void startProgress() {
             Runnable runnable = new Runnable(){
+                @Override
                 public void run() {
                     progressMonitor.beginTask(Messages.FeatureTableSelectionProvider_loading_new_selection, 10);
                     progressMonitor.worked(1);
@@ -299,11 +309,11 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
                 final Set<String> fids ) throws IOException, Abort {
             int usedTicks = 0;
             for( Iterator iter = structured.iterator(); iter.hasNext(); ) {
-                
+
                 if (progressMonitor.isCanceled())
                     throw new Abort();
 
-                Object element = (Object) iter.next();
+                Object element = iter.next();
 
                 if (element instanceof String) {
                     fids.add((String) element);
@@ -336,7 +346,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
 
         /**
          * Obtain fids from the features source if possible.
-         * 
+         *
          * @param fids the set to add fids to
          * @param adaptable the object that adapted to the filter. hopefully can adapt to a feature
          *        source as well
@@ -348,16 +358,16 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
                 throws IOException, Abort {
             Filter filter = null;
             if (adaptable.getAdapter(Filter.class) != null)
-                filter = (Filter) adaptable.getAdapter(Filter.class);
+                filter = adaptable.getAdapter(Filter.class);
             else if (adaptable.getAdapter(Query.class) != null)
-                filter = ((Query) adaptable.getAdapter(Query.class)).getFilter();
+                filter = adaptable.getAdapter(Query.class).getFilter();
 
             if (filter == null)
                 return;
 
             FeatureSource<SimpleFeatureType, SimpleFeature> source = null;
             if (adaptable.getAdapter(FeatureSource.class) != null) {
-                source = (FeatureSource<SimpleFeatureType, SimpleFeature>) adaptable.getAdapter(FeatureSource.class);
+                source = adaptable.getAdapter(FeatureSource.class);
             }
 
             if (source == null) {
@@ -378,13 +388,13 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
                 Query defaultQuery = new Query(source.getSchema().getName().getLocalPart(),
                         filter, new String[0]);
                 // TODO: Remove this workaround in 2.6.1 (note this has no performance impact)
-                Set<String> required = (Set) filter.accept( new FilterAttributeExtractor(), null );                
+                Set<String> required = (Set) filter.accept( new FilterAttributeExtractor(), null );
                 defaultQuery.setPropertyNames( required.toArray(new String[0]) );
-                
+
                 // get features that are just fids no attributes
                 FeatureCollection<SimpleFeatureType, SimpleFeature>  features = source.getFeatures(defaultQuery);
                 long start=System.currentTimeMillis();
-                
+
                 FeatureIterator<SimpleFeature> featureIterator = features.features();
                 try {
                     while( featureIterator.hasNext() ) {
@@ -393,6 +403,7 @@ class FeatureTableSelectionProvider implements ISelectionProvider {
                         if( System.currentTimeMillis()-start>500){
                             start=System.currentTimeMillis();
                             owner.getViewer().getControl().getDisplay().asyncExec(new Runnable(){
+                                @Override
                                 public void run() {
                                     progressMonitor.subTask(fids.size()+" selected"); //$NON-NLS-1$
                                 }

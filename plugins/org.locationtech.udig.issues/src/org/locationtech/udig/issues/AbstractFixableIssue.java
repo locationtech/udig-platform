@@ -15,6 +15,7 @@ import java.util.List;
 import org.locationtech.udig.core.IFixer;
 import org.locationtech.udig.core.enums.Resolution;
 import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.issues.internal.IssuesActivator;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -28,7 +29,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
  * Base implementation of IIssue which persists a fixerMemento (for use with an IssueFixer).
  * <p>
  * </p>
- * 
+ *
  * @author chorner
  * @since 1.1.0
  */
@@ -42,9 +43,10 @@ public abstract class AbstractFixableIssue extends AbstractIssue {
 
     public static final String KEY_FIXERMEMENTO = "fixerMemento"; //$NON-NLS-1$
     public static final String XPID_ISSUEFIXER = "org.locationtech.udig.issues.issueFixer"; //$NON-NLS-1$
-    
+
     IMemento fixerMemento = null;
-    
+
+    @Override
     public void fixIssue( IViewPart part, IEditorPart editor ) {
         IFixer fixer = findIssueFixer(fixerMemento);
         if (fixer == null) {
@@ -77,7 +79,7 @@ public abstract class AbstractFixableIssue extends AbstractIssue {
                     break;
                 }
             }
-            if (isValid) { //check the target class 
+            if (isValid) { //check the target class
                 String targetClass = element.getAttribute(ATT_TARGET);
                 //first ensure that this class name and target name are not identical
                 if (targetClass != null && this.getClass().getCanonicalName() != targetClass) {
@@ -90,7 +92,7 @@ public abstract class AbstractFixableIssue extends AbstractIssue {
                     } catch (ClassNotFoundException e) {
                         //can't instantiate
                         isValid = false;
-                        IssuesActivator.log("couldn't create class " + targetClass, e); //$NON-NLS-1$
+                        LoggingSupport.log(IssuesActivator.getDefault(), "couldn't create class " + targetClass, e); //$NON-NLS-1$
                     }
                 }
             }
@@ -100,8 +102,7 @@ public abstract class AbstractFixableIssue extends AbstractIssue {
                 try {
                     fixer = (IFixer) element.createExecutableExtension(ATT_CLASS);
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    IssuesActivator.log("Could not instantiate IssueFixer extension", e); //$NON-NLS-1$
+                    LoggingSupport.log(IssuesActivator.getDefault(), "Could not instantiate IssueFixer extension", e); //$NON-NLS-1$
                 }
                 if (fixer != null && fixer.canFix(this, fixerMemento)) {
                     return fixer;
@@ -111,6 +112,7 @@ public abstract class AbstractFixableIssue extends AbstractIssue {
         return null;
     }
 
+    @Override
     public void init( IMemento memento, IMemento viewMemento, String issueId, String groupId,
             ReferencedEnvelope bounds ) {
         setViewMemento(viewMemento);
@@ -125,16 +127,17 @@ public abstract class AbstractFixableIssue extends AbstractIssue {
     }
 
     /**
-     * Subclasses should override and call super.save(). 
+     * Subclasses should override and call super.save().
      */
+    @Override
     public void save( IMemento memento ) {
         memento.putMemento(fixerMemento);
     }
-    
+
     /**
      * Obtains the fixer memento, which contains issue state and initialization data for the
      * IssueFixer.
-     * 
+     *
      * @return fixerMemento
      */
     public IMemento getFixerMemento() {

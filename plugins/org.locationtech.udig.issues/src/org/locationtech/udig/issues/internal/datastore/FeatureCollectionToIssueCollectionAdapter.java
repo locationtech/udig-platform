@@ -21,6 +21,7 @@ import org.geotools.feature.FeatureIterator;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.locationtech.udig.core.enums.Priority;
 import org.locationtech.udig.core.enums.Resolution;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.issues.IIssue;
 import org.locationtech.udig.issues.IssuesListUtil;
 import org.locationtech.udig.issues.internal.IssuesActivator;
@@ -30,10 +31,10 @@ import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Converts a features collection(issues that have been saved as features) to a collection of issues.
- * 
+ *
  * Note a DefaultFeatureCollection is explicitly used in order to force the contents
  * into memory (allowing us to use an iterator through memory).
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -50,33 +51,36 @@ public class FeatureCollectionToIssueCollectionAdapter extends AbstractCollectio
     @Override
     public Iterator<IIssue> iterator() {
         final FeatureIterator<SimpleFeature> iter = features.features();
-        
+
         return new Iterator<IIssue>(){
-            
+
+            @Override
             public boolean hasNext() {
                 return iter.hasNext();
             }
 
+            @Override
             public IIssue next() {
                 SimpleFeature feature = iter.next();
                 String extensionPointID=(String) feature.getAttribute(mapper.getExtensionId());
                 try{
                 	IIssue issue = IssuesListUtil.createIssue(extensionPointID);
-                
+
                 	if( issue==null ){
                 		return createPlaceHolder(feature, extensionPointID);
                 	}
-                	
+
                     initIssue(feature,issue);
-                    
+
                     return issue;
                 } catch (Throwable e) {
-                    IssuesActivator.log("", e); //$NON-NLS-1$
+                    LoggingSupport.log(IssuesActivator.getDefault(), e);
                     return createPlaceHolder(feature, extensionPointID);
                 }
-                
+
             }
 
+            @Override
             public void remove() {
                 iter.close();
             }
@@ -86,7 +90,7 @@ public class FeatureCollectionToIssueCollectionAdapter extends AbstractCollectio
                 String viewData=(String) feature.getAttribute(mapper.getViewMemento());
                 String groupId=(String) feature.getAttribute(mapper.getGroupId());
                 String id=(String) feature.getAttribute(mapper.getId());
-                
+
                 String resolutionInt=(String) feature.getAttribute(mapper.getResolution());
                 String priorityInt=(String) feature.getAttribute(mapper.getPriority());
                 String description=(String) feature.getAttribute(mapper.getDescription());
@@ -97,12 +101,12 @@ public class FeatureCollectionToIssueCollectionAdapter extends AbstractCollectio
                 Priority priority=Priority.valueOf(priorityInt);
                 if( priority==null )
                     priority=Priority.WARNING;
-                
+
 
                 issue.setDescription(description);
                 issue.setResolution(resolution);
                 issue.setPriority(priority);
-                
+
                 XMLMemento issueMemento=null;
                 if (mementoData != null) {
                     try {
@@ -119,12 +123,12 @@ public class FeatureCollectionToIssueCollectionAdapter extends AbstractCollectio
                         viewMemento = null;
                     }
                 }
-                
+
                 ReferencedEnvelope env = new ReferencedEnvelope(feature.getBounds());
 
                 issue.init(issueMemento, viewMemento, id, groupId, env);
             }
-            
+
             protected IIssue createPlaceHolder( SimpleFeature feature, String extensionId ) {
                 PlaceholderIssue issue=new PlaceholderIssue();
                 issue.setExtensionID(extensionId);

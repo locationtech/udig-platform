@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.issues.IIssue;
 import org.locationtech.udig.issues.IIssuesList;
 import org.locationtech.udig.issues.IIssuesManager;
@@ -52,10 +53,13 @@ import org.eclipse.ui.XMLMemento;
  */
 public class IssuesManager extends Object implements IIssuesManager {
 
-    private volatile IIssuesList    issuesList;
+    private volatile IIssuesList issuesList;
+
     private volatile DirtyIssueList dirtyListener;
-    private Collection<IIssuesManagerListener> listeners=new CopyOnWriteArraySet<IIssuesManagerListener>();
-    private Collection<IIssuesListListener> listListeners=new CopyOnWriteArraySet<IIssuesListListener>();
+
+    private Collection<IIssuesManagerListener> listeners = new CopyOnWriteArraySet<>();
+
+    private Collection<IIssuesListListener> listListeners = new CopyOnWriteArraySet<>();
 
     public IssuesManager() {
         setIssuesList(createListFromPreferences());
@@ -71,7 +75,7 @@ public class IssuesManager extends Object implements IIssuesManager {
         String listID = preferenceStore.getString(IssuesPreferencePage.PREFERENCE_ID);
         List<IConfigurationElement> extensions = ExtensionPointList
                 .getExtensionPointList(IssueConstants.ISSUES_LIST_EXTENSION_ID);
-        for( IConfigurationElement element : extensions ) {
+        for (IConfigurationElement element : extensions) {
             String string = element.getNamespaceIdentifier() + "." + element.getAttribute("id");//$NON-NLS-1$//$NON-NLS-2$
             if ((string).equals(listID)) {
                 try {
@@ -80,15 +84,15 @@ public class IssuesManager extends Object implements IIssuesManager {
                     if (config != null) {
                         IssuesListConfigurator configurator = (IssuesListConfigurator) element
                                 .createExecutableExtension("configurator"); //$NON-NLS-1$
-                        String data = preferenceStore.getString(IssuesPreferencePage.PREFERENCE_ID
-                                + "/" + listID); //$NON-NLS-1$
+                        String data = preferenceStore
+                                .getString(IssuesPreferencePage.PREFERENCE_ID + "/" + listID); //$NON-NLS-1$
                         XMLMemento memento = XMLMemento.createReadRoot(new StringReader(data));
                         configurator.initConfiguration(issuesList, memento);
                     }
                     break;
                 } catch (CoreException e) {
                     issuesList = null;
-                    IssuesActivator.log("", e); //$NON-NLS-1$
+                    LoggingSupport.log(IssuesActivator.getDefault(), e);
                 }
             }
         }
@@ -96,40 +100,44 @@ public class IssuesManager extends Object implements IIssuesManager {
         if (issuesList == null) {
             issuesList = new IssuesList();
         }
-        
-        if( issuesList instanceof IRemoteIssuesList ){
+
+        if (issuesList instanceof IRemoteIssuesList) {
             try {
-                ((IRemoteIssuesList)issuesList).refresh();
+                ((IRemoteIssuesList) issuesList).refresh();
             } catch (IOException e) {
-                IssuesActivator.log("failed to refresh issues list", e); //$NON-NLS-1$
-                issuesList=new IssuesList();
+                LoggingSupport.log(IssuesActivator.getDefault(), "failed to refresh issues list", //$NON-NLS-1$
+                        e);
+                issuesList = new IssuesList();
             }
-        }else if (issuesList instanceof IssuesList){
-        	((IssuesList)issuesList).load();
+        } else if (issuesList instanceof IssuesList) {
+            ((IssuesList) issuesList).load();
         }
 
         return issuesList;
     }
 
+    @Override
     public IIssuesList getIssuesList() {
         return issuesList;
     }
 
-    public void addIssuesListListener( IIssuesListListener listener ) {
+    @Override
+    public void addIssuesListListener(IIssuesListListener listener) {
         if (listener == null)
             throw new NullPointerException();
         issuesList.addListener(listener);
         listListeners.add(listener);
     }
 
-    public void removeIssuesListListener( IIssuesListListener listener ) {
+    @Override
+    public void removeIssuesListListener(IIssuesListListener listener) {
         if (listener == null)
             throw new NullPointerException();
         issuesList.removeListener(listener);
         listListeners.remove(listener);
     }
 
-    public void removeIssues( String groupId ) {
+    public void removeIssues(String groupId) {
         if (groupId == null)
             throw new NullPointerException();
         issuesList.removeIssues(groupId);
@@ -139,82 +147,88 @@ public class IssuesManager extends Object implements IIssuesManager {
         return issuesList.getGroups();
     }
 
-    public List<IIssue> getIssues( String groupId ) {
+    public List<IIssue> getIssues(String groupId) {
         if (groupId == null)
             throw new NullPointerException();
         return issuesList.getIssues(groupId);
     }
 
-    public void setIssuesList( IIssuesList newList ) {
-        Object lock=issuesList==null?this:issuesList;
+    @Override
+    public void setIssuesList(IIssuesList newList) {
+        Object lock = issuesList == null ? this : issuesList;
         synchronized (lock) {
             if (newList == null)
                 throw new NullPointerException();
             if (issuesList != null) {
                 issuesList.removeListener(dirtyListener);
-                for( IIssue issue : issuesList ) {
+                for (IIssue issue : issuesList) {
                     issue.removeIssueListener(dirtyListener);
                 }
             }
-            
+
             IIssuesList oldList = issuesList;
             issuesList = newList;
             testIssues(newList, null);
             this.dirtyListener = new DirtyIssueList();
             issuesList.addListener(dirtyListener);
-            
-            IssuesActivator.getDefault().getPreferenceStore().setValue(PREFERENCE_ID, newList.getExtensionID());
-            
-            for( IIssuesListListener l : listListeners ) {
+
+            IssuesActivator.getDefault().getPreferenceStore().setValue(PREFERENCE_ID,
+                    newList.getExtensionID());
+
+            for (IIssuesListListener l : listListeners) {
                 issuesList.addListener(l);
             }
-            
-            for( IIssue issue : newList ) {
+
+            for (IIssue issue : newList) {
                 issue.addIssueListener(dirtyListener);
             }
-            
-            notifyListeners( newList, oldList, IssuesManagerEventType.ISSUES_LIST_CHANGE );
+
+            notifyListeners(newList, oldList, IssuesManagerEventType.ISSUES_LIST_CHANGE);
         }
-        
+
     }
 
-    private void notifyListeners( Object newValue, Object oldValue, IssuesManagerEventType type ) {
-        if( type==IssuesManagerEventType.DIRTY_ISSUE && !(issuesList instanceof IRemoteIssuesList))
+    private void notifyListeners(Object newValue, Object oldValue, IssuesManagerEventType type) {
+        if (type == IssuesManagerEventType.DIRTY_ISSUE
+                && !(issuesList instanceof IRemoteIssuesList))
             return;
-        
-        IssuesManagerEvent event=new IssuesManagerEvent(this, type, newValue, oldValue);
-        for( IIssuesManagerListener listener : listeners ) {
+
+        IssuesManagerEvent event = new IssuesManagerEvent(this, type, newValue, oldValue);
+        for (IIssuesManagerListener listener : listeners) {
             listener.notifyChange(event);
         }
     }
 
+    @Override
     public boolean save(IProgressMonitor monitor) throws IOException {
-        if (!(issuesList instanceof IRemoteIssuesList)){
-        	if (issuesList instanceof IssuesList ){
-        		((IssuesList)issuesList).save();
-        	}
+        if (!(issuesList instanceof IRemoteIssuesList)) {
+            if (issuesList instanceof IssuesList) {
+                ((IssuesList) issuesList).save();
+            }
             return false;
         }
-        
 
-        Object lock=issuesList==null?this:issuesList;
-        final boolean[] result= new boolean[1];
-        result[0]=false;
-        final Collection<IIssue> dirtyIssues=new ArrayList<IIssue>();
+        Object lock = issuesList == null ? this : issuesList;
+        final boolean[] result = new boolean[1];
+        result[0] = false;
+        final Collection<IIssue> dirtyIssues = new ArrayList<>();
 
         synchronized (lock) {
-            monitor.beginTask(Messages.IssuesManager_task_title, dirtyListener.dirtyIssues.size()+1);
+            monitor.beginTask(Messages.IssuesManager_task_title,
+                    dirtyListener.dirtyIssues.size() + 1);
             monitor.worked(1);
-            
+
             final IOException[] exception = new IOException[1];
             try {
-                PlatformGIS.runBlockingOperation(new IRunnableWithProgress(){
-   
-                    public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
-   
+                PlatformGIS.runBlockingOperation(new IRunnableWithProgress() {
+
+                    @Override
+                    public void run(IProgressMonitor monitor)
+                            throws InvocationTargetException, InterruptedException {
+
                         dirtyIssues.addAll(dirtyListener.dirtyIssues);
                         IRemoteIssuesList list = (IRemoteIssuesList) issuesList;
-                        for( IIssue issue : dirtyListener.dirtyIssues ) {
+                        for (IIssue issue : dirtyListener.dirtyIssues) {
                             result[0] = true;
                             try {
                                 list.save(issue);
@@ -224,50 +238,54 @@ public class IssuesManager extends Object implements IIssuesManager {
                             }
                         }
                     }
-                    
+
                 }, monitor);
             } catch (Exception e) {
-                IssuesActivator.log("Error saving issues", e); //$NON-NLS-1$
+                LoggingSupport.log(IssuesActivator.getDefault(), "Error saving issues", e); //$NON-NLS-1$
             }
-    
+
             if (exception[0] != null)
                 throw exception[0];
-            }
+        }
         monitor.done();
         notifyListeners(null, dirtyIssues, IssuesManagerEventType.SAVE);
-        
+
         return result[0];
 
     }
 
-    public void addListener( IIssuesManagerListener listener ) {
+    @Override
+    public void addListener(IIssuesManagerListener listener) {
         listeners.add(listener);
     }
 
-    public void removeListener( IIssuesManagerListener listener ) {
+    @Override
+    public void removeListener(IIssuesManagerListener listener) {
         listeners.remove(listener);
     }
 
+    @Override
     public boolean isDirty() {
         return !dirtyListener.dirtyIssues.isEmpty() && (issuesList instanceof IRemoteIssuesList);
     }
 
-
     /**
      * Keeps track of which issues in the list are dirty.
-     * 
+     *
      * @author Jesse
      * @since 1.1.0
      */
     public class DirtyIssueList implements IIssuesListListener, IIssueListener {
-        Collection<IIssue> dirtyIssues = new CopyOnWriteArraySet<IIssue>();
-        public void notifyChange( IssuesListEvent event ) {
-            switch( event.getType() ) {
+        Collection<IIssue> dirtyIssues = new CopyOnWriteArraySet<>();
+
+        @Override
+        public void notifyChange(IssuesListEvent event) {
+            switch (event.getType()) {
             case ADD:
                 testIssues(event.getChanged(), this);
                 break;
             case REMOVE:
-                for( IIssue issue : event.getChanged() ) {
+                for (IIssue issue : event.getChanged()) {
                     issue.removeIssueListener(this);
                 }
                 break;
@@ -282,24 +300,28 @@ public class IssuesManager extends Object implements IIssuesManager {
                 break;
             }
         }
-        public void notifyChanged( IssueEvent event ) {
-            Boolean oldValue = dirtyIssues.isEmpty()?Boolean.FALSE:Boolean.TRUE;
+
+        @Override
+        public void notifyChanged(IssueEvent event) {
+            Boolean oldValue = dirtyIssues.isEmpty() ? Boolean.FALSE : Boolean.TRUE;
             dirtyIssues.add(event.getSource());
             notifyListeners(Boolean.TRUE, oldValue, IssuesManagerEventType.DIRTY_ISSUE);
         }
-        public void notifyPropertyChanged( IssuePropertyChangeEvent event ) {
-            Boolean oldValue = dirtyIssues.isEmpty()?Boolean.FALSE:Boolean.TRUE;
+
+        @Override
+        public void notifyPropertyChanged(IssuePropertyChangeEvent event) {
+            Boolean oldValue = dirtyIssues.isEmpty() ? Boolean.FALSE : Boolean.TRUE;
             dirtyIssues.add(event.getSource());
             notifyListeners(Boolean.TRUE, oldValue, IssuesManagerEventType.DIRTY_ISSUE);
         }
 
     }
 
-    void testIssues( Collection< ? extends IIssue> issueList, IIssueListener listener ) {
-        final Collection<IIssue> toRemove=new ArrayList<IIssue>();
-        for( IIssue issue : issueList ) {
-            try{
-                
+    void testIssues(Collection<? extends IIssue> issueList, IIssueListener listener) {
+        final Collection<IIssue> toRemove = new ArrayList<>();
+        for (IIssue issue : issueList) {
+            try {
+
                 // testing to ensure that the issue is a valid issue
                 issue.getBounds();
                 issue.getDescription();
@@ -314,24 +336,24 @@ public class IssuesManager extends Object implements IIssuesManager {
                 issue.getPropertyNames();
                 issue.getResolution();
                 issue.getViewPartId();
-                
-                if( listener!=null )
+
+                if (listener != null)
                     issue.addIssueListener(listener);
-            }catch (Throwable t) {
+            } catch (Throwable t) {
                 toRemove.add(issue);
             }
         }
-        if( !toRemove.isEmpty() ){
-            PlatformGIS.run(new IRunnableWithProgress(){
-    
-                public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
+        if (!toRemove.isEmpty()) {
+            PlatformGIS.run(new IRunnableWithProgress() {
+
+                @Override
+                public void run(IProgressMonitor monitor)
+                        throws InvocationTargetException, InterruptedException {
                     issuesList.removeAll(toRemove);
                 }
-                
+
             });
         }
     }
 
-    
-    
 }

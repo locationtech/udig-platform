@@ -68,6 +68,7 @@ import org.locationtech.jts.geom.MultiPoint;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.ui.internal.Messages;
 import org.locationtech.udig.ui.preferences.PreferenceConstants;
@@ -379,8 +380,9 @@ public class FeatureTypeEditor {
      * Creates a default {@link FeatureType}.
      *
      * <p>
-     * The default type has a {@link Geometry} attribute and a name attribute. The geometry
-     * attribute is a {@link LineString}.
+     * The default type has a {@link Geometry} attribute and a name
+     * attribute.
+     * The geometry attribute is a {@link LineString}.
      * </p>
      *
      * @return a default FeatureType.
@@ -391,7 +393,7 @@ public class FeatureTypeEditor {
         builder.setName(Messages.FeatureTypeEditor_newFeatureTypeName);
         builder.setCRS(getDefaultCRS());
         // no need to provide a default length since length can be specified via the UI
-        // builder.length(MAX_ATTRIBUTE_LENGTH).add(Messages.FeatureTypeEditor_defaultNameAttributeName,
+        //builder.length(MAX_ATTRIBUTE_LENGTH).add(Messages.FeatureTypeEditor_defaultNameAttributeName, String.class);
         // String.class);
         builder.add(Messages.FeatureTypeEditor_defaultNameAttributeName, String.class);
 
@@ -416,7 +418,7 @@ public class FeatureTypeEditor {
                 }
                 return CRS.parseWKT(crsInfo);
             } catch (Throwable t) {
-                UiPlugin.log("", t); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(),t);
             }
         }
         return DefaultGeographicCRS.WGS84;

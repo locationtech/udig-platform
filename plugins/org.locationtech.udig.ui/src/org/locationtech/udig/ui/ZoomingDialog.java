@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TreeItem;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.internal.ui.UiPlugin;
 
 /**
@@ -179,7 +180,8 @@ public class ZoomingDialog extends Dialog {
                     display.sleep();
                 }
             } catch (Throwable e) {
-                UiPlugin.log( "Exception in UI thread while waiting", e); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), "Exception in UI thread while waiting", //$NON-NLS-1$
+                        e);
             }
         }
         display.update();

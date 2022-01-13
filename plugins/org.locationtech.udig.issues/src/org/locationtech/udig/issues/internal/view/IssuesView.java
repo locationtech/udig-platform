@@ -63,6 +63,7 @@ import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.part.ViewPart;
 import org.locationtech.udig.core.enums.Resolution;
 import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.issues.Column;
 import org.locationtech.udig.issues.IIssue;
 import org.locationtech.udig.issues.IIssuesContentProvider;
@@ -80,7 +81,6 @@ import org.locationtech.udig.issues.listeners.IIssuesListListener;
 import org.locationtech.udig.issues.listeners.IIssuesManagerListener;
 import org.locationtech.udig.issues.listeners.IssuesListEvent;
 import org.locationtech.udig.issues.listeners.IssuesManagerEvent;
-import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 import org.locationtech.udig.ui.PlatformGIS;
 import org.locationtech.udig.ui.ProgressManager;
 
@@ -282,7 +282,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
                 }
             }
         } catch (Exception e) {
-            IssuesActivator.log("Error loading Issues View Content Provider", e); //$NON-NLS-1$
+            LoggingSupport.log(IssuesActivator.getDefault(), "Error loading Issues View Content Provider", e); //$NON-NLS-1$
         }
         return defaultValue;
     }
@@ -382,8 +382,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
                     return;
 
                 if (!(sel.getFirstElement() instanceof IIssue)) {
-                    ProjectUIPlugin.log("IssuesView somehow has a non Issue Selected", //$NON-NLS-1$
-                            null);
+                    LoggingSupport.log(IssuesActivator.getDefault(), "IssuesView somehow has a non Issue Selected"); //$NON-NLS-1$
                     return;
                 }
                 boolean doDelete;
@@ -553,7 +552,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
                 try {
                     issuesManager.save(ProgressManager.instance().get());
                 } catch (IOException e) {
-                    IssuesActivator.log("", e); //$NON-NLS-1$
+                    LoggingSupport.log(IssuesActivator.getDefault(), e); //$NON-NLS-1$
                 }
             }
         };
@@ -580,7 +579,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
                     try {
                         ((IRemoteIssuesList) list).refresh();
                     } catch (IOException e) {
-                        IssuesActivator.log("", e); //$NON-NLS-1$
+                        LoggingSupport.log(IssuesActivator.getDefault(), e); //$NON-NLS-1$
                     }
             }
         };
@@ -642,7 +641,7 @@ public class IssuesView extends ViewPart implements ISelectionChangedListener, I
         try {
             IIssuesManager.defaultInstance.save(ProgressManager.instance().get());
         } catch (IOException e) {
-            IssuesActivator.log("Error Saving issues List!!!", e); //$NON-NLS-1$
+            LoggingSupport.log(IssuesActivator.getDefault(), "Error Saving issues List!!!", e); //$NON-NLS-1$
         }
         updateTimerJob.cancel();
         disposeListeners();

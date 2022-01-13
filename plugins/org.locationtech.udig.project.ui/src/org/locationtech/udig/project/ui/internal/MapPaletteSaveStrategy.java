@@ -32,14 +32,14 @@ import org.locationtech.udig.project.internal.StyleBlackboard;
 
 /**
  * Save strategy for Map Palette
- * 
+ *
  * @author Jody Garnett
  * @since 1.3.0
  * @version 1.3.0
  */
 public final class MapPaletteSaveStrategy extends CatalogExport {
 	private final ExportResourceSelectionState state;
-	private MapEditorWithPalette editor;
+	private MapEditorWithPalette  editor;
 
 	public MapPaletteSaveStrategy(ExportResourceSelectionState state, MapEditorWithPalette editor) {
 		super(false);
@@ -115,7 +115,7 @@ public final class MapPaletteSaveStrategy extends CatalogExport {
 					Collection<IGeoResource> exported) {
 				LayerFactory layerFactory = MapPaletteSaveStrategy.this.editor
 						.getMap().getLayerFactory();
-				Collection<Layer> newLayers = new ArrayList<Layer>();
+				Collection<Layer> newLayers = new ArrayList<>();
 
 				for (IGeoResource exportedResource : exported) {
 					try {
@@ -138,5 +138,5 @@ public final class MapPaletteSaveStrategy extends CatalogExport {
 		catalogExportWizard.setSelectExportedInCatalog(false);
 		return catalogExportWizard;
 	}
-	
+
 }

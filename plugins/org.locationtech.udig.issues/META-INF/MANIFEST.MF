@@ -8,10 +8,12 @@ Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.locationtech.udig.project.ui;visibility:=reexport,
  org.locationtech.udig.catalog.postgis,
  org.eclipse.ui.cheatsheets,
- org.locationtech.udig.libs
+ org.locationtech.udig.libs,
+ org.locationtech.udig.core,
+ org.locationtech.udig.project,
+ org.locationtech.udig.project.ui
 Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig.issues,
  org.locationtech.udig.issues.internal;x-friends:="org.locationtech.udig.issues.tests",

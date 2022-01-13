@@ -9,22 +9,27 @@
  */
 package org.locationtech.udig.ui.operations;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.internal.ui.UiPlugin;
 
-import org.eclipse.core.runtime.IConfigurationElement;
+public class AdaptsToParserImpl implements FilterParser {
 
-public class AdaptsToParserImpl implements FilterParser { 
-
-    public OpFilter parse( IConfigurationElement element ) {
+    @Override
+    public OpFilter parse(IConfigurationElement element) {
         String adaptsTo = element.getAttribute("target"); //$NON-NLS-1$
-        if( adaptsTo.trim().length()==0 ){
-            UiPlugin.log("AdaptsToParserImpl:Parsing OpFilter: adapts to attribute is empty string"+element.getNamespaceIdentifier(), null); //$NON-NLS-1$
+        if (adaptsTo.trim().length() == 0) {
+            LoggingSupport.log(UiPlugin.getDefault(),
+                    "AdaptsToParserImpl:Parsing OpFilter: adapts to attribute is empty string" //$NON-NLS-1$
+                            + element.getNamespaceIdentifier(),
+                    null);
 
             return OpFilter.TRUE;
         }
         return new AdaptsToFilter(adaptsTo);
     }
 
+    @Override
     public String getElementName() {
         return "adaptsTo"; //$NON-NLS-1$
     }

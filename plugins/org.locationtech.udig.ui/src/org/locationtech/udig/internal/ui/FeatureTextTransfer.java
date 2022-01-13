@@ -28,6 +28,7 @@ import org.geotools.gml.producer.FeatureTransformer;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.io.WKTWriter;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.ui.AbstractTextStrategizedTransfer;
 import org.locationtech.udig.ui.internal.Messages;
 import org.opengis.feature.simple.SimpleFeature;
@@ -176,7 +177,7 @@ public class FeatureTextTransfer extends AbstractTextStrategizedTransfer impleme
 
                 return SimpleFeatureBuilder.build(ft, new Object[] { read }, null);
             } catch (Exception e) {
-                UiPlugin.log("", e); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), e);
             }
             return null;
         }

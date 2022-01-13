@@ -13,16 +13,16 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
-
-import org.locationtech.udig.internal.ui.UiPlugin;
+import java.util.Set;
 
 import org.geotools.brewer.color.BrewerPalette;
+import org.locationtech.udig.core.logging.LoggingSupport;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 /**
  * <p>A colour scheme remaps the colours in a palette.</p>
- * 
+ *
  * @author ptozer
  * @author chorner
  */
@@ -34,24 +34,24 @@ public class ColourScheme {
     /** should the scheme automatically add/remove available colours? */
     private boolean canAutoSize = true;
     private HashMap<String,Integer> idMap; //object identifier, colour index
-    private HashMap<Integer,Integer> colourMap; //colour index, new colour index 
+    private HashMap<Integer,Integer> colourMap; //colour index, new colour index
     private BrewerPalette palette;
-	
+
 	public ColourScheme (BrewerPalette palette, int itemSize) {
-        colourMap = new HashMap<Integer,Integer>();
-        idMap = new HashMap<String,Integer>();
+        colourMap = new HashMap<>();
+        idMap = new HashMap<>();
         setColourPalette(palette);
         setSizeScheme(itemSize);
 	}
 
     public ColourScheme (BrewerPalette palette, int itemSize, int paletteSize) {
-        colourMap = new HashMap<Integer,Integer>();
-        idMap = new HashMap<String,Integer>();
+        colourMap = new HashMap<>();
+        idMap = new HashMap<>();
         setColourPalette(palette);
         setSizePalette(paletteSize);
         setSizeScheme(itemSize);
     }
-    
+
     public ColourScheme (BrewerPalette palette, HashMap<Integer,Integer> colourMap, HashMap<String,Integer> idMap, int itemSize, int paletteSize) {
         this.idMap = idMap;
         this.colourMap = colourMap;
@@ -59,33 +59,33 @@ public class ColourScheme {
         this.colourCount = paletteSize;
         this.itemCount = itemSize;
     }
-    
+
     public static ColourScheme getDefault(final BrewerPalette palette) {
         return new ColourScheme(palette, 0);
     }
-    
+
     public void setColourPalette(BrewerPalette palette) {
         this.palette = palette;
-        //TODO: check number of colours in palette has not decreased 
+        //TODO: check number of colours in palette has not decreased
     }
-    
+
     public boolean getAutoSizing() {
         return canAutoSize;
     }
-    
+
     /**
      * Sets the behaviour of the colour scheme as items are added. If true, the palette will morph
      * in size as items are added or removed. If false, the palette will remain static and scheme
      * colours will be repeated even if some are unused.
-     * 
+     *
      * @param auto boolean
      */
     public void setAutoSizing(boolean auto) {
         canAutoSize = auto;
     }
-    
+
     /**
-     * Set the number of items this scheme is used by.  The size of the palette is automatically adjusted to fit. 
+     * Set the number of items this scheme is used by.  The size of the palette is automatically adjusted to fit.
      *
      * @param numItems the number of items obtaining colours from this scheme
      */
@@ -93,7 +93,7 @@ public class ColourScheme {
         if (canAutoSize) { // we are allowed to adjust the number of colours from the palette this scheme uses
             setSizePalette(numItems); //setSizePalette is smart enough not to exceed the palette size
         }
-        
+
         if (numItems > itemCount) { //items were added
             for (int i = itemCount; i < numItems; i++) {
                 int newColourIndex = getNextColourIndex();
@@ -113,7 +113,7 @@ public class ColourScheme {
     /**
      * Sets the number of colours to use from the current palette. This method checks to ensure the
      * number of colours does not exceed the size of the palette.
-     * 
+     *
      * @param numColours
      */
     public void setSizePalette(int numColours) {
@@ -127,7 +127,7 @@ public class ColourScheme {
         }
         colourCount = numColours;
     }
-    
+
     private int getLargestColourIndex(int numItems) {
         int largestIndex = -1;
         for (int i = 0; i < numItems; i++) {
@@ -139,7 +139,7 @@ public class ColourScheme {
         }
         return largestIndex;
     }
-    
+
     public int getMinColours() {
         int minColours = palette.getMinColors();
         int colourWidth = getLargestColourIndex(itemCount) + 1;
@@ -149,16 +149,16 @@ public class ColourScheme {
             return minColours;
         }
     }
-    
+
     /**
      * Obtains a new colour index in the range specified, if unused. Colours are repeated if all are
      * in use.
-     * 
+     *
      * @return colour index of the most appropriate next colour
      */
     private int getNextColourIndex() {
         // find an unused colour
-        for (int i = 0; i < colourCount; i++) { 
+        for (int i = 0; i < colourCount; i++) {
             boolean hasColour = false;
             for (int j = 0; j < itemCount; j++) {
                 if (colourMap.containsKey(j) && colourMap.get(j) == i) {
@@ -188,9 +188,9 @@ public class ColourScheme {
         }
         return index;
     }
-    
+
     /**
-     * Gets the number of colours currently available in the palette.  
+     * Gets the number of colours currently available in the palette.
      *
      * @return
      */
@@ -199,7 +199,7 @@ public class ColourScheme {
     }
 
     /**
-     * Gets the number of classes utilizing this scheme.  
+     * Gets the number of classes utilizing this scheme.
      *
      * @return
      */
@@ -232,10 +232,10 @@ public class ColourScheme {
         }
         return true;
     }
-    
+
     /**
      * Returns the next available colour. Good for comparing reality to what we think we have.
-     * 
+     *
      * @param colours
      * @return
      */
@@ -274,7 +274,7 @@ public class ColourScheme {
             return getNextAvailableColour(colours); //recursion! run!
         }
     }
-    
+
 	public Color getColour(int index) {
         if (index >= itemCount) {
             setSizeScheme(index+1);
@@ -284,7 +284,7 @@ public class ColourScheme {
         if (clrMap.containsKey(index)) {
             i = clrMap.get(index);
         } else {
-            UiPlugin.log("ColourScheme getColour("+index+") exceeded bounds", null); //$NON-NLS-1$ //$NON-NLS-2$
+            LoggingSupport.log(UiPlugin.getDefault(), "ColourScheme getColour("+index+") exceeded bounds"); //$NON-NLS-1$ //$NON-NLS-2$
             i = 0; //return the first colour, instead of exploding
         }
         return palette.getColor(i, colourCount);
@@ -296,13 +296,14 @@ public class ColourScheme {
 	public Color[] getAllColours() {
 		return palette.getColors(colourCount);
 	}
-    
+
+    @Override
     public boolean equals(Object other) {
         if( !super.equals(other) )
             return false;
         if( !(other instanceof ColourScheme) )
             return false;
-        
+
         ColourScheme schemeToCompare=(ColourScheme) other;
         if (schemeToCompare.getSizePalette() != colourCount)
             return false;
@@ -317,7 +318,7 @@ public class ColourScheme {
         }
         return true;
     }
-    
+
 
     @Override
     public int hashCode() {
@@ -339,7 +340,7 @@ public class ColourScheme {
     }
 
     public HashMap<Integer, Integer> getColourMap() {
-        HashMap<Integer,Integer> colourMapping = new HashMap<Integer,Integer>();
+        HashMap<Integer,Integer> colourMapping = new HashMap<>();
         for (int i = 0; i < itemCount; i++) {
             if (colourMap.containsKey(i)) {
                 colourMapping.put(i, colourMap.get(i));
@@ -353,16 +354,16 @@ public class ColourScheme {
         }
         return colourMapping;
     }
-    
+
     public HashMap<String, Integer> getIdMap() {
         return idMap;
     }
-    
+
     public void setColourMap(HashMap<Integer, Integer> colourMap) {
         this.colourMap = colourMap;
         //TODO: synchronize size
     }
-    
+
     public void swapColours(int firstIndex, int secondIndex) {
         if (firstIndex >= colourCount) {
             setSizeScheme(firstIndex+1);
@@ -374,12 +375,12 @@ public class ColourScheme {
         colourMap.put(firstIndex, colourMap.get(secondIndex));
         colourMap.put(secondIndex, tempVal);
     }
-    
+
     public Color addItem() {
         int size = getSizeScheme();
         return getColour(size);
     }
-    
+
     public Color addItem(String id) {
         int size = getSizeScheme();
         Color color = getColour(size);
@@ -389,7 +390,7 @@ public class ColourScheme {
         }
         return color;
     }
-    
+
     /**
      * Add an item to the scheme, and modify the palette to contain this colour.
      *
@@ -407,7 +408,7 @@ public class ColourScheme {
             return -1;
         }
     }
-    
+
     private int indexOf(Color color) {
         Iterator<Integer> it = colourMap.keySet().iterator();
         while (it.hasNext()) {
@@ -420,16 +421,16 @@ public class ColourScheme {
         }
         return -1;
     }
-    
+
     public boolean removeItem(String id) {
         if (idMap.containsKey(id)) {
             int index = indexOf(id);
             idMap.remove(id);
-            return removeItem(index);    
+            return removeItem(index);
         }
         return false;
     }
-    
+
     public boolean removeItem(String id, Color colour) {
         Set<Entry<String, Integer>> entries = idMap.entrySet();
         for (Entry<String, Integer> entry : entries) {
@@ -442,7 +443,7 @@ public class ColourScheme {
         }
         return false;
     }
-    
+
     public boolean removeItem(int index) {
         if (index < 0) {
             return false;
@@ -462,8 +463,8 @@ public class ColourScheme {
             colourMap.remove(index);
             itemCount--;
         }
-        
+
         return true;
     }
-    
+
 }

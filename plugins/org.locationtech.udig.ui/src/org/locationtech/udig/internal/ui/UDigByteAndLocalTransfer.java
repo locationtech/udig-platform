@@ -21,6 +21,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.dnd.ByteArrayTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
+import org.locationtech.udig.core.logging.LoggingSupport;
 
 /**
  * Appears to be a transfer for passing an object around
@@ -58,12 +59,14 @@ public class UDigByteAndLocalTransfer extends ByteArrayTransfer implements UDIGT
 		return _instance;
 	}
 
-	protected int[] getTypeIds() {
+	@Override
+    protected int[] getTypeIds() {
 
 		return new int[] { CFSTR_INETURLID };
 	}
 
-	public String[] getTypeNames() {
+	@Override
+    public String[] getTypeNames() {
 
 		return new String[] { CFSTR_INETURL };
 	}
@@ -72,15 +75,15 @@ public class UDigByteAndLocalTransfer extends ByteArrayTransfer implements UDIGT
 	public TransferData[] getSupportedTypes() {
 		return super.getSupportedTypes();
 	}
-	
-	@SuppressWarnings("unchecked") 
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public void javaToNative(Object object, TransferData transferData) {
 
 	    startTime = System.currentTimeMillis();
 	    if( object instanceof IStructuredSelection){
 	    	IStructuredSelection selection=(IStructuredSelection) object;
-	    	List<Object> elements=new ArrayList<Object>();
+	    	List<Object> elements=new ArrayList<>();
 	    	for (Iterator<Object> iter = selection.iterator(); iter.hasNext();) {
 				elements.add(iter.next());
 			}
@@ -98,18 +101,19 @@ public class UDigByteAndLocalTransfer extends ByteArrayTransfer implements UDIGT
 	 * specific representation of a URL and optionally, a title to a java
 	 * <code>String[]</code>. For additional information see
 	 * <code>Transfer#nativeToJava</code>.
-	 * 
+	 *
 	 * @param transferData
 	 *            the platform specific representation of the data to be been
 	 *            converted
 	 * @return a java <code>String[]</code> containing a URL and optionally a
 	 *         title if the conversion was successful; otherwise null
 	 */
+    @Override
     public Object nativeToJava(TransferData transferData) {
-        
-        byte[] bytes = (byte[])super.nativeToJava(transferData); 
+
+        byte[] bytes = (byte[])super.nativeToJava(transferData);
         if (bytes == null) return null;
-        
+
         try
         {
           long startTime = Long.valueOf(new String(bytes)).longValue();
@@ -125,16 +129,17 @@ public class UDigByteAndLocalTransfer extends ByteArrayTransfer implements UDIGT
             try {
                 read=reader.read(chars);
             } catch (IOException e) {
-                UiPlugin.log("Error reading transfer data", e); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), "Error reading transfer data", e); //$NON-NLS-1$
             }
             buf.append(chars,0,read);
             return buf.toString().trim();
         }
 
-		
+
 	}
 
-	public boolean validate(Object object) {
+	@Override
+    public boolean validate(Object object) {
 		return true;
 	}
 }

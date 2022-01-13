@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.locationtech.udig.project.ui.internal;
 
@@ -17,28 +17,29 @@ import org.locationtech.udig.project.internal.EditManager;
 
 /**
  * Save strategy for Map Palette
- * 
+ *
  * @author Jody Garnett
  * @since 1.3.0
  * @version 1.3.0
  */
 class SaveMapPaletteRunnable implements Runnable{
-    	private final MapEditorWithPalette mapEditor;
+    	private final MapEditorWithPalette  mapEditor;
     	private final boolean[] success;
-    	
+
 
 		public SaveMapPaletteRunnable(MapEditorWithPalette mapEditor, boolean[] success) {
 			super();
 			this.mapEditor = mapEditor;
 			this.success = success;
 		}
-    	
+
     	private enum Result{NO_TEMP_LAYERS, EXPORT_WIZARD_RUNNING};
+            @Override
             public void run() {
                 try{
-                	
+
                     EditManager editManagerInternal = mapEditor.getMap().getEditManagerInternal();
-					
+
                     SaveMapPaletteRunnable.Result result = saveTemporaryLayers();
                     if( result == Result.NO_TEMP_LAYERS ){
     					editManagerInternal.commitTransaction();
@@ -54,27 +55,27 @@ class SaveMapPaletteRunnable implements Runnable{
             }
 
             private SaveMapPaletteRunnable.Result saveTemporaryLayers( ) {
-                List<IGeoResource> resources=new ArrayList<IGeoResource>();
+                List<IGeoResource> resources=new ArrayList<>();
                 for( ILayer layer : mapEditor.getMap().getMapLayers() ) {
                     if( layer.hasResource(ITransientResolve.class) )
                         resources.addAll(layer.getGeoResources());
                 }
-                
+
                 if( resources.isEmpty() ){
                     return Result.NO_TEMP_LAYERS;
                 }
-                
+
                 final StructuredSelection selection = new StructuredSelection(resources);
                 final ExportResourceSelectionState layerState = new ExportResourceSelectionState(selection);
-                
+
                 CatalogExport exp = new MapPaletteSaveStrategy(layerState, mapEditor);
 
                 // open the export dialog
                 exp.open();
-                 
+
                 // Since dialog is opened after this returns return cancelled and we'll make sure the MapSaveStrategy will clear the
                 // dirty state if the export takes place.
-                
+
                 return Result.EXPORT_WIZARD_RUNNING;
             }
 

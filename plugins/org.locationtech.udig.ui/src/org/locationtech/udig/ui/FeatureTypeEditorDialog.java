@@ -14,9 +14,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.locationtech.udig.internal.ui.UiPlugin;
-import org.locationtech.udig.ui.internal.Messages;
-
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.resource.ImageRegistry;
@@ -35,14 +32,16 @@ import org.geotools.data.DataStore;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.feature.SchemaException;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.udig.core.logging.LoggingSupport;
+import org.locationtech.udig.internal.ui.UiPlugin;
+import org.locationtech.udig.ui.internal.Messages;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.FeatureType;
 
-import org.locationtech.jts.geom.Geometry;
-
 /**
  * Opens a dialog that allows a SimpleFeatureType to be defined.
- * 
+ *
  * @author Jesse
  * @author Andrea Antonello (www.hydrologis.com)
  * @since 1.1.0
@@ -57,11 +56,11 @@ public class FeatureTypeEditorDialog extends Dialog {
     public FeatureTypeEditorDialog( Shell parentShell, ValidateFeatureType strategy ) {
         super(parentShell);
         editor = new FeatureTypeEditor();
-        defaultFeatureType=editor.createDefaultFeatureType(); 
+        defaultFeatureType=editor.createDefaultFeatureType();
         this.validateFeatureType=strategy;
         setShellStyle(SWT.RESIZE|SWT.DIALOG_TRIM|SWT.CLOSE);
     }
-    
+
     @Override
     protected Control createDialogArea( Composite parent ) {
         getShell().setText(Messages.FeatureTypeEditorDialog_ShellTitle);
@@ -69,12 +68,12 @@ public class FeatureTypeEditorDialog extends Dialog {
         GridLayout gridLayout = new GridLayout(8, false);
         gridLayout.marginWidth=0;
         gridLayout.marginHeight=0;
-        
+
         composite.setLayout(gridLayout);
         composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        
+
         editor.createFeatureTypeNameText(composite, new GridData(SWT.FILL, SWT.FILL, true,false, 8,1));
-        
+
         Composite buttons=new Composite(composite, SWT.NONE);
         gridLayout = new GridLayout();
         gridLayout.marginWidth=0;
@@ -87,11 +86,11 @@ public class FeatureTypeEditorDialog extends Dialog {
         buttons.setLayoutData(gridData);
         createButton(buttons, editor.getCreateAttributeAction());
         createButton(buttons, editor.getDeleteAction());
-        
+
         editor.createTable(composite, new GridData(SWT.FILL, SWT.FILL, true,true, 7,1),
                 defaultFeatureType, true);
         editor.createContextMenu();
-        
+
         return composite;
     }
 
@@ -110,6 +109,7 @@ public class FeatureTypeEditorDialog extends Dialog {
         button.setImage(image);
 
         button.addListener(SWT.Selection, new Listener(){
+            @Override
             public void handleEvent( Event event ) {
                 action.runWithEvent(event);
             }
@@ -120,18 +120,18 @@ public class FeatureTypeEditorDialog extends Dialog {
     protected Point getInitialSize() {
         return new Point(500, 500);
     }
-    
+
     @Override
     public boolean close() {
         result = editor.getFeatureType();
         editor.getControl().setFocus();
         return super.close();
     }
-    
+
     public void setDataStore(DataStore dataStore){
         this.dataStore=dataStore;
         if( dataStore instanceof ShapefileDataStore ){
-            List<LegalAttributeTypes> list=new ArrayList<LegalAttributeTypes>(editor.getLegalTypes());
+            List<LegalAttributeTypes> list=new ArrayList<>(editor.getLegalTypes());
             for( Iterator<LegalAttributeTypes> iter=list.iterator(); iter.hasNext(); ){
                 LegalAttributeTypes type=iter.next();
                 if( type.getType()==Geometry.class ){
@@ -141,7 +141,7 @@ public class FeatureTypeEditorDialog extends Dialog {
             editor.setLegalTypes(list);
         }
     }
-    
+
     @Override
     protected void okPressed() {
         String errorMessage = validateFeatureType.validate(editor.getFeatureType());
@@ -152,7 +152,7 @@ public class FeatureTypeEditorDialog extends Dialog {
             super.okPressed();
         }
     }
-    
+
 	public FeatureTypeEditor getEditor() {
         return editor;
     }
@@ -162,16 +162,16 @@ public class FeatureTypeEditorDialog extends Dialog {
         result=null;
         return super.open();
     }
-    
+
     /**
-     * Returns the feature type defined by user or null if it is not a legal feature type for the setDataStore.  
-     * 
+     * Returns the feature type defined by user or null if it is not a legal feature type for the setDataStore.
+     *
      * <p>If setDataStore has previously been called then the feature typename
-     * will be checked to determine if the typename already exists.  
-     * If it does then null is returned and the dialog should be opened a 
+     * will be checked to determine if the typename already exists.
+     * If it does then null is returned and the dialog should be opened a
      * second time.</p>
-     * 
-     * @param checkForDuplicateFeatureType If true null will be returned if 
+     *
+     * @param checkForDuplicateFeatureType If true null will be returned if
      *                  the datastore has a feature type with the same
      *                  feature type name.
      * @return the feature type defined by user
@@ -183,13 +183,13 @@ public class FeatureTypeEditorDialog extends Dialog {
                     return result;
                 }
             } catch (SchemaException e) {
-                UiPlugin.log("Error creating feature type", e); //$NON-NLS-1$
+                LoggingSupport.log(UiPlugin.getDefault(), "Error creating feature type", e); //$NON-NLS-1$
             }
         }
         return null;
 
     }
-    
+
     private boolean isFeatureTypeOK( ) throws SchemaException {
         if( dataStore==null )
             return true;
@@ -197,10 +197,10 @@ public class FeatureTypeEditorDialog extends Dialog {
             // verify that the typename does not already exist. if it doesn't
             // getSchema throws an exception
             dataStore.getSchema(defaultFeatureType.getName());
-            
+
             /*
              * FIXME not sure if it is enough to recreate the featureType, or if
-             * somewhere the reference to the old object is needed. 
+             * somewhere the reference to the old object is needed.
              */
             SimpleFeatureTypeBuilder ftB = new SimpleFeatureTypeBuilder();
             ftB.setName(Messages.NewFeatureTypeOp_duplicateTypeName);
@@ -214,17 +214,17 @@ public class FeatureTypeEditorDialog extends Dialog {
 
     /**
      * Validates the feature type to determine whether it is acceptable and can be created.
-     * 
+     *
      * <p>This is used to determine if the dialog can close.</p>
-     * 
+     *
      * @author Jesse
      * @author Andrea Antonello (www.hydrologis.com)
      * @since 1.2
      */
     public interface ValidateFeatureType {
         /**
-         * Returns true if the feature type builder is ok and the dialog may close. 
-         * 
+         * Returns true if the feature type builder is ok and the dialog may close.
+         *
          * <p>Changes to the builder will be reflected in the dialog.</p>
          *
          * @param featureType the {@link FeatureType} to validate.

@@ -10,8 +10,6 @@
  */
 package org.locationtech.udig.ui.action;
 
-import org.locationtech.udig.internal.ui.UiPlugin;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -19,6 +17,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.locationtech.udig.core.logging.LoggingSupport;
+import org.locationtech.udig.internal.ui.UiPlugin;
 
 /**
  * Description of NewObjectAction.
@@ -27,7 +27,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * <p>
  * You can consider this a really early version of "Action" back before Eclipse 3.3 made
  * this sort of thing easy.
- * 
+ *
  * @author jones
  * @since 0.6.0
  */
@@ -45,7 +45,7 @@ public class NewObjectDelegate {
 
     /**
      * Construct <code>UDIGActionBarAdvisor.NewContribution.NewItem</code>.
-     * 
+     *
      * @param element The configuration element that holds the properties (from plugin.xml)
      * @param window The window this action will operate in.
      */
@@ -61,7 +61,7 @@ public class NewObjectDelegate {
             this.icon = null;
         this.window = window;
     }
-    
+
     /**
      * Create the IWorkbenchWindowActionDelegate (if required) and call run.
      */
@@ -71,7 +71,7 @@ public class NewObjectDelegate {
                 delegate = (IWorkbenchWindowActionDelegate) element
                         .createExecutableExtension("class"); //$NON-NLS-1$
             } catch (CoreException e) {
-                UiPlugin.log(null, e);
+                LoggingSupport.log(UiPlugin.getDefault(), e);
             }
         }
         if (delegate != null) {

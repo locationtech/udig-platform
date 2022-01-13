@@ -37,7 +37,7 @@
             default="true"
             icon="icons/obj16/map_obj.gif"
             id="org.locationtech.udig.project.ui.mapEditor"
-            name="%mapEditorPalette.name">
+            name="%mapEditor.name">
       </editor>
    </extension>
    

@@ -50,6 +50,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.locationtech.udig.core.AbstractUdigUIPlugin;
 import org.locationtech.udig.core.internal.ExtensionPointProcessor;
 import org.locationtech.udig.core.internal.ExtensionPointUtil;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.internal.ui.operations.OperationMenuFactory;
 import org.locationtech.udig.ui.MenuBuilder;
 import org.locationtech.udig.ui.UDIGMenuBuilder;
@@ -297,11 +298,12 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * @param clazz The calling class.
      * @param methodName The calling method name.
      * @param t The throwable from where the problem actually occurred.
+     * @deprecated Use
+     *             {@link LoggingSupport#log(org.eclipse.core.runtime.Plugin, Class, String, Throwable)}
+     *             instead.
      */
-    public static void log(Class clazz, String methodName, Throwable t) {
-        String msg = MessageFormat.format("Exception in {0}.{1}: {2}", //$NON-NLS-1$
-                new Object[] { clazz.getName(), methodName, t });
-        log(msg, t);
+    public static void log(Class<?> clazz, String methodName, Throwable t) {
+        LoggingSupport.log(getDefault(), clazz, methodName, t);
     }
 
     /**
@@ -309,54 +311,37 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * <p>
      * This should be used for user level messages.
      * </p>
+     * @deprecated Use {@link LoggingSupport#log(org.eclipse.core.runtime.Plugin, String, Throwable)} instead.
      */
     public static void log(String message2, Throwable e) {
-        String message = message2;
-        if (message == null)
-            message = ""; //$NON-NLS-1$
-        getDefault().getLog().log(new Status(IStatus.INFO, ID, 0, message, e));
+        LoggingSupport.log(getDefault(), message2, e);
     }
 
     /**
      * Log the status to the default log.
      *
      * @param status
+     *
+     * @deprecated Use {@link LoggingSupport#log(org.eclipse.core.runtime.Plugin, IStatus)} instead.
      */
     public static void log(IStatus status) {
-        getDefault().getLog().log(status);
+        LoggingSupport.log(getDefault(), status);
     }
 
     /**
-     * Messages that only engage if getDefault().isDebugging()
-     * <p>
-     * It is much preferred to do this:
-     * 
-     * <pre>
-     * <code> private static final String RENDERING = "org.locationtech.udig.project/render/trace";
-     * if (ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase(RENDERING)) {
-     *      System.out.println( "your message here" );
-     * }
+     * @deprecated Use {@link LoggingSupport#trace(org.eclipse.core.runtime.Plugin, String, Throwable)} instead.
      */
     private static void trace(String message, Throwable e) {
-        if (getDefault().isDebugging()) {
-            if (message != null) {
-                System.out.println(message); // $NON-NLS-1$
-            }
-            if (e != null) {
-                e.printStackTrace(System.out);
-            }
-        }
+        LoggingSupport.trace(getDefault(), message, e);
     }
 
     /**
      * Messages that only engage if getDefault().isDebugging() and the trace option traceID is true.
      * Available trace options can be found in the Trace class. (They must also be part of the
-     * .options file)
+     * @deprecated Use {@link LoggingSupport#trace(org.eclipse.core.runtime.Plugin, String, Class, String, Throwable)} instead.
      */
     public static void trace(String traceID, Class<?> caller, String message, Throwable e) {
-        if (isDebugging(traceID)) {
-            trace(caller, message, e);
-        }
+        LoggingSupport.trace(getDefault(), traceID, caller, message, e);
     }
 
     /**
@@ -365,9 +350,11 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * @param caller class of the object doing the trace.
      * @param message tracing message, may be null.
      * @param e exception, may be null.
+     *
+     * @deprecated Use {@link LoggingSupport#trace(org.eclipse.core.runtime.Plugin, Class, String, Throwable)} instead.
      */
     public static void trace(Class<?> caller, String message, Throwable e) {
-        trace(caller.getSimpleName() + ": " + message, e); //$NON-NLS-1$ //$NON-NLS-2$
+        LoggingSupport.trace(getDefault(), caller, message, e);
     }
 
     /**
@@ -380,10 +367,11 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * </p>
      *
      * @param trace currently only RENDER is defined
+     *
+     * @deprecated Use {@link LoggingSupport#isDebugging(org.eclipse.core.runtime.Plugin, String)} instead.
      */
     public static boolean isDebugging(final String trace) {
-        return (getDefault() != null && getDefault().isDebugging()
-                && "true".equalsIgnoreCase(Platform.getDebugOption(trace))); //$NON-NLS-1$
+        return LoggingSupport.isDebugging(getDefault(), trace);
     }
 
     /**
@@ -535,7 +523,6 @@ public class UiPlugin extends AbstractUdigUIPlugin {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    @SuppressWarnings("nls")
     public static Properties getProxySettings() throws FileNotFoundException, IOException {
         Properties properties = new Properties();
         File iniFile = getIniFile();
@@ -572,7 +559,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
             BufferedReader bR = null;
             BufferedWriter bW = null;
             try {
-                Collection<String> updatedLines = new ArrayList<String>();
+                Collection<String> updatedLines = new ArrayList<>();
                 bR = new BufferedReader(new FileReader(iniFile));
                 String line = null;
                 while ((line = bR.readLine()) != null) {
@@ -598,7 +585,7 @@ public class UiPlugin extends AbstractUdigUIPlugin {
         }
 
         if (!readOnly) {
-            UiPlugin.log("udig.ini changed:" + iniFile, null);
+            LoggingSupport.log(UiPlugin.getDefault(), "udig.ini changed:" + iniFile);
         }
     }
 

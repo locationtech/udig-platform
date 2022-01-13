@@ -11,6 +11,7 @@
 package org.locationtech.udig.issues.internal;
 
 import org.locationtech.udig.core.AbstractUdigUIPlugin;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.issues.IIssuesManager;
 import org.locationtech.udig.ui.ProgressManager;
 
@@ -46,22 +47,25 @@ public class IssuesActivator extends AbstractUdigUIPlugin {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
      */
+    @Override
     public void start(BundleContext context) throws Exception {
         super.start(context);
         INSTANCE = this;
         PlatformUI.getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
 
+            @Override
             public void postShutdown(IWorkbench workbench) {
             }
 
+            @Override
             public boolean preShutdown(IWorkbench workbench, boolean forced) {
                 try {
                     IIssuesManager.defaultInstance.save(ProgressManager.instance().get());
                 } catch (Exception e) {
-                    log("Error saving issues", e); //$NON-NLS-1$
+                    LoggingSupport.log(getDefault(), "Error saving issues", e); //$NON-NLS-1$
                     boolean result = MessageDialog.openQuestion(Display.getCurrent()
                             .getActiveShell(), Messages.IssuesActivator_errorTitle,
                             Messages.IssuesActivator_errorMessage);
@@ -74,28 +78,16 @@ public class IssuesActivator extends AbstractUdigUIPlugin {
         });
     }
 
-    /**
-     * Writes an info log in the plugin's log.
-     * <p>
-     * This should be used for user level messages.
-     * </p>
-     */
-    public static void log(String message2, Throwable e) {
-        String message = message2;
-        if (message == null)
-            message = "Error in Issues plugin:" + e; //$NON-NLS-1$
-        getDefault().getLog().log(new Status(IStatus.INFO, PLUGIN_ID, IStatus.OK, message, e));
-    }
-
     public static IssuesActivator getDefault() {
         return INSTANCE;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.locationtech.udig.core.AbstractUdigUIPlugin#getIconPath()
      */
+    @Override
     public IPath getIconPath() {
         return new Path(ICONS_PATH);
     }

@@ -9,19 +9,17 @@
  */
 package org.locationtech.udig.internal.ui;
 
-import org.locationtech.udig.core.internal.CorePlugin;
-import org.locationtech.udig.ui.UDIGDragDropUtilities;
-import org.locationtech.udig.ui.WorkbenchConfiguration;
-import org.locationtech.udig.ui.preferences.PreferenceConstants;
-
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+import org.locationtech.udig.core.internal.CorePlugin;
+import org.locationtech.udig.core.logging.LoggingSupport;
+import org.locationtech.udig.ui.UDIGDragDropUtilities;
+import org.locationtech.udig.ui.WorkbenchConfiguration;
+import org.locationtech.udig.ui.preferences.PreferenceConstants;
 import org.osgi.service.prefs.Preferences;
 
 /**
@@ -53,7 +51,7 @@ import org.osgi.service.prefs.Preferences;
  * use to pre-screen window closings</li>
  * </ul>
  * </p>
- * 
+ *
  * @author cole.markham
  * @since 1.0.0
  */
@@ -61,7 +59,7 @@ public class UDIGWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
     /**
      * Constructor
-     * 
+     *
      * @param configurer
      */
     public UDIGWorkbenchWindowAdvisor( IWorkbenchWindowConfigurer configurer ) {
@@ -114,7 +112,7 @@ public class UDIGWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                 showTip();
             }
         } catch (Exception e) {
-            UiPlugin.log("", e); //$NON-NLS-1$
+            LoggingSupport.log(UiPlugin.getDefault(), e);
         }
     }
 
@@ -129,7 +127,7 @@ public class UDIGWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                 dialog.open();
             }
         } catch (Exception e) {
-            UiPlugin.log("", e); //$NON-NLS-1$
+            LoggingSupport.log(UiPlugin.getDefault(), e);
         }
     }
 

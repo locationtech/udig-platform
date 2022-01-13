@@ -725,8 +725,7 @@ public class ToolManager implements IToolManager {
             editor.setSelectionProvider(activeModalToolProxy.getSelectionProvider());
             if (editor instanceof MapEditorWithPalette) {
                 // temporary cast while we sort out if MapPart can own an MapEditDomain
-                MapEditorWithPalette editor2 = (MapEditorWithPalette) editor;
-                MapEditDomain editDomain = editor2.getEditDomain();
+                MapEditDomain editDomain = ((MapEditorWithPalette) editor).getEditDomain();
                 editDomain.setActiveTool(activeModalToolProxy.getId());
             }
 

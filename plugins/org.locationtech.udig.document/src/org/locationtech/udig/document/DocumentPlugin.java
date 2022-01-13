@@ -3,13 +3,12 @@ package org.locationtech.udig.document;
 import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.document.ui.IDocumentImages;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -33,9 +32,10 @@ public class DocumentPlugin extends AbstractUIPlugin {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
      */
+    @Override
     public void start(BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
@@ -43,9 +43,10 @@ public class DocumentPlugin extends AbstractUIPlugin {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
      */
+    @Override
     public void stop(BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
@@ -58,16 +59,6 @@ public class DocumentPlugin extends AbstractUIPlugin {
      */
     public static DocumentPlugin getDefault() {
         return plugin;
-    }
-
-    /**
-     * Writes an info log in the plugin's log.
-     * <p>
-     * This should be used for user level messages.
-     * </p>
-     */
-    public static void log(String message, Throwable e) {
-        getDefault().getLog().log(new Status(IStatus.INFO, PLUGIN_ID, 0, message, e));
     }
 
     @Override
@@ -88,7 +79,7 @@ public class DocumentPlugin extends AbstractUIPlugin {
 
     /**
      * Adds image to the registry.
-     * 
+     *
      * @param reg
      * @param imagePath
      */
@@ -102,7 +93,7 @@ public class DocumentPlugin extends AbstractUIPlugin {
         if (url != null) {
             attachImg = ImageDescriptor.createFromURL(url);
         } else {
-            log("Unable to find image for " + imagePath, null);
+            LoggingSupport.log(getDefault(), "Unable to find image for " + imagePath, null);
             attachImg = ImageDescriptor.getMissingImageDescriptor();
         }
         reg.put(imagePath, attachImg);

@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.WorkbenchAdvisor;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.libs.internal.Activator;
 import org.locationtech.udig.ui.internal.Messages;
 import org.osgi.framework.Bundle;
@@ -134,7 +135,7 @@ public class UDIGApplication implements IApplication {
         try {
             returnCode = PlatformUI.createAndRunWorkbench(display, workbenchAdvisor);
         } catch (Throwable t) {
-            UiPlugin.log(Messages.UDIGApplication_error, t);
+            LoggingSupport.log(UiPlugin.getDefault(), Messages.UDIGApplication_error, t);
         } finally {
             context.applicationRunning();
             display.dispose();

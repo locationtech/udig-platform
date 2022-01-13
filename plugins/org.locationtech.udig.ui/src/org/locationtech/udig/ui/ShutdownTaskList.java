@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchListener;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.ui.internal.Messages;
 
@@ -60,7 +61,8 @@ public class ShutdownTaskList implements IWorkbenchListener {
                             task.steps = task.task.getProgressMonitorSteps();
                             totalsteps += task.steps;
                         } catch (Throwable e) {
-                            UiPlugin.log("error calling getProgressMonitorSteps() on " + task.task, //$NON-NLS-1$
+                            LoggingSupport.log(UiPlugin.getDefault(),
+                                    "error calling getProgressMonitorSteps() on " + task.task, //$NON-NLS-1$
                                     e);
                         }
                     }
@@ -113,7 +115,8 @@ public class ShutdownTaskList implements IWorkbenchListener {
                             task.steps = task.task.getProgressMonitorSteps();
                             totalsteps += task.steps;
                         } catch (Throwable e) {
-                            UiPlugin.log("error calling getProgressMonitorSteps() on " + task.task, //$NON-NLS-1$
+                            LoggingSupport.log(UiPlugin.getDefault(),
+                                    "error calling getProgressMonitorSteps() on " + task.task, //$NON-NLS-1$
                                     e);
                         }
                     }
