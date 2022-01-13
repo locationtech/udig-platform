@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -135,7 +135,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * @version $Revision: 1.9 $
  */
 // TODO: Rename this to MapEditor to prevent code bloat / code duplication
-public class MapEditor extends GraphicalEditorWithFlyoutPalette
+public class MapEditorWithPalette extends GraphicalEditorWithFlyoutPalette
         implements IDropTargetProvider, IAdaptable, MapEditorPart {
 
     public static final int STATUS_LINE_HEIGHT;
@@ -164,7 +164,7 @@ public class MapEditor extends GraphicalEditorWithFlyoutPalette
 
     final StatusLineManager statusLineManager = new StatusLineManager();
 
-    private MapEditorSite mapEditorSite;
+    private MapSite mapSite;
 
     private boolean dirty = false;
 
@@ -191,7 +191,7 @@ public class MapEditor extends GraphicalEditorWithFlyoutPalette
     /**
      * Creates a new MapViewport object.
      */
-    public MapEditor() {
+    public MapEditorWithPalette() {
         // Make sure the featureEditorProcessor has been started.
         // This will load all the tools so we can use them
         ProjectUIPlugin.getDefault().getFeatureEditProcessor();
@@ -297,7 +297,7 @@ public class MapEditor extends GraphicalEditorWithFlyoutPalette
                 return;
             }
 
-            MapEditor.this.composite.getDisplay().asyncExec(new Runnable() {
+            MapEditorWithPalette.this.composite.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     switch (event.getType()) {
@@ -380,8 +380,8 @@ public class MapEditor extends GraphicalEditorWithFlyoutPalette
         @Override
         public boolean preShutdown(IProgressMonitor monitor, IWorkbench workbench, boolean forced)
                 throws Exception {
-            monitor.beginTask("Saving Map Editor", 3); //$NON-NLS-1$
-            save(new SubProgressMonitor(monitor, 1));
+            monitor.beginTask("Saving Map Editor", 3);
+            save(SubMonitor.convert(monitor, 1));
             if (dirty) {
                 if (!forced) {
                     return false;
@@ -788,8 +788,8 @@ public class MapEditor extends GraphicalEditorWithFlyoutPalette
         this.replaceableSelectionProvider = new ReplaceableSelectionProvider();
         getSite().setSelectionProvider(replaceableSelectionProvider);
         runMapOpeningInterceptor(getMap());
-        mapEditorSite = new MapEditorSite(super.getSite(), this);
-        final IContributionManager statusBar = mapEditorSite.getActionBars().getStatusLineManager();
+        mapSite = new MapSite(super.getSite(), this);
+        final IContributionManager statusBar = mapSite.getActionBars().getStatusLineManager();
 
         scaleContributionItem = new ScaleRatioLabel(this);
         scaleContributionItem.setVisible(true);
@@ -876,8 +876,8 @@ public class MapEditor extends GraphicalEditorWithFlyoutPalette
                     contextMenu.add(tm.getBACKWARD_HISTORYAction());
                     contextMenu.add(tm.getFORWARD_HISTORYAction());
                     contextMenu.add(new Separator());
-                    contextMenu.add(tm.getCOPYAction(MapEditor.this));
-                    contextMenu.add(tm.getPASTEAction(MapEditor.this));
+                    contextMenu.add(tm.getCOPYAction(MapEditorWithPalette.this));
+                    contextMenu.add(tm.getPASTEAction(MapEditorWithPalette.this));
                     contextMenu.add(tm.getDELETEAction());
 
                     /**
@@ -1001,10 +1001,10 @@ public class MapEditor extends GraphicalEditorWithFlyoutPalette
     IPartListener2 partlistener = new IPartListener2() {
         @Override
         public void partActivated(IWorkbenchPartReference partRef) {
-            if (partRef.getPart(false) == MapEditor.this) {
+            if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 registerFeatureFlasher();
                 IToolManager tools = ApplicationGIS.getToolManager();
-                tools.setCurrentEditor(MapEditor.this);
+                tools.setCurrentEditor(MapEditorWithPalette.this);
             }
         }
 
@@ -1015,7 +1015,7 @@ public class MapEditor extends GraphicalEditorWithFlyoutPalette
 
         @Override
         public void partClosed(IWorkbenchPartReference partRef) {
-            if (partRef.getPart(false) == MapEditor.this) {
+            if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 deregisterFeatureFlasher();
                 visible = false;
             }
@@ -1033,7 +1033,7 @@ public class MapEditor extends GraphicalEditorWithFlyoutPalette
 
         @Override
         public void partHidden(IWorkbenchPartReference partRef) {
-            if (partRef.getPart(false) == MapEditor.this) {
+            if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 deregisterFeatureFlasher();
                 visible = false;
             }
@@ -1041,7 +1041,7 @@ public class MapEditor extends GraphicalEditorWithFlyoutPalette
 
         @Override
         public void partVisible(IWorkbenchPartReference partRef) {
-            if (partRef.getPart(false) == MapEditor.this) {
+            if (partRef.getPart(false) == MapEditorWithPalette.this) {
                 registerFeatureFlasher();
                 visible = true;
             }
@@ -1115,15 +1115,15 @@ public class MapEditor extends GraphicalEditorWithFlyoutPalette
     }
 
     @Override
-    public MapEditorSite getMapEditorSite() {
-        return mapEditorSite;
+    public MapSite getMapSite() {
+        return mapSite;
     }
 
     private class FlashFeatureListener implements ISelectionListener {
 
         @Override
         public void selectionChanged(IWorkbenchPart part, final ISelection selection) {
-            if (part == MapEditor.this || getSite().getPage().getActivePart() != part
+            if (part == MapEditorWithPalette.this || getSite().getPage().getActivePart() != part
                     || selection instanceof IBlockingSelection)
                 return;
 

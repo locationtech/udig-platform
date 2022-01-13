@@ -40,7 +40,7 @@ import org.locationtech.udig.project.MapCompositionEvent;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
-import org.locationtech.udig.project.ui.internal.MapEditor;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
 import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.ui.IDropAction;
 import org.locationtech.udig.ui.IDropHandlerListener;
@@ -61,7 +61,7 @@ public class MapEditorDNDTest extends AbstractProjectUITestCase {
 
         UDIGControlDropListener dropper = UDIGDragDropUtilities.getEditorDropListener();
         handler = dropper.getHandler();
-        handler.setTarget(new MapEditor());
+        handler.setTarget(new MapEditorWithPalette());
         done = false;
     }
 

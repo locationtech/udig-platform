@@ -70,7 +70,7 @@ import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.project.tests.ui.ViewPart1;
 import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.MapEditor;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
 import org.opengis.feature.simple.SimpleFeature;
 
@@ -332,7 +332,7 @@ public class IssuesViewTest extends AbstractProjectUITestCase {
 
             @Override
             public String getEditorID() {
-                return MapEditor.ID;
+                return MapEditorWithPalette.ID;
 
             }
 

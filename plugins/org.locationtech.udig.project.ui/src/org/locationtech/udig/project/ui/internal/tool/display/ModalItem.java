@@ -28,7 +28,7 @@ import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 import org.locationtech.udig.internal.ui.operations.OperationCategory;
 import org.locationtech.udig.project.ui.ApplicationGIS;
-import org.locationtech.udig.project.ui.internal.MapEditor;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
 import org.locationtech.udig.project.ui.internal.MapPart;
 import org.locationtech.udig.project.ui.internal.MapToolEntry;
 import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
@@ -123,8 +123,8 @@ public abstract class ModalItem implements ILazyOpListener {
         ToolManager tools = (ToolManager) ApplicationGIS.getToolManager();
         MapPart currentEditor = tools.currentEditor;
         if (currentEditor != null) {
-            if (currentEditor instanceof MapEditor) {
-                MapEditor editor2 = (MapEditor) currentEditor;
+            if (currentEditor instanceof MapEditorWithPalette) {
+                MapEditorWithPalette editor2 = (MapEditorWithPalette) currentEditor;
 
                 MapEditDomain editDomain = editor2.getEditDomain();
 

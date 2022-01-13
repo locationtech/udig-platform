@@ -12,7 +12,6 @@ package org.locationtech.udig.project.ui.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.locationtech.udig.project.ui.internal.MapEditor;
 import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 
 public class PreferenceInitializer extends AbstractPreferenceInitializer {

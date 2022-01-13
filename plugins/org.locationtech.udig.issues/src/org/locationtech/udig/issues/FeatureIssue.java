@@ -39,7 +39,7 @@ import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.FeatureEditorLoader;
 import org.locationtech.udig.project.ui.internal.MapEditorInput;
-import org.locationtech.udig.project.ui.internal.MapEditor;
+import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
 import org.locationtech.udig.project.ui.internal.tool.ToolContext;
 import org.locationtech.udig.ui.ProgressManager;
 import org.opengis.feature.simple.SimpleFeature;
@@ -113,7 +113,7 @@ public class FeatureIssue extends AbstractIssue {
 
     @Override
     public String getEditorID() {
-        return MapEditor.ID;
+        return MapEditorWithPalette.ID;
     }
 
     @Override
