@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2012, Refractions Research Inc.
  *
@@ -20,10 +21,9 @@ import java.net.URLStreamHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.core.runtime.Status;
+import org.locationtech.udig.core.logging.LoggingSupport;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -34,23 +34,20 @@ import org.osgi.framework.BundleContext;
  */
 public class CorePlugin extends Plugin {
 
-    /** Plugin <code>ID</code> field */
-    public static final String ID = "org.locationtech.udig.core"; //$NON-NLS-1$
     private static CorePlugin plugin;
 
-
-
     /**
-     * A url stream handler that delegates to the default one but if it doesn't work then it returns null as the stream.
+     * A url stream handler that delegates to the default one but if it doesn't work then it returns
+     * null as the stream.
      */
-    public static final URLStreamHandler RELAXED_HANDLER=new URLStreamHandler(){
+    public static final URLStreamHandler RELAXED_HANDLER = new URLStreamHandler() {
 
         @Override
-        protected URLConnection openConnection( URL u ) throws IOException {
-            try{
-                URL url=new URL(u.toString());
+        protected URLConnection openConnection(URL u) throws IOException {
+            try {
+                URL url = new URL(u.toString());
                 return url.openConnection();
-            }catch (MalformedURLException e){
+            } catch (MalformedURLException e) {
                 return null;
             }
         }
@@ -67,40 +64,40 @@ public class CorePlugin extends Plugin {
     /**
      * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
      */
-    public void start( BundleContext context ) throws Exception {
+    @Override
+    public void start(BundleContext context) throws Exception {
         super.start(context);
     }
 
     /**
-     * Create a URL from the provided spec; willing to create
-     * a URL even if the spec does not have a registered handler.
-     * Can be used to create "jdbc" URLs for example.
+     * Create a URL from the provided spec; willing to create a URL even if the spec does not have a
+     * registered handler. Can be used to create "jdbc" URLs for example.
      *
      * @param spec
      * @return URL if possible
      * @throws RuntimeException of a MalformedURLException resulted
      */
-    public static URL createSafeURL( String spec ) {
+    public static URL createSafeURL(String spec) {
         try {
             return new URL(null, spec, RELAXED_HANDLER);
         } catch (MalformedURLException e) {
-            throw (RuntimeException) new RuntimeException( e );
+            throw new RuntimeException(e);
         }
     }
+
     /**
-     * Create a URI from the provided spec; willing to create
-     * a URI even if the spec does not have a registered handler.
-     * Can be used to create "jdbc" URLs for example.
+     * Create a URI from the provided spec; willing to create a URI even if the spec does not have a
+     * registered handler. Can be used to create "jdbc" URLs for example.
      *
      * @param spec
      * @return URI if possible
      * @throws RuntimeException of a URISyntaxException resulted
      */
-    public static URI createSafeURI( String spec ){
+    public static URI createSafeURI(String spec) {
         try {
-            return new URI( spec );
+            return new URI(spec);
         } catch (URISyntaxException e) {
-            throw (RuntimeException) new RuntimeException( e );
+            throw new RuntimeException(e);
         }
     }
 
@@ -116,7 +113,7 @@ public class CorePlugin extends Plugin {
     /**
      * Takes a string, and splits it on '\n' and calls stringsToURLs(String[])
      */
-    public static List<URL> stringsToURLs( String string ) {
+    public static List<URL> stringsToURLs(String string) {
         String[] strings = string.split("\n"); //$NON-NLS-1$
 
         return stringsToURLs(strings);
@@ -131,16 +128,16 @@ public class CorePlugin extends Plugin {
      * @param strings an array of strings, each to be converted to a URL
      * @return a List of URLs, in the same order as the array
      */
-    public static List<URL> stringsToURLs( String[] strings ) {
-        List<URL> urls = new ArrayList<URL>();
+    public static List<URL> stringsToURLs(String[] strings) {
+        List<URL> urls = new ArrayList<>();
 
-        for( String string : strings ) {
+        for (String string : strings) {
             try {
                 urls.add(new URL(string));
             } catch (MalformedURLException e) {
                 // not a URL, maybe it is a file
                 try {
-                	urls.add( new File(string).toURI().toURL());
+                    urls.add(new File(string).toURI().toURL());
                 } catch (MalformedURLException e1) {
                     // Not a URL, not a File. nothing to do now.
                 }
@@ -154,33 +151,31 @@ public class CorePlugin extends Plugin {
      * <p>
      * This should be used for user level messages.
      * </p>
+     *
+     * @deprecated Use {@link LoggingSupport#log(Plugin, String, Throwable)} instead.
      */
-    public static void log( String message2, Throwable e ) {
-        String message=message2;
-        if (message == null)
-            message = ""; //$NON-NLS-1$
-        getDefault().getLog().log(new Status(IStatus.INFO, ID, 0, message, e));
+    public static void log(String message2, Throwable e) {
+        LoggingSupport.log(getDefault(), message2, e);
     }
+
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
-     * It is much prefered to do this:
+     * It is much preferred to do this:
      *
-     * <pre><code>
-     * private static final String RENDERING = &quot;org.locationtech.udig.project/render/trace&quot;;
-     * if (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp; &quot;true&quot;.equalsIgnoreCase(RENDERING)) {
-     *     System.out.println(&quot;your message here&quot;);
-     * }
+     * <pre>
+     * <code> private static final String RENDERING =
+     * &quot;org.locationtech.udig.project/render/trace&quot;; if
+     * (ProjectUIPlugin.getDefault().isDebugging() &amp;&amp;
+     * &quot;true&quot;.equalsIgnoreCase(RENDERING)) { System.out.println(&quot;your message
+     * here&quot;); }
      *
+     * @deprecated Use {@link LoggingSupport#trace(Plugin, String, Throwable)} instead.
      */
-    public static void trace( String message, Throwable e ) {
-        if (getDefault().isDebugging()) {
-            if (message != null)
-                System.out.println(message);
-            if (e != null)
-                e.printStackTrace();
-        }
+    public static void trace(String message, Throwable e) {
+        LoggingSupport.trace(getDefault(), message, e);
     }
+
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
      * <p>
@@ -192,7 +187,7 @@ public class CorePlugin extends Plugin {
      *
      * @param trace currently only RENDER is defined
      */
-    public static boolean isDebugging( final String trace ) {
+    public static boolean isDebugging(final String trace) {
         return getDefault().isDebugging()
                 && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
