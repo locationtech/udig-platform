@@ -32,6 +32,23 @@ There is a utility method in URLUtils that will do this for you:
 
 Use it!
 
+Logging in Bundles
+------------------
+To write logs that appear in the Error Log View with different states, it is recommended to use LoggingSupport-class of core bundle.
+A common scenario is logging in case of an exception shown as follows:
+
+.. code-block:: java
+
+    try {
+        // do something here that might cause an error
+        pseudoFunction();
+    } catch (Exception e) {
+        LoggingSupport.log(PluginImplementation.getDefault(), "error executing pseudo function", e);
+    }
+
+The first parameter is the Plugin of the bundle to create log-entries for. A message without a Throwable just creates an **INFO** entry
+in Error Log View. Throwable is a **WARNING** whereas any other Exception is reported as an **ERROR**.
+
 Example Checklist for an Import Wizard
 --------------------------------------
 
