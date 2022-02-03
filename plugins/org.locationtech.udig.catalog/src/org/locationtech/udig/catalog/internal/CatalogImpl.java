@@ -770,10 +770,14 @@ public class CatalogImpl extends ICatalog {
             if (info.getTitle() != null)
                 t = pattern.accept(info.getTitle());
             if (!t && info.getKeywords() != null) {
-                String[] keys = info.getKeywords().toArray(new String[0]);
-                for (int i = 0; !t && i < keys.length; i++)
-                    if (keys[i] != null)
-                        t = pattern.accept(keys[i]);
+                for (String keyword : info.getKeywords()) {
+                    if (t) {
+                        break;
+                    }
+                    if (keyword != null) {
+                        t = pattern.accept(keyword);
+                    }
+                }
             }
             if (!t && info.getSchema() != null)
                 t = pattern.accept(info.getSchema().toString());
@@ -818,10 +822,8 @@ public class CatalogImpl extends ICatalog {
         if (info.getSchema() != null && pattern.accept(info.getSchema().toString())) {
             return true;
         }
-        if (pattern.accept(info.getDescription())) {
-            return true;
-        }
-        return false;
+
+        return pattern.accept(info.getDescription());
     }
 
     protected static boolean check(IGeoResource resource, AST pattern, Envelope bbox) {
