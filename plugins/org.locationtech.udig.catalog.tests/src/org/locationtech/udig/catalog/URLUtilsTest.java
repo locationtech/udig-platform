@@ -11,7 +11,9 @@
 package org.locationtech.udig.catalog;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -25,6 +27,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class URLUtilsTest {
+
+    public static String SERVICE_COMPARISON_TEST_URL = "http://www.randomurl.com"; //$NON-NLS-1$
 
     @Test
     public void testEquals() throws Exception {
@@ -54,7 +58,6 @@ public class URLUtilsTest {
         assertEquals(true, URLUtils.urlEquals(url4, url3, true));
         assertEquals(false, URLUtils.urlEquals(url3, url4, false));
         assertEquals(false, URLUtils.urlEquals(url4, url3, false));
-
     }
 
     @Test
@@ -177,4 +180,27 @@ public class URLUtilsTest {
         assertEquals(file, file2);
     }
 
+    @Test
+    public void testUrlEqualsWindows() throws MalformedURLException {
+        Assume.assumeTrue(SystemUtils.IS_OS_WINDOWS);
+
+        assertTrue(URLUtils.urlEquals(new URL("file://c:\\java/udig/"), //$NON-NLS-1$
+                new URL("file:/C:\\java\\udig"), false)); //$NON-NLS-1$
+        assertFalse(URLUtils.urlEquals(new URL("file://d:\\java/udig/"), //$NON-NLS-1$
+                new URL("file:/C:\\java\\udig"), false)); //$NON-NLS-1$
+        assertTrue(URLUtils.urlEquals(new URL("file:///C:/java/udig"), //$NON-NLS-1$
+                new URL("file:/C:\\java\\udig"), false)); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testUrlEquals() throws Exception {
+        assertTrue(URLUtils.urlEquals(new URL("file:///java/udig"), //$NON-NLS-1$
+                new URL("file:/java/udig"), false)); //$NON-NLS-1$
+        assertFalse(URLUtils.urlEquals(new URL("file:///Java/udig"), //$NON-NLS-1$
+                null, false));
+        assertFalse(URLUtils.urlEquals(new URL("file:///java/udig"), //$NON-NLS-1$
+                new URL("file:/java/udig#ResourceName"), false)); //$NON-NLS-1$
+        assertTrue(URLUtils.urlEquals(new URL("file:///java/udig"), //$NON-NLS-1$
+                new URL("file:/java/udig#ResourceName"), true)); //$NON-NLS-1$
+    }
 }
