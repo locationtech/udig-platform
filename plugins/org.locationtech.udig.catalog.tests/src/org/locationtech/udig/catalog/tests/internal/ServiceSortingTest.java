@@ -19,6 +19,7 @@ import org.junit.Test;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.IService;
+import org.locationtech.udig.catalog.URLUtilsTest;
 
 /**
  * Tests for sorted services
@@ -30,7 +31,7 @@ public class ServiceSortingTest {
     @Test
     public void testServiceComparison() throws Exception {
         ICatalog ci = CatalogPlugin.getDefault().getLocalCatalog();
-        IService service = ci.acquire(new URL("http://www.randomurl.com"),
+        IService service = ci.acquire(new URL(URLUtilsTest.SERVICE_COMPARISON_TEST_URL),
                 new NullProgressMonitor());
         assertTrue(service instanceof MoreInterestingService.MoreInterestingServiceImpl);
     }
