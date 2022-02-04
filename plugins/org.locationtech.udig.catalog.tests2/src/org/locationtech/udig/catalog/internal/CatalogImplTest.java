@@ -19,8 +19,11 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IGeoResourceInfo;
 import org.locationtech.udig.catalog.IService;
@@ -38,6 +41,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class CatalogImplTest {
 
     private static final String NOT_MATCHING_TEXT = "whatever";
+
+    private static final Envelope ENVELOPE = new Envelope(15, 17, -5, 5);
 
     private static final String MATCHING_TEXT = "test";
 
@@ -75,12 +80,57 @@ public class CatalogImplTest {
     }
 
     @Test
-    public void checkIsTrueIfResourceInfoNameMatch() throws Exception {
+    public void checkWithEnvelopeIsTrueIfResourceInfoNameMatch() throws Exception {
         when(geoResourceInfo.getTitle()).thenReturn(NOT_MATCHING_TEXT);
         when(geoResourceInfo.getName()).thenReturn(MATCHING_TEXT);
         when(geoResource.getInfo(any())).thenReturn(geoResourceInfo);
 
         assertTrue(CatalogImpl.check(geoResource, testAST));
+    }
+
+    @Test
+    public void checkWithEnvelopeIsTrueIfResourceInfoNameMatchAndEnvelopeIsNull() throws Exception {
+        when(geoResourceInfo.getTitle()).thenReturn(NOT_MATCHING_TEXT);
+        when(geoResourceInfo.getName()).thenReturn(MATCHING_TEXT);
+        when(geoResource.getInfo(any())).thenReturn(geoResourceInfo);
+
+        assertTrue(CatalogImpl.check(geoResource, testAST, null));
+    }
+
+    @Test
+    public void checkWithEnvelopeIsTrueIfResourceInfoNameMatchAndInfoBoundsisNull()
+            throws Exception {
+        when(geoResourceInfo.getTitle()).thenReturn(MATCHING_TEXT);
+        when(geoResourceInfo.getBounds()).thenReturn(null);
+        when(geoResource.getInfo(any())).thenReturn(geoResourceInfo);
+
+        assertTrue(CatalogImpl.check(geoResource, testAST, ENVELOPE));
+    }
+
+    @Test
+    public void checkWithEnvelopeIsTrueIfResourceInfoNameMatchAndInfoWithBounds() throws Exception {
+        when(geoResourceInfo.getTitle()).thenReturn(MATCHING_TEXT);
+        when(geoResourceInfo.getBounds())
+                .thenReturn(new ReferencedEnvelope(10, 20, -10, 10, DefaultGeographicCRS.WGS84));
+        when(geoResource.getInfo(any())).thenReturn(geoResourceInfo);
+
+        assertTrue(CatalogImpl.check(geoResource, testAST, ENVELOPE));
+    }
+
+    @Test
+    public void checkWithEnvelopeIsFalseWithGeoResource() {
+        IGeoResource nullGeoResource = null;
+        assertFalse(CatalogImpl.check(nullGeoResource, testAST, null));
+    }
+
+    @Test
+    public void checkIsTrueIfResourceInfoNameMatchAndEnvelopeIsNullCheck() throws Exception {
+        Envelope envelope = new Envelope();
+        when(geoResourceInfo.getTitle()).thenReturn(NOT_MATCHING_TEXT);
+        when(geoResourceInfo.getName()).thenReturn(MATCHING_TEXT);
+        when(geoResource.getInfo(any())).thenReturn(geoResourceInfo);
+
+        assertTrue(CatalogImpl.check(geoResource, testAST, envelope));
     }
 
     @Test
@@ -185,8 +235,7 @@ public class CatalogImplTest {
     @Test
     public void checkIsTrueIfServiceInfoDescriptionMatch() throws Exception {
         when(serviceInfo.getTitle()).thenReturn(NOT_MATCHING_TEXT);
-        when(serviceInfo.getDescription())
-                .thenReturn(MATCHING_TEXT);
+        when(serviceInfo.getDescription()).thenReturn(MATCHING_TEXT);
         when(serviceMock.getInfo(null)).thenReturn(serviceInfo);
 
         assertTrue(CatalogImpl.check(serviceMock, testAST));
@@ -195,8 +244,7 @@ public class CatalogImplTest {
     @Test
     public void checkIsFalseIfServiceNotMatchAnything() throws Exception {
         when(serviceInfo.getTitle()).thenReturn(NOT_MATCHING_TEXT);
-        when(serviceInfo.getDescription())
-                .thenReturn(NOT_MATCHING_TEXT);
+        when(serviceInfo.getDescription()).thenReturn(NOT_MATCHING_TEXT);
         when(serviceMock.getInfo(null)).thenReturn(serviceInfo);
 
         assertFalse(CatalogImpl.check(serviceMock, testAST));

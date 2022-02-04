@@ -8,7 +8,8 @@ Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.junit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.mockito;bundle-version="2.23.0",
  net.bytebuddy.byte-buddy;bundle-version="1.9.0",
- net.bytebuddy.byte-buddy-agent;bundle-version="1.9.0"
+ net.bytebuddy.byte-buddy-agent;bundle-version="1.9.0",
+ org.objenesis;bundle-version="2.6.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Fragment-Host: org.locationtech.udig.catalog;bundle-version="2.3.0"
