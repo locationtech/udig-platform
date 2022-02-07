@@ -22,6 +22,7 @@
                 <module>org.locationtech.udig.catalog.tests</module>
                 <module>org.locationtech.udig.catalog.tests2</module>
                 <module>org.locationtech.udig.catalog.rasterings.tests</module>
+                <module>org.locationtech.udig.catalog.shp.tests</module>
                 <module>org.locationtech.udig.catalog.ui.tests</module>
                 <module>org.locationtech.udig.catalog.wfs.tests</module>
                 <module>org.locationtech.udig.catalog.wms.tests</module>

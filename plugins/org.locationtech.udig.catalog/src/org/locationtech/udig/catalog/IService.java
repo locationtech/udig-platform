@@ -271,12 +271,15 @@ public abstract class IService implements IResolve {
      */
     @Override
     public ICatalog parent(IProgressMonitor monitor) {
-        ICatalog localCatalog = CatalogPlugin.getDefault().getLocalCatalog();
-        if (localCatalog.getById(IService.class, getID(), monitor) != null) {
-            return localCatalog;
-        } else {
-            return null;
+        CatalogPlugin catalogPlugin = CatalogPlugin.getDefault();
+        if (catalogPlugin != null) {
+            ICatalog localCatalog = catalogPlugin.getLocalCatalog();
+            if (localCatalog != null
+                    && localCatalog.getById(IService.class, getID(), monitor) != null) {
+                return localCatalog;
+            }
         }
+        return null;
     }
 
     /**

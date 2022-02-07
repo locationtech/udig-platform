@@ -14,7 +14,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/commons-dbcp-1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-digester-1.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-jxpath-1.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-lang3-3.8.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-lang3-3.8.1.jar" sourcepath="lib-src/commons-lang3-3.8.1-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-logging-1.1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-pool-1.5.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-text-1.6.jar"/>
@@ -59,7 +59,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-postgis-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-sqlserver-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-jdbc-teradata-22.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/gt-main-22.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gt-main-22.1.jar" sourcepath="lib-src/gt-main-22.1-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-mbstyle-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-mbtiles-22.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gt-metadata-22.1.jar"/>

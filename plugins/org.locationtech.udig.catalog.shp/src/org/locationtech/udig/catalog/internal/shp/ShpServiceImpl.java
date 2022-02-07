@@ -65,7 +65,7 @@ public class ShpServiceImpl extends IService {
     public ShpServiceImpl( URL url, Map<String, Serializable> params ) {
         //this.url = url;
         if( url == null ){
-            throw new NullPointerException("ShpService requres a URL");
+            throw new NullPointerException("ShpService requires a URL");
         }
         try {
             id = new ID(url);
@@ -99,6 +99,7 @@ public class ShpServiceImpl extends IService {
      * @see org.locationtech.udig.catalog.IService#resolve(java.lang.Class,
      * org.eclipse.core.runtime.IProgressMonitor)
      */
+    @Override
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
 
         if (monitor == null)
@@ -117,6 +118,7 @@ public class ShpServiceImpl extends IService {
     /*
      * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
+    @Override
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null)
             return false;
@@ -125,6 +127,7 @@ public class ShpServiceImpl extends IService {
                 super.canResolve(adaptee);
     }
 
+    @Override
     public void dispose( IProgressMonitor monitor ) {
         super.dispose(monitor);
         if (members != null){
@@ -139,6 +142,7 @@ public class ShpServiceImpl extends IService {
     /*
      * @see org.locationtech.udig.catalog.IResolve#members(org.eclipse.core.runtime.IProgressMonitor)
      */
+    @Override
     public List<ShpGeoResourceImpl> resources( IProgressMonitor monitor ) throws IOException {
 
         if (members == null) {
@@ -146,7 +150,7 @@ public class ShpServiceImpl extends IService {
             rLock.lock();
             try {
                 if (members == null) {
-                    members = new LinkedList<ShpGeoResourceImpl>();
+                    members = new LinkedList<>();
                     String[] typenames = ds.getTypeNames();
                     if (typenames != null)
                         for( int i = 0; i < typenames.length; i++ ) {
@@ -171,6 +175,7 @@ public class ShpServiceImpl extends IService {
     /*
      * @see org.locationtech.udig.catalog.IService#getInfo(org.eclipse.core.runtime.IProgressMonitor)
      */
+    @Override
     protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
         ShapefileDataStore dataStore = getDS(monitor); // load ds
         if (dataStore == null) {
@@ -187,6 +192,7 @@ public class ShpServiceImpl extends IService {
     /*
      * @see org.locationtech.udig.catalog.IService#getConnectionParams()
      */
+    @Override
     public Map<String, Serializable> getConnectionParams() {
         return params;
     }
@@ -296,6 +302,7 @@ public class ShpServiceImpl extends IService {
     /*
      * @see org.locationtech.udig.catalog.IResolve#getStatus()
      */
+    @Override
     public Status getStatus() {
         if( ds == null ){
             return super.getStatus();
@@ -306,6 +313,7 @@ public class ShpServiceImpl extends IService {
     /*
      * @see org.locationtech.udig.catalog.IResolve#getMessage()
      */
+    @Override
     public Throwable getMessage() {
         return msg;
     }
@@ -313,6 +321,7 @@ public class ShpServiceImpl extends IService {
     /*
      * @see org.locationtech.udig.catalog.IResolve#getIdentifier()
      */
+    @Override
     public URL getIdentifier() {
         return id.toURL();
     }

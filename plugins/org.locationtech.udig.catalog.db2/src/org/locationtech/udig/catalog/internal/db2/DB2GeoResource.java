@@ -199,7 +199,7 @@ public class DB2GeoResource extends IGeoResource {
 
             icon = Glyph.icon(ft);
             keywords = new String[] { "db2", //$NON-NLS-1$
-                    ft.getName().getLocalPart(), ft.getName().getNamespaceURI() };
+                    ft.getName().getLocalPart(), ft.getName().getURI() };
         }
 
         @Override
