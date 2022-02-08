@@ -20,6 +20,7 @@
                 <module>org.locationtech.udig.catalog.geotiff.tests</module>
                 <module>org.locationtech.udig.catalog.jgrass.tests</module>
                 <module>org.locationtech.udig.catalog.tests</module>
+                <module>org.locationtech.udig.catalog.tests2</module>
                 <module>org.locationtech.udig.catalog.rasterings.tests</module>
                 <module>org.locationtech.udig.catalog.ui.tests</module>
                 <module>org.locationtech.udig.catalog.wfs.tests</module>
