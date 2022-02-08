@@ -64,7 +64,7 @@ import org.opengis.style.GraphicalSymbol;
 
 /**
  * Connect to a shapefile.
- * 
+ *
  * @author David Zwiers, Refractions Research
  * @since 0.6
  */
@@ -92,9 +92,11 @@ public class ShpGeoResourceImpl extends IGeoResource {
         }
     }
 
+    @Override
     public URL getIdentifier() {
         return identifier;
     }
+    @Override
     public ID getID() {
         return id;
     }
@@ -102,6 +104,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
     /*
      * @see org.locationtech.udig.catalog.IGeoResource#getStatus()
      */
+    @Override
     public Status getStatus() {
         return parent.getStatus();
     }
@@ -109,6 +112,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
     /*
      * @see org.locationtech.udig.catalog.IGeoResource#getStatusMessage()
      */
+    @Override
     public Throwable getMessage() {
         return parent.getMessage();
     }
@@ -121,6 +125,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
      * </ul>
      * @see org.locationtech.udig.catalog.IResolve#resolve(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)
      */
+    @Override
     public <T> T resolve( Class<T> adaptee, IProgressMonitor monitor ) throws IOException {
         if (adaptee == null) {
             return null;
@@ -165,15 +170,15 @@ public class ShpGeoResourceImpl extends IGeoResource {
         return parent.getDS(monitor).getFeatureSource();
     }
 
-    
+
     public Style style( IProgressMonitor monitor ) throws IOException {
         SimpleFeatureSource source  = featureSource(null);
 
         SimpleFeatureType featureType = source.getSchema();
-        
+
         ID fileID = parent.getID();
         if( !fileID.isFile() ){
-            return null; // we are only checking for sidecar files 
+            return null; // we are only checking for sidecar files
         }
         File file = fileID.toFile("sld");
         if( !file.exists()){
@@ -186,10 +191,10 @@ public class ShpGeoResourceImpl extends IGeoResource {
         if( sld == null ){
             return null; // well that is unexpected since f.exists()
         }
-        
+
         Style[] styles = SLDs.styles( sld );
         // Style[] styles = parser.readXML();
-        
+
         // put the first one on
         if (styles != null && styles.length > 0) {
             Style style = SLDs.matchingStyle(styles, featureType);
@@ -201,20 +206,20 @@ public class ShpGeoResourceImpl extends IGeoResource {
         }
         return null; // well nothing worked out; make your own style
     }
-    
+
     /**
      * This transforms all external graphics references that are relative to absolute.
-     * This is a workaround to be able to visualize png and svg in relative mode, which 
+     * This is a workaround to be able to visualize png and svg in relative mode, which
      * doesn't work right now in geotools. See: http://jira.codehaus.org/browse/GEOT-3235
-     * 
+     *
      * This will not be necessary any more as soon as the geotools bug is fixed.
-     * 
+     *
      * @param relatedFile the related shapefile.
      * @param style the style to check.
      */
     private void makeGraphicsAbsolute( File relatedFile, Style style ) {
         File parentFolder = relatedFile.getParentFile();
-        
+
         ExternalGraphicsAbsolutePathMaker visitor = new ExternalGraphicsAbsolutePathMaker(parentFolder);
         visitor.visit(style);
     }
@@ -227,15 +232,19 @@ public class ShpGeoResourceImpl extends IGeoResource {
             this.parentFolder = parentFolder;
         }
 
+        @Override
         public void visit( StyledLayerDescriptor sld ) {
         }
 
+        @Override
         public void visit( NamedLayer layer ) {
         }
 
+        @Override
         public void visit( UserLayer layer ) {
         }
 
+        @Override
         public void visit( Style style ) {
             List<FeatureTypeStyle> fts = style.featureTypeStyles();
             for( FeatureTypeStyle featureTypeStyle : fts ) {
@@ -243,6 +252,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
             }
         }
 
+        @Override
         public void visit( Rule rule ) {
             List<Symbolizer> syms = rule.symbolizers();
             for( Symbolizer symbolizer : syms ) {
@@ -250,6 +260,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
             }
         }
 
+        @Override
         public void visit( FeatureTypeStyle fts ) {
             List<Rule> rules = fts.rules();
             for( Rule rule : rules ) {
@@ -257,6 +268,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
             }
         }
 
+        @Override
         public void visit( Fill fill ) {
             Graphic graphicFill = fill.getGraphicFill();
             if (graphicFill != null) {
@@ -264,6 +276,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
             }
         }
 
+        @Override
         public void visit( Stroke stroke ) {
             Graphic graphicFill = stroke.getGraphicFill();
             if (graphicFill != null) {
@@ -275,6 +288,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
             }
         }
 
+        @Override
         public void visit( Symbolizer sym ) {
             if (sym instanceof RasterSymbolizer) {
                 visit((RasterSymbolizer) sym);
@@ -290,6 +304,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
                 throw new RuntimeException("visit(Symbolizer) unsupported");
         }
 
+        @Override
         public void visit( PointSymbolizer ps ) {
             Graphic graphic = ps.getGraphic();
             if (graphic != null) {
@@ -297,6 +312,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
             }
         }
 
+        @Override
         public void visit( LineSymbolizer line ) {
             Stroke stroke = line.getStroke();
             if (stroke != null) {
@@ -304,6 +320,7 @@ public class ShpGeoResourceImpl extends IGeoResource {
             }
         }
 
+        @Override
         public void visit( PolygonSymbolizer poly ) {
             Stroke stroke = poly.getStroke();
             if (stroke != null) {
@@ -315,10 +332,13 @@ public class ShpGeoResourceImpl extends IGeoResource {
             }
         }
 
+        @Override
         public void visit( TextSymbolizer text ) {}
 
+        @Override
         public void visit( RasterSymbolizer raster ) {}
 
+        @Override
         public void visit( Graphic gr ) {
             List<GraphicalSymbol> graphicalSymbols = gr.graphicalSymbols();
             for( GraphicalSymbol graphicalSymbol : graphicalSymbols ) {
@@ -329,8 +349,10 @@ public class ShpGeoResourceImpl extends IGeoResource {
             }
         }
 
+        @Override
         public void visit( Mark mark ) {}
 
+        @Override
         public void visit( ExternalGraphic exgr ) {
             try {
                 URL location = exgr.getLocation();
@@ -346,38 +368,52 @@ public class ShpGeoResourceImpl extends IGeoResource {
             }
         }
 
+        @Override
         public void visit( PointPlacement pp ) {}
 
+        @Override
         public void visit( AnchorPoint ap ) {}
 
+        @Override
         public void visit( Displacement dis ) {}
 
+        @Override
         public void visit( LinePlacement lp ) {}
 
+        @Override
         public void visit( Halo halo ) {}
 
+        @Override
         public void visit( FeatureTypeConstraint ftc ) {}
 
+        @Override
         public void visit( ColorMap colorMap ) {}
 
+        @Override
         public void visit( ColorMapEntry colorMapEntry ) {}
 
+        @Override
         public void visit( ContrastEnhancement contrastEnhancement ) {}
 
+        @Override
         public void visit( ImageOutline outline ) {}
 
+        @Override
         public void visit( ChannelSelection cs ) {}
 
+        @Override
         public void visit( OverlapBehavior ob ) {}
 
+        @Override
         public void visit( SelectedChannelType sct ) {}
 
+        @Override
         public void visit( ShadedRelief sr ) {}
     }
 
     /**
      * Helper method performing the same function as service( monitor ) without the
-     * monitor or chance of IOException. 
+     * monitor or chance of IOException.
      * <p>
      * @return ShpServiceImpl responsible for this ShpGeoResourceImpl
      */
@@ -388,22 +424,24 @@ public class ShpGeoResourceImpl extends IGeoResource {
     /*
      * @see org.locationtech.udig.catalog.IResolve#canResolve(java.lang.Class)
      */
+    @Override
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null) {
             return false;
         }
         return (adaptee.isAssignableFrom(IGeoResourceInfo.class) || adaptee.isAssignableFrom(SimpleFeatureStore.class)
-                || adaptee.isAssignableFrom(FeatureSource.class) 
-                || adaptee.isAssignableFrom(SimpleFeatureSource.class) 
-                || adaptee.isAssignableFrom(IService.class) 
+                || adaptee.isAssignableFrom(FeatureSource.class)
+                || adaptee.isAssignableFrom(SimpleFeatureSource.class)
+                || adaptee.isAssignableFrom(IService.class)
                 || adaptee.isAssignableFrom(Style.class)
-                ) 
+                )
                 || super.canResolve(adaptee);
     }
     @Override
-    public ShpGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
-        return (ShpGeoResourceInfo) super.getInfo(monitor);
+    public IGeoResourceInfo getInfo( IProgressMonitor monitor ) throws IOException {
+        return super.getInfo(monitor);
     }
+    @Override
     protected ShpGeoResourceInfo createInfo( IProgressMonitor monitor ) throws IOException {
         return new ShpGeoResourceInfo(this);
     }
