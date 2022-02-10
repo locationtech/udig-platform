@@ -6,8 +6,12 @@ Bundle-Version: 2.3.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Eclipse-BuddyPolicy: ext
 Require-Bundle: org.eclipse.core.runtime,
- org.junit,
- org.locationtech.udig.libs
+ org.junit;bundle-version="4.12.0",
+ org.locationtech.udig.libs,
+ org.mockito;bundle-version="2.23.0",
+ org.objenesis;bundle-version="2.6.0",
+ net.bytebuddy.byte-buddy;bundle-version="1.9.0",
+ net.bytebuddy.byte-buddy-agent;bundle-version="1.9.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Fragment-Host: org.locationtech.udig.core

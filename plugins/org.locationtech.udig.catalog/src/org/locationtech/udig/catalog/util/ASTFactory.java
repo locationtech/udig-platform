@@ -1,8 +1,12 @@
-/*
- * Created on 8-Jan-2005
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2005, Refractions Research Inc.
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.catalog.util;
 
@@ -13,7 +17,7 @@ import java.util.Stack;
 
 /**
  * Used by catalog to implement search.
- * 
+ *
  * @author David Zwiers, Refractions Research
  */
 public class ASTFactory {
@@ -24,27 +28,27 @@ public class ASTFactory {
      * Creates an AST for the pattern The pattern uses the following conventions: use " " to
      * surround a phase use + to represent 'AND' use - to represent 'OR' use ! to represent 'NOT'
      * use ( ) to designate scope
-     * 
+     *
      * @param pattern Search pattern
      * @return AST
      */
-    public static AST parse( String str ) {
-        if( str == null || str.trim().length() == 0){
+    public static AST parse(String str) {
+        if (str == null || str.trim().length() == 0) {
             return null;
         }
         List<String> tokens = tokenize(str);
-        Stack<AST> s = new Stack<AST>();
+        Stack<AST> s = new Stack<>();
         ListIterator<String> li = tokens.listIterator();
 
         // create the ast
-        while( li.hasNext() )
+        while (li.hasNext())
             node(s, li);
         if (s.size() == 1) {
             return s.pop();
         }
         if (s.size() > 1) {
             // assume they are anded ... TODO balance the tree
-            while( s.size() > 1 ) {
+            while (s.size() > 1) {
                 AST p1 = s.pop();
                 AST p2 = s.pop();
                 s.push(new And(p1, p2));
@@ -55,11 +59,11 @@ public class ASTFactory {
         return null;
     }
 
-    protected static List<String> tokenize( String pattern ) {
-        List<String> l = new LinkedList<String>();
-        for( int i = 0; i < pattern.length(); i++ ) {
+    protected static List<String> tokenize(String pattern) {
+        List<String> l = new LinkedList<>();
+        for (int i = 0; i < pattern.length(); i++) {
             char c = pattern.charAt(i);
-            switch( c ) {
+            switch (c) {
             case '(':
                 l.add("("); //$NON-NLS-1$
                 break;
@@ -106,28 +110,30 @@ public class ASTFactory {
                     l.add("!"); //$NON-NLS-1$
                     i += 2;
                 }
+                break;
             default:
                 // greedy grab
                 j = i + 1;
-                while( j < pattern.length() && pattern.charAt(j) != '"' && pattern.charAt(j) != '+'
+                while (j < pattern.length() && pattern.charAt(j) != '"' && pattern.charAt(j) != '+'
                         && pattern.charAt(j) != '-' && pattern.charAt(j) != '!'
                         && pattern.charAt(j) != '(' && pattern.charAt(j) != ')'
                         && pattern.charAt(j) != ' ' && pattern.charAt(j) != '\t'
-                        && pattern.charAt(j) != '\n' )
+                        && pattern.charAt(j) != '\n')
                     j++;
                 l.add(pattern.substring(i, j));
                 i = (i == j ? j : j - 1);
+                break;
             }
         }
         return l;
     }
 
-    private static void node( Stack<AST> s, ListIterator<String> li ) {
+    private static void node(Stack<AST> s, ListIterator<String> li) {
         if (li.hasNext()) {
             String token = li.next();
 
             char c = token.charAt(0);
-            switch( c ) {
+            switch (c) {
             case '(':
                 // child is what we want
                 node(s, li);
@@ -154,6 +160,7 @@ public class ASTFactory {
                 break;
             default:
                 s.push(new Literal(token));
+                break;
             }
         }
     }
@@ -164,45 +171,30 @@ public class ASTFactory {
         @SuppressWarnings("unused")
         private And() {/* should not be used */
         }
-        public And( AST left, AST right ) {
+
+        public And(AST left, AST right) {
             this.left = left;
             this.right = right;
         }
 
-        /**
-         * TODO summary sentence for accept ...
-         * 
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
-         * @param datum
-         * @return
-         */
-        public boolean accept( String datum ) {
-            if( datum == null ) return false;
+        @Override
+        public boolean accept(String datum) {
+            if (datum == null)
+                return false;
             return left != null && right != null && left.accept(datum) && right.accept(datum);
         }
 
-        /**
-         * TODO summary sentence for type ...
-         * 
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
-         * @return
-         */
+        @Override
         public int type() {
             return AND;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getLeft()
-         */
+
+        @Override
         public AST getLeft() {
             return left;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getRight()
-         */
+
+        @Override
         public AST getRight() {
             return right;
         }
@@ -214,46 +206,30 @@ public class ASTFactory {
         @SuppressWarnings("unused")
         private Or() {/* should not be used */
         }
-        public Or( AST left, AST right ) {
+
+        public Or(AST left, AST right) {
             this.left = left;
             this.right = right;
         }
 
-        /**
-         * TODO summary sentence for accept ...
-         * 
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
-         * @param datum
-         * @return
-         */
-        public boolean accept( String datum ) {
-            if( datum == null ) return false;
+        @Override
+        public boolean accept(String datum) {
+            if (datum == null)
+                return false;
             return (right != null && right.accept(datum)) || (left != null && left.accept(datum));
         }
 
-        /**
-         * TODO summary sentence for type ...
-         * 
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
-         * @return
-         */
+        @Override
         public int type() {
             return OR;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getLeft()
-         */
+
+        @Override
         public AST getLeft() {
             return left;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getRight()
-         */
+        @Override
         public AST getRight() {
             return right;
         }
@@ -265,44 +241,29 @@ public class ASTFactory {
         @SuppressWarnings("unused")
         private Not() {/* should not be used */
         }
-        public Not( AST child ) {
+
+        public Not(AST child) {
             this.child = child;
         }
 
-        /**
-         * TODO summary sentence for accept ...
-         * 
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
-         * @param datum
-         * @return
-         */
-        public boolean accept( String datum ) {
-            if( datum == null ) return false;
+        @Override
+        public boolean accept(String datum) {
+            if (datum == null)
+                return false;
             return !(child != null && child.accept(datum));
         }
 
-        /**
-         * TODO summary sentence for type ...
-         * 
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
-         * @return
-         */
+        @Override
         public int type() {
             return NOT;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getLeft()
-         */
+
+        @Override
         public AST getLeft() {
             return child;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getRight()
-         */
+
+        @Override
         public AST getRight() {
             return null;
         }
@@ -314,48 +275,33 @@ public class ASTFactory {
         @SuppressWarnings("unused")
         private Literal() {/* should not be used */
         }
-        public Literal( String value ) {
+
+        public Literal(String value) {
             this.value = value;
         }
 
-        /**
-         * TODO summary sentence for accept ...
-         * 
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#accept(java.lang.String)
-         * @param datum
-         * @return
-         */
-        public boolean accept( String datum ) {
+        @Override
+        public boolean accept(String datum) {
             return value != null && datum != null
                     && datum.toUpperCase().indexOf(value.toUpperCase()) > -1;
         }
 
-        /**
-         * TODO summary sentence for type ...
-         * 
-         * @see org.locationtech.udig.catalog.internal.CatalogImpl.AST#type()
-         * @return
-         */
+        @Override
         public int type() {
             return LITERAL;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getLeft()
-         */
+
+        @Override
         public AST getLeft() {
             return null;
         }
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.locationtech.udig.catalog.util.AST#getRight()
-         */
+
+        @Override
         public AST getRight() {
             return null;
         }
 
+        @Override
         public String toString() {
             return value;
         }

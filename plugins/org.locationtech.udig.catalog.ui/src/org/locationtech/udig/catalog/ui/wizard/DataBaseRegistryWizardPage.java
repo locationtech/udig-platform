@@ -753,11 +753,10 @@ public abstract class DataBaseRegistryWizardPage extends DataStoreWizardPage
 
         // If there are stored valid connections, add them to the Combo Widget
         // TODO: This should be limited to only n recent connections
-        if (null != storedDBCIList) {
-            for (DataBaseConnInfo dbci : storedDBCIList) {
-                rcntComboWgt.add(dbci.toDisplayString());
-            }
+        for (DataBaseConnInfo dbci : storedDBCIList) {
+            rcntComboWgt.add(dbci.toDisplayString());
         }
+
         // Populate the rest of the widgets with the current values which are
         // the
         // defaults which were set in the constructor of the extending class.
