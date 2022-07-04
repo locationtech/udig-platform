@@ -76,6 +76,7 @@ import org.eclipse.ui.dialogs.PropertyDialogAction;
 import org.locationtech.udig.core.filter.AdaptingFilter;
 import org.locationtech.udig.core.filter.AdaptingFilterFactory;
 import org.locationtech.udig.core.internal.ExtensionPointList;
+import org.locationtech.udig.internal.ui.UDIGDNDProcessor;
 import org.locationtech.udig.internal.ui.UDIGDropHandler;
 import org.locationtech.udig.internal.ui.UDigByteAndLocalTransfer;
 import org.locationtech.udig.internal.ui.UiPlugin;
@@ -2139,7 +2140,7 @@ public class ToolManager implements IToolManager {
 
         @Override
         public void run() {
-            final Object contents = ToolManagerUtils.getClipboardContent(part);
+            final Object contents = getClipboardContent(part);
 
             if (contents == null) {
                 return;
@@ -2194,6 +2195,20 @@ public class ToolManager implements IToolManager {
                 finalDropHandler.performDrop(contents, null);
             }
         }
+
+        private static Object getClipboardContent(final IWorkbenchPart part) {
+            final Clipboard clipboard = new Clipboard(part.getSite().getShell().getDisplay());
+            final Set<Transfer> transfers = UDIGDNDProcessor.getTransfers();
+            Object contents = null;
+            for (final Transfer transfer : transfers) {
+                contents = clipboard.getContents(transfer);
+                if (contents != null) {
+                    break;
+                }
+            }
+            return contents;
+        }
+
     }
 
     @Override

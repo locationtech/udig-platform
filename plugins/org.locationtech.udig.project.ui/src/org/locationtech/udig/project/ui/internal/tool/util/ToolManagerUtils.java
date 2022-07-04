@@ -11,25 +11,37 @@
 package org.locationtech.udig.project.ui.internal.tool.util;
 
 import java.util.Collections;
-import java.util.Set;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.dnd.Clipboard;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.ui.IWorkbenchPart;
 import org.locationtech.udig.catalog.IGeoResource;
-import org.locationtech.udig.internal.ui.UDIGDNDProcessor;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.commands.CreateMapCommand;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.MapPart;
 
-public class ToolManagerUtils {
+/**
+ * Class with helper methods for ToolManager
+ *
+ * @author fgdrf
+ *
+ */
+public final class ToolManagerUtils {
 
+    private ToolManagerUtils() {
+    }
+
+    /**
+     * Resolves the Map from Part Selection, if there is any selection, otherwise use active MapPart
+     * to access map.
+     *
+     * @param part Part to get selected element from
+     * @return Map Should never null, if there is no selection or MapPart with Map available, a map
+     *         will be created.
+     */
     public static Map getTargetMap(final IWorkbenchPart part) {
-        final Object selection = firstSelectedElement(part);
+        final Object selection = getFirstSelectedElement(part);
 
         Map finalMap = null;
         if (selection instanceof Map) {
@@ -53,22 +65,14 @@ public class ToolManagerUtils {
         return finalMap;
     }
 
-    public static Object getClipboardContent(final IWorkbenchPart part) {
-        final Clipboard clipboard = new Clipboard(part.getSite().getShell().getDisplay());
-        final Set<Transfer> transfers = UDIGDNDProcessor.getTransfers();
-        Object contents = null;
-        for (final Transfer transfer : transfers) {
-            contents = clipboard.getContents(transfer);
-            if (contents != null) {
-                break;
-            }
-        }
-        return contents;
-    }
-
-    public static Object firstSelectedElement(final IWorkbenchPart part) {
+    /**
+     * @param part to get selected element from.
+     * @return the first selected element or <code>null</code>, if selection is empty.
+     */
+    public static Object getFirstSelectedElement(final IWorkbenchPart part) {
         final ISelection selection = part.getSite().getSelectionProvider().getSelection();
-        if (selection.isEmpty() || !(selection instanceof IStructuredSelection)) {
+        if (selection == null || selection.isEmpty()
+                || !(selection instanceof IStructuredSelection)) {
             return null;
         } else {
             return ((IStructuredSelection) selection).getFirstElement();

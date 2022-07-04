@@ -12,8 +12,10 @@ package org.locationtech.udig.project.ui.internal.tool.utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
 
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchPart;
@@ -23,6 +25,7 @@ import org.junit.runner.RunWith;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.ui.internal.tool.util.ToolManagerUtils;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -63,9 +66,34 @@ public class ToolManagerUtilsTest {
         when(site.getSelectionProvider()).thenReturn(selectionProvider);
         when(selectionProvider.getSelection()).thenReturn(selection);
         when(selection.isEmpty()).thenReturn(Boolean.TRUE);
-
-        Object targetMap = ToolManagerUtils.getTargetMap(part);
-
-        assertNotNull(targetMap);
+        assertNotNull(ToolManagerUtils.getTargetMap(part));
     }
+
+    @Test
+    public void nullObjectOnNullSelection() {
+        when(part.getSite()).thenReturn(site);
+        when(site.getSelectionProvider()).thenReturn(selectionProvider);
+        when(selectionProvider.getSelection()).thenReturn(null);
+        assertNull(ToolManagerUtils.getFirstSelectedElement(part));
+    }
+
+    @Test
+    public void nullObjectOnEmptySelection() {
+        when(part.getSite()).thenReturn(site);
+        when(site.getSelectionProvider()).thenReturn(selectionProvider);
+        when(selectionProvider.getSelection()).thenReturn(selection);
+        when(selection.isEmpty()).thenReturn(true);
+        assertNull(ToolManagerUtils.getFirstSelectedElement(part));
+    }
+
+    @Test
+    public void nullObjectOnNonStructuredSelection() {
+        when(part.getSite()).thenReturn(site);
+        when(site.getSelectionProvider()).thenReturn(selectionProvider);
+        ISelection nonStructuredSelection = Mockito.mock(ISelection.class);
+        when(nonStructuredSelection.isEmpty()).thenReturn(false);
+        when(selectionProvider.getSelection()).thenReturn(nonStructuredSelection);
+        assertNull(ToolManagerUtils.getFirstSelectedElement(part));
+    }
+
 }
