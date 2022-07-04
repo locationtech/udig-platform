@@ -30,7 +30,6 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -74,11 +73,9 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.dialogs.PropertyDialogAction;
-import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.core.filter.AdaptingFilter;
 import org.locationtech.udig.core.filter.AdaptingFilterFactory;
 import org.locationtech.udig.core.internal.ExtensionPointList;
-import org.locationtech.udig.internal.ui.UDIGDNDProcessor;
 import org.locationtech.udig.internal.ui.UDIGDropHandler;
 import org.locationtech.udig.internal.ui.UDigByteAndLocalTransfer;
 import org.locationtech.udig.internal.ui.UiPlugin;
@@ -91,7 +88,6 @@ import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.ProjectPackage;
-import org.locationtech.udig.project.internal.commands.CreateMapCommand;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 import org.locationtech.udig.project.ui.internal.MapEditorWithPalette;
@@ -101,6 +97,7 @@ import org.locationtech.udig.project.ui.internal.ProjectUIPlugin;
 import org.locationtech.udig.project.ui.internal.actions.Delete;
 import org.locationtech.udig.project.ui.internal.tool.ToolContext;
 import org.locationtech.udig.project.ui.internal.tool.impl.ToolContextImpl;
+import org.locationtech.udig.project.ui.internal.tool.util.ToolManagerUtils;
 import org.locationtech.udig.project.ui.tool.IContextMenuContributionTool;
 import org.locationtech.udig.project.ui.tool.IToolManager;
 import org.locationtech.udig.project.ui.tool.ModalTool;
@@ -2142,49 +2139,28 @@ public class ToolManager implements IToolManager {
 
         @Override
         public void run() {
-            Clipboard clipboard = new Clipboard(part.getSite().getShell().getDisplay());
-            Set<Transfer> transfers = UDIGDNDProcessor.getTransfers();
-            Object contents = null;
-            for (Transfer transfer : transfers) {
-                contents = clipboard.getContents(transfer);
-                if (contents != null)
-                    break;
+            final Object contents = ToolManagerUtils.getClipboardContent(part);
+
+            if (contents == null) {
+                return;
             }
 
-            Object selection = firstSelectedElement();
+            final Map finalMap = ToolManagerUtils.getTargetMap(part);
+            final MapPart finalMapPart;
+            if (finalMap != null) {
+                finalMapPart = ApplicationGISInternal.findMapPart(finalMap);
+            } else {
+                finalMapPart = null;
+            }
+            UDIGDropHandler dropHandler = null;
+            if (finalMapPart != null && finalMapPart.getDropHandler() != null) {
+                dropHandler = finalMapPart.getDropHandler();
+            }
 
-            if (contents != null) {
-                MapPart activeEditor = ApplicationGISInternal.getActiveEditor();
-                final Map finalMap;
-                final UDIGDropHandler finalDropHandler;
-                if (selection instanceof Map) {
-                    finalMap = (Map) selection;
-                    finalDropHandler = new UDIGDropHandler();
-                    activeEditor = null;
-                } else if (activeEditor == null) {
-                    CreateMapCommand command = new CreateMapCommand(null,
-                            Collections.<IGeoResource> emptyList(), null);
-                    try {
-                        command.run(new NullProgressMonitor());
-                    } catch (Exception e) {
-                        throw (RuntimeException) new RuntimeException().initCause(e);
-                    }
-                    finalMap = (Map) command.getCreatedMap();
-                    finalDropHandler = new UDIGDropHandler();
-                } else {
+            final UDIGDropHandler finalDropHandler = (dropHandler == null ? new UDIGDropHandler() : dropHandler);
 
-                    UDIGDropHandler mapDropHandler = activeEditor.getDropHandler();
-
-                    if (mapDropHandler == null) {
-                        finalDropHandler = new UDIGDropHandler();
-                    } else {
-                        finalDropHandler = mapDropHandler;
-                    }
-                    finalMap = activeEditor.getMap();
-                }
-
-                final MapPart finalActiveEditor = activeEditor;
-                ILayer selectedLayer = finalMap.getEditManager().getSelectedLayer();
+            if (finalMap != null && finalMap.getEditManager() != null) {
+                final ILayer selectedLayer = finalMap.getEditManager().getSelectedLayer();
                 if (selectedLayer == null) {
                     finalDropHandler.setTarget(finalMap);
                 } else {
@@ -2194,8 +2170,7 @@ public class ToolManager implements IToolManager {
 
                     @Override
                     public void done(IDropAction action, Throwable error) {
-
-                        if (finalActiveEditor == null && finalMap.getMapLayers().isEmpty()) {
+                        if (finalMapPart == null && finalMap.getMapLayers().isEmpty()) {
                             finalMap.getProjectInternal().getElementsInternal().remove(finalMap);
                         }
 
@@ -2204,7 +2179,7 @@ public class ToolManager implements IToolManager {
 
                     @Override
                     public void noAction(Object data) {
-                        if (finalActiveEditor == null && finalMap.getMapLayers().isEmpty()) {
+                        if (finalMapPart == null && finalMap.getMapLayers().isEmpty()) {
                             finalMap.getProjectInternal().getElementsInternal().remove(finalMap);
                         }
                         finalDropHandler.removeListener(this);
@@ -2217,15 +2192,6 @@ public class ToolManager implements IToolManager {
                 });
                 finalDropHandler.setViewerLocation(ViewerDropLocation.ON);
                 finalDropHandler.performDrop(contents, null);
-            }
-        }
-
-        private Object firstSelectedElement() {
-            ISelection selection = part.getSite().getSelectionProvider().getSelection();
-            if (selection.isEmpty() || !(selection instanceof IStructuredSelection)) {
-                return null;
-            } else {
-                return ((IStructuredSelection) selection).getFirstElement();
             }
         }
     }
