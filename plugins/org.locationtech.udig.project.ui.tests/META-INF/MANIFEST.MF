@@ -52,6 +52,7 @@ Require-Bundle: org.eclipse.gef;bundle-version="3.7.0",
  org.locationtech.udig.tool.default,
  org.mockito;bundle-version="2.23.0",
  org.objenesis;bundle-version="2.6.0",
- net.bytebuddy.byte-buddy;bundle-version="1.9.0"
+ net.bytebuddy.byte-buddy;bundle-version="1.9.0",
+ net.bytebuddy.byte-buddy-agent;bundle-version="1.9.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
