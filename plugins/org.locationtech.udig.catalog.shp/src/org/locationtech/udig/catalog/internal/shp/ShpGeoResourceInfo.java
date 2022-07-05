@@ -24,16 +24,16 @@ class ShpGeoResourceInfo extends IGeoResourceInfo {
 	private final ShpGeoResourceImpl shpResource;
 	private SimpleFeatureType featureType = null;
     private ResourceInfo header;
-    
+
 	/**
 	 * Connect to Shapefile and grab header information.
-	 * 
+	 *
 	 * @param shpGeoResourceImpl
 	 * @throws IOException
 	 */
 	ShpGeoResourceInfo( ShpGeoResourceImpl shpGeoResourceImpl ) throws IOException {
         shpResource = shpGeoResourceImpl;
-        featureType = shpResource.parent.getDS(null).getSchema();
+        featureType = shpResource.parent.getDS(null).getFeatureSource().getSchema();
         try {
             FeatureSource<SimpleFeatureType, SimpleFeature> source = shpResource.parent.getDS(null)
                     .getFeatureSource();
@@ -82,30 +82,34 @@ class ShpGeoResourceInfo extends IGeoResourceInfo {
 		title = title.replace("%20", " ");
         title = title.trim();
     }
-        
+
+    @Override
     public CoordinateReferenceSystem getCRS() {
         return featureType.getCoordinateReferenceSystem();
-    }    
+    }
 
+    @Override
     public String getName() {
         return featureType.getName().getLocalPart();
     }
 
+    @Override
     public URI getSchema() {
-    	try {
+        try {
 			return new URI( featureType.getName().getNamespaceURI());
 		} catch (URISyntaxException e) {
 			return null;
 		}
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
-    
+
     /**
      * Description of shapefile contents.
-     * 
+     *
      * @return description of Shapefile Contents
      */
     public SimpleFeatureType getFeatureType(){

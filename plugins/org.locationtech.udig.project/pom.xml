@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>plugins</artifactId>
     <groupId>org.locationtech.udig</groupId>
+    <artifactId>plugins</artifactId>
     <version>2.3.0-SNAPSHOT</version>
   </parent>
   <artifactId>org.locationtech.udig.project</artifactId>
   <packaging>eclipse-plugin</packaging>
-
 
   <build>
     <plugins>
@@ -21,39 +19,38 @@
           <execution>
             <id>prepare-package</id>
             <phase>prepare-package</phase>
-            <configuration>
-              <target>
-                <tstamp>
-                  <format property="current.time" pattern="yyyy" />
-                </tstamp>
-
-                <replace file="about.mappings">
-                  <replacefilter token="_DATE_" value="${current.time}" />
-                </replace>
-              </target>
-            </configuration>
             <goals>
               <goal>run</goal>
             </goals>
+            <configuration>
+              <target>
+                <tstamp>
+                  <format pattern="yyyy" property="current.time"></format>
+                </tstamp>
+
+                <replace file="about.mappings">
+                  <replacefilter token="_DATE_" value="${current.time}"></replacefilter>
+                </replace>
+              </target>
+            </configuration>
           </execution>
           <execution>
             <id>verify</id>
             <phase>verify</phase>
-            <configuration>
-              <target>
-                <tstamp>
-                  <format property="current.time" pattern="yyyy" />
-                </tstamp>
-
-                <replace file="about.mappings">
-                  <replacefilter token="${current.time}"
-                    value="_DATE_" />
-                </replace>
-              </target>
-            </configuration>
             <goals>
               <goal>run</goal>
             </goals>
+            <configuration>
+              <target>
+                <tstamp>
+                  <format pattern="yyyy" property="current.time"></format>
+                </tstamp>
+
+                <replace file="about.mappings">
+                  <replacefilter token="${current.time}" value="_DATE_"></replacefilter>
+                </replace>
+              </target>
+            </configuration>
           </execution>
         </executions>
       </plugin>
