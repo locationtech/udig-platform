@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.locationtech.udig</groupId>
-        <artifactId>pom-libs.parent</artifactId>
-        <version>0.0.2</version>
-        <relativePath>../../pom-libs.xml</relativePath>
-    </parent>
+  <parent>
+    <groupId>org.locationtech.udig</groupId>
+    <artifactId>pom-libs.parent</artifactId>
+    <version>0.0.2</version>
+    <relativePath>../../pom-libs.xml</relativePath>
+  </parent>
 
-    <!-- 
+  <!-- 
         At the time of writing we cannot distrubtue the DB2 JDBC drivers
         and have created placeholder using a an empty DUMMY.txt file.
         
@@ -26,100 +26,99 @@
         3. Proivde a wizard for users to replace these jars
      -->
 
-    <artifactId>pom-libs.dummy.db2</artifactId>
-    <name>DB2 Dummy Jar Creation</name>
-    
-    <packaging>pom</packaging>
+  <artifactId>pom-libs.dummy.db2</artifactId>
 
-    <properties>
-        <lib.dir>${basedir}/libs</lib.dir>
-        <lib.dummy.dir>${lib.dir}/dummy</lib.dummy.dir>
-    </properties>
+  <packaging>pom</packaging>
+  <name>DB2 Dummy Jar Creation</name>
 
-    <developers>
-        <developer>
-            <id>jodygarnett</id>
-            <name>Jody Garnett</name>
-            <email>jody.garnett@gmail.com</email>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <timezone>+10</timezone>
-        </developer>
-        <developer>
-            <id>fgdrf</id>
-            <name>Frank Gasdorf</name>
-            <email>fgdrf@users.sourceforge.net</email>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-    </developers>
+  <developers>
+    <developer>
+      <id>jodygarnett</id>
+      <name>Jody Garnett</name>
+      <email>jody.garnett@gmail.com</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+10</timezone>
+    </developer>
+    <developer>
+      <id>fgdrf</id>
+      <name>Frank Gasdorf</name>
+      <email>fgdrf@users.sourceforge.net</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>${lib.dir}</directory>
-                            <includes>
-                                <include>*.jar</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                        <fileset>
-                            <directory>${lib.dummy.dir}</directory>
-                            <includes>
-                                <include>*.*</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>create_dummy</id>
-                        <phase>compile</phase>
-                        <configuration>
-                            <target>
-                                <mkdir dir="${lib.dir}"/>
-                                <mkdir dir="${lib.dummy.dir}"/>
-                                <touch file="${lib.dummy.dir}/DUMMY.txt"/>
-                                
-                                <jar destfile="${lib.dir}/db2jcc.jar"
-                                     basedir="${lib.dummy.dir}">
-                                    <manifest>
-                                      <attribute name="Built-By" value="${user.name}"/>
-                                      <attribute name="Implementation-Title" value="Dummy"/>
-                                      <attribute name="Implementation-Version" value="1.0.0"/>
-                                    </manifest>
-                                </jar>
-                                <jar destfile="${lib.dir}/db2jcc_license_cu.jar">
-                                     basedir="${lib.dummy.dir}">
-                                    <manifest>
-                                      <attribute name="Built-By" value="${user.name}"/>
-                                      <attribute name="Implementation-Title" value="Dummy"/>
-                                      <attribute name="Implementation-Version" value="1.0.0"/>
-                                    </manifest>
-                                </jar>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-         </plugins>
-    </build>
-    
+  <properties>
+    <lib.dir>${basedir}/libs</lib.dir>
+    <lib.dummy.dir>${lib.dir}/dummy</lib.dummy.dir>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${lib.dir}</directory>
+              <includes>
+                <include>*.jar</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+            <fileset>
+              <directory>${lib.dummy.dir}</directory>
+              <includes>
+                <include>*.*</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>create_dummy</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <mkdir dir="${lib.dir}"></mkdir>
+                <mkdir dir="${lib.dummy.dir}"></mkdir>
+                <touch file="${lib.dummy.dir}/DUMMY.txt"></touch>
+
+                <jar basedir="${lib.dummy.dir}" destfile="${lib.dir}/db2jcc.jar">
+                  <manifest>
+                    <attribute name="Built-By" value="${user.name}"></attribute>
+                    <attribute name="Implementation-Title" value="Dummy"></attribute>
+                    <attribute name="Implementation-Version" value="1.0.0"></attribute>
+                  </manifest>
+                </jar>
+                <jar destfile="${lib.dir}/db2jcc_license_cu.jar">
+                  basedir="${lib.dummy.dir}"&gt;
+                  <manifest>
+                    <attribute name="Built-By" value="${user.name}"></attribute>
+                    <attribute name="Implementation-Title" value="Dummy"></attribute>
+                    <attribute name="Implementation-Version" value="1.0.0"></attribute>
+                  </manifest>
+                </jar>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

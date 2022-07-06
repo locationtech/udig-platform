@@ -1,72 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.locationtech.udig</groupId>
-        <artifactId>pom-libs.parent</artifactId>
-        <version>0.0.2</version>
-        <relativePath>../../pom-libs.xml</relativePath>
-    </parent>
+  <parent>
+    <groupId>org.locationtech.udig</groupId>
+    <artifactId>pom-libs.parent</artifactId>
+    <version>0.0.2</version>
+    <relativePath>../../pom-libs.xml</relativePath>
+  </parent>
 
-    <!-- 
+  <!-- 
     You will need to generate the dummy en help directory using:
             
             mvn package -f pom-libs.xml 
      -->
 
-    <artifactId>pom-libs.dummy.help.en</artifactId>
-    <name>Help Dummy EN Creation</name>
-    
-    <packaging>pom</packaging>
+  <artifactId>pom-libs.dummy.help.en</artifactId>
 
-    <properties>
-        <en.dir>${basedir}/EN</en.dir>
-    </properties>
+  <packaging>pom</packaging>
+  <name>Help Dummy EN Creation</name>
 
-    <developers>
-        <developer>
-            <id>jodygarnett</id>
-            <name>Jody Garnett</name>
-            <email>jody.garnett@gmail.com</email>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <timezone>+10</timezone>
-        </developer>
-        <developer>
-            <id>fgdrf</id>
-            <name>Frank Gasdorf</name>
-            <email>fgdrf@users.sourceforge.net</email>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-    </developers>
+  <developers>
+    <developer>
+      <id>jodygarnett</id>
+      <name>Jody Garnett</name>
+      <email>jody.garnett@gmail.com</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+10</timezone>
+    </developer>
+    <developer>
+      <id>fgdrf</id>
+      <name>Frank Gasdorf</name>
+      <email>fgdrf@users.sourceforge.net</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <!-- EN/index.html placeholder -->
-                    <execution>
-                        <id>create_index</id>
-                        <phase>compile</phase>
-                        <configuration>
-                           <target>
-                             <mkdir dir="${en.dir}"/>
-                           </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-         </plugins>
-    </build>
-    
+  <properties>
+    <en.dir>${basedir}/EN</en.dir>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <!-- EN/index.html placeholder -->
+          <execution>
+            <id>create_index</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <mkdir dir="${en.dir}"></mkdir>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>
