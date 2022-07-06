@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <!-- This script was created to automagically download the external libs 
+  <!-- This script was created to automagically download the external libs 
         required for uDig to build and export correctly. 
         
         To download the required libraries, use: 
@@ -14,139 +14,165 @@
           - verify the classpath (Manfiest Runtime tab) references the libs;
           - ensure the lib versions in the classpath are also correct. -->
 
-    <groupId>org.locationtech.udig</groupId>
-    <artifactId>pom-libs.parent</artifactId>
-    <version>0.0.2</version>
-    <name>uDig 3rd-Party libraries Download</name>
-    
-    <packaging>pom</packaging>
+  <groupId>org.locationtech.udig</groupId>
+  <artifactId>pom-libs.parent</artifactId>
+  <version>0.0.2</version>
 
-    <developers>
-        <developer>
-            <id>fgdrf</id>
-            <name>Frank Gasdorf</name>
-            <email>fgdrf@users.sourceforge.net</email>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-    </developers>
+  <packaging>pom</packaging>
+  <name>uDig 3rd-Party libraries Download</name>
 
-    <modules>
-       <module>plugins/org.locationtech.udig.catalog.arcsde/pom-libs.xml</module>
-       <module>plugins/org.locationtech.udig.help/pom-libs.xml</module>
-       <module>plugins/org.locationtech.udig.libs/pom-libs.xml</module>
-       <module>plugins/org.locationtech.udig.libs.db2/pom-libs.xml</module>
-       <module>plugins/org.locationtech.udig.libs.geobuf/pom-libs.xml</module>
-       <module>plugins/org.locationtech.udig.libs.jfreechart/pom-libs.xml</module>
-       <module>plugins/org.locationtech.udig.libs.netcdf/pom-libs.xml</module>
-       <module>plugins/org.locationtech.udig.libs.oracle/pom-libs.xml</module>
-       <module>plugins/net.sf.opencsv/pom-libs.xml</module>
-    </modules>
+  <developers>
+    <developer>
+      <id>fgdrf</id>
+      <name>Frank Gasdorf</name>
+      <email>fgdrf@users.sourceforge.net</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
 
-    <properties>
-        <lib.dir>${basedir}/lib</lib.dir>
-        <lib.source.dir>${basedir}/lib-src</lib.source.dir>
+  <modules>
+    <module>plugins/org.locationtech.udig.catalog.arcsde/pom-libs.xml</module>
+    <module>plugins/org.locationtech.udig.help/pom-libs.xml</module>
+    <module>plugins/org.locationtech.udig.libs/pom-libs.xml</module>
+    <module>plugins/org.locationtech.udig.libs.db2/pom-libs.xml</module>
+    <module>plugins/org.locationtech.udig.libs.geobuf/pom-libs.xml</module>
+    <module>plugins/org.locationtech.udig.libs.jfreechart/pom-libs.xml</module>
+    <module>plugins/org.locationtech.udig.libs.netcdf/pom-libs.xml</module>
+    <module>plugins/org.locationtech.udig.libs.oracle/pom-libs.xml</module>
+    <module>plugins/net.sf.opencsv/pom-libs.xml</module>
+  </modules>
 
-        <!-- dependencies used of udig.libs (host-bundle) and udig.libs.xxx (fragments as extensions) -->
-        <geotools.version>22.1</geotools.version>
-        <imageio-ext.version>1.3.2</imageio-ext.version>
-        <jai.imageio.version>1.1</jai.imageio.version>
-        <jai.core.version>1.1.3</jai.core.version>
-    </properties>
+  <properties>
+    <lib.dir>${basedir}/lib</lib.dir>
+    <lib.source.dir>${basedir}/lib-src</lib.source.dir>
 
-    <repositories>
-        <!-- Open Source Geospatial Foundation is the official repository used by
+    <!-- dependencies used of udig.libs (host-bundle) and udig.libs.xxx (fragments as extensions) -->
+    <geotools.version>22.1</geotools.version>
+    <imageio-ext.version>1.3.2</imageio-ext.version>
+    <jai.imageio.version>1.1</jai.imageio.version>
+    <jai.core.version>1.1.3</jai.core.version>
+  </properties>
+
+  <dependencies>
+    <!-- globally excluded dependencies for udig.libs (host) bundle and udig.libs.xxx (extensions) using fragments -->
+    <!-- Java Advanced Imaging is bundled into our JRE - as such we don't need 
+           them to be downloaded now; however we must run with: -Dosgi.parentClassloader=ext -->
+    <dependency>
+      <groupId>javax.media</groupId>
+      <artifactId>jai_imageio</artifactId>
+      <version>${jai.imageio.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.media</groupId>
+      <artifactId>jai_codec</artifactId>
+      <version>${jai.core.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.media</groupId>
+      <artifactId>jai_core</artifactId>
+      <version>${jai.core.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.9</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>27.0-jre</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <repositories>
+    <!-- Open Source Geospatial Foundation is the official repository used by
         the GeoTools project for stable releases - use this repository when
         using an official GeoTools numbered release -->
-        <repository>
-            <id>OSGeo</id>
-            <name>OSGeo Maven Release Repository</name>
-            <url>https://repo.osgeo.org/repository/release/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>OSGeo</id>
+      <name>OSGeo Maven Release Repository</name>
+      <url>https://repo.osgeo.org/repository/release/</url>
+    </repository>
 
-        <!-- GeoSolutions provide their own repository for imageio-ext builds -->
-        <repository>
-            <id>geosolutions</id>
-            <name>GeoSolutions</name>
-            <url>http://maven.geo-solutions.it</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
+    <!-- GeoSolutions provide their own repository for imageio-ext builds -->
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <id>geosolutions</id>
+      <name>GeoSolutions</name>
+      <url>http://maven.geo-solutions.it</url>
+    </repository>
 
-        <repository>
-            <id>ecc</id>
-            <name>ECC Repository</name>
-            <url>https://github.com/ElectronicChartCentre/ecc-mvn-repo/raw/master/releases</url>
-        </repository>
+    <repository>
+      <id>ecc</id>
+      <name>ECC Repository</name>
+      <url>https://github.com/ElectronicChartCentre/ecc-mvn-repo/raw/master/releases</url>
+    </repository>
 
-    </repositories>
+  </repositories>
 
-    <dependencies>
-      <!-- globally excluded dependencies for udig.libs (host) bundle and udig.libs.xxx (extensions) using fragments -->
-      <!-- Java Advanced Imaging is bundled into our JRE - as such we don't need 
-           them to be downloaded now; however we must run with: -Dosgi.parentClassloader=ext -->
-      <dependency>
-        <groupId>javax.media</groupId>
-        <artifactId>jai_imageio</artifactId>
-        <version>${jai.imageio.version}</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>javax.media</groupId>
-        <artifactId>jai_codec</artifactId>
-        <version>${jai.core.version}</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>javax.media</groupId>
-        <artifactId>jai_core</artifactId>
-        <version>${jai.core.version}</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>commons-codec</groupId>
-        <artifactId>commons-codec</artifactId>
-        <version>1.9</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>27.0-jre</version>
-        <scope>provided</scope>
-      </dependency>
-    </dependencies>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>2.4.1</version>
+        </plugin>
 
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <version>2.4.1</version>
-                </plugin>
-            
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>3.1.1</version>
-                </plugin>
-            
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <version>1.7</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.7</version>
+        </plugin>
+        <plugin>
+          <groupId>com.github.ekryd.sortpom</groupId>
+          <artifactId>sortpom-maven-plugin</artifactId>
+          <version>2.15.0</version>
+          <executions>
+            <execution>
+              <phase>verify</phase>
+              <goals>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <keepBlankLines>true</keepBlankLines>
+            <spaceBeforeCloseEmptyElement>false</spaceBeforeCloseEmptyElement>
+            <createBackupFile>false</createBackupFile>
+            <verifyFail>stop</verifyFail>
+            <verifyFailOn>strict</verifyFailOn>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>com.github.ekryd.sortpom</groupId>
+        <artifactId>sortpom-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 </project>

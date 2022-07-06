@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.locationtech.udig</groupId>
-        <artifactId>pom-libs.parent</artifactId>
-        <version>0.0.2</version>
-        <relativePath>../../pom-libs.xml</relativePath>
-    </parent>
+  <parent>
+    <groupId>org.locationtech.udig</groupId>
+    <artifactId>pom-libs.parent</artifactId>
+    <version>0.0.2</version>
+    <relativePath>../../pom-libs.xml</relativePath>
+  </parent>
 
-    <!-- 
+  <!-- 
     The files icu4j-3.2+.jar,jpe_sdk-9.2+.jar and jsde_sdk-9.2+.jar genearted here
     are fake ones. They're empty jar files in order for eclipse not to complain
     about the plugin missing required jars. When running udig, since the 
@@ -24,91 +24,88 @@
             mvn package -f pom-libs.xml 
      -->
 
-    <artifactId>pom-libs.dummy.arcsde</artifactId>
-    <name>ArcSDE Dummy Jar Creation</name>
-    
-    <packaging>pom</packaging>
+  <artifactId>pom-libs.dummy.arcsde</artifactId>
 
-    <properties>
-        <lib.dir>${basedir}/lib</lib.dir>
-        <lib.dummy.dir>${lib.dir}/dummy</lib.dummy.dir>
-    </properties>
+  <packaging>pom</packaging>
+  <name>ArcSDE Dummy Jar Creation</name>
 
-    <developers>
-        <developer>
-            <id>jodygarnett</id>
-            <name>Jody Garnett</name>
-            <email>jody.garnett@gmail.com</email>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <timezone>+10</timezone>
-        </developer>
-        <developer>
-            <id>fgdrf</id>
-            <name>Frank Gasdorf</name>
-            <email>fgdrf@users.sourceforge.net</email>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-    </developers>
+  <developers>
+    <developer>
+      <id>jodygarnett</id>
+      <name>Jody Garnett</name>
+      <email>jody.garnett@gmail.com</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+10</timezone>
+    </developer>
+    <developer>
+      <id>fgdrf</id>
+      <name>Frank Gasdorf</name>
+      <email>fgdrf@users.sourceforge.net</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>${lib.dir}</directory>
-                            <includes>
-                                <include>*.jar</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                        <fileset>
-                            <directory>${lib.dummy.dir}</directory>
-                            <includes>
-                                <include>*.*</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <!-- create icu4j-3.2+.jar, jpe_sdk-9.2+.jar, jsde_sdk-9.2+.jar -->
-                    <execution>
-                        <id>create_dummy</id>
-                        <phase>compile</phase>
-                        <configuration>
-                            <target>
-                                <mkdir dir="${lib.dir}"/>
-                                <mkdir dir="${lib.dummy.dir}"/>
-                                <touch file="${lib.dummy.dir}/DUMMY.txt"/>
-                                
-                                <jar destfile="${lib.dir}/icu4j-3.2+.jar"
-                                     basedir="${lib.dummy.dir}"/>
-                                <jar destfile="${lib.dir}/jpe_sdk-9.2+.jar"
-                                     basedir="${lib.dummy.dir}"/>
-                                <jar destfile="${lib.dir}/jsde_sdk-9.2+.jar"
-                                     basedir="${lib.dummy.dir}"/>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-         </plugins>
-    </build>
-    
+  <properties>
+    <lib.dir>${basedir}/lib</lib.dir>
+    <lib.dummy.dir>${lib.dir}/dummy</lib.dummy.dir>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${lib.dir}</directory>
+              <includes>
+                <include>*.jar</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+            <fileset>
+              <directory>${lib.dummy.dir}</directory>
+              <includes>
+                <include>*.*</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <!-- create icu4j-3.2+.jar, jpe_sdk-9.2+.jar, jsde_sdk-9.2+.jar -->
+          <execution>
+            <id>create_dummy</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <mkdir dir="${lib.dir}"></mkdir>
+                <mkdir dir="${lib.dummy.dir}"></mkdir>
+                <touch file="${lib.dummy.dir}/DUMMY.txt"></touch>
+
+                <jar basedir="${lib.dummy.dir}" destfile="${lib.dir}/icu4j-3.2+.jar"></jar>
+                <jar basedir="${lib.dummy.dir}" destfile="${lib.dir}/jpe_sdk-9.2+.jar"></jar>
+                <jar basedir="${lib.dummy.dir}" destfile="${lib.dir}/jsde_sdk-9.2+.jar"></jar>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

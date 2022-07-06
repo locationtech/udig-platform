@@ -1,197 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.locationtech.udig</groupId>
-		<artifactId>pom-libs.parent</artifactId>
-		<version>0.0.2</version>
-		<relativePath>../../pom-libs.xml</relativePath>
-	</parent>
+  <parent>
+    <groupId>org.locationtech.udig</groupId>
+    <artifactId>pom-libs.parent</artifactId>
+    <version>0.0.2</version>
+    <relativePath>../../pom-libs.xml</relativePath>
+  </parent>
 
-	<!-- This script was created to automagically download the external libs
+  <!-- This script was created to automagically download the external libs
 		required for uDig to build and export correctly. To download the required
 		libraries, use: mvn package -f pom-libs.xml After they have downloaded, make
 		sure you: - refresh this project in Eclipse; -
 		verify the classpath (Manfiest Runtime tab) references the libs; - ensure
 		the lib versions in the classpath are also correct. -->
 
-	<artifactId>pom-libs.download.jfreechart</artifactId>
-	<name>JFreechart 3rd-Party dependencies Download</name>
+  <artifactId>pom-libs.download.jfreechart</artifactId>
 
-	<packaging>pom</packaging>
+  <packaging>pom</packaging>
+  <name>JFreechart 3rd-Party dependencies Download</name>
 
-	<properties>
-		<jfreechart.version>1.0.19</jfreechart.version>
-		<jfreechart.swt.version>1.0.17</jfreechart.swt.version>
-		<lib.dir>${basedir}/lib</lib.dir>
-		<lib.source.dir>${basedir}/lib-src</lib.source.dir>
-	</properties>
+  <developers>
+    <developer>
+      <id>fgdrf</id>
+      <name>Frank Gasdorf</name>
+      <email>fgdrf@users.sourceforge.net</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
 
-	<developers>
-		<developer>
-			<id>fgdrf</id>
-			<name>Frank Gasdorf</name>
-			<email>fgdrf@users.sourceforge.net</email>
-			<roles>
-				<role>developer</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-	</developers>
+  <properties>
+    <jfreechart.version>1.0.19</jfreechart.version>
+    <jfreechart.swt.version>1.0.17</jfreechart.swt.version>
+    <lib.dir>${basedir}/lib</lib.dir>
+    <lib.source.dir>${basedir}/lib-src</lib.source.dir>
+  </properties>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>jfree</groupId>
-				<artifactId>eastwood</artifactId>
-				<version>1.1.1-20090908</version>
-				<exclusions>
-					<exclusion>
-						<groupId>junit</groupId>
-						<artifactId>junit</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>jfree</groupId>
-						<artifactId>jfreechart</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>jfree</groupId>
-						<artifactId>jcommon</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.jfree</groupId>
-				<artifactId>jfreechart</artifactId>
-				<version>${jfreechart.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>jfree</groupId>
-				<artifactId>jfreechart-swt</artifactId>
-				<version>${jfreechart.swt.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jfree</groupId>
-				<artifactId>jcommon</artifactId>
-				<version>1.0.23</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>jfree</groupId>
+        <artifactId>eastwood</artifactId>
+        <version>1.1.1-20090908</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>junit</artifactId>
+            <groupId>junit</groupId>
+          </exclusion>
+          <exclusion>
+            <artifactId>jfreechart</artifactId>
+            <groupId>jfree</groupId>
+          </exclusion>
+          <exclusion>
+            <artifactId>jcommon</artifactId>
+            <groupId>jfree</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.jfree</groupId>
+        <artifactId>jfreechart</artifactId>
+        <version>${jfreechart.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>jfree</groupId>
+        <artifactId>jfreechart-swt</artifactId>
+        <version>${jfreechart.swt.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jfree</groupId>
+        <artifactId>jcommon</artifactId>
+        <version>1.0.23</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.jfree</groupId>
-			<artifactId>jfreechart</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>jfreechart-swt</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>eastwood</artifactId>
-		</dependency>
-	</dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>org.jfree</groupId>
+      <artifactId>jfreechart</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jfree</groupId>
+      <artifactId>jfreechart-swt</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jfree</groupId>
+      <artifactId>eastwood</artifactId>
+    </dependency>
+  </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>${lib.dir}</directory>
-							<includes>
-								<include>*.*</include>
-							</includes>
-							<followSymlinks>false</followSymlinks>
-						</fileset>
-						<fileset>
-							<directory>${lib.source.dir}</directory>
-							<includes>
-								<include>*.*</include>
-							</includes>
-							<followSymlinks>false</followSymlinks>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${lib.dir}</directory>
+              <includes>
+                <include>*.*</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+            <fileset>
+              <directory>${lib.source.dir}</directory>
+              <includes>
+                <include>*.*</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${lib.dir}</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>false</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-							<excludeScope>provided</excludeScope>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy-dependencies-sources</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<classifier>sources</classifier>
-							<outputDirectory>${lib.source.dir}</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>false</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-							<excludeScope>provided</excludeScope>
-							<failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${lib.dir}</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <excludeScope>provided</excludeScope>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-dependencies-sources</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <classifier>sources</classifier>
+              <outputDirectory>${lib.source.dir}</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <excludeScope>provided</excludeScope>
+              <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>remove-lib-timestamp</id>
-						<phase>compile</phase>
-						<configuration>
-							<target>
-								<macrodef name="remove-lib-timestamp">
-									<attribute name="lib-dir" />
-									<sequential>
-										<move todir="@{lib-dir}" includeemptydirs="false">
-											<fileset dir="@{lib-dir}">
-												<include name="**/*.jar" />
-											</fileset>
-											<!-- YYYYMMDD.HHIISS-increment -->
-											<regexpmapper handledirsep="yes"
-												from="(.*?)-([\\\d]{8}(\.[\\\d]{6})?-[\\\d]+)((-sources)?\.jar)$$"
-												to="\1-SNAPSHOT\4" />
-										</move>
-									</sequential>
-								</macrodef>
-								<remove-lib-timestamp lib-dir="${lib.dir}" />
-								<remove-lib-timestamp lib-dir="${lib.source.dir}" />
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>remove-lib-timestamp</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <macrodef name="remove-lib-timestamp">
+                  <attribute name="lib-dir"></attribute>
+                  <sequential>
+                    <move includeemptydirs="false" todir="@{lib-dir}">
+                      <fileset dir="@{lib-dir}">
+                        <include name="**/*.jar"></include>
+                      </fileset>
+                      <!-- YYYYMMDD.HHIISS-increment -->
+                      <regexpmapper from="(.*?)-([\\\d]{8}(\.[\\\d]{6})?-[\\\d]+)((-sources)?\.jar)$$" handledirsep="yes" to="\1-SNAPSHOT\4"></regexpmapper>
+                    </move>
+                  </sequential>
+                </macrodef>
+                <remove-lib-timestamp lib-dir="${lib.dir}"></remove-lib-timestamp>
+                <remove-lib-timestamp lib-dir="${lib.source.dir}"></remove-lib-timestamp>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

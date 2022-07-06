@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -19,9 +17,9 @@
         the lib versions in the classpath are also correct. -->
 
   <artifactId>pom-libs.download.geotools.netcdf</artifactId>
-  <name>uDig NetCDF Core libraries Download</name>
 
   <packaging>pom</packaging>
+  <name>uDig NetCDF Core libraries Download</name>
 
   <developers>
     <developer>
@@ -44,40 +42,40 @@
       <version>${geotools.version}</version>
       <exclusions>
         <exclusion>
-          <groupId>org.geotools</groupId>
           <artifactId>gt-coverage-api</artifactId>
+          <groupId>org.geotools</groupId>
         </exclusion>
         <exclusion>
-          <groupId>org.geotools.jdbc</groupId>
           <artifactId>gt-jdbc-h2</artifactId>
+          <groupId>org.geotools.jdbc</groupId>
         </exclusion>
         <exclusion>
-          <groupId>org.geotools</groupId>
           <artifactId>gt-epsg-hsql</artifactId>
+          <groupId>org.geotools</groupId>
         </exclusion>
         <exclusion>
-          <groupId>org.geotools</groupId>
           <artifactId>gt-geotiff</artifactId>
+          <groupId>org.geotools</groupId>
         </exclusion>
         <exclusion>
-          <groupId>org.geotools</groupId>
           <artifactId>gt-shapefile</artifactId>
+          <groupId>org.geotools</groupId>
         </exclusion>
         <exclusion>
-          <groupId>org.geotools</groupId>
           <artifactId>gt-transform</artifactId>
+          <groupId>org.geotools</groupId>
         </exclusion>
         <exclusion>
-          <groupId>org.geotools</groupId>
           <artifactId>gt-image</artifactId>
-        </exclusion>
-        <exclusion>
           <groupId>org.geotools</groupId>
-          <artifactId>gt-cql</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>it.geosolutions.imageio-ext</groupId>
+          <artifactId>gt-cql</artifactId>
+          <groupId>org.geotools</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>*</artifactId>
+          <groupId>it.geosolutions.imageio-ext</groupId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -88,12 +86,12 @@
       <exclusions>
         <!-- in classpath of host-bundle -->
         <exclusion>
-          <groupId>it.geosolutions.imageio-ext</groupId>
           <artifactId>imageio-ext-utilities</artifactId>
+          <groupId>it.geosolutions.imageio-ext</groupId>
         </exclusion>
         <exclusion>
-          <groupId>it.geosolutions.imageio-ext</groupId>
           <artifactId>imageio-ext-geocore</artifactId>
+          <groupId>it.geosolutions.imageio-ext</groupId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -180,31 +178,28 @@
           <execution>
             <id>remove-lib-timestamp</id>
             <phase>compile</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
             <configuration>
               <target>
                 <macrodef name="remove-lib-timestamp">
-                  <attribute name="lib-dir" />
+                  <attribute name="lib-dir"></attribute>
                   <sequential>
-                    <move todir="@{lib-dir}" includeemptydirs="false">
+                    <move includeemptydirs="false" todir="@{lib-dir}">
                       <fileset dir="@{lib-dir}">
-                        <include name="**/*.jar" />
+                        <include name="**/*.jar"></include>
                       </fileset>
                       <!-- YYYYMMDD.HHIISS-increment -->
-                      <regexpmapper
-                           handledirsep="yes"
-                           from="(.*?)-([\\\d]{8}(\.[\\\d]{6})?-[\\\d]+)((-sources)?\.jar)$$"
-                           to="\1-SNAPSHOT\4" />
+                      <regexpmapper from="(.*?)-([\\\d]{8}(\.[\\\d]{6})?-[\\\d]+)((-sources)?\.jar)$$" handledirsep="yes" to="\1-SNAPSHOT\4"></regexpmapper>
                     </move>
                   </sequential>
                 </macrodef>
 
-                <remove-lib-timestamp lib-dir="${lib.dir}" />
-                <remove-lib-timestamp lib-dir="${lib.source.dir}" />
+                <remove-lib-timestamp lib-dir="${lib.dir}"></remove-lib-timestamp>
+                <remove-lib-timestamp lib-dir="${lib.source.dir}"></remove-lib-timestamp>
               </target>
             </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
           </execution>
         </executions>
       </plugin>
