@@ -1,66 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>features</artifactId>
     <groupId>org.locationtech.udig</groupId>
+    <artifactId>features</artifactId>
     <version>2.3.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.locationtech.udig_platform-feature</artifactId>
   <packaging>eclipse-feature</packaging>
-  
-    <profiles>
-        <profile>
-            <id>sdk</id>
-            <activation>
-                <property><name>all</name></property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.eclipse.tycho.extras</groupId>
-                        <artifactId>tycho-source-feature-plugin</artifactId>
-                        <version>${tycho-extras-version}</version>
-                        <configuration>
-                            <excludes>
-                                <plugin id="org.locationtech.udig.help"/>
-                                <plugin id="org.locationtech.udig.libs.db2"/>
-                                <plugin id="org.locationtech.udig.libs.oracle"/>
-                                <plugin id="org.locationtech.udig.libs.geobuf"/>
-                                <plugin id="org.locationtech.udig.libs.jfreechart"/>
-                                <plugin id="javax.media.jai_imageio"/>
-                                <plugin id="javax.media.jai_imageio.linux.gtk.x86_64"/>
-                            </excludes>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>source-feature</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>source-feature</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    
-                    <plugin>
-                        <groupId>org.eclipse.tycho</groupId>
-                        <artifactId>tycho-p2-plugin</artifactId>
-                        <version>${tycho-version}</version>
-                        <executions>
-                            <execution>
-                                <id>attached-p2-metadata</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>p2-metadata</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+
+  <profiles>
+    <profile>
+      <id>sdk</id>
+      <activation>
+        <property>
+          <name>all</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.tycho.extras</groupId>
+            <artifactId>tycho-source-feature-plugin</artifactId>
+            <version>${tycho-extras-version}</version>
+            <executions>
+              <execution>
+                <id>source-feature</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>source-feature</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <excludes>
+                <plugin id="org.locationtech.udig.help"></plugin>
+                <plugin id="org.locationtech.udig.libs.db2"></plugin>
+                <plugin id="org.locationtech.udig.libs.oracle"></plugin>
+                <plugin id="org.locationtech.udig.libs.geobuf"></plugin>
+                <plugin id="org.locationtech.udig.libs.jfreechart"></plugin>
+                <plugin id="javax.media.jai_imageio"></plugin>
+                <plugin id="javax.media.jai_imageio.linux.gtk.x86_64"></plugin>
+              </excludes>
+            </configuration>
+          </plugin>
+
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-p2-plugin</artifactId>
+            <version>${tycho-version}</version>
+            <executions>
+              <execution>
+                <id>attached-p2-metadata</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>p2-metadata</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
