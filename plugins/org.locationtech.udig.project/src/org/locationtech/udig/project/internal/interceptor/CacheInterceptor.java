@@ -20,6 +20,8 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.TransformerException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -42,7 +44,6 @@ import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * If a cache flag is set in the layer style blackboard this interceptor will return a
@@ -213,10 +214,18 @@ public class CacheInterceptor
             GMLFilterDocument filterDocument = new GMLFilterDocument(filterGeometry);
 
             try {
-                // parse xml
-                XMLReader reader = XMLReaderFactory.createXMLReader();
+
+                // parse XML
+
+                SAXParserFactory factory = SAXParserFactory.newInstance();
+                factory.setNamespaceAware(true);
+
+                SAXParser parser = factory.newSAXParser();
+                XMLReader reader = parser.getXMLReader();
+
                 reader.setContentHandler(filterDocument);
                 reader.parse(input);
+
             } catch (Exception e) {
                 return Filter.INCLUDE;
             }

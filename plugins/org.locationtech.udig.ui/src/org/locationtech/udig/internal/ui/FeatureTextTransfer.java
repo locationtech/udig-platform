@@ -12,6 +12,8 @@ package org.locationtech.udig.internal.ui;
 
 import java.io.StringReader;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.TransformerException;
 
 import org.eclipse.swt.dnd.TextTransfer;
@@ -34,7 +36,6 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 public class FeatureTextTransfer extends AbstractTextStrategizedTransfer implements UDIGTransfer {
     private static FeatureTextTransfer _instance = new FeatureTextTransfer();
@@ -126,10 +127,18 @@ public class FeatureTextTransfer extends AbstractTextStrategizedTransfer impleme
             GMLFilterGeometry filterGeometry = new GMLFilterGeometry(filterFeature);
             GMLFilterDocument filterDocument = new GMLFilterDocument(filterGeometry);
             try {
+
                 // parse XML
-                XMLReader reader = XMLReaderFactory.createXMLReader();
+
+                SAXParserFactory factory = SAXParserFactory.newInstance();
+                factory.setNamespaceAware(true);
+
+                SAXParser parser = factory.newSAXParser();
+                XMLReader reader = parser.getXMLReader();
+
                 reader.setContentHandler(filterDocument);
                 reader.parse(input);
+
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
