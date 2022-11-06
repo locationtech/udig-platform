@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,67 +28,67 @@ import org.eclipse.ui.PlatformUI;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.coverage.processing.CoverageProcessor;
-import org.geotools.util.factory.Hints;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
+import org.geotools.util.factory.Hints;
 import org.opengis.parameter.ParameterValueGroup;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 public class RasterTutorialHandler extends AbstractHandler {
 
-    public Object execute( ExecutionEvent event ) throws ExecutionException {
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
         IWorkbench workbench = PlatformUI.getWorkbench();
-        
+
         Shell shell = workbench.getActiveWorkbenchWindow().getShell();
-        FileDialog dialog = new FileDialog( shell, SWT.OPEN );
-        dialog.setFilterExtensions(new String[]{"*.jpeg;*.jpg","*.png"});
+        FileDialog dialog = new FileDialog(shell, SWT.OPEN);
+        dialog.setFilterExtensions(new String[] { "*.jpeg;*.jpg", "*.png" }); //$NON-NLS-1$ //$NON-NLS-2$
         String filename = dialog.open();
-        if( filename == null ) {
+        if (filename == null) {
             return null;
         }
-        File file = new File( filename );
-        
-        System.out.println( file );
+        File file = new File(filename);
+
+        System.out.println(file);
         try {
-            example( file );
-        }
-        catch( Throwable t ){
-            throw new ExecutionException("Example Failed", t );
+            example(file);
+        } catch (Throwable t) {
+            throw new ExecutionException("Example Failed", t);
         }
         return null;
     }
 
-    public static void example( File file ) throws Exception {
-        URL url = file.toURL();
+    public static void example(File file) throws Exception {
+        URL url = file.toURI().toURL();
         BufferedImage image = ImageIO.read(url);
-        
-        //coordinates of our raster image, in lat/lon
+
+        // coordinates of our raster image, in lat/lon
         double minx = -92.36918018580701;
         double miny = -49.043520894708884;
-        
+
         double maxx = -42.25153935511384;
         double maxy = 2.1002762835725868;
-        
-        CoordinateReferenceSystem crs = CRS.decode("EPSG:4326");
-        ReferencedEnvelope envelope = new ReferencedEnvelope(minx,maxx,miny,maxy,crs);
-        
-        String name = "GridCoverage";
-        
-        GridCoverageFactory factory = new GridCoverageFactory();        
-        GridCoverage2D gridCoverage = (GridCoverage2D) factory.create(name,image,envelope);
-        
-        CoordinateReferenceSystem targetCRS = CRS.decode("EPSG:24882");
 
-        RenderingHints hints = new RenderingHints(Hints.LENIENT_DATUM_SHIFT, Boolean.TRUE);        
+        CoordinateReferenceSystem crs = CRS.decode("EPSG:4326"); //$NON-NLS-1$
+        ReferencedEnvelope envelope = new ReferencedEnvelope(minx, maxx, miny, maxy, crs);
+
+        String name = "GridCoverage";
+
+        GridCoverageFactory factory = new GridCoverageFactory();
+        GridCoverage2D gridCoverage = factory.create(name, image, envelope);
+
+        CoordinateReferenceSystem targetCRS = CRS.decode("EPSG:24882"); //$NON-NLS-1$
+
+        RenderingHints hints = new RenderingHints(Hints.LENIENT_DATUM_SHIFT, Boolean.TRUE);
         CoverageProcessor processor = new CoverageProcessor(hints);
-                
-        ParameterValueGroup param = processor.getOperation("Resample").getParameters();
-        param.parameter("Source").setValue( gridCoverage );
-        param.parameter("CoordinateReferenceSystem").setValue(targetCRS);
-        param.parameter("InterpolationType").setValue("NearestNeighbor");
-        
+
+        ParameterValueGroup param = processor.getOperation("Resample").getParameters(); //$NON-NLS-1$
+        param.parameter("Source").setValue(gridCoverage); //$NON-NLS-1$
+        param.parameter("CoordinateReferenceSystem").setValue(targetCRS); //$NON-NLS-1$
+        param.parameter("InterpolationType").setValue("NearestNeighbor"); //$NON-NLS-1$ //$NON-NLS-2$
+
         GridCoverage2D reprojected = (GridCoverage2D) processor.doOperation(param);
-        
+
         ImageViewer.show(gridCoverage, "Normal Grid Coverage");
         ImageViewer.show(reprojected, "Reprojected Grid Coverage");
     }

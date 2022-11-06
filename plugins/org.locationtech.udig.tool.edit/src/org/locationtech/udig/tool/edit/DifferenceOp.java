@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -62,232 +63,256 @@ import org.opengis.feature.type.GeometryDescriptor;
 
 /**
  * Cuts the polygons in layer 1 out of the polygons in layer 2.
- *  
+ *
  * @author jones
  * @since 1.1.0
  */
 public class DifferenceOp implements IOp {
 
+    @Override
     @SuppressWarnings("unchecked")
-    public void op( final Display display, Object target, IProgressMonitor monitor ) throws Exception {
-        final ILayer[] layers=(ILayer[]) target;
-        final int[] value=new int[1]; 
-        final ILayer[] from=new ILayer[1];
-        final ILayer[] diff=new ILayer[1];
-        PlatformGIS.syncInDisplayThread(new Runnable(){
+    public void op(final Display display, Object target, IProgressMonitor monitor)
+            throws Exception {
+        final ILayer[] layers = (ILayer[]) target;
+        final int[] value = new int[1];
+        final ILayer[] from = new ILayer[1];
+        final ILayer[] diff = new ILayer[1];
+        PlatformGIS.syncInDisplayThread(new Runnable() {
+            @Override
             public void run() {
-                LayerSelection selection=new LayerSelection(display.getActiveShell(), layers);
-                value[0]= selection.open();
-                from[0]=selection.fromLayer; 
-                diff[0]=selection.diffLayer; 
+                LayerSelection selection = new LayerSelection(display.getActiveShell(), layers);
+                value[0] = selection.open();
+                from[0] = selection.fromLayer;
+                diff[0] = selection.diffLayer;
             }
         });
-        if( value[0]==Window.CANCEL )
+        if (value[0] == Window.CANCEL)
             return;
-        ILayer fromLayer=from[0];
-        ILayer diffLayer=diff[0];
-        
-        if( !fromLayer.hasResource(FeatureSource.class) ){
-            MessageDialog.openError(display.getActiveShell(), Messages.differenceOp_inputError1, fromLayer.getName()+Messages.differenceOp_inputError2); 
-            return;
-        }
-        if( !diffLayer.hasResource(FeatureSource.class) ){
-            MessageDialog.openError(display.getActiveShell(), Messages.differenceOp_inputError1, diffLayer.getName()+Messages.differenceOp_inputError2);
+        ILayer fromLayer = from[0];
+        ILayer diffLayer = diff[0];
+
+        if (!fromLayer.hasResource(FeatureSource.class)) {
+            MessageDialog.openError(display.getActiveShell(), Messages.differenceOp_inputError1,
+                    fromLayer.getName() + Messages.differenceOp_inputError2);
             return;
         }
-        
+        if (!diffLayer.hasResource(FeatureSource.class)) {
+            MessageDialog.openError(display.getActiveShell(), Messages.differenceOp_inputError1,
+                    diffLayer.getName() + Messages.differenceOp_inputError2);
+            return;
+        }
+
         ShapefileDataStoreFactory dsfac = new ShapefileDataStoreFactory();
-        File tmp = File.createTempFile(layers[0].getName() + "_" + layers[1].getName() + "_diff", ".shp"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        DataStore ds = dsfac.createDataStore(tmp.toURL());
+        File tmp = File.createTempFile(layers[0].getName() + "_" + layers[1].getName() + "_diff", //$NON-NLS-1$ //$NON-NLS-2$
+                ".shp"); //$NON-NLS-1$
+        DataStore ds = dsfac.createDataStore(tmp.toURI().toURL());
         final SimpleFeatureType newSchema = FeatureTypes.newFeatureType(
-                fromLayer.getSchema().getAttributeDescriptors().toArray(
-                        new AttributeDescriptor[0]), "diff"); //$NON-NLS-1$
+                fromLayer.getSchema().getAttributeDescriptors().toArray(new AttributeDescriptor[0]),
+                "diff"); //$NON-NLS-1$
         ds.createSchema(newSchema);
-        
-        final FeatureSource<SimpleFeatureType, SimpleFeature> fromSource = fromLayer.getResource(FeatureSource.class, monitor);
-        final FeatureSource<SimpleFeatureType, SimpleFeature> diffSource = diffLayer.getResource(FeatureSource.class, monitor);
+
+        final FeatureSource<SimpleFeatureType, SimpleFeature> fromSource = fromLayer
+                .getResource(FeatureSource.class, monitor);
+        final FeatureSource<SimpleFeatureType, SimpleFeature> diffSource = diffLayer
+                .getResource(FeatureSource.class, monitor);
         if (isGeometryCollection(fromSource.getSchema().getGeometryDescriptor())) {
-            MessageDialog.openError(display.getActiveShell(), Messages.differenceOp_inputError, fromLayer.getName() + Messages.differenceOp_multiGeoms);
+            MessageDialog.openError(display.getActiveShell(), Messages.differenceOp_inputError,
+                    fromLayer.getName() + Messages.differenceOp_multiGeoms);
             return;
         }
         if (isGeometryCollection(diffSource.getSchema().getGeometryDescriptor())) {
-            MessageDialog.openError(display.getActiveShell(), Messages.differenceOp_inputError, fromLayer.getName() + Messages.differenceOp_multiGeoms);
+            MessageDialog.openError(display.getActiveShell(), Messages.differenceOp_inputError,
+                    fromLayer.getName() + Messages.differenceOp_multiGeoms);
             return;
         }
-        
+
         final DefaultFeatureCollection diffFeatures = new DefaultFeatureCollection();
         diffFeatures.addAll(diffSource.getFeatures());
-        
-        FeatureStore<SimpleFeatureType, SimpleFeature> destStore = (FeatureStore<SimpleFeatureType, SimpleFeature>)ds.getFeatureSource("diff"); //$NON-NLS-1$
-        
-        // TODO: figure out whatever this FeatureReader is doing; and make it a feature collection instead
-        destStore.addFeatures(DataUtilities.collection(new FeatureReader<SimpleFeatureType, SimpleFeature>(){
-        // TODO this needs an undo
-//        ((FeatureStore<SimpleFeatureType, SimpleFeature>)fromSource).setFeatures(new FeatureReader() {
-        	FeatureCollection<SimpleFeatureType, SimpleFeature> coll = fromSource.getFeatures();
-            FeatureIterator<SimpleFeature> iter = coll.features();
-            FeatureIterator<SimpleFeature> peek = coll.features();
-            boolean hasNextCalled = false;
-            
-            public SimpleFeatureType getFeatureType() {
-                return newSchema;
-            }
-            
-            private Geometry diff(SimpleFeature f) {
-                Geometry geom = (Geometry) f.getDefaultGeometry();
-                FeatureIterator<SimpleFeature> i = diffFeatures.features();
-                try {
-                    while (i.hasNext()) {
-                        SimpleFeature diff = i.next();
-                        Geometry g = geom.difference((Geometry) diff.getDefaultGeometry());
-                        if (g.isEmpty()) {
-                            return null;
-                        }
-                        geom = g;
+
+        FeatureStore<SimpleFeatureType, SimpleFeature> destStore = (FeatureStore<SimpleFeatureType, SimpleFeature>) ds
+                .getFeatureSource("diff"); //$NON-NLS-1$
+
+        // TODO: figure out whatever this FeatureReader is doing; and make it a feature collection
+        // instead
+        destStore.addFeatures(
+                DataUtilities.collection(new FeatureReader<SimpleFeatureType, SimpleFeature>() {
+                    // TODO this needs an undo
+                    FeatureCollection<SimpleFeatureType, SimpleFeature> coll = fromSource
+                            .getFeatures();
+
+                    FeatureIterator<SimpleFeature> iter = coll.features();
+
+                    FeatureIterator<SimpleFeature> peek = coll.features();
+
+                    boolean hasNextCalled = false;
+
+                    @Override
+                    public SimpleFeatureType getFeatureType() {
+                        return newSchema;
                     }
-                } finally {
-                    i.close();
-                }
-                return geom;
-            }
-            
-            public SimpleFeature next() throws IOException, IllegalAttributeException, NoSuchElementException {
-                SimpleFeature source=iter.next();
-                Geometry geom = diff(source);
-                if (geom == null || !hasNextCalled) {
-                    throw new NoSuchElementException("Use hasNext()."); //$NON-NLS-1$
-                }
-                
-                if (geom instanceof LineString) {
-                    geom = geom.getFactory().createMultiLineString(new LineString[] {(LineString) geom});
-                }
-                if (geom instanceof Polygon) {
-                    geom = geom.getFactory().createMultiPolygon(new Polygon[]{(Polygon) geom});
-                }
-                source.setDefaultGeometry(geom);
-                
-                hasNextCalled = false;
-                return source;
-            }
 
-            public boolean hasNext() throws IOException {
-                if (hasNextCalled) {
-                    return iter.hasNext();
-                }
-
-                // pointer chase forward to the next different geometry
-                try {
-                    Geometry g = null;
-                    while (g == null) {
-                        if (!peek.hasNext()) {
-                            return false;
+                    private Geometry diff(SimpleFeature f) {
+                        Geometry geom = (Geometry) f.getDefaultGeometry();
+                        FeatureIterator<SimpleFeature> i = diffFeatures.features();
+                        try {
+                            while (i.hasNext()) {
+                                SimpleFeature diff = i.next();
+                                Geometry g = geom.difference((Geometry) diff.getDefaultGeometry());
+                                if (g.isEmpty()) {
+                                    return null;
+                                }
+                                geom = g;
+                            }
+                        } finally {
+                            i.close();
                         }
-                        SimpleFeature f = peek.next();
-                        g = diff(f);
-                        
-                        if (g == null) {
-                            iter.next();
-                        } else {
-                            return true;
-                        }
-                    } 
-                } finally {
-                    hasNextCalled = true;
-                }
-                return false;
-            }
+                        return geom;
+                    }
 
-            public void close() throws IOException {
-                iter.close();
-                peek.close();
-            }
-        }));
-        
-        // add the diff shapefile as a udig resource
+                    @Override
+                    public SimpleFeature next()
+                            throws IOException, IllegalAttributeException, NoSuchElementException {
+                        SimpleFeature source = iter.next();
+                        Geometry geom = diff(source);
+                        if (geom == null || !hasNextCalled) {
+                            throw new NoSuchElementException("Use hasNext()."); //$NON-NLS-1$
+                        }
+
+                        if (geom instanceof LineString) {
+                            geom = geom.getFactory()
+                                    .createMultiLineString(new LineString[] { (LineString) geom });
+                        }
+                        if (geom instanceof Polygon) {
+                            geom = geom.getFactory()
+                                    .createMultiPolygon(new Polygon[] { (Polygon) geom });
+                        }
+                        source.setDefaultGeometry(geom);
+
+                        hasNextCalled = false;
+                        return source;
+                    }
+
+                    @Override
+                    public boolean hasNext() throws IOException {
+                        if (hasNextCalled) {
+                            return iter.hasNext();
+                        }
+
+                        // pointer chase forward to the next different geometry
+                        try {
+                            Geometry g = null;
+                            while (g == null) {
+                                if (!peek.hasNext()) {
+                                    return false;
+                                }
+                                SimpleFeature f = peek.next();
+                                g = diff(f);
+
+                                if (g == null) {
+                                    iter.next();
+                                } else {
+                                    return true;
+                                }
+                            }
+                        } finally {
+                            hasNextCalled = true;
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public void close() throws IOException {
+                        iter.close();
+                        peek.close();
+                    }
+                }));
+
+        // Add the diff shapefile as a uDig resource
         URL url = tmp.toURI().toURL();
         IRepository local = CatalogPlugin.getDefault().getLocal();
-        IService service = local.acquire( url, null );
-        
-        // List<IService> services = CatalogPlugin.getDefault().getServiceFactory().createService(tmp.toURL());
-        // IService service = services.get(0);
-        // CatalogPlugin.getDefault().getLocalCatalog().add(service);
-        List< ? extends IGeoResource> resources = service.resources(null);
-        
+        IService service = local.acquire(url, null);
+
+        List<? extends IGeoResource> resources = service.resources(null);
+
         IGeoResource resource = resources.get(0);
-        
-        Map map = ((Map)layers[0].getMap());
+
+        Map map = ((Map) layers[0].getMap());
         LayerFactory factory = map.getLayerFactory();
         Layer outLayer = factory.createLayer(resource);
         map.getLayersInternal().add(outLayer);
     }
 
-    static class LayerSelection extends Dialog{
+    static class LayerSelection extends Dialog {
 
         private ILayer[] layers;
+
         Combo fromCombo;
+
         Combo diffCombo;
+
         ILayer fromLayer;
+
         ILayer diffLayer;
 
-        protected LayerSelection( Shell parentShell, ILayer[] layers ) {
+        protected LayerSelection(Shell parentShell, ILayer[] layers) {
             super(parentShell);
-            this.layers=layers;
-            fromLayer=layers[0];
-            diffLayer=layers[1];
+            this.layers = layers;
+            fromLayer = layers[0];
+            diffLayer = layers[1];
         }
-        
-        
-        @Override
-        protected Control createDialogArea( Composite parent ) {
-            Composite comp= (Composite) super.createDialogArea(parent);
-            Composite c=new Composite(comp, SWT.NONE);
-            c.setLayout(new GridLayout(2,true));
 
-            String[] names=new String[]{
-                    layers[0].getName(),
-                    layers[1].getName()
-            };
-            
-            Label layer2=new Label(c, SWT.NONE);
+        @Override
+        protected Control createDialogArea(Composite parent) {
+            Composite comp = (Composite) super.createDialogArea(parent);
+            Composite c = new Composite(comp, SWT.NONE);
+            c.setLayout(new GridLayout(2, true));
+
+            String[] names = new String[] { layers[0].getName(), layers[1].getName() };
+
+            Label layer2 = new Label(c, SWT.NONE);
             layer2.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
             layer2.setText("Subtract: "); //$NON-NLS-1$
-            
-            diffCombo=new Combo(c, SWT.DEFAULT);
+
+            diffCombo = new Combo(c, SWT.DEFAULT);
             diffCombo.setLayoutData(new GridData(GridData.FILL_BOTH));
             diffCombo.setItems(names);
             diffCombo.select(1);
-            
-            Label layer1=new Label(c, SWT.NONE);
+
+            Label layer1 = new Label(c, SWT.NONE);
             layer1.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
             layer1.setText("From: "); //$NON-NLS-1$
-            
-            fromCombo=new Combo(c, SWT.DEFAULT);
+
+            fromCombo = new Combo(c, SWT.DEFAULT);
             fromCombo.setLayoutData(new GridData(GridData.FILL_BOTH));
             fromCombo.setItems(names);
             fromCombo.select(0);
-            
-            diffCombo.addSelectionListener(new SelectionListener(){
 
-                public void widgetSelected( SelectionEvent e ) {
+            diffCombo.addSelectionListener(new SelectionListener() {
+
+                @Override
+                public void widgetSelected(SelectionEvent e) {
                     widgetDefaultSelected(e);
                 }
 
-                public void widgetDefaultSelected( SelectionEvent e ) {
-                    diffLayer=layers[diffCombo.getSelectionIndex()];
+                @Override
+                public void widgetDefaultSelected(SelectionEvent e) {
+                    diffLayer = layers[diffCombo.getSelectionIndex()];
                 }
-                
+
             });
-            
-            fromCombo.addSelectionListener(new SelectionListener(){
 
-                public void widgetSelected( SelectionEvent e ) {
+            fromCombo.addSelectionListener(new SelectionListener() {
+
+                @Override
+                public void widgetSelected(SelectionEvent e) {
                     widgetDefaultSelected(e);
                 }
 
-                public void widgetDefaultSelected( SelectionEvent e ) {
-                    fromLayer=layers[fromCombo.getSelectionIndex()];
+                @Override
+                public void widgetDefaultSelected(SelectionEvent e) {
+                    fromLayer = layers[fromCombo.getSelectionIndex()];
                 }
-                
+
             });
             return c;
         }

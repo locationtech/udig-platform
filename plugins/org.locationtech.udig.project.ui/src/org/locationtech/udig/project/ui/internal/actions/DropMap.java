@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -70,7 +71,7 @@ public class DropMap extends IDropAction {
                     && ApplicationGIS.getActiveMap() != ApplicationGIS.NO_MAP) {
                 return false;
             }
-            // layer droppe in map if special too
+            // layer dropped in map if special too
             if (getData() instanceof ILayer && getDestination() instanceof MapPart) {
                 return false;
             }
@@ -81,7 +82,7 @@ public class DropMap extends IDropAction {
         if (getData() instanceof String) {
             String string = (String) getData();
             try {
-                string = URLDecoder.decode(string, "UTF-8");
+                string = URLDecoder.decode(string, "UTF-8"); //$NON-NLS-1$
             } catch (UnsupportedEncodingException e2) {
                 // so ignore...
             }
@@ -133,7 +134,7 @@ public class DropMap extends IDropAction {
         } else if (getData() instanceof String) {
             String string = (String) getData();
             try {
-                string = URLDecoder.decode(string, "UTF-8");
+                string = URLDecoder.decode(string, "UTF-8"); //$NON-NLS-1$
             } catch (UnsupportedEncodingException e2) {
                 // so ignore...
             }
@@ -144,7 +145,7 @@ public class DropMap extends IDropAction {
                 File file = new File(string);
                 if (file.exists())
                     try {
-                        url = file.toURL();
+                        url = file.toURI().toURL();
                     } catch (MalformedURLException e1) {
                         // oh well
                     }
@@ -165,7 +166,7 @@ public class DropMap extends IDropAction {
                     return;
                 }
             } catch (Exception e) {
-                // ok not a file either
+                // OK not a file either
                 ProjectUIPlugin.log("Some how accept() accepted: " + getData(), new Exception()); //$NON-NLS-1$
                 return;
             }

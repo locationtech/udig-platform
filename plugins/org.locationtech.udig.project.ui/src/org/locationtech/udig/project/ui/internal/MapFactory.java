@@ -187,7 +187,8 @@ public class MapFactory {
                             services.addAll(handleURL((URL) object, monitor));
                         } else if (object instanceof File) {
                             try {
-                                services.addAll(handleURL(((File) object).toURL(), monitor));
+                                services.addAll(
+                                        handleURL(((File) object).toURI().toURL(), monitor));
                             } catch (MalformedURLException e) {
                                 // ignore non-URL strings
                             }
@@ -295,8 +296,9 @@ public class MapFactory {
                     }
                     monitor.worked(1);
                 }
-                if (!layers.isEmpty())
+                if (!layers.isEmpty()) {
                     map.getLayersInternal().addAll(layers);
+                }
                 if (!map.getLayersInternal().isEmpty() || newMap == true) {
                     ProjectExplorer.getProjectExplorer().open(map);
                 } else if (!mapExists) {
@@ -406,7 +408,7 @@ public class MapFactory {
     /**
      * Will acquire services for a single URL, as long as one service works we don't have an error.
      * <p>
-     * If no servies work we will just punt out the exception from the last entry.
+     * If no services work we will just punt out the exception from the last entry.
      * </p>
      *
      * @param url
@@ -525,20 +527,12 @@ public class MapFactory {
     private static class CurrentMapFinder implements Runnable {
         Map map = null;
 
-        /**
-         * @return
-         */
         Map getCurrentMap() {
             map = null;
             PlatformGIS.syncInDisplayThread(this);
             return map;
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see java.lang.Runnable#run()
-         */
         @Override
         public void run() {
             if (isMapOpen()) {
