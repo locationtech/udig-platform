@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,11 +13,9 @@ package org.locationtech.udig.project.internal.property;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.Interaction;
 import org.locationtech.udig.ui.operations.AbstractPropertyValue;
-import org.locationtech.udig.ui.operations.PropertyValue;
 
 /**
- * Allows tools or operations to check what kind of interactions a layer
- * supports.
+ * Allows tools or operations to check what kind of interactions a layer supports.
  * <p>
  * The following values are defined by {@link Interaction}:
  * <ul>
@@ -28,17 +26,19 @@ import org.locationtech.udig.ui.operations.PropertyValue;
  * <li>EDIT: interaction_edit</li>
  * <li>AOI: interaction_aoi</li>
  * </ul>
+ * </p>
+ *
  * @author Jody Garnett (LISAsoft)
  * @since 1.3.0
  */
 public class LayerInteractionProperty extends AbstractPropertyValue<ILayer> {
 
     @Override
-    public boolean isTrue( ILayer layer, String text ) {
+    public boolean isTrue(ILayer layer, String text) {
         Interaction interaction = Interaction.getInteraction(text);
-        if( interaction == null ){
+        if (interaction == null) {
             return false; // unable to figure out Interaction to test
-        }        
+        }
         return layer.getInteraction(interaction);
     }
 
@@ -49,7 +49,7 @@ public class LayerInteractionProperty extends AbstractPropertyValue<ILayer> {
 
     @Override
     public boolean isBlocking() {
-        return false; 
+        return false;
     }
 
 }

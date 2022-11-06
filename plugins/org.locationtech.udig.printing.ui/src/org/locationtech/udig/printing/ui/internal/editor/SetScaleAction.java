@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -10,15 +11,6 @@
 package org.locationtech.udig.printing.ui.internal.editor;
 
 import java.awt.Dimension;
-
-import org.locationtech.udig.printing.model.AbstractBoxPrinter;
-import org.locationtech.udig.printing.model.Page;
-import org.locationtech.udig.printing.model.impl.MapBoxPrinter;
-import org.locationtech.udig.printing.ui.IBoxEditAction;
-import org.locationtech.udig.printing.ui.internal.editor.parts.BoxPart;
-import org.locationtech.udig.project.internal.render.ViewportModel;
-import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
-import org.locationtech.udig.project.render.IViewportModel;
 
 import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.dialogs.Dialog;
@@ -36,16 +28,22 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.udig.printing.model.AbstractBoxPrinter;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.printing.model.impl.MapBoxPrinter;
+import org.locationtech.udig.printing.ui.IBoxEditAction;
+import org.locationtech.udig.printing.ui.internal.editor.parts.BoxPart;
+import org.locationtech.udig.project.internal.render.ViewportModel;
+import org.locationtech.udig.project.render.IViewportModel;
 
 /**
  * Sets the scale on a map in the MapBox
- * 
+ *
  * <p>
- *  The scale is calculated and set taking into account 
- *  the real dimension of the currently used paper
- *  type.
+ * The scale is calculated and set taking into account the real dimension of the currently used
+ * paper type.
  * </p>
- * 
+ *
  * @author jesse
  * @author Andrea Antonello (www.hydrologis.com)
  * @since 1.1.0
@@ -53,17 +51,20 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 public class SetScaleAction implements IBoxEditAction {
 
     private BoxPart owner;
+
     Double scale;
 
+    @Override
     public Command getCommand() {
         final double newScale = scale;
         scale = null;
 
         final double oldScale = calculateScale();
-        return new Command(){
-            private void setScale( double scale ) {
+        return new Command() {
+            private void setScale(double scale) {
                 applyNewScale(scale);
             }
+
             @Override
             public void execute() {
                 setScale(newScale);
@@ -76,7 +77,8 @@ public class SetScaleAction implements IBoxEditAction {
         };
     }
 
-    public void init( BoxPart owner ) {
+    @Override
+    public void init(BoxPart owner) {
         this.owner = owner;
     }
 
@@ -84,10 +86,12 @@ public class SetScaleAction implements IBoxEditAction {
         return (MapBoxPrinter) owner.getBoxPrinter();
     }
 
+    @Override
     public boolean isDone() {
         return true;
     }
 
+    @Override
     public void perform() {
         scale = null;
 
@@ -95,11 +99,8 @@ public class SetScaleAction implements IBoxEditAction {
 
         Shell parentShell = Display.getCurrent().getActiveShell();
         if (scaleDenominator < .01) {
-            MessageDialog
-                    .openInformation(
-                            parentShell,
-                            "Set Scale",
-                            "The map scale cannot be accurately calculated because of the map's projection.\n\nTry Changing the projection of the map");
+            MessageDialog.openInformation(parentShell, "Set Scale",
+                    "The map scale cannot be accurately calculated because of the map's projection.\n\nTry Changing the projection of the map");
             return;
         }
 
@@ -118,7 +119,7 @@ public class SetScaleAction implements IBoxEditAction {
 
     /**
      * Calculates the scale of the map taking into account the paper size.
-     * 
+     *
      * @return the scale of the map on the current paper type.
      */
     private double calculateScale() {
@@ -131,10 +132,10 @@ public class SetScaleAction implements IBoxEditAction {
         org.eclipse.draw2d.geometry.Dimension mapSize = owner.getBoxPrinter().getBox().getSize();
         // map box size in points and then in meters on paper
         float mapPaperWidthPoints = (float) paperSize.width * (float) mapSize.width
-                / (float) pageSize.width;
+                / pageSize.width;
         float mapPaperWidthMeters = AbstractBoxPrinter.point2cm(mapPaperWidthPoints) / 100f;
         // map bounds in meters
-        ReferencedEnvelope mapEnvelope = (ReferencedEnvelope) viewportModel.getBounds();
+        ReferencedEnvelope mapEnvelope = viewportModel.getBounds();
         double mapWorldWidthMeters = mapEnvelope.getWidth();
 
         double thescale = mapWorldWidthMeters / mapPaperWidthMeters;
@@ -143,10 +144,10 @@ public class SetScaleAction implements IBoxEditAction {
 
     /**
      * Applies the supplied scale on the map on the current type of paper.
-     * 
+     *
      * @param scale the scale to apply to the map.
      */
-    private void applyNewScale( double scale ) {
+    private void applyNewScale(double scale) {
         ViewportModel viewportModel = getMapBoxPrinter().getMap().getViewportModelInternal();
         // get page size in pixels and in mm
         Page page = getMapBoxPrinter().getBox().getPage();
@@ -156,17 +157,17 @@ public class SetScaleAction implements IBoxEditAction {
         org.eclipse.draw2d.geometry.Dimension mapSize = owner.getBoxPrinter().getBox().getSize();
         // map box size in points and then in meters on paper
         float mapPaperWidthPoints = (float) paperSize.width * (float) mapSize.width
-                / (float) pageSize.width;
+                / pageSize.width;
         float mapPaperWidthMeters = AbstractBoxPrinter.point2cm(mapPaperWidthPoints) / 100f;
         float mapPaperHeightPoints = (float) paperSize.height * (float) mapSize.height
-                / (float) pageSize.height;
+                / pageSize.height;
         float mapPaperHeightMeters = AbstractBoxPrinter.point2cm(mapPaperHeightPoints) / 100f;
 
         double mapWorldWidthMeters = scale * mapPaperWidthMeters;
         double mapWorldHeightMeters = scale * mapPaperHeightMeters;
 
         // current map bounds in meters
-        ReferencedEnvelope mapEnvelope = (ReferencedEnvelope) viewportModel.getBounds();
+        ReferencedEnvelope mapEnvelope = viewportModel.getBounds();
         double centerX = (mapEnvelope.getMaxX() + mapEnvelope.getMinX()) / 2.0;
         double centerY = (mapEnvelope.getMaxY() + mapEnvelope.getMinY()) / 2.0;
 
@@ -186,16 +187,17 @@ public class SetScaleAction implements IBoxEditAction {
 
     /**
      * A dialog with a Spinner for setting the scale of a map.
-     * 
+     *
      * @author jesse
      * @since 1.1.0
      */
     private static class ScaleDialog extends Dialog implements Listener {
 
         private Spinner spinner;
+
         private double scale;
 
-        protected ScaleDialog( Shell parentShell, double scale ) {
+        protected ScaleDialog(Shell parentShell, double scale) {
             super(parentShell);
             this.scale = scale;
             setShellStyle(SWT.CLOSE | SWT.TITLE);
@@ -208,7 +210,7 @@ public class SetScaleAction implements IBoxEditAction {
         }
 
         @Override
-        protected Control createContents( Composite parent ) {
+        protected Control createContents(Composite parent) {
             getShell().setText("Set Scale");
 
             Composite container = new Composite(parent, SWT.NONE);
@@ -227,7 +229,8 @@ public class SetScaleAction implements IBoxEditAction {
             return container;
         }
 
-        public void handleEvent( Event event ) {
+        @Override
+        public void handleEvent(Event event) {
             if (event.type == SWT.Modify) {
                 this.scale = spinner.getSelection();
             } else if (event.type == SWT.KeyUp) {

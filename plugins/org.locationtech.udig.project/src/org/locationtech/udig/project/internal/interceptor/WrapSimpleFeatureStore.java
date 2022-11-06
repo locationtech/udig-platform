@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -9,41 +10,34 @@
  */
 package org.locationtech.udig.project.internal.interceptor;
 
+import org.geotools.data.simple.SimpleFeatureStore;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.IResourceInterceptor;
-import org.locationtech.udig.project.internal.impl.UDIGFeatureStore;
 import org.locationtech.udig.project.internal.impl.UDIGSimpleFeatureStore;
 import org.locationtech.udig.project.internal.impl.UDIGStore;
-
-import org.geotools.data.FeatureStore;
-import org.geotools.data.simple.SimpleFeatureStore;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Wraps a SimpleFeatureStore in a UDIGSimpleFeatureStore.
  * <p>
  * This is done to ensure that (ensuring that the transaction is only set once!).
- * 
+ *
  * @author Jesse
  * @since 1.2.1
  */
-public class WrapSimpleFeatureStore
-        implements
-            IResourceInterceptor<SimpleFeatureStore> {
+public class WrapSimpleFeatureStore implements IResourceInterceptor<SimpleFeatureStore> {
 
-    public SimpleFeatureStore run( ILayer layer,
-            SimpleFeatureStore resource,
-            Class< ? super SimpleFeatureStore> requestedType ) {
-        
-        if( resource instanceof UDIGStore ){
+    @Override
+    public SimpleFeatureStore run(ILayer layer, SimpleFeatureStore resource,
+            Class<? super SimpleFeatureStore> requestedType) {
+
+        if (resource instanceof UDIGStore) {
             return resource;
         }
-        
-        if (requestedType.isAssignableFrom(SimpleFeatureStore.class)){
+
+        if (requestedType.isAssignableFrom(SimpleFeatureStore.class)) {
             return new UDIGSimpleFeatureStore(resource, layer);
         }
         return resource;
     }
-    
+
 }
