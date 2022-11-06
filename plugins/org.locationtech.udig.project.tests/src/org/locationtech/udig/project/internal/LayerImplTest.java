@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -32,6 +33,7 @@ import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -52,7 +54,6 @@ import org.locationtech.udig.project.tests.TestInterceptorPost;
 import org.locationtech.udig.project.tests.TestInterceptorPre;
 import org.locationtech.udig.project.tests.support.MapTests;
 import org.locationtech.udig.ui.tests.support.UDIGTestUtil;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
@@ -60,118 +61,130 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * Tests LayerImpl
+ *
  * @author Jesse
  * @since 1.1.0
  */
 public class LayerImplTest {
 
     private Map map;
+
     private LayerImpl layer;
 
     @Before
     public void setUp() throws Exception {
-        map=MapTests.createDefaultMap("typename1", 3, true, null); //$NON-NLS-1$
-        layer=(LayerImpl) map.getMapLayers().get(0);
+        map = MapTests.createDefaultMap("typename1", 3, true, null); //$NON-NLS-1$
+        layer = (LayerImpl) map.getMapLayers().get(0);
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#getGeoResources()}.
+     * Test method for
+     * {@link org.locationtech.udig.project.internal.impl.LayerImpl#getGeoResources()}.
      */
     @Test
     public void testGetGeoResources() {
         assertEquals(1, layer.getGeoResources().size());
-        assertTrue("Was :"+layer.getGeoResources().get(0).getClass(),layer.getGeoResources().get(0) instanceof LayerResource); //$NON-NLS-1$
+        assertTrue("Was :" + layer.getGeoResources().get(0).getClass(), //$NON-NLS-1$
+                layer.getGeoResources().get(0) instanceof LayerResource);
     }
 
     /**
-     * Testing that the SetTransactionInterceptor is being ran correctly.
-     * Testing that the CachingInterceptor is being ran correctly
-     * Testing that the TestInterceptor is being ran correctly.
+     * Testing that the SetTransactionInterceptor is being ran correctly. Testing that the
+     * CachingInterceptor is being ran correctly Testing that the TestInterceptor is being ran
+     * correctly.
      */
     @Test
     public void testGetGeoResourcesInterceptors() throws IOException {
         NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
-        FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer.getResource(FeatureStore.class, nullProgressMonitor);
+        FeatureStore<SimpleFeatureType, SimpleFeature> resource = layer
+                .getResource(FeatureStore.class, nullProgressMonitor);
         Transaction transaction = resource.getTransaction();
         assertNotNull(transaction);
-        assertTrue(transaction==Transaction.AUTO_COMMIT);
+        assertTrue(transaction == Transaction.AUTO_COMMIT);
         assertSame(transaction, resource.getTransaction());
         assertSame(resource, layer.getResource(FeatureStore.class, nullProgressMonitor));
         assertSame(resource, layer.getResource(FeatureSource.class, nullProgressMonitor));
-        
-        assertTrue(TestInterceptorPre.runs>0);
+
+        assertTrue(TestInterceptorPre.runs > 0);
         assertFalse(TestInterceptorCaching.cached);
         assertFalse(TestInterceptorCaching.obtained);
-        assertTrue(TestInterceptorPost.runs>0);
-        
-        ProjectPlugin.getPlugin().getPreferenceStore().setValue(PreferenceConstants.P_LAYER_RESOURCE_CACHING_STRATEGY, "org.locationtech.udig.project.tests.org.locationtech.udig.project.tests.interceptor2"); //$NON-NLS-1$
-        try{
-            TestInterceptorPre.runs=0;
-            TestInterceptorPost.runs=0;
-            
+        assertTrue(TestInterceptorPost.runs > 0);
+
+        ProjectPlugin.getPlugin().getPreferenceStore().setValue(
+                PreferenceConstants.P_LAYER_RESOURCE_CACHING_STRATEGY,
+                "org.locationtech.udig.project.tests.org.locationtech.udig.project.tests.interceptor2"); //$NON-NLS-1$
+        try {
+            TestInterceptorPre.runs = 0;
+            TestInterceptorPost.runs = 0;
+
             assertNotSame(resource, layer.getResource(FeatureStore.class, nullProgressMonitor));
-    
+
             assertEquals(1, TestInterceptorPre.runs);
             assertTrue(TestInterceptorCaching.cached);
             assertFalse(TestInterceptorCaching.obtained);
-            assertEquals(1,TestInterceptorPost.runs);
-            
+            assertEquals(1, TestInterceptorPost.runs);
+
             layer.getResource(FeatureStore.class, nullProgressMonitor);
-            
+
             assertEquals(1, TestInterceptorPre.runs);
             assertTrue(TestInterceptorCaching.cached);
             assertTrue(TestInterceptorCaching.obtained);
             assertEquals(2, TestInterceptorPost.runs);
-            
-            TestInterceptorPre.runs=0;
-            TestInterceptorPost.runs=0;
-    
+
+            TestInterceptorPre.runs = 0;
+            TestInterceptorPost.runs = 0;
+
             layer.getResource(ITransientResolve.class, nullProgressMonitor);
-            
+
             assertEquals(0, TestInterceptorPre.runs);
             assertEquals(1, TestInterceptorPost.runs);
-        }finally{
-            ProjectPlugin.getPlugin().getPreferenceStore().setValue(PreferenceConstants.P_LAYER_RESOURCE_CACHING_STRATEGY, ResourceCacheInterceptor.ID);
+        } finally {
+            ProjectPlugin.getPlugin().getPreferenceStore().setValue(
+                    PreferenceConstants.P_LAYER_RESOURCE_CACHING_STRATEGY,
+                    ResourceCacheInterceptor.ID);
         }
     }
-    
+
     /**
-     * Tests the case where a interceptor interfers with a later interceptor that is run.
+     * Tests the case where a interceptor interferes with a later interceptor that is run.
      *
      * @throws Exception
      */
     @Test
     public void testRunCoDependentInterceptors() throws Exception {
-        LayerResource resource=(LayerResource) layer.getGeoResources().get(0);
-        
-        
-        try{
-            resource.testingOnly_sort(new Comparator<IResourceInterceptor<? extends Object>>(){
-                
-                public int compare( IResourceInterceptor< ? extends Object> o1, IResourceInterceptor< ? extends Object> o2 ) {
-                    if( o1 instanceof TestInterceptorPost){
+        LayerResource resource = (LayerResource) layer.getGeoResources().get(0);
+
+        try {
+            resource.testingOnly_sort(new Comparator<IResourceInterceptor<? extends Object>>() {
+
+                @Override
+                public int compare(IResourceInterceptor<? extends Object> o1,
+                        IResourceInterceptor<? extends Object> o2) {
+                    if (o1 instanceof TestInterceptorPost) {
                         return -1;
                     }
-                    if( o2 instanceof TestInterceptorPost){
+                    if (o2 instanceof TestInterceptorPost) {
                         return 1;
-                    } 
+                    }
                     return 0;
                 }
-                
+
             }, false);
-            TestInterceptorPost.changeType=true;
+            TestInterceptorPost.changeType = true;
             NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
-            FeatureSource<SimpleFeatureType, SimpleFeature> resolve = resource.resolve(FeatureSource.class, nullProgressMonitor);
+            FeatureSource<SimpleFeatureType, SimpleFeature> resolve = resource
+                    .resolve(FeatureSource.class, nullProgressMonitor);
             assertNotNull(resolve);
-        }finally{
-            TestInterceptorPost.changeType=false;     
+        } finally {
+            TestInterceptorPost.changeType = false;
             resource.testingOnly_sort(null, false);
 
         }
     }
-    
+
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#getResource(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)}.
+     * Test method for
+     * {@link org.locationtech.udig.project.internal.impl.LayerImpl#getResource(java.lang.Class, org.eclipse.core.runtime.IProgressMonitor)}.
      */
     @Test
     public void testGetResource() throws IOException {
@@ -179,20 +192,23 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#findGeoResource(java.lang.Class)}.
-     * @throws Exception 
+     * Test method for
+     * {@link org.locationtech.udig.project.internal.impl.LayerImpl#findGeoResource(java.lang.Class)}.
+     *
+     * @throws Exception
      */
     @SuppressWarnings("unchecked")
     @Test
-    public void testFindGeoResource() throws Exception{
+    public void testFindGeoResource() throws Exception {
         String string = "value"; //$NON-NLS-1$
-        layer = MapTests.createLayer(new URL("http://testresourcefindGeoResource.org"), string , null); //$NON-NLS-1$
+        layer = MapTests.createLayer(new URL("http://testresourcefindGeoResource.org"), string, //$NON-NLS-1$
+                null);
         List resolveTos = layer.getResource(List.class, null);
         Integer integer = Integer.valueOf(2);
         resolveTos.add(integer);
         Float floatValue = Float.valueOf(2.0f);
         resolveTos.add(floatValue);
-        
+
         assertNotNull(layer.findGeoResource(String.class));
         assertNotNull(layer.findGeoResource(Float.class));
         assertNotNull(layer.findGeoResource(Integer.class));
@@ -200,7 +216,8 @@ public class LayerImplTest {
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#isType(java.lang.Class)}.
+     * Test method for
+     * {@link org.locationtech.udig.project.internal.impl.LayerImpl#isType(java.lang.Class)}.
      */
     @Test
     public void testHasResource() {
@@ -214,73 +231,81 @@ public class LayerImplTest {
      */
     @Test
     public void testGetCRS() {
-        //TODO implement test
+        // TODO implement test
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#getDefaultColor()}.
+     * Test method for
+     * {@link org.locationtech.udig.project.internal.impl.LayerImpl#getDefaultColor()}.
      */
     @Test
     public void testGetDefaultColor() {
-        //TODO implement test 
+        // TODO implement test
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#getMinScaleDenominator()}.
+     * Test method for
+     * {@link org.locationtech.udig.project.internal.impl.LayerImpl#getMinScaleDenominator()}.
      */
     @Test
     public void testGetMinScaleDenominator() {
-        //TODO implement test 
+        // TODO implement test
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#getMaxScaleDenominator()}.
+     * Test method for
+     * {@link org.locationtech.udig.project.internal.impl.LayerImpl#getMaxScaleDenominator()}.
      */
     @Test
     public void testGetMaxScaleDenominator() {
-        //TODO implement test 
+        // TODO implement test
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#refresh(org.locationtech.jts.geom.Envelope)}.
+     * Test method for
+     * {@link org.locationtech.udig.project.internal.impl.LayerImpl#refresh(org.locationtech.jts.geom.Envelope)}.
      */
     @Test
     public void testRefresh() {
-        //TODO implement test 
+        // TODO implement test
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#layerToMapTransform()}.
+     * Test method for
+     * {@link org.locationtech.udig.project.internal.impl.LayerImpl#layerToMapTransform()}.
      */
     @Test
     public void testLayerToMapTransform() {
-        //TODO implement test 
+        // TODO implement test
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#mapToLayerTransform()}.
+     * Test method for
+     * {@link org.locationtech.udig.project.internal.impl.LayerImpl#mapToLayerTransform()}.
      */
     @Test
     public void testMapToLayerTransform() {
-        //TODO implement test 
+        // TODO implement test
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#createBBoxFilter(org.locationtech.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor)}.
+     * Test method for
+     * {@link org.locationtech.udig.project.internal.impl.LayerImpl#createBBoxFilter(org.locationtech.jts.geom.Envelope, org.eclipse.core.runtime.IProgressMonitor)}.
      */
     @Test
     public void testCreateBBoxFilter() {
-        //TODO implement test 
+        // TODO implement test
     }
 
     /**
-     * Test method for {@link org.locationtech.udig.project.internal.impl.LayerImpl#changed(org.locationtech.udig.catalog.IResolveChangeEvent)}.
+     * Test method for
+     * {@link org.locationtech.udig.project.internal.impl.LayerImpl#changed(org.locationtech.udig.catalog.IResolveChangeEvent)}.
      */
     @Test
     public void testChanged() {
-        //TODO implement test 
+        // TODO implement test
     }
-    
+
     @Test
     public void testSetZOrder() throws Exception {
         IGeoResource resource = CatalogTests.createGeoResource("resource", 3, false); //$NON-NLS-1$
@@ -299,7 +324,7 @@ public class LayerImplTest {
         createLayer = map.getLayerFactory().createLayer(resource);
         createLayer.setName("layer4"); //$NON-NLS-1$
         map.getLayersInternal().add(createLayer);
-        
+
         layer.setZorder(2);
         assertEquals(2, layer.getZorder());
         assertEquals(2, map.getLayersInternal().indexOf(layer));
@@ -309,56 +334,58 @@ public class LayerImplTest {
         assertEquals(0, map.getLayersInternal().indexOf(layer));
 
     }
-    
+
     @SuppressWarnings("unchecked")
     @Ignore
     @Test
     public void testGetBounds() throws Exception {
         IGeoResource resource = CatalogTests.createGeoResource("resource", 0, false); //$NON-NLS-1$
-        FeatureStore<SimpleFeatureType, SimpleFeature> fs = resource.resolve(FeatureStore.class, null);
+        FeatureStore<SimpleFeatureType, SimpleFeature> fs = resource.resolve(FeatureStore.class,
+                null);
         DefaultFeatureCollection collection = new DefaultFeatureCollection();
         collection.clear();
-        GeometryFactory fac=new GeometryFactory();
+        GeometryFactory fac = new GeometryFactory();
 
-        Object[] atts = new Object[]{
-                fac.createPoint(new Coordinate(0,0)),
-                "name1" //$NON-NLS-1$
+        Object[] atts = new Object[] { fac.createPoint(new Coordinate(0, 0)), "name1" //$NON-NLS-1$
         };
         SimpleFeatureType schema = fs.getSchema();
-        collection.add(SimpleFeatureBuilder.build(schema, atts, "id"));
+        collection.add(SimpleFeatureBuilder.build(schema, atts, "id")); //$NON-NLS-1$
 
-        atts = new Object[]{
-                fac.createPoint(new Coordinate(45,45)),
-                "name2" //$NON-NLS-1$
+        atts = new Object[] { fac.createPoint(new Coordinate(45, 45)), "name2" //$NON-NLS-1$
         };
-        collection.add(SimpleFeatureBuilder.build(schema, atts, "id"));
+        collection.add(SimpleFeatureBuilder.build(schema, atts, "id")); //$NON-NLS-1$
 
         fs.removeFeatures(Filter.INCLUDE);
-        
+
         fs.addFeatures(collection);
         Layer layer = map.getLayerFactory().createLayer(resource);
         layer.setName("layer1"); //$NON-NLS-1$
         map.getLayersInternal().add(layer);
 
-        assertEquals( new Envelope(0,45,0,45), layer.getBounds(null, layer.getCRS()) );
-        
-        CoordinateReferenceSystem decode = CRS.decode("EPSG:2065");
-        SimpleFeature[] feature = UDIGTestUtil.createTestFeatures("test", new Point[]{null}, new String[]{"name"}, decode); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        assertEquals(new Envelope(0, 45, 0, 45), layer.getBounds(null, layer.getCRS()));
+
+        CoordinateReferenceSystem decode = CRS.decode("EPSG:2065"); //$NON-NLS-1$
+        SimpleFeature[] feature = UDIGTestUtil.createTestFeatures("test", new Point[] { null }, //$NON-NLS-1$
+                new String[] { "name" }, decode); //$NON-NLS-1$
         layer = map.getLayerFactory().createLayer(CatalogTests.createGeoResource(feature, true));
-        map.getLayersInternal().add( layer );
-        
+        map.getLayersInternal().add(layer);
+
         ReferencedEnvelope bounds = layer.getBounds(null, decode);
         assertEquals(decode, bounds.getCoordinateReferenceSystem());
-        
+
         // TODO
-        
+
     }
 
-    private void addFeatureEvents(List<FeatureEvent> featureChanges, int quantity, boolean useIndex) throws IOException {
+    private void addFeatureEvents(List<FeatureEvent> featureChanges, int quantity, boolean useIndex)
+            throws IOException {
         final NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
-        final ReferencedEnvelope envelop = new ReferencedEnvelope(0, 0.1, 0, 0.1, DefaultGeographicCRS.WGS84);
-        for (int i=0; i<quantity; i++) {
-            FeatureEvent featureEvent = new FeatureEvent(layer.getResource(FeatureSource.class, nullProgressMonitor), Type.CHANGED, envelop);
+        final ReferencedEnvelope envelop = new ReferencedEnvelope(0, 0.1, 0, 0.1,
+                DefaultGeographicCRS.WGS84);
+        for (int i = 0; i < quantity; i++) {
+            FeatureEvent featureEvent = new FeatureEvent(
+                    layer.getResource(FeatureSource.class, nullProgressMonitor), Type.CHANGED,
+                    envelop);
 
             if (useIndex) {
                 featureChanges.add(0, featureEvent);

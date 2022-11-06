@@ -190,16 +190,6 @@ public class LayerDecorator implements Layer, InternalEObject {
     }
 
     @Override
-    public boolean isSelectable() {
-        return layer.getInteraction(Interaction.SELECT);
-    }
-
-    @Override
-    public void setSelectable(boolean value) {
-        layer.setInteraction(Interaction.SELECT, value);
-    }
-
-    @Override
     public String getName() {
         return layer.getName();
     }
@@ -262,11 +252,6 @@ public class LayerDecorator implements Layer, InternalEObject {
     @Override
     public SimpleFeatureType getSchema() {
         return layer.getSchema();
-    }
-
-    @Override
-    public CoordinateReferenceSystem getCRS(IProgressMonitor monitor) {
-        return layer.getCRS();
     }
 
     @Override

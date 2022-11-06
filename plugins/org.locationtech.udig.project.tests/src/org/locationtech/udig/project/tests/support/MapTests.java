@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.geotools.data.FeatureStore;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.styling.Style;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.udig.catalog.CatalogPlugin;
@@ -72,7 +73,7 @@ public class MapTests {
     }
 
     /**
-     * Will create a rendermanager
+     * Will create a RenderManager
      *
      * @param resource
      * @param displaySize
@@ -90,6 +91,8 @@ public class MapTests {
         final Map map = ProjectFactory.eINSTANCE.createMap(
                 ProjectPlugin.getPlugin().getProjectRegistry().getDefaultProject(), "testMap", //$NON-NLS-1$
                 new ArrayList<Layer>());
+
+        map.getViewportModelInternal().setCRS(DefaultGeographicCRS.WGS84);
 
         Layer tmp = map.getLayerFactory().createLayer(resource);
         Layer layer = new TestLayer();
@@ -117,7 +120,6 @@ public class MapTests {
                 @Override
                 public void refresh(Envelope bounds) {
                     // do nothing
-
                 }
 
                 @Override
@@ -138,8 +140,6 @@ public class MapTests {
             RenderManager rm = map.getRenderManagerInternal();
             rm.setMapDisplay(new TestMapDisplay(displaySize));
             rm.getRendererCreator().getLayers().add(layer);
-
-            map.getViewportModelInternal().setCRS(layer.getCRS());
 
             final Runnable job = new Runnable() {
                 @Override

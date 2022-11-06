@@ -65,9 +65,9 @@ import org.opengis.referencing.operation.TransformException;
  */
 public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     /**
-     * The default value of the '{@link #getCRS() <em>CRS</em>}' attribute.
-     * <!-- begin-user-doc -->
+     * The default value of the '{@link #getCRS() <em>CRS</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     *
      * @see #getCRS()
      * @generated
      * @ordered
@@ -93,9 +93,9 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     protected boolean cRSESet = false;
 
     /**
-     * The default value of the '{@link #getBounds() <em>Bounds</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The default value of the '{@link #getBounds() <em>Bounds</em>}' attribute. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getBounds()
      * @generated
      * @ordered
@@ -104,8 +104,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             .createFromString(RenderPackage.eINSTANCE.getReferencedEnvelope(), ""); //$NON-NLS-1$
 
     /**
-     * The cached value of the '{@link #getBounds() <em>Bounds</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
+     * The cached value of the '{@link #getBounds() <em>Bounds</em>}' attribute. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
      *
      * @see #getBounds()
      * @generated NOT
@@ -134,8 +134,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     protected static final double HEIGHT_EDEFAULT = 0.0;
 
     /**
-     * The default value of the '{@link #getWidth() <em>Width</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
+     * The default value of the '{@link #getWidth() <em>Width</em>}' attribute. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
      *
      * @see #getWidth()
      * @generated
@@ -164,8 +164,9 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     protected static final Coordinate PIXEL_SIZE_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getRenderManagerInternal() <em>Render Manager Internal</em>}' reference.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The cached value of the '{@link #getRenderManagerInternal() <em>Render Manager
+     * Internal</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getRenderManagerInternal()
      * @generated
      * @ordered
@@ -173,9 +174,9 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     protected RenderManager renderManagerInternal;
 
     /**
-     * The cached value of the '{@link #getPreferredScaleDenominators() <em>Preferred Scale Denominators</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The cached value of the '{@link #getPreferredScaleDenominators() <em>Preferred Scale
+     * Denominators</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getPreferredScaleDenominators()
      * @generated
      * @ordered
@@ -194,6 +195,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -203,6 +205,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -212,7 +215,6 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     @Override
     public void setCRS(CoordinateReferenceSystem newCRS) {
-        double scale = getScaleDenominator();
         if (newCRS == null)
             throw new IllegalArgumentException("A CRS cannot be null"); //$NON-NLS-1$
         if (newCRS.equals(cRS))
@@ -236,6 +238,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                     DirectPosition newCenter = transform.transform(position,
                             new DirectPosition2D());
                     setCenter(new Coordinate(newCenter.getOrdinate(0), newCenter.getOrdinate(1)));
+                    double scale = getScaleDenominator();
                     setScale(scale);
                 }
             } catch (FactoryException e) {
@@ -286,6 +289,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -343,7 +347,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                     mapDisplay.getDPI(), referenced);
             if (forceContainBBoxZoom && !finalBounds.contains(newBounds)) {
                 Iterator<Double> tail = getPreferredScaleDenominators().tailSet(scale).iterator();
-                // the tail will include scale because scale is one of the elements in the set.  So drop that
+                // the tail will include scale because scale is one of the elements in the set. So
+                // drop that
                 tail.next();
                 Double nextLargest = tail.next();
                 if (nextLargest != null) {
@@ -471,6 +476,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -481,8 +487,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public NotificationChain basicSetMapInternal(Map newMapInternal, NotificationChain msgs) {
@@ -493,6 +499,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public void setMapInternalGen(Map newMapInternal) {
@@ -553,6 +560,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -562,6 +570,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public NotificationChain basicSetRenderManagerInternal(RenderManager newRenderManagerInternal,
@@ -582,6 +591,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -645,7 +655,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     @Override
     public AffineTransform worldToScreenTransform() {
         if (!validState())
-            return new AffineTransform(); //Identity (screen-space is arbitrary here.)
+            return new AffineTransform(); // Identity (screen-space is arbitrary here.)
         // set up the affine transform and calculate scale values
         return worldToScreenTransform(getBounds(),
                 getRenderManagerInternal().getMapDisplay().getDisplaySize());
@@ -801,6 +811,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -867,7 +878,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             eNotify(new ENotificationImpl(this, Notification.SET,
                     RenderPackage.VIEWPORT_MODEL__BOUNDS, oldBounds, bounds));
 
-            //notifyListeners(new ViewportModelEvent(this, EventType.CRS, bounds, oldBounds));
+            // notifyListeners(new ViewportModelEvent(this, EventType.CRS, bounds, oldBounds));
             notifyListeners(new ViewportModelEvent(this, EventType.BOUNDS, bounds, oldBounds));
         }
     }
@@ -923,8 +934,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -946,8 +957,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -963,8 +974,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -978,8 +989,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1010,8 +1021,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -1047,8 +1058,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1083,8 +1094,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1238,8 +1249,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * This method will calculate the current width based on ScaleUtils and
-     * the current RenderManager.
+     * This method will calculate the current width based on ScaleUtils and the current
+     * RenderManager.
      */
     @Override
     public void setScale(double scaleDenominator) {
