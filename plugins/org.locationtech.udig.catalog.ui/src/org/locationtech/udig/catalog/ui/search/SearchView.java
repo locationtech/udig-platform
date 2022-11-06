@@ -16,6 +16,7 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
+import org.locationtech.udig.catalog.URLUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
@@ -37,7 +38,6 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -77,7 +77,7 @@ import org.locationtech.udig.ui.UDIGDragDropUtilities;
 /**
  * Search view is a distinct, simple implementation focused on Catalog searches.
  * <p>
- * We are unable to make use of the usual eclipse search facilities (ie
+ * We are unable to make use of the usual eclipse search facilities (i.e.
  * org.eclipse.search.searchPages) as this would cause our application to be dependent on
  * org.eclipse.core.resources - aka IResource. This would represent a significant jump in download
  * size etc...
@@ -97,7 +97,6 @@ public class SearchView extends SearchPart {
 
     public Text text;
 
-    private Button bbox;
 
     private Label label;
 
@@ -159,12 +158,6 @@ public class SearchView extends SearchPart {
 
         super.createPartControl(aParent);
 
-        // Layout using Form Layout (+ indicates FormAttachment)
-        // +
-        // +label+text+bbox+
-        // +
-        // contents
-        // +
         FormLayout layout = new FormLayout();
         layout.marginHeight = 0;
         layout.marginWidth = 0;
@@ -253,11 +246,12 @@ public class SearchView extends SearchPart {
         private void refresh(IResolve res) {
             URL resolveURL = res.getIdentifier();
             URL cachedURL = null;
-            if (cache != null) {
-                cachedURL = cache.getId();
+            if (cache == null) {
+                return; // nothing to refresh
             }
+            cachedURL = cache.getId();
 
-            if (resolveURL != null && resolveURL.equals(cachedURL)) {
+            if (URLUtils.urlEquals(cachedURL, resolveURL, false)) {
                 if (res.canResolve(ICatalogInfo.class)) {
                     try {
                         showInfo(new Info(cache.getId(),
@@ -373,10 +367,8 @@ public class SearchView extends SearchPart {
 
     protected void showInfo(Info info) {
         book.showPage(summary);
-        if (cache != null) {
-            if (info.getId().equals(cache.getId())) {
-                return;
-            }
+        if (cache != null && URLUtils.urlEquals(cache.getId(), info.getId(), false)) {
+            return;
         }
         cache = info;
         summary.setText(""); //$NON-NLS-1$
@@ -398,8 +390,8 @@ public class SearchView extends SearchPart {
                     new Object[] { cache.name, serverName }) + ")\n\n"); //$NON-NLS-1$
         } else {
             if (serverName != null && !serverName.equals("")) { //$NON-NLS-1$
-                summary.append(MessageFormat.format(Messages.SearchView_server,
-                        new Object[] { serverName }) + "\n\n"); //$NON-NLS-1$
+                summary.append(
+                        MessageFormat.format(Messages.SearchView_server, serverName) + "\n\n"); //$NON-NLS-1$
             }
         }
 
@@ -420,8 +412,8 @@ public class SearchView extends SearchPart {
         }
 
         if (cache.description != null && !(cache.description.equals(""))) { //$NON-NLS-1$
-            summary.append(MessageFormat.format(Messages.SearchView_description,
-                    new Object[] { cache.description }));
+            summary.append(
+                    MessageFormat.format(Messages.SearchView_description, cache.description));
         }
     }
 
@@ -507,8 +499,8 @@ public class SearchView extends SearchPart {
             }
             List<IResolve> records = null;
             try {
-                monitor.subTask(MessageFormat.format(Messages.SearchView_searching_for,
-                        new Object[] { query.text, name }));
+                monitor.subTask(
+                        MessageFormat.format(Messages.SearchView_searching_for, query.text, name));
                 monitor.worked(++work);
                 records = catalog.search(query.text, query.bbox, monitor);
                 if (records != null && !records.isEmpty()) {

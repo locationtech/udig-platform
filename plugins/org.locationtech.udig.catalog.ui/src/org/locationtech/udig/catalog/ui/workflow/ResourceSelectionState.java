@@ -146,7 +146,7 @@ public class ResourceSelectionState extends State {
                 selectResourcesForDND(service, members);
             }
         }
-        if (!toRemove.isEmpty())
+        if (services != null && !toRemove.isEmpty())
             services.removeAll(toRemove);
     }
 
@@ -154,7 +154,7 @@ public class ResourceSelectionState extends State {
         // if there is only a single resource then for drag and drop we can assume that
         // the user just wants to show the data on the map and not be queried just to
         // select the one element
-        if (members.size() == 1) {
+        if (members != null && members.size() == 1) {
             resources.put(members.get(0), service);
         }
     }
@@ -163,11 +163,10 @@ public class ResourceSelectionState extends State {
         Collection<URL> selectedResources = getPreferredResources();
         for (IGeoResource geoResource : members) {
             for (URL url : selectedResources) {
-                if (resources.size() < selectedResources.size()) {
-                    if (URLUtils.urlEquals(url, geoResource.getIdentifier(), false)) {
-                        resources.put(geoResource, service);
-                        break;
-                    }
+                if (resources.size() < selectedResources.size()
+                        && URLUtils.urlEquals(url, geoResource.getIdentifier(), false)) {
+                    resources.put(geoResource, service);
+                    break;
                 }
             }
         }
@@ -178,8 +177,7 @@ public class ResourceSelectionState extends State {
         if (state == null) {
             return Collections.emptyList();
         }
-        Collection<URL> selectedResources = state.getSelectedResources();
-        return selectedResources;
+        return state.getSelectedResources();
     }
 
     private void addResource(IProgressMonitor monitor, URL url) throws IOException {
@@ -208,8 +206,6 @@ public class ResourceSelectionState extends State {
         if (resources == null || resources.isEmpty())
             return false;
 
-        int count = 0;
-
         Set<IService> parents = new HashSet<>();
 
         for (Map.Entry<IGeoResource, IService> entry : resources.entrySet()) {
@@ -224,10 +220,9 @@ public class ResourceSelectionState extends State {
                     SubMonitor subMonitor = SubMonitor.convert(monitor, 10);
                     try {
                         URL identifier = service.getIdentifier();
-                        monitor.setTaskName(MessageFormat
-                                .format(Messages.ResourceSelectionState_taskName, new Object[] {
-                                        identifier.getProtocol() + "://" + identifier.getPath() })); //$NON-NLS-1$
-                        count += service.resources(subMonitor).size();
+                        monitor.setTaskName(
+                                MessageFormat.format(Messages.ResourceSelectionState_taskName,
+                                        identifier.getProtocol() + "://" + identifier.getPath())); //$NON-NLS-1$
                     } finally {
                         subMonitor.done();
                     }
@@ -262,7 +257,7 @@ public class ResourceSelectionState extends State {
                 if (resource.getIdentifier() == null) {
                     continue;
                 }
-                if (url.equals(resource.getIdentifier())) {
+                if (URLUtils.urlEquals(url, resource.getIdentifier(), false)) {
                     return resource;
                 }
             }
