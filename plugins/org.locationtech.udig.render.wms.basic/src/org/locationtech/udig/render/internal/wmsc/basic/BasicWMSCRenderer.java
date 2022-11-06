@@ -237,8 +237,7 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
 
                     Tile tile = null;
                     try {
-                        tile = tilesToDraw_queue.take(); // blocks until a tile is ready to
-                                                         // take
+                        tile = tilesToDraw_queue.take(); // blocks until a tile is ready to take
                         if (testing) {
                             System.out.println("removed from queue: " + tile.getId()); //$NON-NLS-1$
                         }
@@ -263,12 +262,13 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
                         return;
                     }
 
-                    // check that the tile's bounds are within the current
-                    // context's bounds (if it's not, don't bother drawing it) and also
-                    // only draw tiles that haven't already been drawn (panning fast
-                    // can result in listeners being notified the same tile is ready multiple
-                    // times but we don't want to draw it more than once per render cycle)
-                    // ReferencedEnvelope viewbounds = getContext().getViewportModel().getBounds();
+                    /**
+                     * Check that the tile's bounds are within the current context's bounds (if it's
+                     * not, don't bother drawing it) and also only draw tiles that haven't already
+                     * been drawn (panning fast can result in listeners being notified the same tile
+                     * is ready multiple times but we don't want to draw it more than once per
+                     * render cycle)
+                     */
                     ReferencedEnvelope viewbounds = getContext().getImageBounds();
                     if (tile != null && tile.getBufferedImage() != null && viewbounds != null
                             && viewbounds.intersects(tile.getBounds())
@@ -280,10 +280,11 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
                         setState(RENDERING); // tell renderer new data is ready
                     }
 
-                    // remove the tile from the not rendered list regardless
-                    // of whether it was actually drawn (this is to prevent
-                    // this render cycle from blocking endlessly waiting for tiles
-                    // that either didn't return or had some error)
+                    /**
+                     * Remove the tile from the not rendered list regardless of whether it was
+                     * actually drawn (this is to prevent this render cycle from blocking endlessly
+                     * waiting for tiles that either didn't return or had some error)
+                     */
                     notRenderedTiles.remove(tile.getId());
                 }
             }
@@ -319,8 +320,7 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
         GridCoverageFactory factory = new GridCoverageFactory();
         ReferencedEnvelope ref = new ReferencedEnvelope(bounds.getMinX(), bounds.getMaxX(),
                 bounds.getMinY(), bounds.getMaxY(), crs);
-        GridCoverage2D coverage = factory.create("GridCoverage", //$NON-NLS-1$
-                tile.getBufferedImage(), ref);
+        GridCoverage2D coverage = factory.create("GridCoverage", tile.getBufferedImage(), ref); //$NON-NLS-1$
         Envelope2D coveragebounds = coverage.getEnvelope2D();
 
         // bounds of tile
@@ -447,12 +447,12 @@ public class BasicWMSCRenderer extends RendererImpl implements IRenderer {
 
         @Override
         public void notifyTileReady(Tile tile) {
-            // set the area that needs updating
-            // setRenderBounds(tile.getBounds());
 
-            // if the rendering is already in a rendering state, queue this tile
-            // to draw and tell the renderer more data is ready,
-            // otherwise create a new rendering thread (which will check the tiles afresh)
+            /**
+             * If the rendering is already in a rendering state, queue this tile to draw and tell
+             * the renderer more data is ready, otherwise create a new rendering thread (which will
+             * check the tiles afresh)
+             */
             int currentState = getState();
             if ((currentState == RENDERING || currentState == STARTING)) {
                 // queue the tile to draw

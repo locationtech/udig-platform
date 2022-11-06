@@ -14,3 +14,4 @@ build.xml
 workspace
 runtime-udig.product
 .sts4-cache/
+docs/__pycache__

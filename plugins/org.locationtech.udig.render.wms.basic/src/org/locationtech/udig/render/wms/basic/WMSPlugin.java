@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2004, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2004, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,7 +10,6 @@
  *
  */
 package org.locationtech.udig.render.wms.basic;
-
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,12 +23,14 @@ import org.osgi.framework.BundleContext;
 
 /**
  * WMS renderer plugin
+ *
  * @author jones
  * @since 0.6.0
  */
 public class WMSPlugin extends AbstractUIPlugin {
 
     public static final String ID = "org.locationtech.udig.render.wms.basic"; //$NON-NLS-1$
+
     private static WMSPlugin plugin;
 
     /**
@@ -38,23 +39,24 @@ public class WMSPlugin extends AbstractUIPlugin {
      */
     public WMSPlugin() {
         super();
-        plugin=this;
+        plugin = this;
     }
 
-    public static WMSPlugin getDefault(){
+    public static WMSPlugin getDefault() {
         return plugin;
     }
 
     /**
      * This method is called upon plug-in activation
      */
-    public void start( BundleContext context ) throws Exception {
+    @Override
+    public void start(BundleContext context) throws Exception {
         super.start(context);
         ClassLoader current = Thread.currentThread().getContextClassLoader();
         try {
             Thread.currentThread().setContextClassLoader(WebMapServer.class.getClassLoader());
             Logger logger = Logger.getLogger("org.geotools.data.ows");//$NON-NLS-1$
-            if (!isDebugging()) { //$NON-NLS-1$
+            if (!isDebugging()) { // $NON-NLS-1$
                 logger.setLevel(Level.SEVERE);
             } else {
                 logger.setLevel(Level.FINEST);
@@ -67,7 +69,8 @@ public class WMSPlugin extends AbstractUIPlugin {
     /**
      * This method is called when the plug-in is stopped
      */
-    public void stop( BundleContext context ) throws Exception {
+    @Override
+    public void stop(BundleContext context) throws Exception {
         super.stop(context);
         plugin = null;
     }
@@ -77,28 +80,33 @@ public class WMSPlugin extends AbstractUIPlugin {
     }
 
     public static void log(String message, Throwable exception) {
-        WMSPlugin.getDefault().getLog().log(
-                new Status(IStatus.INFO, WMSPlugin.ID, IStatus.OK,
-                        message, exception));
+        WMSPlugin.getDefault().getLog()
+                .log(new Status(IStatus.INFO, WMSPlugin.ID, IStatus.OK, message, exception));
     }
+
     /**
      * Messages that only engage if getDefault().isDebugging()
      * <p>
-     * It is much prefered to do this:<pre><code>
-     * private static final String RENDERING = "org.locationtech.udig.project/render/trace";
+     * It is much preferred to do this:
+     *
+     * <pre>
+     * <code> private static final String RENDERING = "org.locationtech.udig.project/render/trace";
      * if( ProjectUIPlugin.getDefault().isDebugging() && "true".equalsIgnoreCase( RENDERING ) ){
-     *      System.out.println( "your message here" );
-     * }
+     * System.out.println( "your message here" ); }
      */
-    public static final void trace( String message, Throwable e) {
-        if( getDefault().isDebugging() ) {
-            if( message != null ) System.out.println( message );
-            if( e != null ) e.printStackTrace();
+    public static final void trace(String message, Throwable e) {
+        if (getDefault().isDebugging()) {
+            if (message != null)
+                System.out.println(message);
+            if (e != null)
+                e.printStackTrace();
         }
     }
-    public static final void trace( String message ) {
-        trace( message, null );
+
+    public static final void trace(String message) {
+        trace(message, null);
     }
+
     /**
      * Performs the Platform.getDebugOption true check on the provided trace
      * <p>
@@ -107,11 +115,11 @@ public class WMSPlugin extends AbstractUIPlugin {
      * <li>Trace.RENDER - trace rendering progress
      * </ul>
      * </p>
+     *
      * @param trace currently only RENDER is defined
      */
-    public static boolean isDebugging( final String trace ){
-        return getDefault().isDebugging() &&
-            "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
-
+    public static boolean isDebugging(final String trace) {
+        return getDefault().isDebugging()
+                && "true".equalsIgnoreCase(Platform.getDebugOption(trace)); //$NON-NLS-1$
     }
 }
