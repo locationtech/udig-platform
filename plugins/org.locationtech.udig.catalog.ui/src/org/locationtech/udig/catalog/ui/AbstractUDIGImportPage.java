@@ -154,7 +154,7 @@ public abstract class AbstractUDIGImportPage extends WorkflowWizardPage
             setErrorMessage("Could not connect:" + e.getCause().getMessage());
             throw (RuntimeException) new RuntimeException().initCause(e);
         } catch (InterruptedException e) {
-            setErrorMessage("Canceled");
+            setErrorMessage("Canceled"); //$NON-NLS-1$
             throw (RuntimeException) new RuntimeException().initCause(e);
         }
         if (!services.isEmpty()) {

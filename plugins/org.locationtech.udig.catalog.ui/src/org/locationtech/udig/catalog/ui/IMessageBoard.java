@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -10,9 +11,9 @@
 package org.locationtech.udig.catalog.ui;
 
 /**
- * Abstracts out a place to post messages.  
- * 
- * @see StatusLineMessageBoardAdapter 
+ * Abstracts out a place to post messages.
+ *
+ * @see StatusLineMessageBoardAdapter
  * @author Jesse
  * @since 1.1.0
  */
@@ -22,11 +23,9 @@ public interface IMessageBoard {
      *
      * @param message message to set on the message board.
      */
-    void putMessage( String message, Type messageType );
-    
-    enum Type{
-        NORMAL, 
-        ERROR,
-        WARNING
+    void putMessage(String message, Type messageType);
+
+    enum Type {
+        NORMAL, ERROR, WARNING
     }
 }

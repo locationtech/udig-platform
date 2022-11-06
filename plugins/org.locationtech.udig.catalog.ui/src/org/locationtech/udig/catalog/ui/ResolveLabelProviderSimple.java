@@ -99,7 +99,7 @@ public class ResolveLabelProviderSimple extends LabelProvider implements IResolv
                         return name;
                     }
                     if (id.getTypeQualifier() != null) {
-                        return title + "(" + id.getTypeQualifier() + ")";
+                        return title + "(" + id.getTypeQualifier() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
                     } else {
                         return title;
                     }

@@ -83,7 +83,7 @@ public class FileConnectionFactory extends UDIGConnectionFactory {
         return null;
     }
 
-    /** Check that any trailing #layer is removed from the url */
+    /** Check that any trailing #layer is removed from the URL */
     static public URL checkedURL(URL url) {
         if (url == null) {
             return null;

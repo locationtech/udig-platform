@@ -75,14 +75,20 @@ public class CatalogUIPlugin extends AbstractUdigUIPlugin {
 
     private static CatalogUIPlugin INSTANCE;
 
-    /** The id of the plug-in */
+    /**
+     * The id of the plug-in
+     */
     public static final String ID = "org.locationtech.udig.catalog.ui"; //$NON-NLS-1$
 
-    /** Preference store for the last directory open by the file selection dialog */
+    /**
+     * Preference store for the last directory open by the file selection dialog
+     */
     public static final String PREF_OPEN_DIALOG_DIRECTORY = "udig.preferences.openDialog.lastDirectory"; //$NON-NLS-1$
 
-    /** Icons path (value "icons/") */
-    public static final String ICONS_PATH = "icons/";//$NON-NLS-1$
+    /**
+     * Icons path (value "icons/")
+     */
+    public static final String ICONS_PATH = "icons/"; //$NON-NLS-1$
 
     private static final String LABELS_PREFERENCE_STORE = "CATALOG_LABELS_PREFERENCE_STORAGE"; //$NON-NLS-1$
 

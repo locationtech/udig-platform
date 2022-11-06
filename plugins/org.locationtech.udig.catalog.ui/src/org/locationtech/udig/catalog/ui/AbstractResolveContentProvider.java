@@ -247,7 +247,6 @@ public class AbstractResolveContentProvider implements IResolveChangeListener {
 
     /**
      * Thread for updating structure
-     * <p>
      * Note: thread notify the system that the element has requires an update
      */
     class Update implements Runnable {
@@ -259,7 +258,6 @@ public class AbstractResolveContentProvider implements IResolveChangeListener {
 
         /**
          * Update structure, Thread will be notified if more updates are required.
-         * <p>
          * Note: We also need to let ourselves be interrupted
          */
         @Override

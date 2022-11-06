@@ -113,7 +113,7 @@ public abstract class AbstractUDIGConnectionFactory extends UDIGConnectionFactor
      * extension
      *
      * @param serviceExtension
-     * @param url url created from {@link AbstractUDIGConnectionFactory#canProcess(Object)}
+     * @param url URL created from {@link AbstractUDIGConnectionFactory#canProcess(Object)}
      * @return true if can process parameters
      */
     protected boolean canProcess(ServiceExtension2 serviceExtension, URL url) {
@@ -125,7 +125,7 @@ public abstract class AbstractUDIGConnectionFactory extends UDIGConnectionFactor
      * the service extension
      *
      * @param serviceExtension
-     * @param id id from {@link AbstractUDIGConnectionFactory#canProcess(Object)}
+     * @param id ID from {@link AbstractUDIGConnectionFactory#canProcess(Object)}
      * @return true if can process parameters
      */
     protected boolean canProcess(ServiceExtension2 serviceExtension, ID id) {
