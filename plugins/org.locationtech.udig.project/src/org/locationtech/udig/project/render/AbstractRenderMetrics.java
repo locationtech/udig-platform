@@ -12,6 +12,7 @@ package org.locationtech.udig.project.render;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.geotools.util.Range;
@@ -203,10 +204,10 @@ public abstract class AbstractRenderMetrics {
      *
      * @param context context to use for determining the metrics of the associated renderer
      * @param factory the factory associated with this metrics.
-     * @param expectedStyleIds
+     * @param expectedStyleIds list of expected style Ids.
      */
     protected AbstractRenderMetrics(final IRenderContext context,
-            final IRenderMetricsFactory factory, List<String> expectedStyleIds) {
+            final IRenderMetricsFactory factory, final List<String> expectedStyleIds) {
         this.context = context;
         this.factory = factory;
         this.expectedStyleIDs = expectedStyleIds;
@@ -281,8 +282,8 @@ public abstract class AbstractRenderMetrics {
     }
 
     /**
-     * Returns a number that represents the expected latency of connecting to the georesource.
-     * Measured in milliseconds.
+     * Returns a number that represents the expected latency of connecting to the Measured in
+     * milliseconds.
      * <p>
      * This will be used by the RenderCreator to determine which renderer to use for a given
      * georesource.
@@ -411,7 +412,7 @@ public abstract class AbstractRenderMetrics {
      *
      * @return List of Style IDs expected by the current renderer
      */
-    final public List<String> getExpectedStyles() {
+    public final List<String> getExpectedStyles() {
         return this.expectedStyleIDs;
     }
 
@@ -433,33 +434,26 @@ public abstract class AbstractRenderMetrics {
         this.id = id;
     }
 
-    /**
-     * TODO: This function may require some tweaking ...
-     */
     @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof AbstractRenderMetrics)) {
-            return false;
-        }
-        if (o == this) {
-            return true;
-        }
-
-        AbstractRenderMetrics m = (AbstractRenderMetrics) o;
-        if (!m.context.equals(this.context)) {
-            return false;
-        }
-        if (getLatencyMetric() != m.getLatencyMetric()) {
-            return false;
-        }
-        if (getResolutionMetric() != m.getResolutionMetric()) {
-            return false;
-        }
-        if (getDrawingTimeMetric() != m.getDrawingTimeMetric()) {
-            return false;
-        }
-
-        return true;
+    public int hashCode() {
+        return Objects.hash(context, latencyMetric, resolutionMetric, timeToDrawMetric);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        AbstractRenderMetrics other = (AbstractRenderMetrics) obj;
+        return Objects.equals(context, other.context) && latencyMetric == other.latencyMetric
+                && Double.doubleToLongBits(resolutionMetric) == Double
+                        .doubleToLongBits(other.resolutionMetric)
+                && timeToDrawMetric == other.timeToDrawMetric;
+    }
 }
