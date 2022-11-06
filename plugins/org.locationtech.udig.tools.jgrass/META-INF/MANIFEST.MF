@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.tools.jgrass
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JGrass Tools Plug-in
@@ -15,7 +16,7 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.catalog.jgrass,
  org.eclipse.xsd;bundle-version="2.7.0",
  org.locationtech.udig.libs.jfreechart
-Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: org.locationtech.udig.tools.jgrass.profile.borrowedfro
  mjgrasstools

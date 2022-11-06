@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.render.feature.shapefile
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
@@ -11,5 +12,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.locationtech.udig.project,
  org.locationtech.udig.render.feature.basic,
  org.eclipse.ui
-Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

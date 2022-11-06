@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.style.jgrass
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JGrassraster Style Plug-in
@@ -15,7 +16,7 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.style.sld,
  org.locationtech.udig.mapgraphic,
  org.locationtech.udig.legend
-Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig.style.jgrass.categories,org.loca
  tiontech.udig.style.jgrass.colors
 Import-Package: org.apache.commons.io;version="2.4.0",

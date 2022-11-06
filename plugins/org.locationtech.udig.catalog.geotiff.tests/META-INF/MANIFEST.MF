@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.catalog.geotiff.tests
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Geotiff Test Plug-in
@@ -11,4 +12,3 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.catalog.geotiff
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-

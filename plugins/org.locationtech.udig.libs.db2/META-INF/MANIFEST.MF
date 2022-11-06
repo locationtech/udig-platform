@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.libs.db2
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DB2 Plug-in

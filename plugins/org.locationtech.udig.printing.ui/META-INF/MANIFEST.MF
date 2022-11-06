@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.printing.ui
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %printing.ui.plugin.name

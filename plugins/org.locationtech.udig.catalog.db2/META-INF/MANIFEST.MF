@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.catalog.db2
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DB2 Catalog Plug-in

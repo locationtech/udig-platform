@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.tutorials.featureeditor
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Feature Editor Plug-in

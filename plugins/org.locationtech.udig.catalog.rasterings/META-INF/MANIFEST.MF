@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.catalog.rasterings
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Rasterings Catalog Plug-in

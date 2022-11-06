@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.document.tests
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Document Plug-in Tests
@@ -12,4 +13,3 @@ Require-Bundle: org.locationtech.udig.document,
 Eclipse-BundleShape: dir
 Bundle-Activator: org.locationtech.udig.document.tests.Activator
 Bundle-ActivationPolicy: lazy
-

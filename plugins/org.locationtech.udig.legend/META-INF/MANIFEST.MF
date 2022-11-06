@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.legend
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Legend Plug-in

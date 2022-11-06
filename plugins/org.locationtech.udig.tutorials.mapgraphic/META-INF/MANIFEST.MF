@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.tutorials.mapgraphic
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mapgraphic Plug-in

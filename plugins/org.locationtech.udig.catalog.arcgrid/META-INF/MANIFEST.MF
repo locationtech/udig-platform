@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.catalog.arcgrid
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ArcGrid Plug-in

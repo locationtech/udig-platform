@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.locationtech.udig.tutorials.workbench
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Workbench Plug-in
@@ -9,4 +10,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.locationtech.udig.catalog,
  org.locationtech.udig.project
-Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy
