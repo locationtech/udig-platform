@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -65,9 +66,6 @@ import org.locationtech.udig.project.ui.internal.ApplicationGISInternal;
 
 /**
  * Provides a tabbed browser view using the native web browser.
- * <p>
- *
- * </p>
  *
  * @author mleslie
  * @since 1.0.0
@@ -244,21 +242,14 @@ public class BrowserContainerView extends ViewPart {
             if (this.listener == null || this.listener.equals("DEFAULT")) //$NON-NLS-1$
                 return null;
             try {
-                return (LocationListener) Class.forName(this.listener).newInstance();
-            } catch (InstantiationException e) {
-                //
-            } catch (IllegalAccessException e) {
-                //
-            } catch (ClassNotFoundException e) {
-                //
+                return (LocationListener) Class.forName(this.listener).getDeclaredConstructor()
+                        .newInstance();
+            } catch (Exception e) {
+                return null;
             }
-            return null;
         }
     }
 
-    /**
-     *
-     */
     public BrowserContainerView() {
         super();
     }
@@ -299,7 +290,7 @@ public class BrowserContainerView extends ViewPart {
             this.browserData = null;
         } else {
             String initialBrowserURL = System.getProperty(BROWSER_INITIAL_URL_PROPERTY,
-                    "http://udig.github.io/data/");
+                    "http://udig.github.io/data/"); //$NON-NLS-1$
             addTab(Messages.BrowserContainerView_tabTitle, initialBrowserURL, (Image) null,
                     getListener()); // $NON-NLS-1$
         }
