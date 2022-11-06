@@ -12,6 +12,7 @@ package org.locationtech.udig.project.internal;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
 import java.util.Collections;
@@ -62,9 +63,6 @@ public class ViewportModelImplTest {
         viewportModel.setBounds(-140, -120, 40, 60);
         assertEquals(1.0d, viewportModel.getBounds().getWidth() / viewportModel.getHeight(),
                 ACCURACY);
-
-        // assertEquals(calculateScale(viewportModel.getBounds(), viewportModel.getCRS(), 500,500),
-        // viewportModel.getScaleDenominator());
     }
 
     /**
@@ -84,6 +82,7 @@ public class ViewportModelImplTest {
                 250, 250);
         double viewportResults = viewportModel.getScaleDenominator();
         double d = Math.abs(trueScale - viewportResults);
+        assertTrue(d + " should be less than " + ACCURACY, d < ACCURACY); //$NON-NLS-1$
     }
 
     /**
@@ -103,7 +102,7 @@ public class ViewportModelImplTest {
                 100, 100);
         double viewportResults = viewportModel.getScaleDenominator();
         double d = Math.abs(trueScale - viewportResults);
-        // assertTrue(d+" should be less than "+ACCURACY_SCALE, d< ACCURACY_SCALE ); //$NON-NLS-1$
+        assertTrue(d + " should be less than " + ACCURACY, d < ACCURACY); //$NON-NLS-1$
     }
 
     /**
@@ -116,14 +115,14 @@ public class ViewportModelImplTest {
         ViewportModel viewportModel = map.getViewportModelInternal();
         viewportModel.setCRS(DefaultGeographicCRS.WGS84);
         viewportModel.setBounds(500, 500, 1000, 1000);
-        // assertEquals(1.0d, viewportModel.getBounds().getWidth()/viewportModel.getHeight(),
-        // ACCURACY);
+        assertEquals(1.0d, viewportModel.getBounds().getWidth() / viewportModel.getHeight(),
+                ACCURACY);
 
         double trueScale = calculateScale(new Envelope(-180, -80, -90, 10), viewportModel.getCRS(),
                 100, 100);
         double viewportResults = viewportModel.getScaleDenominator();
         double d = Math.abs(trueScale - viewportResults);
-        // assertTrue(d+" should be less than "+ACCURACY_SCALE, d< ACCURACY_SCALE ); //$NON-NLS-1$
+        assertTrue(d + " should be less than " + ACCURACY, d < ACCURACY); //$NON-NLS-1$
     }
 
     @Test
@@ -139,7 +138,7 @@ public class ViewportModelImplTest {
 
     private static double calculateScale(Envelope envelope,
             CoordinateReferenceSystem coordinateReferenceSystem, int imageWidth, int imageHeight)
-                    throws Exception {
+            throws Exception {
         ReferencedEnvelope bounds = new ReferencedEnvelope(envelope, coordinateReferenceSystem);
         bounds.transform(DefaultGeographicCRS.WGS84, true);
 

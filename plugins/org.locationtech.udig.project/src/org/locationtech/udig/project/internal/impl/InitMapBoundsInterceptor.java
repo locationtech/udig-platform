@@ -10,12 +10,14 @@
  */
 package org.locationtech.udig.project.internal.impl;
 
+import java.util.List;
+
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.interceptor.LayerInterceptor;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.render.ViewportModel;
-import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
 import org.locationtech.udig.ui.ProgressManager;
 
 /**
@@ -40,11 +42,14 @@ public class InitMapBoundsInterceptor implements LayerInterceptor {
         final ViewportModel viewportModel = map.getViewportModelInternal();
 
         ReferencedEnvelope bounds = viewportModel.getBounds();
-        // If first layer or if the CRS has been unchanged from the original BBox
-        if (map.getMapLayers().size() == 1
-                || bounds == ViewportModelImpl.getDefaultReferencedEnvelope()) {
-            bounds = map.getBounds(ProgressManager.instance().get());
-            viewportModel.setBounds(bounds);
+        // If the map has one layer and if the CRS has been unchanged from the original BBox
+        final List<ILayer> mapLayers = map.getMapLayers();
+        if (mapLayers.size() == 1 || bounds.equals(ViewportModel.getNullReferenceEnvelope())) {
+            bounds = mapLayers.get(0).getBounds(ProgressManager.instance().get(),
+                    viewportModel.getCRS());
+            if (!bounds.isNull()) {
+                viewportModel.setBounds(bounds);
+            }
         }
     }
 

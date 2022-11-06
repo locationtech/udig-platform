@@ -1,5 +1,12 @@
 /**
- * <copyright></copyright> $Id$
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2022, Refractions Research Inc.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
+ * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
  */
 package org.locationtech.udig.project.internal.render.impl;
 
@@ -13,6 +20,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -35,7 +43,6 @@ import org.locationtech.udig.project.IMap;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.ProjectPackage;
 import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.render.RenderFactory;
 import org.locationtech.udig.project.internal.render.RenderManager;
 import org.locationtech.udig.project.internal.render.RenderPackage;
 import org.locationtech.udig.project.internal.render.ViewportModel;
@@ -56,18 +63,18 @@ import org.opengis.referencing.operation.TransformException;
 
 /**
  * TODO Purpose of org.locationtech.udig.project.internal.render.impl
- * <p>
- * </p>
  *
  * @author Jesse
  * @since 1.0.0
  * @generated
  */
 public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
+    private static final int DEFAULT_CRS = 4326; // WGS84
+
     /**
-     * The default value of the '{@link #getCRS() <em>CRS</em>}' attribute.
-     * <!-- begin-user-doc -->
+     * The default value of the '{@link #getCRS() <em>CRS</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     *
      * @see #getCRS()
      * @generated
      * @ordered
@@ -93,25 +100,20 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     protected boolean cRSESet = false;
 
     /**
-     * The default value of the '{@link #getBounds() <em>Bounds</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getBounds()
-     * @generated
-     * @ordered
-     */
-    protected static final ReferencedEnvelope BOUNDS_EDEFAULT = (ReferencedEnvelope) RenderFactory.eINSTANCE
-            .createFromString(RenderPackage.eINSTANCE.getReferencedEnvelope(), ""); //$NON-NLS-1$
-
-    /**
-     * The cached value of the '{@link #getBounds() <em>Bounds</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
+     * The cached value of the '{@link #getBounds() <em>Bounds</em>}' attribute. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
      *
      * @see #getBounds()
      * @generated NOT
      * @ordered
      */
-    protected ReferencedEnvelope bounds = ViewportModelImpl.getDefaultReferencedEnvelope();
+    protected ReferencedEnvelope bounds = null;
+
+    /**
+     * The default value of the '{@link #getBounds() <em>Bounds</em>}' attribute.
+     */
+    protected static final ReferencedEnvelope BOUNDS_EDEFAULT = ViewportModel
+            .getNullReferenceEnvelope();
 
     /**
      * The default value of the '{@link #getCenter() <em>Center</em>}' attribute. <!--
@@ -134,8 +136,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     protected static final double HEIGHT_EDEFAULT = 0.0;
 
     /**
-     * The default value of the '{@link #getWidth() <em>Width</em>}' attribute. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
+     * The default value of the '{@link #getWidth() <em>Width</em>}' attribute. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
      *
      * @see #getWidth()
      * @generated
@@ -164,8 +166,9 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     protected static final Coordinate PIXEL_SIZE_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getRenderManagerInternal() <em>Render Manager Internal</em>}' reference.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The cached value of the '{@link #getRenderManagerInternal() <em>Render Manager
+     * Internal</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getRenderManagerInternal()
      * @generated
      * @ordered
@@ -173,9 +176,9 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     protected RenderManager renderManagerInternal;
 
     /**
-     * The cached value of the '{@link #getPreferredScaleDenominators() <em>Preferred Scale Denominators</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The cached value of the '{@link #getPreferredScaleDenominators() <em>Preferred Scale
+     * Denominators</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @see #getPreferredScaleDenominators()
      * @generated
      * @ordered
@@ -194,6 +197,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -203,6 +207,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -218,16 +223,16 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         if (newCRS.equals(cRS))
             return;
         CoordinateReferenceSystem oldCRS = getCRS();
-        if (getBounds().isNull() || !validState()) {
+        ReferencedEnvelope oldBounds = getBounds();
+        if (oldBounds.isNull() || !validState()) {
             setCRSGen(newCRS);
-
         } else {
             Coordinate center = getCenter();
             DirectPosition2D position = new DirectPosition2D(oldCRS, center.x, center.y);
             try {
                 eSetDeliver(false);
                 cRS = newCRS;
-                bounds = new ReferencedEnvelope(bounds, cRS);
+                bounds = new ReferencedEnvelope(oldBounds, cRS);
                 if (oldCRS != DefaultEngineeringCRS.GENERIC_2D
                         && oldCRS != DefaultEngineeringCRS.GENERIC_3D
                         && oldCRS != DefaultEngineeringCRS.CARTESIAN_2D
@@ -286,6 +291,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -300,8 +306,10 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     @Override
     public synchronized ReferencedEnvelope getBounds() {
-        if (bounds == null) {
-            return getMapInternal().getBounds(ProgressManager.instance().get());
+        ReferencedEnvelope nullReferenceEnvelope = ViewportModel.getNullReferenceEnvelope();
+        if (bounds == null || nullReferenceEnvelope.equals(bounds)) {
+            ReferencedEnvelope calculateExtent = calculateExtent(getMap(), getCRS());
+            bounds = (calculateExtent == null ? nullReferenceEnvelope : calculateExtent);
         }
 
         return bounds;
@@ -343,7 +351,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                     mapDisplay.getDPI(), referenced);
             if (forceContainBBoxZoom && !finalBounds.contains(newBounds)) {
                 Iterator<Double> tail = getPreferredScaleDenominators().tailSet(scale).iterator();
-                // the tail will include scale because scale is one of the elements in the set.  So drop that
+                // the tail will include scale because scale is one of the elements in the set. So
+                // drop that
                 tail.next();
                 Double nextLargest = tail.next();
                 if (nextLargest != null) {
@@ -353,8 +362,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             }
         }
 
-        Envelope oldBounds = bounds == null ? new Envelope() : bounds;
-        if (!getBounds().isNull() && !Double.isNaN(getAspectRatio())
+        Envelope oldBounds = getBounds();
+        if (!oldBounds.isNull() && !Double.isNaN(getAspectRatio())
                 && !Double.isNaN(finalBounds.getWidth())
                 && !Double.isNaN(finalBounds.getHeight())) {
             double nRatio = finalBounds.getWidth() / finalBounds.getHeight();
@@ -376,7 +385,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             }
         }
         bounds = new ReferencedEnvelope(finalBounds, getCRS());
-        fireNotification(oldBounds);
+        fireNotification(oldBounds, bounds);
     }
 
     /**
@@ -386,8 +395,9 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     @Override
     public Coordinate getCenter() {
-        return new Coordinate(bounds.getMinX() + bounds.getWidth() / 2,
-                bounds.getMinY() + bounds.getHeight() / 2);
+        final ReferencedEnvelope currentBounds = getBounds();
+        return new Coordinate(currentBounds.getMinX() + currentBounds.getWidth() / 2, currentBounds.getMinY()
+                + currentBounds.getHeight() / 2);
     }
 
     /**
@@ -397,8 +407,9 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     @Override
     public void setCenter(Coordinate newCenter) {
-        // Coordinate center=getCenter();
-        double dw = getBounds().getWidth() / 2, dh = getBounds().getHeight() / 2;
+        final ReferencedEnvelope currentBounds = getBounds();
+        final double dw = currentBounds.getWidth() / 2;
+        final double dh = currentBounds.getHeight() / 2;
         setBounds(new Envelope(newCenter.x - dw, newCenter.x + dw, newCenter.y - dh,
                 newCenter.y + dh));
     }
@@ -410,7 +421,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
      */
     @Override
     public double getHeight() {
-        return bounds.getHeight();
+        return getBounds().getHeight();
     }
 
     /**
@@ -471,6 +482,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -481,8 +493,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public NotificationChain basicSetMapInternal(Map newMapInternal, NotificationChain msgs) {
@@ -493,6 +505,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public void setMapInternalGen(Map newMapInternal) {
@@ -518,7 +531,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     boolean viewer = false;
 
-    // can't expect to great of accuracy since ASPECT RATIO is based on ints
+    // can't expect to great of accuracy since ASPECT RATIO is based on integers
     private static final double ACCURACY = 0.0001;
 
     private boolean initialized;
@@ -539,9 +552,6 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         this.viewer = viewer;
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.RenderManager#setMap(IMap)
-     */
     @Override
     public void setMapInternal(Map newMap) {
         if (isViewer()) {
@@ -553,6 +563,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -562,6 +573,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     public NotificationChain basicSetRenderManagerInternal(RenderManager newRenderManagerInternal,
@@ -582,6 +594,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -645,15 +658,12 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     @Override
     public AffineTransform worldToScreenTransform() {
         if (!validState())
-            return new AffineTransform(); //Identity (screen-space is arbitrary here.)
+            return new AffineTransform(); // Identity (screen-space is arbitrary here.)
         // set up the affine transform and calculate scale values
         return worldToScreenTransform(getBounds(),
                 getRenderManagerInternal().getMapDisplay().getDisplaySize());
     }
 
-    /**
-     * @see ViewportModel#worldToScreenTransform(Envelope, Dimension)
-     */
     @Override
     public AffineTransform worldToScreenTransform(Envelope mapExtent, Dimension screenSize) {
         if (!validState())
@@ -725,8 +735,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         double effectiveZoom = zoom;
         AffineTransform transformer = ScaleUtils.createScaleTransformWithFixedPoint(effectiveZoom,
                 fixedPoint);
-        ReferencedEnvelope srcEnvelope = getBounds();
-        Envelope transformedEnvelope = ScaleUtils.transformEnvelope(srcEnvelope, transformer);
+        Envelope transformedEnvelope = ScaleUtils.transformEnvelope(getBounds(), transformer);
         setBounds(transformedEnvelope);
         return this;
     }
@@ -742,45 +751,7 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             if (!validState())
                 return;
 
-            ReferencedEnvelope bounds2 = new ReferencedEnvelope(getCRS());
-
-            // check the limit service
-            IAOIService aOIService = PlatformGIS.getAOIService();
-            ReferencedEnvelope extent = aOIService.getExtent();
-
-            if (extent != null && !extent.isNull() && !extent.isEmpty()) {
-                bounds2 = new ReferencedEnvelope(extent);
-            } else {
-                boolean hasVisibleLayer = false;
-                // search the map for visible layers and construct a bounds from those layers.
-                // otherwise default to what the map's extent is.
-                List<ILayer> layers = getMap().getMapLayers();
-                for (ILayer layer : layers) {
-                    ReferencedEnvelope layerBounds = layer
-                            .getBounds(ProgressManager.instance().get(), getCRS());
-                    if (layer.isVisible() && !layerBounds.isNull()) {
-                        hasVisibleLayer = true;
-                        // consider zooming in (or zooming out) to a scale the layer is visible
-                        ReferencedEnvelope fitted = ScaleUtils.fitToMinAndMax(layerBounds, layer);
-                        if (fitted.getCoordinateReferenceSystem() == bounds2
-                                .getCoordinateReferenceSystem()) {
-                            bounds2.expandToInclude(fitted);
-                        } else if (bounds2.getCoordinateReferenceSystem() == layerBounds
-                                .getCoordinateReferenceSystem()) {
-                            // We have a small problem here? Should do the fitting
-                            // before transform to viewport CRS
-
-                            // use layerBounds which should match
-                            bounds2.expandToInclude(layerBounds);
-                        } else {
-                            // ignore as it probably does not have a CRS
-                        }
-                    }
-                }
-                if (!hasVisibleLayer) {
-                    bounds2 = getMap().getBounds(ProgressManager.instance().get());
-                }
-            }
+            ReferencedEnvelope bounds2 = calculateExtent(getMap(), getCRS());
 
             if (bounds2.getCoordinateReferenceSystem() == null || getCRS() == null
                     || bounds2.getCoordinateReferenceSystem().equals(getCRS())) {
@@ -792,15 +763,58 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                 zoomToBox(JTS.transform(bounds2, transform));
             }
 
-        } catch (FactoryException e) {
-            zoomToBox(new Envelope(-180, 180, -90, 90));
-        } catch (TransformException e) {
+        } catch (FactoryException | TransformException e) {
             zoomToBox(new Envelope(-180, 180, -90, 90));
         }
     }
 
+    private ReferencedEnvelope calculateExtent(final IMap map,
+            final CoordinateReferenceSystem crs) {
+        ReferencedEnvelope calculatedBounds = new ReferencedEnvelope(crs);
+
+        // check the limit service
+        IAOIService aOIService = PlatformGIS.getAOIService();
+        ReferencedEnvelope extent = aOIService.getExtent();
+
+        if (extent != null && !extent.isNull() && !extent.isEmpty()) {
+            calculatedBounds = new ReferencedEnvelope(extent);
+        } else {
+            IProgressMonitor progressMonitor = ProgressManager.instance().get();
+            boolean hasVisibleLayer = false;
+            // search the map for visible layers and construct a bounds from those layers.
+            // otherwise default to what the map's extent is.
+            List<ILayer> layers = (map == null ? Collections.emptyList() : map.getMapLayers());
+            for (ILayer layer : layers) {
+                ReferencedEnvelope layerBounds = layer.getBounds(progressMonitor, crs);
+                if (layer.isVisible() && !layerBounds.isNull()) {
+                    hasVisibleLayer = true;
+                    // consider zooming in (or zooming out) to a scale the layer is visible
+                    ReferencedEnvelope fitted = ScaleUtils.fitToMinAndMax(layerBounds, layer);
+                    if (fitted.getCoordinateReferenceSystem() == calculatedBounds
+                            .getCoordinateReferenceSystem()) {
+                        calculatedBounds.expandToInclude(fitted);
+                    } else if (calculatedBounds.getCoordinateReferenceSystem() == layerBounds
+                            .getCoordinateReferenceSystem()) {
+                        // We have a small problem here? Should do the fitting
+                        // before transform to viewport CRS
+
+                        // use layerBounds which should match
+                        calculatedBounds.expandToInclude(layerBounds);
+                    } else {
+                        // ignore as it probably does not have a CRS
+                    }
+                }
+            }
+            if (!hasVisibleLayer && map != null) {
+                calculatedBounds = map.getBounds(progressMonitor);
+            }
+        }
+        return calculatedBounds;
+    }
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -822,9 +836,6 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         return result.toString();
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.displayAdapter.IMapDisplayListener#sizeChanged(org.locationtech.udig.project.render.displayAdapter.MapDisplayEvent)
-     */
     @Override
     public void sizeChanged(final MapDisplayEvent event) {
         if (event.getSize().width < 1 || event.getSize().height < 1)
@@ -844,8 +855,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                     zoomToExtent();
                 } else {
                     if (oldSizeIsValid(event)) {
-                        calculateNewBounds(event, oldBounds);
-                        fireNotification(oldBounds);
+                        bounds = calculateNewBounds(event, oldBounds);
+                        fireNotification(oldBounds, bounds);
                     } else {
                         zoomToBox(getBounds());
                     }
@@ -862,24 +873,23 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         }
     }
 
-    private void fireNotification(Envelope oldBounds) {
+    private void fireNotification(Envelope oldBounds, Envelope newBounds) {
         if (eNotificationRequired()) {
             eNotify(new ENotificationImpl(this, Notification.SET,
-                    RenderPackage.VIEWPORT_MODEL__BOUNDS, oldBounds, bounds));
+                    RenderPackage.VIEWPORT_MODEL__BOUNDS, oldBounds, newBounds));
 
-            //notifyListeners(new ViewportModelEvent(this, EventType.CRS, bounds, oldBounds));
-            notifyListeners(new ViewportModelEvent(this, EventType.BOUNDS, bounds, oldBounds));
+            notifyListeners(new ViewportModelEvent(this, EventType.BOUNDS, newBounds, oldBounds));
         }
     }
 
-    private void calculateNewBounds(MapDisplayEvent event, Envelope oldBounds) {
+    private ReferencedEnvelope calculateNewBounds(MapDisplayEvent event, Envelope oldBounds) {
         double oldXscale = getWidth() / event.getOldSize().width;
         double oldYscale = getHeight() / event.getOldSize().height;
         double minx = oldBounds.getMinX();
         double maxy = oldBounds.getMaxY();
         double maxx = minx + (event.getSize().width * oldXscale);
         double miny = maxy - (event.getSize().height * oldYscale);
-        this.bounds = new ReferencedEnvelope(minx, maxx, miny, maxy, getCRS());
+        return new ReferencedEnvelope(minx, maxx, miny, maxy, getCRS());
     }
 
     private boolean oldSizeIsValid(MapDisplayEvent event) {
@@ -894,9 +904,6 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
                 && event.getOldSize().height > event.getSize().height;
     }
 
-    /**
-     * @see org.locationtech.udig.project.internal.render.ViewportModel#zoomToBox(org.locationtech.jts.geom.Envelope)
-     */
     @Override
     public void zoomToBox(Envelope newbbox) {
         setInitialized(true);
@@ -923,8 +930,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -946,8 +953,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -963,8 +970,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -978,8 +985,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1010,8 +1017,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @SuppressWarnings("unchecked")
@@ -1047,8 +1054,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1083,8 +1090,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
      * @generated
      */
     @Override
@@ -1122,21 +1129,14 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     public static CoordinateReferenceSystem getDefaultCRS() {
         try {
             IPreferenceStore store = ProjectPlugin.getPlugin().getPreferenceStore();
-            int i = store.getInt(PreferenceConstants.P_DEFAULT_CRS);
-            if (i == -1)
-                return CRS.decode("EPSG:4326");//$NON-NLS-1$
-            return CRS.decode("EPSG:" + i); //$NON-NLS-1$
+            int epsgCode = store.getInt(PreferenceConstants.P_DEFAULT_CRS);
+            if (epsgCode == -1) {
+                epsgCode = DEFAULT_CRS;
+            }
+            return CRS.decode("EPSG:" + epsgCode); //$NON-NLS-1$
         } catch (FactoryException e) {
             return ViewportModel.BAD_DEFAULT;
         }
-    }
-
-    /**
-     * @returns a default NIL Bounding Box based on system wide default CRS
-     * @return
-     */
-    public static ReferencedEnvelope getDefaultReferencedEnvelope() {
-        return new ReferencedEnvelope(0, 0, 0, 0, ViewportModelImpl.getDefaultCRS());
     }
 
     /**
@@ -1172,9 +1172,6 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
         this.initialized = initialized;
     }
 
-    /**
-     * @see org.locationtech.udig.project.render.IViewportModel#getMap()
-     */
     @Override
     public IMap getMap() {
         return getMapInternal();
@@ -1186,12 +1183,12 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
             return -1;
         }
         RenderManager renderManager = getRenderManagerInternal();
-        ReferencedEnvelope bounds2 = getBounds();
-        if (renderManager == null || renderManager.getMapDisplay() == null)
+        if (renderManager == null || renderManager.getMapDisplay() == null) {
             return -1;
+        }
 
         IMapDisplay display = renderManager.getMapDisplay();
-        return ScaleUtils.calculateScaleDenominator(bounds2, display.getDisplaySize(),
+        return ScaleUtils.calculateScaleDenominator(getBounds(), display.getDisplaySize(),
                 display.getDPI());
 
     }
@@ -1238,8 +1235,8 @@ public class ViewportModelImpl extends EObjectImpl implements ViewportModel {
     }
 
     /**
-     * This method will calculate the current width based on ScaleUtils and
-     * the current RenderManager.
+     * This method will calculate the current width based on ScaleUtils and the current
+     * RenderManager.
      */
     @Override
     public void setScale(double scaleDenominator) {

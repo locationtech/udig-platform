@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2012, Refractions Research Inc.
  *
@@ -14,14 +15,11 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.util.SortedSet;
 
-import org.locationtech.udig.project.IMap;
-import org.locationtech.udig.project.internal.render.impl.ViewportModelImpl;
-
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.udig.project.IMap;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * Models the Viewport on the map.
@@ -30,11 +28,6 @@ import org.locationtech.jts.geom.Envelope;
  * @since 0.5
  */
 public interface IViewportModel {
-
-    /**
-     * A Default setting to use for the viewport CRS.
-     */
-    public static final CoordinateReferenceSystem DEFAULT_CRS = ViewportModelImpl.DEFAULT_CRS;
 
     /**
      * Returns the local coordinate system. The local coordinate system is the CRS that all the
