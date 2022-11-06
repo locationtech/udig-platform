@@ -339,7 +339,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     CopyOnWriteArraySet<ILayerListener> listeners = new CopyOnWriteArraySet<>();
 
     /**
-     * Ensures that a warning about georesources not found is only logged once
+     * Ensures that a warning about GeoResources not found is only logged once
      */
     private volatile boolean warned = false;
 
@@ -354,7 +354,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     private final Lock geoResourceCacheLock = new UDIGDisplaySafeLock();
 
     /**
-     * indicates whether or not the CRS is a known CRS (the georesources return null when asked for
+     * indicates whether or not the CRS is a known CRS (the GeoResources return null when asked for
      * a CRS). If null then it has not been computed yet. if false and crsLoader !=null then it is
      * being computed.
      */
@@ -362,7 +362,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
 
     /**
      * Used in {@link #isUnknownCRS()} to lazily compute the CRS. If null and unknownCRS is null
-     * then the crs has not been computed. if not null then the computatin is taking place.
+     * then the CRS has not been computed. if not null then the computation is taking place.
      */
     private volatile ISafeRunnable crsLoader;
 
@@ -385,19 +385,11 @@ public class LayerImpl extends EObjectImpl implements Layer {
         CatalogPlugin.removeListener(this);
     }
 
-    /*
-     * @see
-     * org.locationtech.udig.project.Layer#addListener(org.locationtech.udig.project.LayerListener)
-     */
     @Override
     public void addListener(final ILayerListener listener) {
         listeners.add(listener);
     }
 
-    /*
-     * @see org.locationtech.udig.project.Layer#removeListener(org.locationtech.udig.project.
-     * LayerListener)
-     */
     @Override
     public void removeListener(final ILayerListener listener) {
         listeners.remove(listener);
@@ -501,7 +493,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * @generated NOT
      */
     @Override
-    @SuppressWarnings("unchecked")
     public void setZorder(int newZorder) {
         if (getContextModel() == null || getMapInternal().getLayersInternal() == null) {
             return;
@@ -642,7 +633,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
      * <b>New implementation of the method:
      * <p>
      * getGeoResource() is a blocking method but it must not block UI thread. With this purpose the
-     * new imlementation is done to avoid UI thread blocking because of synchronization. </b> <!--
+     * new implementation is done to avoid UI thread blocking because of synchronization. </b> <!--
      * end-user-doc -->
      *
      * @uml.property name="geoResources"
@@ -752,7 +743,7 @@ public class LayerImpl extends EObjectImpl implements Layer {
     }
 
     /**
-     * will be returned by getGeoResources and getGeoResource in the real connection is broken.
+     * Will be returned by getGeoResources and getGeoResource in the real connection is broken.
      */
     static public final EList<IGeoResource> NULL;
     static {
@@ -999,15 +990,6 @@ public class LayerImpl extends EObjectImpl implements Layer {
             }
         }
         return null;
-    }
-
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    @Override
-    public <T> boolean isType(Class<T> resourceType) {
-        return hasResource(resourceType);
     }
 
     @Override

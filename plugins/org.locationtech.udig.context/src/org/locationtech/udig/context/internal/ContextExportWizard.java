@@ -91,9 +91,9 @@ public class ContextExportWizard extends Wizard implements IExportWizard {
         append(2, out, "<ResourceList>"); //$NON-NLS-1$
         for (ILayer layer : map.getMapLayers()) {
             try {
-                if (layer.isType(Layer.class)) {
+                if (layer.hasResource(Layer.class)) {
                     writeLayer(layer, out);
-                } else if (layer.isType(WFSDataStore.class)) {
+                } else if (layer.hasResource(WFSDataStore.class)) {
                     writeFeatureType(layer, out);
                 } else {
                     // n/a

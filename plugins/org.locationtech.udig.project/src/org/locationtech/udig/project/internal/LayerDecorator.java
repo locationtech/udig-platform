@@ -588,15 +588,6 @@ public class LayerDecorator implements Layer, InternalEObject {
         layer.setMaxScaleDenominator(value);
     }
 
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    @Override
-    public <T> boolean isType(Class<T> resourceType) {
-        return layer.hasResource(resourceType);
-    }
-
     @Override
     public <T> boolean hasResource(Class<T> resourceType) {
         return layer.hasResource(resourceType);
