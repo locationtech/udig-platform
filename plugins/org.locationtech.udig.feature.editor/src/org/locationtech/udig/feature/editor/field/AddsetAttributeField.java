@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,17 +10,12 @@
  */
 package org.locationtech.udig.feature.editor.field;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.DirectoryDialog;
 
-/* NOT to be fully implmented to the extent it will add stuff to EditManager just
+/**
+ * NOT to be fully implemented to the extent it will add stuff to EditManager just
  * showing the business users what it will look like
  */
 
@@ -29,8 +24,7 @@ public class AddsetAttributeField extends ListAttributeField {
     private String lastPath;
 
     /**
-     * The special label text for directory chooser,
-     * or <code>null</code> if none.
+     * The special label text for directory chooser, or <code>null</code> if none.
      */
     private String prompt;
 
@@ -48,21 +42,19 @@ public class AddsetAttributeField extends ListAttributeField {
      * @param prompt the label text displayed for the directory chooser
      * @param parent the parent of the field editor's control
      */
-    public AddsetAttributeField(String name, String labelText,
-            String prompt, Composite parent) {
-    //    System.out.println("Inside Addset Attribute");
+    public AddsetAttributeField(String name, String labelText, String prompt, Composite parent) {
         init(name, labelText);
         this.prompt = prompt;
         createControl(parent);
     }
 
-    static final String SEPARATOR = "\n";
+    static final String SEPARATOR = "\n"; //$NON-NLS-1$
 
-    /* (non-Javadoc)
-     * Method declared on ListAttributeField.
-     * Creates a single string from the given array by separating each
-     * string with the appropriate OS-specific path separator.
+    /**
+     * (non-Javadoc) Method declared on ListAttributeField. Creates a single string from the given
+     * array by separating each string with the appropriate OS-specific path separator.
      */
+    @Override
     protected String createList(String[] items) {
         StringBuffer path = new StringBuffer("");//$NON-NLS-1$
 
@@ -73,35 +65,36 @@ public class AddsetAttributeField extends ListAttributeField {
         return path.toString();
     }
 
-    /* (non-Javadoc)
-     * Method declared on ListAttributeField.
-     * Creates a new path element by means of a directory dialog.
+    /**
+     * (non-Javadoc) Method declared on ListAttributeField. Creates a new path element by means of a
+     * directory dialog.
      */
+    @Override
     protected String getNewInputObject() {
-        if( prompt == null ){
+        if (prompt == null) {
             prompt = "Please enter:";
         }
-        InputDialog dialog = new InputDialog( getShell(), "New "+getLabelText(), prompt, "", new IInputValidator(){
-            public String isValid( String newText ) {
-                if( newText == null || newText.length() == 0 ){
-                    return "Action is required";
-                }
-                return null;
-            }
-        });
+        InputDialog dialog = new InputDialog(getShell(), "New " + getLabelText(), prompt, "", //$NON-NLS-2$
+                new IInputValidator() {
+                    @Override
+                    public String isValid(String newText) {
+                        if (newText == null || newText.length() == 0) {
+                            return "Action is required";
+                        }
+                        return null;
+                    }
+                });
 
         int sucess = dialog.open();
-        if( sucess == InputDialog.CANCEL ){
+        if (sucess == InputDialog.CANCEL) {
             return null; // we may have to produce a default value here
         }
         return dialog.getValue();
     }
 
-    /* (non-Javadoc)
-     * Method declared on ListAttributeField.
-     */
+    @Override
     protected String[] parseString(String stringList) {
-        if( stringList == null || stringList.length() == 0 ){
+        if (stringList == null || stringList.length() == 0) {
             return new String[0];
         }
         String split[] = stringList.split(SEPARATOR);

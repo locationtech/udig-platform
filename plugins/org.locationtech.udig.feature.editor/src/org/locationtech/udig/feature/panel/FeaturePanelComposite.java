@@ -1,13 +1,14 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2010, Refractions Research Inc.
  * (C) 2001, 2008 IBM Corporation and others
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * (http://www.eclipse.org/legal/epl-v10.html), and the Refractions BSD
  * License v1.0 (http://udig.refractions.net/files/bsd3-v10.html).
- * 
+ *
  * Contributors:
  *     Refractions Research - adapt to Feature Model
  *     IBM Corporation - initial API and implementation
@@ -31,12 +32,10 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.internal.views.properties.tabbed.view.TabbedPropertyTitle;
-import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
 /**
  * Composite responsible for drawing the tabbed property sheet page.
- * 
+ *
  * @author Jody Garnett
  * @author Anthony Hunter
  */
@@ -60,13 +59,13 @@ public class FeaturePanelComposite extends Composite {
 
     /**
      * Constructor for a TabbedPropertyComposite
-     * 
+     *
      * @param parent the parent widget.
      * @param factory the widget factory.
      * @param displayTitle if <code>true</code>, then the title bar will be displayed.
      */
-    public FeaturePanelComposite( Composite parent, FeaturePanelWidgetFactory factory,
-            boolean displayTitle ) {
+    public FeaturePanelComposite(Composite parent, FeaturePanelWidgetFactory factory,
+            boolean displayTitle) {
         super(parent, SWT.NO_FOCUS);
         this.factory = factory;
         this.displayTitle = displayTitle;
@@ -107,8 +106,8 @@ public class FeaturePanelComposite extends Composite {
         leftComposite = factory.createComposite(mainComposite, SWT.NO_FOCUS);
         leftComposite.setLayout(new FormLayout());
 
-        scrolledComposite = factory.createScrolledComposite(mainComposite, SWT.H_SCROLL
-                | SWT.V_SCROLL | SWT.NO_FOCUS);
+        scrolledComposite = factory.createScrolledComposite(mainComposite,
+                SWT.H_SCROLL | SWT.V_SCROLL | SWT.NO_FOCUS);
 
         FormData formData = new FormData();
         formData.left = new FormAttachment(leftComposite, 0);
@@ -152,7 +151,7 @@ public class FeaturePanelComposite extends Composite {
     /**
      * Get the tabbed property list, which is the list of tabs on the left hand side of this
      * composite.
-     * 
+     *
      * @return the tabbed property list.
      */
     public FeaturePanelList getList() {
@@ -161,7 +160,7 @@ public class FeaturePanelComposite extends Composite {
 
     /**
      * Get the tabbed property title bar.
-     * 
+     *
      * @return the tabbed property title bar or <code>null</code> if not used.
      */
     public FeaturePanelTitle getTitle() {
@@ -170,7 +169,7 @@ public class FeaturePanelComposite extends Composite {
 
     /**
      * Get the tab composite where sections display their property contents.
-     * 
+     *
      * @return the tab composite.
      */
     public Composite getTabComposite() {
@@ -179,7 +178,7 @@ public class FeaturePanelComposite extends Composite {
 
     /**
      * Get the scrolled composite which surrounds the title bar and tab composite.
-     * 
+     *
      * @return the scrolled composite.
      */
     public ScrolledComposite getScrolledComposite() {
@@ -188,16 +187,14 @@ public class FeaturePanelComposite extends Composite {
 
     /**
      * Get the widget factory.
-     * 
+     *
      * @return the widget factory.
      */
     protected FeaturePanelWidgetFactory getFactory() {
         return factory;
     }
 
-    /**
-     * @see org.eclipse.swt.widgets.Widget#dispose()
-     */
+    @Override
     public void dispose() {
         listComposite.dispose();
         if (displayTitle) {

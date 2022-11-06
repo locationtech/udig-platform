@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2010, Refractions Research Inc.
  *
@@ -9,11 +10,7 @@
  */
 package org.locationtech.udig.feature.editor.field;
 
-import org.locationtech.udig.internal.ui.SendLogDialog;
-import org.locationtech.udig.project.ui.feature.EditFeature;
-
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -27,16 +24,16 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.geotools.feature.FeatureTypes;
 import org.geotools.feature.type.Types;
 import org.geotools.util.Converters;
+import org.locationtech.udig.project.ui.feature.EditFeature;
 import org.opengis.feature.IllegalAttributeException;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 
 /**
  * Attribute field for a string type attribute.
- * 
+ *
  * @since 1.2.0
  */
 public class StringAttributeField extends AttributeField {
@@ -44,7 +41,7 @@ public class StringAttributeField extends AttributeField {
     /**
      * Validation strategy constant (value <code>0</code>) indicating that the editor should perform
      * validation after every key stroke.
-     * 
+     *
      * @see #setValidateStrategy
      */
     public static final int VALIDATE_ON_KEY_STROKE = 0;
@@ -52,7 +49,7 @@ public class StringAttributeField extends AttributeField {
     /**
      * Validation strategy constant (value <code>1</code>) indicating that the editor should perform
      * validation only when the text widget loses focus.
-     * 
+     *
      * @see #setValidateStrategy
      */
     public static final int VALIDATE_ON_FOCUS_LOST = 1;
@@ -69,7 +66,7 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Old text value.
-     * 
+     *
      * @since 3.4 this field is protected.
      */
     protected String oldValue;
@@ -120,7 +117,7 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Creates a string field editor. Use the method <code>setTextLimit</code> to limit the text.
-     * 
+     *
      * @param name the name of the preference this field editor works on
      * @param labelText the label text of the field editor
      * @param width the width of the text input field in characters, or <code>UNLIMITED</code> for
@@ -131,7 +128,7 @@ public class StringAttributeField extends AttributeField {
      * @param parent the parent of the field editor's control
      * @since 2.0
      */
-    public StringAttributeField( String name, String labelText, int width, int strategy,
+    public StringAttributeField(String name, String labelText, int width, int strategy,
             Composite parent, int control_style) {
         if (control_style == 1) {
             multi = true;
@@ -146,49 +143,48 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Creates a string field editor. Use the method <code>setTextLimit</code> to limit the text.
-     * 
+     *
      * @param name the name of the preference this field editor works on
      * @param labelText the label text of the field editor
      * @param width the width of the text input field in characters, or <code>UNLIMITED</code> for
      *        no limit
      * @param parent the parent of the field editor's control
      */
-    public StringAttributeField( String name, String labelText, int width, Composite parent,
-            int control_style ) {
+    public StringAttributeField(String name, String labelText, int width, Composite parent,
+            int control_style) {
         this(name, labelText, width, VALIDATE_ON_KEY_STROKE, parent, control_style);
     }
 
     /**
      * Creates a string field editor of unlimited width. Use the method <code>setTextLimit</code> to
      * limit the text.
-     * 
+     *
      * @param name the name of the preference this field editor works on
      * @param labelText the label text of the field editor
      * @param parent the parent of the field editor's control
      */
 
-    public StringAttributeField( String name, String labelText, Composite parent, int control_style ) {
+    public StringAttributeField(String name, String labelText, Composite parent,
+            int control_style) {
         this(name, labelText, UNLIMITED, control_style, parent, control_style); // UNLIMITED
     }
 
-    public StringAttributeField( String name, String labelText, Composite parent ) {
+    public StringAttributeField(String name, String labelText, Composite parent) {
         this(name, labelText, UNLIMITED, parent, 0); // UNLIMITED
     }
 
     /**
      * Creates a string field editor of unlimited width. Use the method <code>setTextLimit</code> to
      * limit the text.
-     * 
+     *
      * @param name the name of the preference this field editor works on
      * @param labelText the label text of the field editor
      * @param parent the parent of the field editor's control
      * @param line text field type. True if multiline, false if single line
      */
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
-    public void adjustForNumColumns( int numColumns ) {
+    @Override
+    public void adjustForNumColumns(int numColumns) {
         GridData gd = (GridData) textField.getLayoutData();
         gd.horizontalSpan = numColumns - 1;
         // We only grab excess space if we have to
@@ -199,7 +195,7 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Checks whether the text input field contains a valid value or not.
-     * 
+     *
      * @return <code>true</code> if the field value is valid, and <code>false</code> if invalid
      */
     public boolean checkState() {
@@ -234,7 +230,7 @@ public class StringAttributeField extends AttributeField {
      * The default implementation of this framework method does nothing and returns
      * <code>true</code>. Subclasses should override this method to specific state checks.
      * </p>
-     * 
+     *
      * @return <code>true</code> if the field value is valid, and <code>false</code> if invalid
      */
     protected boolean doCheckState() {
@@ -255,7 +251,7 @@ public class StringAttributeField extends AttributeField {
         Object value = Converters.convert(text, descriptor.getType().getBinding());
         try {
             Types.validate(descriptor, value);
-            if( isRequired() && value == null ){
+            if (isRequired() && value == null) {
                 errorMessage = getAttributeName() + " is required";
                 showErrorMessage(errorMessage);
                 return false;
@@ -267,13 +263,14 @@ public class StringAttributeField extends AttributeField {
         }
     }
 
-    boolean isRequired(){
+    boolean isRequired() {
         return required;
     }
-    
-    public void setRequired( boolean required ) {
+
+    public void setRequired(boolean required) {
         this.required = required;
     }
+
     /**
      * Fills this field editor's basic controls into the given parent.
      * <p>
@@ -282,7 +279,8 @@ public class StringAttributeField extends AttributeField {
      * <code>super.doFillIntoGrid</code>.
      * </p>
      */
-    protected void doFillIntoGrid( final Composite parent, int numColumns ) {
+    @Override
+    protected void doFillIntoGrid(final Composite parent, int numColumns) {
         Label label = getLabelControl(parent);
         GridData gd = new GridData();
         gd.horizontalSpan = 1;
@@ -305,8 +303,6 @@ public class StringAttributeField extends AttributeField {
             gd.grabExcessHorizontalSpace = true;
         }
         if (multi) {
-          //  System.out.println("Multi is true");
-            // gd.grabExcessVerticalSpace = true;
             GC gc = new GC(textField);
             try {
                 Point extent = gc.textExtent("X");//$NON-NLS-1$
@@ -317,9 +313,9 @@ public class StringAttributeField extends AttributeField {
         }
         textField.setLayoutData(gd);
         if (multi) {
-            textField.addKeyListener(new KeyAdapter(){
+            textField.addKeyListener(new KeyAdapter() {
                 @Override
-                public void keyReleased( KeyEvent e ) {
+                public void keyReleased(KeyEvent e) {
                     int numLines = textField.getLineCount();
                     GridData gd = (GridData) textField.getLayoutData();
                     GC gc = new GC(textField);
@@ -341,8 +337,7 @@ public class StringAttributeField extends AttributeField {
 
                         }
 
-                    }
-                    else{
+                    } else {
                         try {
                             gd.heightHint = extent.y * 3;
                         } finally {
@@ -357,28 +352,20 @@ public class StringAttributeField extends AttributeField {
 
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
+    @Override
     public void doLoad() {
         if (textField != null && getFeature() != null) {
-            // AttributeDescriptor descriptor = getFeature().getType().getDescriptor(
-            // getAttributeName() );
-            // int length = FeatureTypes.getFieldLength(descriptor);
-
             Object value = getFeature().getAttribute(getAttributeName());
             String text = Converters.convert(value, String.class);
             if (text == null) {
-                text = "";
+                text = ""; //$NON-NLS-1$
             }
             textField.setText(text);
             oldValue = text;
         }
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
+    @Override
     protected void doLoadDefault() {
         if (textField != null) {
             SimpleFeatureType schema = getFeature().getFeatureType();
@@ -391,9 +378,7 @@ public class StringAttributeField extends AttributeField {
         valueChanged();
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
+    @Override
     protected void doStore() {
         SimpleFeatureType schema = getFeature().getFeatureType();
         AttributeDescriptor descriptor = schema.getDescriptor(getAttributeName());
@@ -405,23 +390,21 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Returns the error message that will be displayed when and if an error occurs.
-     * 
+     *
      * @return the error message, or <code>null</code> if none
      */
     public String getErrorMessage() {
         return errorMessage;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
+    @Override
     public int getNumberOfControls() {
         return 2;
     }
 
     /**
      * Returns the field editor's value.
-     * 
+     *
      * @return the current value
      */
     public String getStringValue() {
@@ -436,13 +419,14 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Returns this field editor's text control.
-     * 
+     *
      * @return the text control, or <code>null</code> if no text field is created yet
      */
     protected Text getTextControl() {
         return textField;
     }
 
+    @Override
     public Text getControl() {
         return textField;
     }
@@ -452,11 +436,11 @@ public class StringAttributeField extends AttributeField {
      * <p>
      * The control is created if it does not yet exist
      * </p>
-     * 
+     *
      * @param parent the parent
      * @return the text control
      */
-    public Text getTextControl( Composite parent ) {
+    public Text getTextControl(Composite parent) {
         if (textField == null) {
             if (multi) {
                 textField = new Text(parent, SWT.MULTI | SWT.BORDER); // this is a multi-line text
@@ -465,44 +449,42 @@ public class StringAttributeField extends AttributeField {
                 textField = new Text(parent, SWT.SINGLE | SWT.BORDER); // this is a single-line text
                 // field
             }
-            
-            textField.setFont(parent.getFont());
-            switch( validateStrategy ) {
-            case VALIDATE_ON_KEY_STROKE:
-                textField.addKeyListener(new KeyAdapter(){
 
-                    /*
-                     * (non-Javadoc)
-                     * @see
-                     * org.eclipse.swt.events.KeyAdapter#keyReleased(org.eclipse.swt.events.KeyEvent
-                     * )
-                     */
-                    public void keyReleased( KeyEvent e ) {
+            textField.setFont(parent.getFont());
+            switch (validateStrategy) {
+            case VALIDATE_ON_KEY_STROKE:
+                textField.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
                         valueChanged();
                     }
                 });
-                textField.addFocusListener(new FocusAdapter(){
+                textField.addFocusListener(new FocusAdapter() {
                     // Ensure that the value is checked on focus loss in case we
                     // missed a keyRelease or user hasn't released key.
                     // See https://bugs.eclipse.org/bugs/show_bug.cgi?id=214716
-                    public void focusLost( FocusEvent e ) {
+                    @Override
+                    public void focusLost(FocusEvent e) {
                         valueChanged();
                     }
                 });
 
                 break;
             case VALIDATE_ON_FOCUS_LOST:
-                textField.addKeyListener(new KeyAdapter(){
-                    public void keyPressed( KeyEvent e ) {
+                textField.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyPressed(KeyEvent e) {
                         clearErrorMessage();
                     }
                 });
-                textField.addFocusListener(new FocusAdapter(){
-                    public void focusGained( FocusEvent e ) {
+                textField.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
                         refreshValidState();
                     }
 
-                    public void focusLost( FocusEvent e ) {
+                    @Override
+                    public void focusLost(FocusEvent e) {
                         valueChanged();
                         clearErrorMessage();
                     }
@@ -511,8 +493,9 @@ public class StringAttributeField extends AttributeField {
             default:
                 Assert.isTrue(false, "Unknown validate strategy");//$NON-NLS-1$
             }
-            textField.addDisposeListener(new DisposeListener(){
-                public void widgetDisposed( DisposeEvent event ) {
+            textField.addDisposeListener(new DisposeListener() {
+                @Override
+                public void widgetDisposed(DisposeEvent event) {
                     textField = null;
                 }
             });
@@ -527,7 +510,7 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Returns whether an empty string is a valid value.
-     * 
+     *
      * @return <code>true</code> if an empty string is a valid value, and <code>false</code> if an
      *         empty string is invalid
      * @see #setEmptyStringAllowed
@@ -536,42 +519,36 @@ public class StringAttributeField extends AttributeField {
         return emptyStringAllowed;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
+    @Override
     public boolean isValid() {
         return isValid;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
+    @Override
     protected void refreshValidState() {
         isValid = checkState();
     }
 
     /**
      * Sets whether the empty string is a valid value or not.
-     * 
+     *
      * @param b <code>true</code> if the empty string is allowed, and <code>false</code> if it is
      *        considered invalid
      */
-    public void setEmptyStringAllowed( boolean b ) {
+    public void setEmptyStringAllowed(boolean b) {
         emptyStringAllowed = b;
     }
 
     /**
      * Sets the error message that will be displayed when and if an error occurs.
-     * 
+     *
      * @param message the error message
      */
-    public void setErrorMessage( String message ) {
+    public void setErrorMessage(String message) {
         errorMessage = message;
     }
 
-    /*
-     * (non-Javadoc) Method declared on AttributeField.
-     */
+    @Override
     public void setFocus() {
         if (textField != null) {
             textField.setFocus();
@@ -580,10 +557,10 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Sets this field editor's value.
-     * 
+     *
      * @param value the new value, or <code>null</code> meaning the empty string
      */
-    public void setStringValue( String value ) {
+    public void setStringValue(String value) {
         if (textField != null) {
             if (value == null) {
                 value = "";//$NON-NLS-1$
@@ -598,11 +575,11 @@ public class StringAttributeField extends AttributeField {
 
     /**
      * Sets this text field's text limit.
-     * 
+     *
      * @param limit the limit on the number of character in the text input field, or
      *        <code>UNLIMITED</code> for no limit
      */
-    public void setTextLimit( int limit ) {
+    public void setTextLimit(int limit) {
         textLimit = limit;
         if (textField != null) {
             textField.setTextLimit(limit);
@@ -616,12 +593,12 @@ public class StringAttributeField extends AttributeField {
      * method is really only useful for subclasses to call in their constructor. However, it has
      * public visibility for backward compatibility.
      * </p>
-     * 
+     *
      * @param value either <code>VALIDATE_ON_KEY_STROKE</code> to perform on the fly checking (the
      *        default), or <code>VALIDATE_ON_FOCUS_LOST</code> to perform validation only after the
      *        text has been typed in
      */
-    public void setValidateStrategy( int value ) {
+    public void setValidateStrategy(int value) {
         Assert.isTrue(value == VALIDATE_ON_FOCUS_LOST || value == VALIDATE_ON_KEY_STROKE);
         validateStrategy = value;
     }
@@ -642,44 +619,44 @@ public class StringAttributeField extends AttributeField {
      * </p>
      */
     protected void valueChanged() {
-        
+
         setPresentsDefaultValue(false);
         boolean oldState = isValid;
         refreshValidState();
         if (isValid != oldState) {
             fireStateChanged(IS_VALID, oldState, isValid);
-        }        
-        
-        textField.addFocusListener(new FocusAdapter(){
-            public void focusGained( FocusEvent e ) {
+        }
+
+        textField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
                 refreshValidState();
             }
 
-            public void focusLost( FocusEvent e ) {
+            @Override
+            public void focusLost(FocusEvent e) {
                 String newValue = textField.getText();
                 if (!newValue.equals(oldValue)) {
                     fireValueChanged(VALUE, oldValue, newValue);
                     oldValue = newValue;
-                    System.out.println("oldValue");
-                }  
+                    System.out.println("oldValue"); //$NON-NLS-1$
+                }
                 clearErrorMessage();
             }
         });
 
-
     }
 
-    public void setVisible( boolean visible ) {
+    @Override
+    public void setVisible(boolean visible) {
         super.setVisible(visible);
         if (getControl() != null && !getControl().isDisposed()) {
             getControl().setVisible(visible);
         }
     }
 
-    /*
-     * @see AttributeField.setEnabled(boolean,Composite).
-     */
-    public void setEnabled( boolean enabled ) {
+    @Override
+    public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         if (getControl() != null && !getControl().isDisposed()) {
             getControl().setEnabled(enabled);

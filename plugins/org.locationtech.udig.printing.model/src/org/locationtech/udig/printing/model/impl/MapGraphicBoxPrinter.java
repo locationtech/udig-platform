@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -18,6 +19,14 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IMemento;
+import org.eclipse.ui.PlatformUI;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.locationtech.udig.catalog.CatalogPlugin;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IGeoResource;
@@ -30,11 +39,9 @@ import org.locationtech.udig.mapgraphic.internal.MapGraphicService;
 import org.locationtech.udig.mapgraphic.style.LocationStyleContent;
 import org.locationtech.udig.printing.model.AbstractBoxPrinter;
 import org.locationtech.udig.printing.model.Box;
-import org.locationtech.udig.printing.model.BoxPrinter;
 import org.locationtech.udig.printing.model.Page;
 import org.locationtech.udig.project.ILayer;
 import org.locationtech.udig.project.ILayerListener;
-import org.locationtech.udig.project.IProjectElement;
 import org.locationtech.udig.project.LayerEvent;
 import org.locationtech.udig.project.internal.Layer;
 import org.locationtech.udig.project.internal.LayerDecorator;
@@ -48,59 +55,54 @@ import org.locationtech.udig.project.internal.render.impl.CompositeRenderContext
 import org.locationtech.udig.project.internal.render.impl.ScaleUtils;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.BoundsStrategy;
-import org.locationtech.udig.project.ui.UDIGEditorInput;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IMemento;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 
 /**
  * Allows a Map graphic to be embedded into a box separate from the MapBox.
- * 
+ *
  * @author jesse
  * @since 1.1.0
  */
 public class MapGraphicBoxPrinter extends AbstractBoxPrinter {
 
     private static final int DEFAULTDPI = 90;
+
     private int usedDpi = 90;
+
     private float scaleFactor = Float.NaN;
 
     private static final Layer NULL = new LayerDecorator(null);
 
     private Layer layer;
+
     private String warning;
 
-    private ILayerListener layerListener = new ILayerListener(){
+    private ILayerListener layerListener = new ILayerListener() {
 
-        public void refresh( LayerEvent event ) {
+        @Override
+        public void refresh(LayerEvent event) {
             setDirty(true);
         }
 
     };
+
     private boolean inPreviewMode;
 
     public MapGraphicBoxPrinter() {
         System.out.println();
     }
 
-    public MapGraphicBoxPrinter( Page page ) {
+    public MapGraphicBoxPrinter(Page page) {
         if (page != null) {
             scaleFactor = (float) page.getSize().width / (float) page.getPaperSize().height;
         }
     }
 
-    public void draw( Graphics2D graphics, IProgressMonitor monitor ) {
+    @Override
+    public void draw(Graphics2D graphics, IProgressMonitor monitor) {
         super.draw(graphics, monitor);
         if (Float.isNaN(scaleFactor)) {
             List<Box> boxes = getBox().getPage().getBoxes();
-            for( Box box : boxes ) {
+            for (Box box : boxes) {
                 Object adapter = box.getBoxPrinter().getAdapter(Map.class);
                 if (adapter != null) {
                     scaleFactor = (float) box.getSize().width / (float) box.getPaperSize().height;
@@ -131,7 +133,7 @@ public class MapGraphicBoxPrinter extends AbstractBoxPrinter {
     /**
      * Draws the graphic.
      */
-    private void drawGraphic( Graphics2D graphics, IProgressMonitor monitor ) {
+    private void drawGraphic(Graphics2D graphics, IProgressMonitor monitor) {
         Pair<Map, Pair<Dimension, Double>> info = findMap();
 
         if (info == null) {
@@ -151,31 +153,32 @@ public class MapGraphicBoxPrinter extends AbstractBoxPrinter {
         renderer.render(graphics, monitor);
     }
 
-    public void createPreview( Graphics2D graphics, IProgressMonitor monitor ) {
+    @Override
+    public void createPreview(Graphics2D graphics, IProgressMonitor monitor) {
         inPreviewMode = true;
         draw(graphics, monitor);
         setDirty(false);
         inPreviewMode = false;
     }
 
-    private CompositeRenderContext createRenderContext( Pair<Map, Pair<Dimension, Double>> info,
-            Layer layer ) {
+    private CompositeRenderContext createRenderContext(Pair<Map, Pair<Dimension, Double>> info,
+            Layer layer) {
         Map map = info.getLeft();
         Dimension size = info.getRight().getLeft();
         double scale = info.getRight().getRight();
 
         ViewportModel viewportModel = map.getViewportModelInternal();
-        ReferencedEnvelope bounds = (ReferencedEnvelope) viewportModel.getBounds();
+        ReferencedEnvelope bounds = viewportModel.getBounds();
         BoundsStrategy boundsStrategy = new BoundsStrategy(scale);
 
         RenderContext context = null;
         if (inPreviewMode && !Float.isNaN(scaleFactor)) {
-            float dpiFloat = (float) DEFAULTDPI * scaleFactor;
+            float dpiFloat = DEFAULTDPI * scaleFactor;
             context = ApplicationGIS.configureMapForRendering(map, size, (int) dpiFloat,
                     boundsStrategy, bounds);
         } else {
-            context = ApplicationGIS.configureMapForRendering(map, size, DEFAULTDPI,
-                    boundsStrategy, bounds);
+            context = ApplicationGIS.configureMapForRendering(map, size, DEFAULTDPI, boundsStrategy,
+                    bounds);
         }
 
         context.setLayerInternal(layer);
@@ -193,23 +196,23 @@ public class MapGraphicBoxPrinter extends AbstractBoxPrinter {
      */
     private Pair<Map, Pair<Dimension, Double>> findMap() {
         List<Box> boxes = getBox().getPage().getBoxes();
-        for( Box box : boxes ) {
+        for (Box box : boxes) {
             if (box.getBoxPrinter() instanceof MapBoxPrinter) {
                 MapBoxPrinter mapBoxPrinter = ((MapBoxPrinter) box.getBoxPrinter());
                 Map map = mapBoxPrinter.getMap();
-                Map copy = (Map) EcoreUtil.copy(map);
+                Map copy = EcoreUtil.copy(map);
 
                 // we need the original map and its box to correctly calculate the
                 // scale so we must do it now
                 Dimension size = new Dimension(box.getSize().width, box.getSize().height);
                 ViewportModel viewportModel = map.getViewportModelInternal();
 
-                ReferencedEnvelope bounds = (ReferencedEnvelope) viewportModel.getBounds();
+                ReferencedEnvelope bounds = viewportModel.getBounds();
 
                 double scale = ScaleUtils.calculateScaleDenominator(bounds, size, 90);
 
-                Pair<Dimension, Double> details = new Pair<Dimension, Double>(size, scale);
-                return new Pair<Map, Pair<Dimension, Double>>(copy, details);
+                Pair<Dimension, Double> details = new Pair<>(size, scale);
+                return new Pair<>(copy, details);
             }
         }
         return null;
@@ -218,7 +221,7 @@ public class MapGraphicBoxPrinter extends AbstractBoxPrinter {
     /**
      * Warns the user that a MapGraphic needs to be set
      */
-    private void drawWarning( Graphics2D graphics, String message ) {
+    private void drawWarning(Graphics2D graphics, String message) {
         graphics.setColor(Color.BLACK);
         int height = graphics.getFontMetrics().getHeight();
 
@@ -229,12 +232,12 @@ public class MapGraphicBoxPrinter extends AbstractBoxPrinter {
     }
 
     @Override
-    public void save( IMemento memento ) {
+    public void save(IMemento memento) {
         memento.putTextData(URLUtils.urlToString(layer.getID(), false));
     }
 
     @Override
-    public void load( IMemento memento ) {
+    public void load(IMemento memento) {
         String url = memento.getTextData();
 
         try {
@@ -254,10 +257,11 @@ public class MapGraphicBoxPrinter extends AbstractBoxPrinter {
 
     private void queryForMapGraphic() {
         final Display display = findDisplay();
-        display.asyncExec(new Runnable(){
+        display.asyncExec(new Runnable() {
+            @Override
             public void run() {
-                MapGraphicChooserDialog dialog = new MapGraphicChooserDialog(display
-                        .getActiveShell(), false);
+                MapGraphicChooserDialog dialog = new MapGraphicChooserDialog(
+                        display.getActiveShell(), false);
                 dialog.open();
                 if (dialog.getSelectedResources().isEmpty()) {
                     layer = NULL;
@@ -279,11 +283,12 @@ public class MapGraphicBoxPrinter extends AbstractBoxPrinter {
         return display;
     }
 
+    @Override
     public String getExtensionPointID() {
         return "org.locationtech.udig.printing.ui.standardBoxes"; //$NON-NLS-1$
     }
 
-    public void setMapGraphic( MapGraphicResource resource ) {
+    public void setMapGraphic(MapGraphicResource resource) {
         LayerFactory factory = ProjectFactory.eINSTANCE.createLayerFactory();
         try {
             if (layer != null) {
@@ -297,8 +302,9 @@ public class MapGraphicBoxPrinter extends AbstractBoxPrinter {
         setDirty(true);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
-    public Object getAdapter( Class adapter ) {
+    public Object getAdapter(Class adapter) {
         if (adapter.isAssignableFrom(ILayer.class)) {
             return layer;
         }
@@ -321,7 +327,7 @@ public class MapGraphicBoxPrinter extends AbstractBoxPrinter {
         }
     }
 
-    public void setStyleBlackboardKey( String key, Object value ) {
+    public void setStyleBlackboardKey(String key, Object value) {
         if (layer == null) {
             throw new IllegalStateException(
                     "Please set the map graphic before calling this method."); //$NON-NLS-1$
@@ -331,7 +337,7 @@ public class MapGraphicBoxPrinter extends AbstractBoxPrinter {
 
     /**
      * Returns the layer contained in the box
-     * 
+     *
      * @return the layer contained in the box
      */
     public Layer getLayer() {

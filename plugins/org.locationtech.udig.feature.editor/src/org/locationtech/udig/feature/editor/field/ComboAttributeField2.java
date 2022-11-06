@@ -1,7 +1,7 @@
-/*
- *    uDig - User Friendly Desktop Internet GIS client
- *    http://udig.refractions.net
- *    (C) 2012, Refractions Research Inc.
+/**
+ * uDig - User Friendly Desktop Internet GIS client
+ * http://udig.refractions.net
+ * (C) 2012, Refractions Research Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,8 +22,6 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -32,36 +30,34 @@ import org.geotools.util.Converters;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 
-/*NOT FINISHED*/
-
+/**
+ * NOT FINISHED
+ */
 public class ComboAttributeField2 extends AttributeField {
 
     /**
-     * The <code>Combo</code> widget. Works only with strings at the moment
-     * which might be problematic if we need it to work with objects
+     * The <code>Combo</code> widget. Works only with strings at the moment which might be
+     * problematic if we need it to work with objects
      */
     private ComboViewer viewer;
 
     private List<?> options;
 
-    private ISelectionChangedListener listener = new ISelectionChangedListener() {                
-        public void selectionChanged(SelectionChangedEvent event) {                    
+    private ISelectionChangedListener listener = new ISelectionChangedListener() {
+        @Override
+        public void selectionChanged(SelectionChangedEvent event) {
             IStructuredSelection sel = (IStructuredSelection) event.getSelection();
-            fireValueChanged(VALUE, null, sel.getFirstElement() ); 
+            fireValueChanged(VALUE, null, sel.getFirstElement());
         }
     };
 
     /**
      * Create the combo box attribute field.
-     * 
-     * @param name
-     *            the name of the preference this attribute field works on
-     * @param labelText
-     *            the label text of the attribute field
-     * @param values
-     *            Underlying values to populate the combo viewer widget.
-     * @param parent
-     *            the parent composite
+     *
+     * @param name the name of the preference this attribute field works on
+     * @param labelText the label text of the attribute field
+     * @param values Underlying values to populate the combo viewer widget.
+     * @param parent the parent composite
      */
     public ComboAttributeField2(String name, String labelText, List<?> values, Composite parent) {
         init(name, labelText);
@@ -71,16 +67,13 @@ public class ComboAttributeField2 extends AttributeField {
 
     @Override
     public Control getControl() {
-        if( viewer != null ){
+        if (viewer != null) {
             return viewer.getControl();
         }
         return null;
     }
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.AttributeField#adjustForNumColumns(int)
-     */
+
+    @Override
     public void adjustForNumColumns(int numColumns) {
         if (numColumns > 1) {
             Control control = getLabelControl();
@@ -99,13 +92,7 @@ public class ComboAttributeField2 extends AttributeField {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.eclipse.jface.preference.AttributeField#doFillIntoGrid(org.eclipse
-     * .swt.widgets.Composite, int)
-     */
+    @Override
     protected void doFillIntoGrid(Composite parent, int numColumns) {
         int comboC = 1;
         if (numColumns > 1) {
@@ -124,22 +111,11 @@ public class ComboAttributeField2 extends AttributeField {
         control.setFont(parent.getFont());
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.AttributeField#doLoad()
-     */
+    @Override
     public void doLoad() {
         Object value = getFeature().getAttribute(getAttributeName());
-//        int index = -1;
-//        if( value != null && options != null ){
-//            index = options.indexOf( value );
-//        }
-//        if( index == -1 ){
-//            viewer.getCombo().setText( value.toString() );
-//        }
-        if( viewer.getInput() == null ){
-            viewer.setInput( Collections.singletonList( value ));
+        if (viewer.getInput() == null) {
+            viewer.setInput(Collections.singletonList(value));
         }
         ISelection selection;
         if (value == null) {
@@ -152,11 +128,7 @@ public class ComboAttributeField2 extends AttributeField {
         viewer.addSelectionChangedListener(listener);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.AttributeField#doLoadDefault()
-     */
+    @Override
     protected void doLoadDefault() {
         SimpleFeatureType schema = getFeature().getFeatureType();
         AttributeDescriptor descriptor = schema.getDescriptor(getAttributeName());
@@ -167,11 +139,7 @@ public class ComboAttributeField2 extends AttributeField {
         viewer.addSelectionChangedListener(listener);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.AttributeField#doStore()
-     */
+    @Override
     protected void doStore() {
         ISelection selection = viewer.getSelection();
         if (!selection.isEmpty() && selection instanceof IStructuredSelection) {
@@ -180,25 +148,21 @@ public class ComboAttributeField2 extends AttributeField {
             getFeature().setAttribute(getAttributeName(), value);
         } else {
             SimpleFeatureType schema = getFeature().getFeatureType();
-            AttributeDescriptor descriptor = schema.getDescriptor( getAttributeName());  
-            
+            AttributeDescriptor descriptor = schema.getDescriptor(getAttributeName());
+
             String text = viewer.getCombo().getText();
-            Object value = Converters.convert( text, descriptor.getType().getBinding() );        
-            getFeature().setAttribute( getAttributeName(), value );
+            Object value = Converters.convert(text, descriptor.getType().getBinding());
+            getFeature().setAttribute(getAttributeName(), value);
         }
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.preference.AttributeField#getNumberOfControls()
-     */
+    @Override
     public int getNumberOfControls() {
         return 2;
     }
 
-    /*
+    /**
      * Lazily create and return the Combo control.
      */
     private Combo getComboBoxControl(Composite parent) {
@@ -208,14 +172,15 @@ public class ComboAttributeField2 extends AttributeField {
             viewer.setContentProvider(ArrayContentProvider.getInstance());
             viewer.setLabelProvider(new LabelProvider());
             viewer.setInput(options);
-            viewer.addSelectionChangedListener( listener);
+            viewer.addSelectionChangedListener(listener);
         }
         return viewer.getCombo();
     }
 
+    @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        if( viewer.getCombo() != null && !viewer.getCombo().isDisposed() ){
+        if (viewer.getCombo() != null && !viewer.getCombo().isDisposed()) {
             viewer.getCombo().setEnabled(enabled);
         }
     }

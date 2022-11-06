@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004-2010, Refractions Research Inc.
  *
@@ -9,30 +10,21 @@
  */
 package org.locationtech.udig.feature.editor.field;
 
-import org.locationtech.udig.project.ui.IFeaturePanel;
-import org.locationtech.udig.project.ui.IFeatureSite;
-import org.locationtech.udig.project.ui.feature.EditFeature;
-
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.jface.dialogs.DialogPage;
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.graphics.FontMetrics;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.locationtech.udig.project.ui.IFeaturePanel;
+import org.locationtech.udig.project.ui.IFeatureSite;
+import org.locationtech.udig.project.ui.feature.EditFeature;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.type.Name;
 
@@ -44,7 +36,7 @@ import org.opengis.feature.type.Name;
  * feature. An attribute field reports an event when the value or validity of the value changes.
  * <p>
  * Attribute fields are often used with your own implementation of IFeaturePanel.
- * 
+ *
  * @since 1.2.0
  */
 public abstract class AttributeField {
@@ -106,12 +98,12 @@ public abstract class AttributeField {
 
     /**
      * Creates a new attribute field.
-     * 
+     *
      * @param name the name of the attribute this attribute field works on
      * @param labelText the label text of the attribute field
      * @param parent the parent of the attribute field's control
      */
-    protected AttributeField( String name, String labelText, Composite parent ) {
+    protected AttributeField(String name, String labelText, Composite parent) {
         init(name, labelText);
         createControl(parent);
     }
@@ -125,10 +117,11 @@ public abstract class AttributeField {
      * <p>
      * The number of columns will always be equal to or greater than the value returned by this
      * editor's <code>getNumberOfControls</code> method.
-     * 
+     * </p>
+     *
      * @param numColumns the number of columns
      */
-    public abstract void adjustForNumColumns( int numColumns ); // TODO: revisit
+    public abstract void adjustForNumColumns(int numColumns); // TODO: revisit
 
     /**
      * Applies a font.
@@ -144,11 +137,11 @@ public abstract class AttributeField {
     /**
      * Checks if the given parent is the current parent of the supplied control; throws an
      * (unchecked) exception if they are not correctly related.
-     * 
+     *
      * @param control the control
      * @param parent the parent control
      */
-    protected void checkParent( Control control, Composite parent ) {
+    protected void checkParent(Control control, Composite parent) {
         Assert.isTrue(control.getParent() == parent, "Different parents");//$NON-NLS-1$
     }
 
@@ -182,10 +175,10 @@ public abstract class AttributeField {
 
     /**
      * Creates this attribute field's main control containing all of its basic controls.
-     * 
+     *
      * @param parent the parent control
      */
-    protected void createControl( Composite parent ) {
+    protected void createControl(Composite parent) {
         GridLayout layout = new GridLayout();
         layout.numColumns = getNumberOfControls();
         layout.marginWidth = 5;
@@ -212,19 +205,19 @@ public abstract class AttributeField {
      * Note this method may be called by the constructor, so it must not access fields on the
      * receiver object because they will not be fully initialized.
      * </p>
-     * 
+     *
      * @param parent the composite used as a parent for the basic controls; the parent's layout must
      *        be a <code>GridLayout</code>
      * @param numColumns the number of columns
      */
-    protected abstract void doFillIntoGrid( Composite parent, int numColumns );
+    protected abstract void doFillIntoGrid(Composite parent, int numColumns);
 
     /**
      * Initializes this attribute field with the attribute value from the feature.
      * <p>
      * Subclasses must implement this method to properly initialize the attribute field.
      * </p>
-     * Usually this is done with feature.getAttribute( name )
+     * Usually this is done with feature.getAttribute(name)
      */
     public abstract void doLoad();
 
@@ -233,7 +226,7 @@ public abstract class AttributeField {
      * <p>
      * Subclasses must implement this method to properly initialize the attribute field.
      * </p>
-     * Usually done with feature.getFeatureType().getDescriptor( Name ).getDefaultValue()
+     * Usually done with feature.getFeatureType().getDescriptor(Name).getDefaultValue()
      */
     protected abstract void doLoadDefault();
 
@@ -242,18 +235,18 @@ public abstract class AttributeField {
      * <p>
      * Subclasses must implement this method to save the entered value into the feature.
      * </p>
-     * Usually done with feature.setAttribute( Name, value )
+     * Usually done with feature.setAttribute(Name, value)
      */
     protected abstract void doStore();
 
     /**
      * Fills this attribute field's basic controls into the given parent.
-     * 
+     *
      * @param parent the composite used as a parent for the basic controls; the parent's layout must
      *        be a <code>GridLayout</code>
      * @param numColumns the number of columns
      */
-    public void fillIntoGrid( Composite parent, int numColumns ) {
+    public void fillIntoGrid(Composite parent, int numColumns) {
         Assert.isTrue(numColumns >= getNumberOfControls());
         Assert.isTrue(parent.getLayout() instanceof GridLayout);
         doFillIntoGrid(parent, numColumns);
@@ -263,13 +256,13 @@ public abstract class AttributeField {
      * Informs this attribute field's listener, if it has one, about a change to one of this
      * attribute field's boolean-valued properties. Does nothing if the old and new values are the
      * same.
-     * 
+     *
      * @param property the attribute field property name, such as <code>VALUE</code> or
      *        <code>IS_VALID</code>
      * @param oldValue the old value
      * @param newValue the new value
      */
-    protected void fireStateChanged( String property, boolean oldValue, boolean newValue ) {
+    protected void fireStateChanged(String property, boolean oldValue, boolean newValue) {
         if (oldValue == newValue) {
             return;
         }
@@ -281,13 +274,13 @@ public abstract class AttributeField {
     /**
      * Informs this attribute field's listener, if it has one, about a change to one of this
      * attribute field's properties.
-     * 
+     *
      * @param property the attribute field property name, such as <code>VALUE</code> or
      *        <code>IS_VALID</code>
      * @param oldValue the old value object, or <code>null</code>
      * @param newValue the new value, or <code>null</code>
      */
-    protected void fireValueChanged( String property, Object oldValue, Object newValue ) {
+    protected void fireValueChanged(String property, Object oldValue, Object newValue) {
         if (propertyChangeListener == null) {
             return;
         }
@@ -297,7 +290,7 @@ public abstract class AttributeField {
 
     /**
      * Returns the symbolic font name used by this attribute field.
-     * 
+     *
      * @return the symbolic font name
      */
     public String getFieldEditorFontName() {
@@ -306,7 +299,7 @@ public abstract class AttributeField {
 
     /**
      * Returns the label control.
-     * 
+     *
      * @return the label control, or <code>null</code> if no label control has been created
      */
     public Label getLabelControl() {
@@ -315,20 +308,21 @@ public abstract class AttributeField {
 
     /**
      * Control suitable for decorating
+     *
      * @return
      */
     public abstract Control getControl();
-    
+
     /**
      * Returns this attribute field's label component.
      * <p>
      * The label is created if it does not already exist
      * </p>
-     * 
+     *
      * @param parent the parent
      * @return the label control
      */
-    public Label getLabelControl( Composite parent ) {
+    public Label getLabelControl(Composite parent) {
         if (label == null) {
             label = new Label(parent, SWT.LEFT);
             label.setFont(parent.getFont());
@@ -336,8 +330,9 @@ public abstract class AttributeField {
             if (text != null) {
                 label.setText(text);
             }
-            label.addDisposeListener(new DisposeListener(){
-                public void widgetDisposed( DisposeEvent event ) {
+            label.addDisposeListener(new DisposeListener() {
+                @Override
+                public void widgetDisposed(DisposeEvent event) {
                     label = null;
                 }
             });
@@ -349,7 +344,7 @@ public abstract class AttributeField {
 
     /**
      * Returns this attribute field's label text.
-     * 
+     *
      * @return the label text
      */
     public String getLabelText() {
@@ -358,14 +353,14 @@ public abstract class AttributeField {
 
     /**
      * Returns the number of basic controls this attribute field consists of.
-     * 
+     *
      * @return the number of controls
      */
     public abstract int getNumberOfControls();
 
     /**
      * Returns the name of the attribute this attribute field operates on.
-     * 
+     *
      * @return the name of the attribute
      */
     public String getAttributeName() {
@@ -374,7 +369,7 @@ public abstract class AttributeField {
 
     /**
      * Return the IFeaturePanel that the receiver is sending updates to.
-     * 
+     *
      * @return IFeaturePanel or <code>null</code> if it has not been set.
      */
     protected IFeaturePanel getFeaturePanel() {
@@ -383,7 +378,7 @@ public abstract class AttributeField {
 
     /**
      * Returns the feature used by this attribute field.
-     * 
+     *
      * @return the feature, or <code>null</code> if none
      * @see #setattributeStore
      */
@@ -393,11 +388,11 @@ public abstract class AttributeField {
 
     /**
      * Initialize the attribute field with the given attribute name and label.
-     * 
+     *
      * @param name the name of the attribute this attribute field works on
      * @param text the label text of the attribute field
      */
-    protected void init( String name, String text ) {
+    protected void init(String name, String text) {
         Assert.isNotNull(name);
         Assert.isNotNull(text);
         attributeName = name;
@@ -411,7 +406,7 @@ public abstract class AttributeField {
      * wishing to perform validation should override both this method and
      * <code>refreshValidState</code>.
      * </p>
-     * 
+     *
      * @return <code>true</code> if the field value is valid, and <code>false</code> if invalid
      * @see #refreshValidState()
      */
@@ -443,7 +438,7 @@ public abstract class AttributeField {
 
     /**
      * Returns whether this attribute field currently presents the default value for its attribute.
-     * 
+     *
      * @return <code>true</code> if the default value is presented, and <code>false</code> otherwise
      */
     public boolean presentsDefaultValue() {
@@ -457,7 +452,7 @@ public abstract class AttributeField {
      * The default implementation of this framework method does nothing. Subclasses wishing to
      * perform validation should override both this method and <code>isValid</code>.
      * </p>
-     * 
+     *
      * @see #isValid
      */
     protected void refreshValidState() {
@@ -485,10 +480,10 @@ public abstract class AttributeField {
     /**
      * Sets this attribute field's label text. The label is typically presented to the left of the
      * entry field.
-     * 
+     *
      * @param text the label text
      */
-    public void setLabelText( String text ) {
+    public void setLabelText(String text) {
         Assert.isNotNull(text);
         labelText = text;
         if (label != null) {
@@ -504,50 +499,48 @@ public abstract class AttributeField {
      * </p>
      * <p>
      * For example:
-     * <p>
-     * 
      * <pre>
      *  ...
      *  field.setAttributeName("font");
      *  field.load();
      * </pre>
-     * 
+     *
      * </p>
-     * 
+     *
      * @param name the name of the attribute
      */
-    public void setAttributeName( String name ) {
+    public void setAttributeName(String name) {
         attributeName = name;
     }
 
     /**
      * Set the page to be the receiver.
-     * 
+     *
      * @param dialogPage
      * @since 3.1
      */
-    public void setPage( IFeaturePanel featurePanel ) {
+    public void setPage(IFeaturePanel featurePanel) {
         page = featurePanel;
 
     }
 
     /**
      * Sets the feature used by this attribute field.
-     * 
+     *
      * @param store the feature, or <code>null</code> if none
      * @see #getfeature
      */
-    public void setFeature( EditFeature feature ) {
+    public void setFeature(EditFeature feature) {
         this.feature = feature;
     }
 
     /**
      * Sets whether this attribute field is presenting the default value.
-     * 
+     *
      * @param booleanValue <code>true</code> if the default value is being presented, and
      *        <code>false</code> otherwise
      */
-    protected void setPresentsDefaultValue( boolean booleanValue ) {
+    protected void setPresentsDefaultValue(boolean booleanValue) {
         isDefaultPresented = booleanValue;
     }
 
@@ -556,19 +549,19 @@ public abstract class AttributeField {
      * <p>
      * Note that attribute fields can support only a single listener.
      * </p>
-     * 
+     *
      * @param listener a property change listener, or <code>null</code> to remove
      */
-    public void setPropertyChangeListener( IPropertyChangeListener listener ) {
+    public void setPropertyChangeListener(IPropertyChangeListener listener) {
         propertyChangeListener = listener;
     }
 
     /**
      * Shows the given error message in the page for this attribute field if it has one.
-     * 
+     *
      * @param msg the error message
      */
-    protected void showErrorMessage( String msg ) {
+    protected void showErrorMessage(String msg) {
         if (page == null || page.getSite() == null) {
             return;
         }
@@ -581,10 +574,10 @@ public abstract class AttributeField {
 
     /**
      * Shows the given message in the page for this attribute field if it has one.
-     * 
+     *
      * @param msg the message
      */
-    protected void showMessage( String msg ) {
+    protected void showMessage(String msg) {
         if (page == null && page.getSite() == null) {
             return;
         }
@@ -613,28 +606,6 @@ public abstract class AttributeField {
         }
     }
 
-    /**
-     * Set the GridData on button to be one that is spaced for the current font.
-     * 
-     * @param button the button the data is being set on.
-     */
-    // protected void setButtonLayoutData(Button button) {
-    // GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-    //
-    // // Compute and store a font metric
-    // GC gc = new GC(button);
-    // gc.setFont(button.getFont());
-    // FontMetrics fontMetrics = gc.getFontMetrics();
-    // gc.dispose();
-    //
-    // int widthHint = org.eclipse.jface.dialogs.Dialog
-    // .convertVerticalDLUsToPixels(fontMetrics,
-    // IDialogConstants.BUTTON_WIDTH);
-    // data.widthHint = Math.max(widthHint, button.computeSize(SWT.DEFAULT,
-    // SWT.DEFAULT, true).x);
-    // button.setLayoutData(data);
-    // }
-
     /** Default implementation checks the getLabelControl */
     public boolean isVisible() {
         Label check = getLabelControl();
@@ -647,19 +618,22 @@ public abstract class AttributeField {
      * The default implementation will call setVisible on both getLabelControl and getControl;
      * override if you have several controls to take care of.
      * </p>
+     *
      * @param visible true to show the attribute field
      */
-    public void setVisible( boolean visible ) {
-        if( getLabelControl() != null && !getLabelControl().isDisposed()){
+    public void setVisible(boolean visible) {
+        if (getLabelControl() != null && !getLabelControl().isDisposed()) {
             getLabelControl().setVisible(visible);
         }
         getLabelControl().setVisible(visible);
-        if( getControl() != null && !getControl().isDisposed()){
-            getControl().setVisible(visible);    
+        if (getControl() != null && !getControl().isDisposed()) {
+            getControl().setVisible(visible);
         }
     }
-    
-    /** Default implementation checks the getLabelControl */
+
+    /**
+     * Default implementation checks the getLabelControl
+     */
     public boolean isEnabled() {
         Label check = getLabelControl();
         return check != null && !check.isDisposed() && check.isEnabled();
@@ -667,19 +641,18 @@ public abstract class AttributeField {
 
     /**
      * Set whether or not the controls in the attribute field are enabled.
-     * 
+     *
      * @param enabled The enabled state.
      * @param parent The parent of the controls in the group. Used to create the controls if
      *        required.
      */
-    public void setEnabled( boolean enabled ) {
-        if( getLabelControl() != null && !getLabelControl().isDisposed()){
-            getLabelControl().setEnabled( enabled );
+    public void setEnabled(boolean enabled) {
+        if (getLabelControl() != null && !getLabelControl().isDisposed()) {
+            getLabelControl().setEnabled(enabled);
         }
-        if( getControl() != null && !getControl().isDisposed()){
-            getControl().setEnabled(enabled);    
+        if (getControl() != null && !getControl().isDisposed()) {
+            getControl().setEnabled(enabled);
         }
     }
-
 
 }

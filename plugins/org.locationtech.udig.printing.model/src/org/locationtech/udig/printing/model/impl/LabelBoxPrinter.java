@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -16,24 +17,19 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.udig.printing.model.AbstractBoxPrinter;
-import org.locationtech.udig.printing.model.Page;
-import org.locationtech.udig.project.IProjectElement;
-import org.locationtech.udig.project.ui.UDIGEditorInput;
-import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IMemento;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.printing.model.AbstractBoxPrinter;
+import org.locationtech.udig.printing.model.Page;
+import org.locationtech.udig.ui.graphics.AWTSWTImageUtils;
 
 /**
  * Box printer for map labels.
- * 
+ *
  * @author Jesse
  * @since 1.1.0
  */
@@ -45,28 +41,41 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
     public static final int INSET = 10;
 
     private static final String SIZE_KEY = "size"; //$NON-NLS-1$
+
     private static final String STYLE_KEY = "style"; //$NON-NLS-1$
+
     private static final String FONT_NAME_KEY = "fontName"; //$NON-NLS-1$
+
     private static final String FONT_COLOR_KEY = "fontCOLOR"; //$NON-NLS-1$
+
     private static final String FONT_SCALE_FACTOR = "fontScaleFActor"; //$NON-NLS-1$
+
     private static final String LABEL_KEY = "label"; //$NON-NLS-1$
+
     private static final String HORIZ_ALIGN_KEY = "horizontalAlignment"; //$NON-NLS-1$
 
     private String text = "Set Text"; //$NON-NLS-1$
+
     private int padding;
+
     String preview;
+
     private int horizontalAlignment = SWT.LEFT;
+
     private int verticalAlignment = SWT.TOP;
+
     private boolean wrap;
+
     private Color fontColor = Color.BLACK;
 
     /**
      * The font used to draw on paper. The one set by the user and expected to be the real size.
      */
     private Font originalFont;
+
     /**
-     * The scaled font used to draw on screen page. 
-     * Resized to give the proper size feeling on screen as if it was on paper. 
+     * The scaled font used to draw on screen page. Resized to give the proper size feeling on
+     * screen as if it was on paper.
      */
     private Font scaledFont;
 
@@ -80,13 +89,13 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
         this.padding = 0;
     }
 
-    public LabelBoxPrinter( int padding ) {
+    public LabelBoxPrinter(int padding) {
         super();
 
         this.padding = padding;
     }
 
-    public LabelBoxPrinter( float scaleFactor ) {
+    public LabelBoxPrinter(float scaleFactor) {
         super();
         this.scaleFactor = scaleFactor;
     }
@@ -102,7 +111,7 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
         return scaleFactor;
     }
 
-    private void setScaleFactor( float scaleFactor ) {
+    private void setScaleFactor(float scaleFactor) {
         this.scaleFactor = scaleFactor;
     }
 
@@ -120,17 +129,17 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
     }
 
     /**
-     * Set the text to display in the box.  Null represents
-     * no text.
+     * Set the text to display in the box. Null represents no text.
      *
      * @param text the box text.
      */
-    public void setText( String text ) {
+    public void setText(String text) {
         this.text = text;
         setDirty(true);
     }
 
-    public void draw( Graphics2D graphics, IProgressMonitor monitor ) {
+    @Override
+    public void draw(Graphics2D graphics, IProgressMonitor monitor) {
         super.draw(graphics, monitor);
 
         int boxWidth = getBox().getSize().width;
@@ -158,16 +167,16 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
         if (drawFont != null && text != null) {
             graphics.setFont(drawFont);
             graphics.setColor(fontColor);
-            int spaceBetweenLines = (int) ((float) drawFont.getSize() / 4f);
+            int spaceBetweenLines = (int) (drawFont.getSize() / 4f);
 
             // calculate vertical position of the first line
             int y;
             List<String> lines = splitIntoLines(text, availableWidth, graphics, getWrap());
 
-            switch( verticalAlignment ) {
+            switch (verticalAlignment) {
             case SWT.CENTER:
                 int textHeight = textHeight(lines, spaceBetweenLines, graphics);
-                y = padding + (int) ((availableHeight - textHeight) / 2);
+                y = padding + (availableHeight - textHeight) / 2;
                 break;
             default:
                 y = padding;
@@ -176,13 +185,13 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
 
             // draw each line
             int x;
-            for( int i = 0; i < lines.size(); i++ ) {
+            for (int i = 0; i < lines.size(); i++) {
 
                 String line = lines.get(i);
                 Rectangle2D lineBounds = graphics.getFontMetrics().getStringBounds(line, graphics);
 
                 // compute the horizontal alignment of each line
-                switch( horizontalAlignment ) {
+                switch (horizontalAlignment) {
                 case SWT.CENTER:
                     x = (int) ((boxWidth - lineBounds.getWidth()) / 2);
                     break;
@@ -204,14 +213,15 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
                 graphics.drawString(line, x, y);
                 y += spaceBetweenLines; // add "leading"
 
-            }// for
+            } // for
         } // if
     }
 
     private void setDefaultFont() {
 
-        Display.getDefault().syncExec(new Runnable(){
+        Display.getDefault().syncExec(new Runnable() {
 
+            @Override
             public void run() {
                 // create a default
                 FontData data = Display.getDefault().getSystemFont().getFontData()[0];
@@ -225,14 +235,13 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
     }
 
     /**
-     * Calculates the height of all lines together, including whitespace 
-     * between lines
+     * Calculates the height of all lines together, including whitespace between lines
      *
      * @return height of text block
      */
-    private int textHeight( List<String> lines, int spaceBetweenLines, Graphics2D graphics ) {
+    private int textHeight(List<String> lines, int spaceBetweenLines, Graphics2D graphics) {
         int height = 0;
-        for( int i = 0; i < lines.size(); i++ ) {
+        for (int i = 0; i < lines.size(); i++) {
             if (i > 0) {
                 height += spaceBetweenLines;
             }
@@ -244,9 +253,8 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
     }
 
     /**
-     * A line wrap algorithm, which splits the given line of text into
-     * multiple lines based on the current font size and the available line
-     * width
+     * A line wrap algorithm, which splits the given line of text into multiple lines based on the
+     * current font size and the available line width
      *
      * @param text
      * @param availableWidth
@@ -254,20 +262,20 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
      * @param wrap
      * @return a list of strings, representing the lines
      */
-    private List<String> splitIntoLines( String text, int availableWidth, Graphics2D graphics,
-            boolean wrap ) {
+    private List<String> splitIntoLines(String text, int availableWidth, Graphics2D graphics,
+            boolean wrap) {
 
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
         if (!wrap) {
             lines.add(text);
             return lines;
         }
 
-        String[] words = text.split(" ");
-        String currentLine = "";
-        for( int i = 0; i < words.length; i++ ) {
+        String[] words = text.split(" "); //$NON-NLS-1$
+        String currentLine = ""; //$NON-NLS-1$
+        for (int i = 0; i < words.length; i++) {
 
-            String tryLine = (currentLine.equals("")) ? words[i] : (currentLine + " " + words[i]);
+            String tryLine = (currentLine.equals("")) ? words[i] : (currentLine + " " + words[i]); //$NON-NLS-1$ //$NON-NLS-2$
             Rectangle2D lineBounds = graphics.getFontMetrics().getStringBounds(tryLine, graphics);
             if (lineBounds.getWidth() > availableWidth) {
                 lines.add(currentLine);
@@ -276,13 +284,14 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
                 currentLine = tryLine;
             }
         }
-        if (!currentLine.equals("")) {
+        if (!currentLine.equals("")) { //$NON-NLS-1$
             lines.add(currentLine);
         }
         return lines;
     }
 
-    public void createPreview( Graphics2D graphics, IProgressMonitor monitor ) {
+    @Override
+    public void createPreview(Graphics2D graphics, IProgressMonitor monitor) {
         inPreviewMode = true;
         draw(graphics, monitor);
         preview = getText();
@@ -290,7 +299,8 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
         inPreviewMode = false;
     }
 
-    public void save( IMemento memento ) {
+    @Override
+    public void save(IMemento memento) {
         memento.putString(LABEL_KEY, text);
         memento.putInteger(HORIZ_ALIGN_KEY, horizontalAlignment);
         if (originalFont != null) {
@@ -302,15 +312,16 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
         if (fontColor != null) {
             StringBuilder clrString = new StringBuilder();
             clrString.append(fontColor.getRed());
-            clrString.append(",");
+            clrString.append(","); //$NON-NLS-1$
             clrString.append(fontColor.getGreen());
-            clrString.append(",");
+            clrString.append(","); //$NON-NLS-1$
             clrString.append(fontColor.getBlue());
             memento.putString(FONT_COLOR_KEY, clrString.toString());
         }
     }
 
-    public void load( IMemento memento ) {
+    @Override
+    public void load(IMemento memento) {
         text = memento.getString(LABEL_KEY);
         horizontalAlignment = memento.getInteger(HORIZ_ALIGN_KEY);
         setScaleFactor(memento.getFloat(FONT_SCALE_FACTOR));
@@ -319,7 +330,7 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
             int size = memento.getInteger(SIZE_KEY);
             int style = memento.getInteger(STYLE_KEY);
             originalFont = new Font(family, style, size);
-            int resizedValue = (int) ((float) size * getScaleFactor());
+            int resizedValue = (int) (size * getScaleFactor());
             if (resizedValue < 4) {
                 resizedValue = 4;
             }
@@ -327,21 +338,23 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
 
             String colorString = memento.getString(FONT_COLOR_KEY);
             if (colorString != null) {
-                String[] colorSplit = colorString.split(",");
-                Color clr = new Color(Integer.parseInt(colorSplit[0]), Integer
-                        .parseInt(colorSplit[1]), Integer.parseInt(colorSplit[2]));
+                String[] colorSplit = colorString.split(","); //$NON-NLS-1$
+                Color clr = new Color(Integer.parseInt(colorSplit[0]),
+                        Integer.parseInt(colorSplit[1]), Integer.parseInt(colorSplit[2]));
                 fontColor = clr;
             }
 
         }
     }
 
+    @Override
     public String getExtensionPointID() {
         return "org.locationtech.udig.printing.ui.standardBoxes"; //$NON-NLS-1$
     }
 
+    @Override
     @SuppressWarnings("unchecked")
-    public Object getAdapter( Class adapter ) {
+    public Object getAdapter(Class adapter) {
         if (adapter.isAssignableFrom(String.class)) {
             return text;
         }
@@ -353,9 +366,9 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
      *
      * @param newFont the new font
      */
-    public void setFont( Font newFont ) {
+    public void setFont(Font newFont) {
         originalFont = newFont;
-        int resizedValue = (int) ((float) originalFont.getSize() * getScaleFactor());
+        int resizedValue = (int) (originalFont.getSize() * getScaleFactor());
         if (resizedValue < 4) {
             resizedValue = 4;
         }
@@ -374,11 +387,13 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
     }
 
     /**
-     * Sets the horizontal alignment of the label.  Options are: {@link SWT#CENTER}, {@link SWT#RIGHT}, {@link SWT#LEFT}
+     * Sets the horizontal alignment of the label. Options are: {@link SWT#CENTER},
+     * {@link SWT#RIGHT}, {@link SWT#LEFT}
      *
-     * @param newAlignment the new alignment.  One of {@link SWT#CENTER}, {@link SWT#RIGHT}, {@link SWT#LEFT}
+     * @param newAlignment the new alignment. One of {@link SWT#CENTER}, {@link SWT#RIGHT},
+     *        {@link SWT#LEFT}
      */
-    public void setHorizontalAlignment( int newAlignment ) {
+    public void setHorizontalAlignment(int newAlignment) {
         if (newAlignment != SWT.LEFT && newAlignment != SWT.CENTER && newAlignment != SWT.RIGHT) {
             throw new IllegalArgumentException("An illegal option was provided"); //$NON-NLS-1$
         }
@@ -387,11 +402,11 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
     }
 
     /**
-     * Sets the vertical alignment of the label.  Options are: {@link SWT#CENTER}, {@link SWT#TOP}
+     * Sets the vertical alignment of the label. Options are: {@link SWT#CENTER}, {@link SWT#TOP}
      *
-     * @param newAlignment the new alignment.  One of {@link SWT#CENTER}, {@link SWT#TOP}
+     * @param newAlignment the new alignment. One of {@link SWT#CENTER}, {@link SWT#TOP}
      */
-    public void setVerticalAlignment( int newAlignment ) {
+    public void setVerticalAlignment(int newAlignment) {
         if (newAlignment != SWT.TOP && newAlignment != SWT.CENTER) {
             throw new IllegalArgumentException("An illegal option was provided"); //$NON-NLS-1$
         }
@@ -403,7 +418,7 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
         return fontColor;
     }
 
-    public void setFontColor( Color fontColor ) {
+    public void setFontColor(Color fontColor) {
         this.fontColor = fontColor;
     }
 
@@ -411,7 +426,7 @@ public class LabelBoxPrinter extends AbstractBoxPrinter {
         return wrap;
     }
 
-    public void setWrap( boolean wrap ) {
+    public void setWrap(boolean wrap) {
         this.wrap = wrap;
     }
 

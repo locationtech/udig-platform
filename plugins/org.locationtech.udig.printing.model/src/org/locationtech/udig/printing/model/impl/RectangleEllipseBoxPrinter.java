@@ -1,4 +1,5 @@
-/* uDig - User Friendly Desktop Internet GIS client
+/**
+ * uDig - User Friendly Desktop Internet GIS client
  * http://udig.refractions.net
  * (C) 2004, Refractions Research Inc.
  *
@@ -17,16 +18,11 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
-import org.locationtech.udig.printing.model.AbstractBoxPrinter;
-import org.locationtech.udig.printing.model.Page;
-import org.locationtech.udig.project.IProjectElement;
-import org.locationtech.udig.project.ui.UDIGEditorInput;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.IMemento;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
+import org.locationtech.udig.printing.model.AbstractBoxPrinter;
+import org.locationtech.udig.printing.model.Page;
 
 /**
  * @author Andrea Antonello (www.hydrologis.com)
@@ -34,21 +30,33 @@ import org.eclipse.ui.PlatformUI;
 public class RectangleEllipseBoxPrinter extends AbstractBoxPrinter {
 
     private static final String LINEWIDTH_KEY = "linewidth"; //$NON-NLS-1$
+
     private static final String LINECOLOR_KEY = "linecolor"; //$NON-NLS-1$
+
     private static final String LINEALPHA_KEY = "linealpha"; //$NON-NLS-1$
+
     private static final String FILLCOLOR_KEY = "fillcolor"; //$NON-NLS-1$
+
     private static final String FILLALPHA_KEY = "fillalpha"; //$NON-NLS-1$
+
     private static final String SHAPETYPE_KEY = "shapetype"; //$NON-NLS-1$
+
     private static final String SCALEFACTOR_KEY = "scalefactor"; //$NON-NLS-1$
 
     public static final int RECTANGLE = 0;
+
     public static final int ROUNDEDRECTANGLE = 1;
+
     public static final int ELLIPSE = 2;
 
     private Color lineColor = Color.GRAY;
+
     private Color fillColor = Color.GRAY;
+
     private float lineWidth = 1f;
+
     private int lineAlpha = 255;
+
     private int fillAlpha = 128;
 
     private int type = RECTANGLE;
@@ -58,8 +66,8 @@ public class RectangleEllipseBoxPrinter extends AbstractBoxPrinter {
     public RectangleEllipseBoxPrinter() {
         super();
     }
-    
-    public RectangleEllipseBoxPrinter( float scaleFactor ) {
+
+    public RectangleEllipseBoxPrinter(float scaleFactor) {
         super();
         this.scaleFactor = scaleFactor;
     }
@@ -75,25 +83,22 @@ public class RectangleEllipseBoxPrinter extends AbstractBoxPrinter {
         return scaleFactor;
     }
 
-    private void setScaleFactor( float scaleFactor ) {
+    private void setScaleFactor(float scaleFactor) {
         this.scaleFactor = scaleFactor;
     }
 
-    public void draw( Graphics2D graphics, IProgressMonitor monitor ) {
+    @Override
+    public void draw(Graphics2D graphics, IProgressMonitor monitor) {
         super.draw(graphics, monitor);
 
         int boxWidth = getBox().getSize().width - (int) lineWidth / 2;
         int boxHeight = getBox().getSize().height - (int) lineWidth / 2;
         int roundedEgde = 50;
-        // if (inPreviewMode) {
-        // boxWidth = (int) ((float) boxWidth * scaleFactor);
-        // boxHeight = (int) ((float) boxHeight * scaleFactor);
-        // roundedEgde = (int) ((float) roundedEgde * scaleFactor);
-        // }
 
         Shape shape = null;
         if (type == ROUNDEDRECTANGLE) {
-            shape = new RoundRectangle2D.Double(0, 0, boxWidth, boxHeight, roundedEgde, roundedEgde);
+            shape = new RoundRectangle2D.Double(0, 0, boxWidth, boxHeight, roundedEgde,
+                    roundedEgde);
         } else if (type == ELLIPSE) {
             shape = new Ellipse2D.Double(0, 0, boxWidth, boxHeight);
         } else {
@@ -111,12 +116,14 @@ public class RectangleEllipseBoxPrinter extends AbstractBoxPrinter {
 
     }
 
-    public void createPreview( Graphics2D graphics, IProgressMonitor monitor ) {
+    @Override
+    public void createPreview(Graphics2D graphics, IProgressMonitor monitor) {
         draw(graphics, monitor);
         setDirty(false);
     }
 
-    public void save( IMemento memento ) {
+    @Override
+    public void save(IMemento memento) {
         memento.putFloat(LINEWIDTH_KEY, lineWidth);
         memento.putString(LINECOLOR_KEY, color2String(lineColor));
         memento.putInteger(LINEALPHA_KEY, lineAlpha);
@@ -126,7 +133,8 @@ public class RectangleEllipseBoxPrinter extends AbstractBoxPrinter {
         memento.putFloat(SCALEFACTOR_KEY, getScaleFactor());
     }
 
-    public void load( IMemento memento ) {
+    @Override
+    public void load(IMemento memento) {
         lineWidth = memento.getFloat(LINEWIDTH_KEY);
         lineColor = string2Color(memento.getString(LINECOLOR_KEY));
         lineAlpha = memento.getInteger(LINEALPHA_KEY);
@@ -136,22 +144,25 @@ public class RectangleEllipseBoxPrinter extends AbstractBoxPrinter {
         setScaleFactor(memento.getFloat(SCALEFACTOR_KEY));
     }
 
-    private String color2String( Color color ) {
-        return color.getRed() + "," + color.getGreen() + "," + color.getBlue();
+    private String color2String(Color color) {
+        return color.getRed() + "," + color.getGreen() + "," + color.getBlue(); //$NON-NLS-1$ //$NON-NLS-2$
     }
-    private Color string2Color( String string ) {
-        String[] split = string.split(",");
-        Color color = new Color(Integer.parseInt(split[0].trim()), Integer
-                .parseInt(split[1].trim()), Integer.parseInt(split[2].trim()));
+
+    private Color string2Color(String string) {
+        String[] split = string.split(","); //$NON-NLS-1$
+        Color color = new Color(Integer.parseInt(split[0].trim()),
+                Integer.parseInt(split[1].trim()), Integer.parseInt(split[2].trim()));
         return color;
     }
 
+    @Override
     public String getExtensionPointID() {
         return "org.locationtech.udig.printing.ui.standardBoxes"; //$NON-NLS-1$
     }
 
+    @Override
     @SuppressWarnings("unchecked")
-    public Object getAdapter( Class adapter ) {
+    public Object getAdapter(Class adapter) {
         return Platform.getAdapterManager().getAdapter(this, adapter);
     }
 
@@ -159,15 +170,17 @@ public class RectangleEllipseBoxPrinter extends AbstractBoxPrinter {
         return lineColor;
     }
 
-    public void setLineColor( Color lineColor ) {
+    public void setLineColor(Color lineColor) {
         this.lineColor = lineColor;
     }
 
+    @Override
     public Color getFillColor() {
         return fillColor;
     }
 
-    public void setFillColor( Color fillColor ) {
+    @Override
+    public void setFillColor(Color fillColor) {
         this.fillColor = fillColor;
     }
 
@@ -175,7 +188,7 @@ public class RectangleEllipseBoxPrinter extends AbstractBoxPrinter {
         return lineWidth;
     }
 
-    public void setLineWidth( float lineWidth ) {
+    public void setLineWidth(float lineWidth) {
         this.lineWidth = lineWidth;
     }
 
@@ -183,7 +196,7 @@ public class RectangleEllipseBoxPrinter extends AbstractBoxPrinter {
         return lineAlpha;
     }
 
-    public void setLineAlpha( int lineAlpha ) {
+    public void setLineAlpha(int lineAlpha) {
         this.lineAlpha = lineAlpha;
     }
 
@@ -191,7 +204,7 @@ public class RectangleEllipseBoxPrinter extends AbstractBoxPrinter {
         return fillAlpha;
     }
 
-    public void setFillAlpha( int fillAlpha ) {
+    public void setFillAlpha(int fillAlpha) {
         this.fillAlpha = fillAlpha;
     }
 
@@ -199,7 +212,7 @@ public class RectangleEllipseBoxPrinter extends AbstractBoxPrinter {
         return type;
     }
 
-    public void setType( int type ) {
+    public void setType(int type) {
         this.type = type;
     }
 
