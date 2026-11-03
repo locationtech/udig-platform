@@ -42,3 +42,8 @@ Improvements and Fixes
 * Removal of deprecated classes (
   `#649 <https://github.com/locationtech/udig-platform/issues/649>`_ : Solve deprecation of ChangeCRSCommand. Please us the class "org.locationtech.udig.project.command.factory.BasicCommandFactory.java" instead!
   )
+
+Updated 3rd-party Dependencies
+------------------------------
+
+uDig has been updated to Eclipse Platform Release 2022-03 and Tycho 2.7.5 (`#686 <https://github.com/locationtech/udig-platform/pull/686>`_). Java 11 is required to build and run uDig from now on, Java 8 is not supported anymore.
