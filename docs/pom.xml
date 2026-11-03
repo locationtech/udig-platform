@@ -124,12 +124,12 @@
               <goal>run</goal>
             </goals>
             <configuration>
-              <tasks>
+              <target>
                 <ant antfile="build.xml" dir="${basedir}" target="${target}">
                   <property name="build.directory" value="${project.build.directory}"></property>
                   <property name="project.version" value="${project.version}"></property>
                 </ant>
-              </tasks>
+              </target>
             </configuration>
           </execution>
           <execution>
@@ -139,29 +139,17 @@
               <goal>run</goal>
             </goals>
             <configuration>
-              <tasks>
+              <target>
                 <!-- create online-help.zip artifact and attach it afterwards as a build result -->
                 <copy todir="${project.build.directory}/udig-eclipse-help/EN">
                   <fileset dir="${project.build.directory}/user/en/simple" excludes="**/_sources/**"></fileset>
                 </copy>
                 <copy file="${basedir}/user/toc.xml" todir="${project.build.directory}/udig-eclipse-help"></copy>
                 <zip basedir="${project.build.directory}/udig-eclipse-help" destfile="${project.build.directory}/udig-eclipse-help.zip"></zip>
-              </tasks>
+              </target>
             </configuration>
           </execution>
         </executions>
-        <dependencies>
-          <dependency>
-            <groupId>ant</groupId>
-            <artifactId>ant</artifactId>
-            <version>1.6.5</version>
-          </dependency>
-          <dependency>
-            <groupId>ant-contrib</groupId>
-            <artifactId>ant-contrib</artifactId>
-            <version>1.0b3</version>
-          </dependency>
-        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
