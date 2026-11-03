@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.apache.batik.util;bundle-version="1.13.0"
 Bundle-Activator: org.locationtech.udig.libs.internal.Activator
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: com.google.common.annotations;version="27.0.0",
  com.google.common.base;version="27.0.0",
  com.google.common.base.internal;version="27.0.0",

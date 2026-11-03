@@ -15,4 +15,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig.catalog.internal.wfs;x-friends:="org.locationtech.udig.catalog.wfs.tests",
  org.locationtech.udig.catalog.internal.wfs.ui;x-friends:="org.locationtech.udig.context,org.locationtech.udig.catalog.wfs.tests",
  org.locationtech.udig.catalog.wfs.internal;x-friends:="org.locationtech.udig.catalog.wfs.tests"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11

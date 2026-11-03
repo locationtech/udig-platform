@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.locationtech.udig.catalog.jgrass.tests;singleton:=true
 Bundle-Version: 2.3.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Automatic-Module-Name: org.locationtech.udig.catalog.jgrass.tests
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.junit;bundle-version="4.12.0",
  org.locationtech.udig.catalog.jgrass;bundle-version="2.3.0",
  org.locationtech.udig.catalog;bundle-version="2.3.0"

@@ -27,7 +27,7 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.style.sld,
  org.locationtech.udig.catalog.wms
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ClassPath: .
 Import-Package: org.apache.commons.io;version="2.4.0",
  org.apache.commons.io.comparator;version="2.4.0",

@@ -6,7 +6,7 @@ Bundle-Version: 2.3.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Fragment-Host: org.locationtech.udig.libs
 Automatic-Module-Name: org.locationtech.udig.libs.netcdf
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.geotools.coverage.io.netcdf,
  org.geotools.coverage.io.netcdf.cf,
  org.geotools.coverage.io.netcdf.crs,

@@ -18,4 +18,4 @@ Export-Package: org.locationtech.udig.issues,
  org.locationtech.udig.issues.internal.datastore;x-friends:="org.locationtech.udig.issues.tests",
  org.locationtech.udig.issues.internal.view;x-friends:="org.locationtech.udig.issues.tests",
  org.locationtech.udig.issues.listeners
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11

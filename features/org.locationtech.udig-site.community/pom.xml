@@ -8,5 +8,5 @@
   </parent>
 
   <artifactId>org.locationtech.udig-site.community</artifactId>
-  <packaging>eclipse-update-site</packaging>
+  <packaging>eclipse-repository</packaging>
 </project>

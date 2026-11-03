@@ -9,7 +9,7 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.catalog,
  org.locationtech.udig.catalog.ui
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.locationtech.udig.catalog.teradata
 Bundle-Vendor: udig.refractions.net
 Import-Package: org.apache.commons.io;version="2.4.0",

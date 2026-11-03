@@ -22,4 +22,4 @@ Require-Bundle: org.locationtech.udig.project;visibility:=reexport,
  org.locationtech.udig.catalog.ui,
  org.eclipse.emf.ecore.edit;visibility:=reexport
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
