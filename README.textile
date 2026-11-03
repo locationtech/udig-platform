@@ -42,6 +42,11 @@ There are two ways to take part: indirectly using github pull requests; and dire
 
 h1. Build Instructions
 
+Requirements:
+
+* JDK 11
+* Maven 3.6.3 or newer
+
 1. Check out Repository
    
    Check out the branch you wish to work with (or fork as you see fit).

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JFreechart
 Bundle-SymbolicName: org.locationtech.udig.libs.jfreechart;singleton:=true
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Bundle-ClassPath: lib/jcommon-1.0.23.jar,
  lib/jfreechart-1.0.19.jar,

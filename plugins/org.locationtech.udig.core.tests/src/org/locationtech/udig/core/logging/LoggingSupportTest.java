@@ -83,7 +83,8 @@ public class LoggingSupportTest {
         LoggingSupport.log(plugin, null, new Exception(EXPECTED_ERROR_MSG));
 
         verify(log).log(statusCapture.capture());
-        assertStatus(IStatus.ERROR, "", BUNDLE_NAME, statusCapture.getValue());
+        // since Eclipse 4.20 Status falls back to the exception message if no message is given
+        assertStatus(IStatus.ERROR, EXPECTED_ERROR_MSG, BUNDLE_NAME, statusCapture.getValue());
     }
 
     @Test

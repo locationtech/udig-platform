@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.locationtech.udig.image.georeferencing
 Bundle-SymbolicName: org.locationtech.udig.image.georeferencing;singleton:=true
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.qualifier
 Bundle-Activator: org.locationtech.udig.image.georeferencing.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.tools.edit,
  org.eclipse.help
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: uDig Community
 Export-Package: org.locationtech.udig.image.georeferencing;uses:="org.
  eclipse.ui.plugin,org.osgi.framework",org.locationtech.udig.image.geo

@@ -31,16 +31,10 @@ uDig with another JRE/JDK than pre-configured we need to setup one. The followin
 supported version might change over time.
 
 In Preferences Dialog choose :menuselection:`Java --> Installed JREs` and hit :guilabel:`Add` in the right panel.
-Navigate on file-system and choose installation folder of JRE/JDK to use
-
- .. image:: images/ide_jre_selection.png
-    :width: 60%
+Navigate on file-system and choose installation folder of JRE/JDK to use. uDig requires at least Java 11.
 
 In addition to the JRE its recommend to configure a compile-level for the projects of the Eclipse Workspace. In
-:menuselection:`Java --> Compiler` check and set at least :guilabel:`Compiler compliance level` to `1.8`.
-
- .. image:: images/ide_compiler_compliance.png
-    :width: 60%
+:menuselection:`Java --> Compiler` check and set at least :guilabel:`Compiler compliance level` to `11`.
 
 API Baselines
 `````````````
