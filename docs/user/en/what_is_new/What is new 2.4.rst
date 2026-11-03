@@ -8,6 +8,10 @@ This is a release candidate, prior to the creation of a stable 2.4.x series. uDi
 .. contents:: :local:
    :depth: 1
 
+Improvements and Fixes
+----------------------
+* `#616 <https://github.com/locationtech/udig-platform/issues/616>`_ : fixed NullPointerException in CommandManager if undo or redo is executed in the calling thread
+
 Updated 3rd-party Dependencies
 ------------------------------
 
