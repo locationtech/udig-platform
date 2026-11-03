@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Style UI Plugin
 Bundle-SymbolicName: org.locationtech.udig.style.ui;singleton:=true
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.qualifier
 Export-Package: org.locationtech.udig.style.ui,
  org.locationtech.udig.style.ui.internal;x-internal:=true,
  org.locationtech.udig.style.ui.views;x-internal:=true

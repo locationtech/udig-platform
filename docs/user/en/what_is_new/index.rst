@@ -8,6 +8,7 @@ The following features are new for uDig.
 .. toctree::
    :maxdepth: 2
 
+   What is new 2.4
    What is new 2.3
    What is new 2.2
    What is new 2.1

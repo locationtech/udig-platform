@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Catalog Rastering Test Bundle
 Bundle-SymbolicName: org.locationtech.udig.catalog.rasterings.tests
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Automatic-Module-Name: org.locationtech.udig.catalog.rasterings.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-11

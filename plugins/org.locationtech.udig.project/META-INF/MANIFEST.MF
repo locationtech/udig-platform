@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.locationtech.udig.project;singleton:=true
 Automatic-Module-Name: org.locationtech.udig.project
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.locationtech.udig.project.internal.ProjectPlugin$Implementation
 Bundle-Vendor: %providerName
