@@ -141,6 +141,8 @@ for uDig. The easiest way to do so is with Maven itself in console. Open a conso
 
   :command:`mvn clean package -f pom-libs.xml`
 
+See :doc:`../../building_with_maven` for details about the Maven build.
+
 Import Projects into Workspace
 -------------------------------
 

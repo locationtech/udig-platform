@@ -10,6 +10,7 @@ uDig Developers
 .. toctree::
    :maxdepth: 1
 
+   building_with_maven
    docguide/sphinxEnvironment
    IDE-Setup/Eclipse/getting_started_Eclipse_IDE
 

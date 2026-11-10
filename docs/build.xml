@@ -30,7 +30,7 @@
             <isset property="project.version" />
         </condition>
 
-        <echo message="Build directory is ${build.directory} and project version is ${project.version}"/>
+        <echo level="info" message="Build directory is ${build.directory} and project version is ${project.version}"/>
     </target>
 
     <target name="clean" depends="init">
@@ -89,7 +89,7 @@
     </target>
 
     <target name="sphinx" if="sphinx.available">
-        <echo message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/>
+        <echo level="info" message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/>
         <exec executable="sphinx-build" failonerror="true" dir="${basedir}/${id}">
             <arg line="-D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/>
         </exec>
@@ -102,7 +102,7 @@
     </target>
 
     <target name="sphinx-simple" if="sphinx.available">
-        <echo message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/>
+        <echo level="info" message="Running sphinx-build -D release=${project.version} -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/${build}&quot;"/>
         <exec executable="sphinx-build" failonerror="true" dir="${basedir}/${id}">
             <arg line="-D release=${project.version} -D html_theme='simple' -D html_title='User Guide' -W -b ${build} -d &quot;${build.directory}/${id}/doctrees&quot; . &quot;${build.directory}/${id}/simple&quot;"/>
         </exec>
