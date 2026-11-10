@@ -32,20 +32,9 @@ jobs:
       run: mvn -B install --file pom-libs.xml
     - uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
-    - uses: BSFishy/pip-action@v1
-      with:
-        # sphinx 4.2.0 does not pin its dependencies, newer versions require Sphinx >= 5
-        packages: |
-          sphinx==4.2.0
-          setuptools<81
-          sphinxcontrib-applehelp<1.0.5
-          sphinxcontrib-devhelp<1.0.3
-          sphinxcontrib-htmlhelp<2.0.2
-          sphinxcontrib-serializinghtml<1.1.6
-          sphinxcontrib-qthelp<1.0.4
-          alabaster<0.7.14
-          jinja2<3.1
+        python-version: '3.14'
+    - name: Install sphinx
+      run: pip install "sphinx==9.2.0"
     - name: Build docs with sphinx
       run: mvn install -B -f docs/pom.xml -Dtycho.mode=maven -Pdocs
     - name: Run uDig product & sdk build (parallel)
