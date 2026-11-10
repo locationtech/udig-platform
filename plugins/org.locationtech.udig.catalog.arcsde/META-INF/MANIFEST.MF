@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.locationtech.udig.catalog.arcsde; singleton:=true
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.qualifier
 Bundle-Activator: org.locationtech.udig.catalog.internal.arcsde.ArcsdePlugin
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
@@ -18,4 +18,4 @@ Bundle-ClassPath: .,
  lib/jsde_sdk-9.2+.jar,
  lib/jpe_sdk-9.2+.jar,
  lib/icu4j-3.2+.jar
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11

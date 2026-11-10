@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Oracle Libs Plug-in
 Bundle-SymbolicName: org.locationtech.udig.libs.oracle
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.qualifier
 Bundle-Vendor: udig.refractions.net
 Bundle-ClassPath: .,libs/oracle-driver.jar,
  libs/oracle-classes.jar
@@ -10,5 +10,5 @@ Eclipse-RegisterBuddy: org.locationtech.udig.libs,
  org.locationtech.udig.catalog.oracle
 Require-Bundle: org.locationtech.udig.libs,
  org.locationtech.udig.catalog.oracle
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Eclipse-BundleShape: dir

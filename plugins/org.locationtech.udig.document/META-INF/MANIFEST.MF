@@ -4,7 +4,7 @@ Bundle-Name: %plugin.name
 Bundle-Vendor: udig.refractions.net
 Bundle-Localization: plugin
 Bundle-SymbolicName: org.locationtech.udig.document;singleton:=true
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.qualifier
 Bundle-Activator: org.locationtech.udig.document.DocumentPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.ui,
  org.locationtech.udig.catalog.shp,
  org.locationtech.udig.project,
  org.locationtech.udig.project.ui
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: org.locationtech.udig.document,
  org.locationtech.udig.document.model;x-friends:="org.locationtech.udig.tests.info",

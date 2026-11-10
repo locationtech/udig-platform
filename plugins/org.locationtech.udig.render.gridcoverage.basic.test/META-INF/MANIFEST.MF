@@ -14,6 +14,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.locationtech.udig.project.ui,
  org.locationtech.udig.style.sld
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: javax.media.jai,
  org.locationtech.udig.catalog.tests

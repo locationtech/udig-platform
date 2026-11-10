@@ -389,8 +389,8 @@ A: Understood, should we use a dither pattern? as a temporary measure?
 Can I use my Own Java?
 ----------------------
 
-A: Yes you can (but please make sure it has **Java Advanced Imaging** and **Java Imaging IO**
-installed.
+A: Yes you can, uDig requires at least Java 11. **Java Advanced Imaging** and **Java Imaging IO**
+are shipped as part of uDig and need not to be installed into your Java.
 
 You can specify a different version on the command line:
 

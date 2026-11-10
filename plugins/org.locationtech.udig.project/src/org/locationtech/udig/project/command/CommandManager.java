@@ -321,8 +321,9 @@ public class CommandManager implements CommandStack, NavCommandStack {
                         return Status.OK_STATUS;
                 }
 
-                SubMonitor subMonitor = SubMonitor.convert(monitor, 10);
-                run(subMonitor, currentRequest);
+                // also used by addRequest if a request is executed in the calling thread
+                progressMonitor = SubMonitor.convert(monitor, 10);
+                run(progressMonitor, currentRequest);
 
                 if (currentRequest.isSync()) {
                     // notify those waiting for command to finish
